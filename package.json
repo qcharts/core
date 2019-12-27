@@ -1,0 +1,60 @@
+{
+  "name": "@qcharts/core",
+  "version": "0.3.1",
+  "description": "@qcharts/gl",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "cross-env DEV_MODE=doc webpack-dev-server --config ./build/webpack.conf.dev.js",
+    "build": "npm run build:docs && npm run build:chart && echo 'Build successfully!'",
+    "babel": "rimraf lib && cross-env NODE_ENV=babel babel src --out-dir lib",
+    "build:chart": "rimraf dist && cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.chart.js",
+    "build:wxapp": "cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.chart.wxapp.js",
+    "build:docs": "rimraf docs && cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.docs.js",
+    "prepublishOnly": "npm run babel && npm run build:chart"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-decorators": "^7.2.3",
+    "@babel/plugin-proposal-dynamic-import": "^7.5.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-modules-amd": "^7.5.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
+    "@babel/runtime": "^7.2.0",
+    "cross-env": "^6.0.3",
+    "happypack": "^5.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "lerna": "^3.16.4",
+    "markdown-it-container": "^2.0.0",
+    "progress-bar-webpack-plugin": "^1.12.1",
+    "scapegoat": "^1.0.0",
+    "vue-loader": "^15.8.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qcharts/core.git"
+  },
+  "keywords": [
+    "qcharts",
+    "gl"
+  ],
+  "author": "yaotaiyang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qcharts/core/issues"
+  },
+  "homepage": "https://github.com/qcharts/core"
+}

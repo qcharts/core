@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>ic_website_play</title>
+    <desc>Created with Sketch.</desc>
+    <g id="ic_website_play" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic_website_codeopen">
+            <rect id="矩形" opacity="0.200000003" x="0" y="0" width="14" height="14"></rect>
+            <path d="M4.04847409,0.986731471 L12.1173676,6.15811687 C12.5823504,6.45612612 12.7177091,7.07465332 12.4196999,7.53963604 C12.3418961,7.66103297 12.2387598,7.76416866 12.1173623,7.84197166 L4.0484688,13.0132856 C3.5834842,13.3112919 2.96495785,13.1759293 2.66695153,12.7109447 C2.56373971,12.5499014 2.50888062,12.3626353 2.50888062,12.1713565 L2.50888062,1.82865717 C2.50888062,1.27637242 2.95659587,0.828657172 3.50888062,0.828657172 C3.70016162,0.828657172 3.88742969,0.883517489 4.04847409,0.986731471 Z" id="路径-17" stroke="#6E6E6E" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

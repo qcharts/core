@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>ic/website/direction-up_gray100%_hover_14px</title>
+    <desc>Created with Sketch.</desc>
+    <g id="ic/website/direction-up_gray100%_hover_14px" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic/官网_导航栏_展开" transform="translate(7.000000, 7.000000) scale(1, -1) translate(-7.000000, -7.000000) " fill-rule="nonzero">
+            <rect id="Rectangle-5" opacity="0.200000003" x="0" y="0" width="14" height="14"></rect>
+            <path d="M2.92426407,5.07573593 C2.68994949,4.84142136 2.31005051,4.84142136 2.07573593,5.07573593 C1.84142136,5.31005051 1.84142136,5.68994949 2.07573593,5.92426407 L7,10.8485281 L11.9242641,5.92426407 C12.1585786,5.68994949 12.1585786,5.31005051 11.9242641,5.07573593 C11.6899495,4.84142136 11.3100505,4.84142136 11.0757359,5.07573593 L7,9.15147186 L2.92426407,5.07573593 Z" id="路径" fill="#9AA0AC"></path>
+        </g>
+    </g>
+</svg>
