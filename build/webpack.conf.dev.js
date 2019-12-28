@@ -6,14 +6,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const common = require('./webpack.conf.common')
 
 module.exports = merge(common, {
+  mode: 'development',
   entry: {
-    app: path.resolve(__dirname, '../demo/'),
+    app: path.resolve(__dirname, '../website/'),
     qcharts: path.resolve(__dirname, '../src/')
   },
   devServer: {
-    contentBase: path.resolve(__dirname, '../src/'),
-    compress: true,
-    hot: false,
+    //contentBase: path.resolve(__dirname, '../src/'),
+    //compress: true,
+    hot: true,
     inline: true,
     quiet: true,
     open: true,
@@ -36,37 +37,36 @@ module.exports = merge(common, {
       //   include: path.resolve(__dirname, '../src'),
       //   exclude: /node_modules/
       // },
-
       {
         test: /\.(s)?css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
-      },
-
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 3000,
-          name: 'static/img/[name].[ext]?[hash]'
-        }
-      },
-
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 3000,
-          name: 'static/fonts/[name].[hash].[ext]'
-        }
+        use: ['style-loader', 'css-loader']
       }
+
+      // {
+      //   test: /\.(png|jpg|gif|svg)$/,
+      //   loader: 'url-loader',
+      //   options: {
+      //     limit: 3000,
+      //     name: 'static/img/[name].[ext]?[hash]'
+      //   }
+      // },
+
+      // {
+      //   test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      //   loader: 'url-loader',
+      //   options: {
+      //     limit: 3000,
+      //     name: 'static/fonts/[name].[hash].[ext]'
+      //   }
+      // }
     ]
   },
   plugins: [
     // new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    //new webpack.HotModuleReplacementPlugin(),
     new webpack.WatchIgnorePlugin([/\.d\.ts$/]),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../demo/index.html'),
+      template: path.resolve(__dirname, '../website/index.html'),
       filename: 'index.html'
     })
   ]

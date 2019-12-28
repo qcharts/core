@@ -1,38 +1,33 @@
 const os = require('os')
 const path = require('path')
-const Happypack = require('happypack')
-const threadPoll = Happypack.ThreadPool({ size: os.cpus().length })
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-
 const { VueLoaderPlugin } = require('vue-loader')
 const VueMdLoader = require('./vue-md-loader')
 
-const isProd = process.env.NODE_ENV === 'production'
-
 module.exports = {
-  mode: isProd ? 'production' : 'development',
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: 'happypack/loader?id=babel',
-        include: [path.resolve(__dirname, '../demo/'), path.resolve(__dirname, '../src/')],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          }
+        ],
+        include: [path.resolve(__dirname, '../website/'), path.resolve(__dirname, '../src/')],
         exclude: [/node_modules/]
       },
-
       {
         test: /\.vue$/,
         use: [
           {
-            loader: 'vue-loader',
-            options: {
-              loaders: {
-                js: 'happypack/loader?id=babel'
-              }
-            }
+            loader: 'vue-loader'
           }
         ],
-        include: path.resolve(__dirname, '../demo'),
+        include: path.resolve(__dirname, '../website'),
         exclude: /node_modules/
       },
 
@@ -40,16 +35,11 @@ module.exports = {
         test: /\.md$/,
         use: [
           {
-            loader: 'vue-loader',
-            options: {
-              loaders: {
-                js: 'happypack/loader?id=babel'
-              }
-            }
+            loader: 'vue-md-loader'
           },
           VueMdLoader
         ],
-        include: path.resolve(__dirname, '../demo'),
+        include: path.resolve(__dirname, '../website'),
         exclude: /node_modules/
       }
     ]
@@ -67,16 +57,6 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new Happypack({
-      id: 'babel',
-      loaders: [
-        {
-          loader: 'babel-loader'
-        }
-      ],
-      threadPool: threadPoll,
-      verbose: false
-    }),
     new ProgressBarPlugin({
       format: 'build [:bar] :percent (:elapsed seconds)',
       clear: false,

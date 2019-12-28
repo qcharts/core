@@ -1,6 +1,7 @@
-import { vnode } from 'vnode'
+import { vnode } from '@qcharts/vnode'
 console.log(vnode)
-let qcharts = {
-  version: 3.0
+const qcharts = {
+  version: 2.0
 }
-export { qcharts }
+export { qcharts, vnode }
+export default qcharts
