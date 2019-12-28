@@ -1,10 +1,10 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const TerserPlugin = require('terser-webpack-plugin')
-// const BundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const common = require('./webpack.conf.common')
 
 module.exports = merge(common, {
+  mode: 'production',
   entry: {
     index: path.join(__dirname, '../src/index.js')
   },

@@ -114,8 +114,8 @@ export default {
           : 'https://s4.ssl.qhres.com/static/eee4270b9365f11e.js'
       const spritejsSrc =
         process.env.NODE_ENV === 'development'
-          ? 'https://lib.baomitu.com/spritejs/2.29.4/spritejs.min.js'
-          : 'https://lib.baomitu.com/spritejs/2.29.4/spritejs.min.js'
+          ? 'https://unpkg.com/spritejs@3/dist/spritejs.min.js'
+          : 'https://unpkg.com/spritejs@3/dist/spritejs.min.js'
 
       const iframe = oDemo.querySelector('iframe')
       iframe.contentWindow.document.write(

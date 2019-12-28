@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const common = require('./webpack.conf.common')
 
 module.exports = merge(common, {
+  mode: 'production',
   entry: path.resolve(__dirname, '../demo/'),
   output: {
     path: path.join(__dirname, '../docs'),
