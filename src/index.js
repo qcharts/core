@@ -1,7 +1,7 @@
 import { vnode } from '@qcharts/vnode'
+import { dataset } from '@qcharts/dataset'
 console.log(vnode)
 const qcharts = {
-  version: 2.0
+  version: 3.0
 }
-export { qcharts, vnode }
-export default qcharts
+export { qcharts, vnode, dataset }

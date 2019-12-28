@@ -47,19 +47,19 @@ export default {
   },
 
   watch: {
-    $route () {
+    $route() {
       this.showMenu = false
     }
   },
 
-  data () {
+  data() {
     return {
       showMenu: false
     }
   },
 
   methods: {
-    toggleShowMenu () {
+    toggleShowMenu() {
       this.showMenu = !this.showMenu
     }
   }
@@ -76,10 +76,9 @@ header {
   box-shadow: 0 2px 8px rgba(229, 229, 229, 0.5);
   nav {
     position: relative;
-    width: 100%;
     height: 100%;
     padding: 0;
-
+    width: 100%;
     display: flex;
     flex-wrap: nowrap;
 
@@ -105,7 +104,7 @@ header {
       justify-content: space-between;
       flex-wrap: nowrap;
       align-items: center;
-      width: 100%;
+      flex-grow: 1;
     }
 
     ul {

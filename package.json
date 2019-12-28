@@ -14,6 +14,7 @@
     "prepublishOnly": "npm run babel && npm run build:chart"
   },
   "dependencies": {
+    "@qcharts/dataset": "^0.0.1",
     "@qcharts/vnode": "^0.0.1"
   },
   "devDependencies": {
@@ -56,9 +57,10 @@
     "husky": "^1.3.0",
     "markdown-it": "^8.4.2",
     "markdown-it-container": "^2.0.0",
-    "mkdirp": "^0.5.1",
+    "node-sass": "^4.13.0",
     "progress-bar-webpack-plugin": "^1.12.1",
     "resize-observer-polyfill": "^1.5.1",
+    "sass-loader": "^8.0.0",
     "scapegoat": "^1.0.0",
     "split.js": "^1.5.10",
     "style-loader": "^0.23.1",

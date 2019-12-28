@@ -1,7 +1,6 @@
 const { escape } = require('scapegoat')
 // const MarkdownIt = require('markdown-it')
 // const md = new MarkdownIt()
-
 module.exports = {
   loader: 'vue-md-loader',
   options: {
@@ -20,10 +19,7 @@ module.exports = {
               tip = tip.replace('demo', '').trim()
 
               let source = tokens[idx + 1].content
-
-              return `<block-demo tip="${
-                /* md.render(tip) */ tip
-              }" source="${escape(source)}">`
+              return `<block-demo tip="${/* md.render(tip) */ tip}" source="${escape(source)}">`
             }
             return '</block-demo>'
           }
@@ -32,9 +28,11 @@ module.exports = {
     ],
     afterProcess(vueFile) {
       // 移除注释
-      return vueFile
-        // .replace(/<span class="hljs-comment">([\S\s]*?)<\/span>/gi, '')
-        .trim()
+      return (
+        vueFile
+          // .replace(/<span class="hljs-comment">([\S\s]*?)<\/span>/gi, '')
+          .trim()
+      )
     },
     afterProcessLiveTemplate(template) {
       return `<div class="block-demo__live">${template}</div>`

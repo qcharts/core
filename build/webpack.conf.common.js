@@ -35,7 +35,7 @@ module.exports = {
         test: /\.md$/,
         use: [
           {
-            loader: 'vue-md-loader'
+            loader: 'vue-loader'
           },
           VueMdLoader
         ],
