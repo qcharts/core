@@ -63,10 +63,5 @@ class Base extends Node {
       return this
     }
   }
-  resolveRef = ref => {
-    return el => {
-      this.$refs[ref] = el
-    }
-  }
 }
 export default Base
