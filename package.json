@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@qcharts/dataset": "^0.0.1",
-    "@qcharts/vnode": "^0.0.1"
+    "@qcharts/vnode": "^0.0.1",
+    "filter-clone": "0.0.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

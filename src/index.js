@@ -5,3 +5,4 @@ const qcharts = {
   version: 3.1
 }
 export { qcharts, vnode, dataset }
+export default qcharts
