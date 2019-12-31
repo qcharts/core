@@ -31,4 +31,4 @@ function jsType(value) {
   }
   return str
 }
-export { deepObjectMerge, emptyObjectj, jsType }
+export { deepObjectMerge, emptyObject, jsType }

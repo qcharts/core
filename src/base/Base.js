@@ -6,12 +6,12 @@ class Base extends Node {
     eventsMixin(this)
     let defaultAttrs = this.getDefaultAttrs()
     this.attr(deepObjectMerge(emptyObject(), defaultAttrs, attrs))
-    this.dispatchEvent(lifeCycle.beforeCreate, {})
+    this.dispatchEvent(lifeCycle.beforeCreate, emptyObject())
     this.$group = new Group()
     this.__data__ = null
     this.__vnode__ = null
     this.__isRendered__ = false
-    this.emit(this.lifecycle.created, this)
+    this.dispatchEvent(lifeCycle.beforeCreate, emptyObject())
     this._colors = []
     this.$refs = emptyObject()
   }
