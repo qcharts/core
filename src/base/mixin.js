@@ -8,9 +8,9 @@ const lifeCycle = {
   beforeDestroy: 'beforeDestroy', // 图表卸载前
   destroyed: 'destroyed' // 图表卸载
 }
-function eventsMixin(component) {
-  component.on = component.prototype.addEventListener
-  component.off = component.prototype.removeEventListener
+function mixin(component) {
+  component.on = component.addEventListener
+  component.off = component.removeEventListener
   component.once = function(type, fn) {
     const listener = (...args) => {
       fn.apply(this, args)
@@ -20,4 +20,4 @@ function eventsMixin(component) {
   }
 }
 
-export { lifeCycle, eventsMixin }
+export { lifeCycle, mixin }

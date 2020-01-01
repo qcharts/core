@@ -1,19 +1,49 @@
 import { Node, Group } from 'spritejs'
-import { lifeCycle, eventsMixin } from 'mixin'
+import { lifeCycle, mixin } from './mixin'
 import { emptyObject, deepObjectMerge, jsType } from '../util'
+import filterClone from 'filter-clone'
+import Dataset from '@qcharts/dataset'
 class Base extends Node {
   constructor(attrs = {}) {
-    eventsMixin(this)
+    super()
+    mixin(this)
     let defaultAttrs = this.getDefaultAttrs()
     this.attr(deepObjectMerge(emptyObject(), defaultAttrs, attrs))
     this.dispatchEvent(lifeCycle.beforeCreate, emptyObject())
-    this.$group = new Group()
+    this.container = new Group()
     this.__data__ = null
     this.__vnode__ = null
-    this.__isRendered__ = false
+    this.__isCreated__ = false
     this.dispatchEvent(lifeCycle.beforeCreate, emptyObject())
-    this._colors = []
+    this.__colors = []
     this.$refs = emptyObject()
+  }
+  source(data, options) {
+    let dataset = data
+    if (!data instanceof Dataset) {
+      dataset = new Dataset(data, options)
+    }
+    this.dataset = dataset
+    return this
+  }
+  beforeRender() {}
+  beforeUpdate() {}
+  render() {}
+  update() {}
+  rendered() {}
+  transProps() {
+    let { animation, clientRect, layer = 'default' } = this.attr()
+    //动画数据转换
+    if (jsType(animation) === 'boolean') {
+      animation = { use: animation ? true : false }
+    }
+    //处理layer支持多layer
+    this.layer = this.scene.layer(layer)
+    //计算布局数据
+    clientRect = filterClone(clientRect, ['left', 'top', 'right', 'bottom', 'width', 'height'])
+
+    let defaultAttrs = this.getDefaultAttrs()
+    this.attr(deepObjectMerge(defaultAttrs, { animation }))
   }
   getDefaultAttrs() {
     let attrs = {
@@ -41,7 +71,7 @@ class Base extends Node {
   }
   attr(...args) {
     //属性设置
-    super.attr(...args)
+    //super.attr(...args)
   }
   style(type, style) {
     //样式设置，样式用attr逻辑存储，添加@符号
