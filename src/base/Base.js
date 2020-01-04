@@ -1,51 +1,29 @@
 import { Node, Group } from 'spritejs'
 import { lifeCycle, mixin } from './mixin'
 import { emptyObject, deepObjectMerge, jsType, getDistancePx } from '../util'
+import { render } from '@qcharts/vnode'
 import filterClone from 'filter-clone'
 import Dataset from '@qcharts/dataset'
 class Base extends Node {
-  constructor(attrs = {}) {
+  constructor(attrs) {
     super()
-    mixin(this)
-    let defaultAttrs = this.getDefaultAttrs()
-    this.attr(deepObjectMerge(emptyObject(), defaultAttrs, attrs))
     this.dispatchEvent(lifeCycle.beforeCreate, emptyObject())
-    this.container = new Group()
+    mixin(this)
+    this.__attrs = emptyObject()
     this.__data__ = null
     this.__vnode__ = null
     this.__isCreated__ = false
-    this.dispatchEvent(lifeCycle.beforeCreate, emptyObject())
     this.__colors = []
+    let defaultAttrs = this.defaultAttrs()
+    let mergeAttrs = deepObjectMerge(emptyObject(), defaultAttrs, attrs)
+    this.attr(mergeAttrs)
+    this.container = new Group()
     //渲染时的数据
-    this.renderAttrs = emptyObject()
     this.$refs = emptyObject()
   }
-  source(data, options) {
-    let dataset = data
-    if (!data instanceof Dataset) {
-      dataset = new Dataset(data, options)
-    }
-    this.dataset = dataset
-    return this
-  }
-  created() {
-    let dataset = this.dataset || this.chart.dataset
-    if (dataset) {
-      this.transProps()
-      let renderData = this.beforeRender()
-      this.render(renderData)
-    }
-  }
-  beforeRender() {
-    this.transProps()
-  }
-  beforeUpdate() {}
-  render() {}
-  update() {}
-  rendered() {}
-  transProps() {
-    //部分原始属性需要在实际绘图的时候需要转换，在此处处理
-    let attrs = filterClone(this.attr())
+  get renderAttrs() {
+    //attrs转换
+    let attrs = filterClone(deepObjectMerge(this.defaultAttrs(), this.attr()))
     let { animation, clientRect, layer = 'default' } = attrs
     //动画数据转换
     if (jsType(animation) === 'boolean') {
@@ -56,24 +34,60 @@ class Base extends Node {
     layer.append(this.container)
     let { width, height } = layer.canvas.getBoundingClientRect()
     //计算布局数据
-    clientRect = filterClone(clientRect, ['left', 'top', 'right', 'bottom', 'width', 'height'])
     for (let key in clientRect) {
       if (['left', 'right', 'width'].indexOf(key) !== -1) {
         clientRect[key] = getDistancePx(clientRect[key], width)
-      } else {
+      } else if (['top', 'bottom', 'height'].indexOf(key) !== -1) {
         clientRect[key] = getDistancePx(clientRect[key], height)
       }
     }
-    this.renderAttrs = deepObjectMerge(this.getDefaultAttrs(), { animation, clientRect })
-    return this.renderAttrs
+    if (clientRect.width === undefined) {
+      clientRect.width = width - clientRect.left - clientRect.right
+    } else {
+      clientRect.right = width - clientRect.left - clientRect.width
+    }
+    if (clientRect.height === undefined) {
+      clientRect.height = height - clientRect.top - clientRect.bottom
+    } else {
+      clientRect.bottom = height - clientRect.top - clientRect.height
+    }
+    return attrs
   }
-  getDefaultAttrs() {
+  source(data, options) {
+    let dataset = data
+    if (!data instanceof Dataset) {
+      dataset = new Dataset(data, options)
+    }
+    this.dataset = dataset
+    return this
+  }
+  created() {
+    this.dataset = this.dataset || this.chart.dataset
+    this.dispatchEvent(lifeCycle.created, emptyObject())
+    console.log('abc')
+    this.__vnode__ = this.render(this.renderData)
+    render(this.__vnode__.children, this.container)
+    this.dispatchEvent(lifeCycle.beforeRender, emptyObject())
+    this.layer.append(this.container)
+    this.dispatchEvent(lifeCycle.rendered, emptyObject())
+  }
+  render() {
+    console.warn('this function must be rewrited')
+  }
+  beforeUpdate() {
+    this.dispatchEvent(lifeCycle.beforeUpdate, emptyObject())
+    this.render(this.renderData)
+    this.dispatchEvent(lifeCycle.updated, emptyObject())
+  }
+  updated() {}
+  mounted() {}
+  defaultAttrs() {
     let attrs = {
       //动画类型
       animation: {
         use: true,
         duration: 300,
-        easing: 'line'
+        easing: 'linear'
       },
       //位置布局信息
       clientRect: {
@@ -81,8 +95,8 @@ class Base extends Node {
         top: '10%',
         right: '10%',
         bottom: '10%',
-        width: '80%',
-        height: '80%'
+        width: undefined,
+        height: undefined
       },
       //透明度
       opacity: 1,
@@ -91,9 +105,17 @@ class Base extends Node {
     }
     return attrs
   }
-  attr(...args) {
+  attr(name, val) {
     //属性设置
-    return super.attr(...args)
+    if (jsType(name) === 'object') {
+      for (let key in name) {
+        this.attr(key, name[key])
+      }
+    } else if (name !== undefined) {
+      this.__attrs[name] = val
+    } else if (name === undefined) {
+      return this.__attrs
+    }
   }
   style(type, style) {
     //样式设置，样式用attr逻辑存储，添加@符号

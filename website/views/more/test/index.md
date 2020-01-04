@@ -26,7 +26,7 @@ chart.source(data, {
   text: 'date'
 })
 
-const line = new Line({ smooth: true, splitNumber: 5 })
+const line = new Line({ clientRect: { height: '50%' }, smooth: true, splitNumber: 5 })
 
 chart.append([line])
 ```
