@@ -9,9 +9,8 @@ class Line extends Base {
   }
   update() {}
   render(attrs) {
-    const { opacity } = this.attr()
     return (
-      <Group opacity={opacity} size={[100, 100]} bgcolor={'#f00'} clipOverflow={false}>
+      <Group pos={[100, 100]} size={[100, 100]} bgcolor={'#f00'} clipOverflow={false}>
         {console.log('abc')}
       </Group>
     )

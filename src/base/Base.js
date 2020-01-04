@@ -7,7 +7,7 @@ import Dataset from '@qcharts/dataset'
 class Base extends Node {
   constructor(attrs) {
     super()
-    this.dispatchEvent(lifeCycle.beforeCreate, emptyObject())
+    this.dispatchEvent(lifeCycle.beforeCreate)
     mixin(this)
     this.__attrs = emptyObject()
     this.__data__ = null
@@ -18,21 +18,23 @@ class Base extends Node {
     let mergeAttrs = deepObjectMerge(emptyObject(), defaultAttrs, attrs)
     this.attr(mergeAttrs)
     this.container = new Group()
+    this.container.attr({ clipOverflow: false })
     //渲染时的数据
     this.$refs = emptyObject()
+  }
+  get layer() {
+    return this.scene.layer(this.attr('layer') || 'default')
   }
   get renderAttrs() {
     //attrs转换
     let attrs = filterClone(deepObjectMerge(this.defaultAttrs(), this.attr()))
-    let { animation, clientRect, layer = 'default' } = attrs
+    let { animation, clientRect } = attrs
     //动画数据转换
     if (jsType(animation) === 'boolean') {
       animation = { use: animation ? true : false }
     }
     //处理layer支持多layer
-    layer = this.scene.layer(layer)
-    layer.append(this.container)
-    let { width, height } = layer.canvas.getBoundingClientRect()
+    let { width, height } = this.layer.canvas.getBoundingClientRect()
     //计算布局数据
     for (let key in clientRect) {
       if (['left', 'right', 'width'].indexOf(key) !== -1) {
@@ -63,24 +65,28 @@ class Base extends Node {
   }
   created() {
     this.dataset = this.dataset || this.chart.dataset
-    this.dispatchEvent(lifeCycle.created, emptyObject())
-    console.log('abc')
-    this.__vnode__ = this.render(this.renderData)
-    render(this.__vnode__.children, this.container)
-    this.dispatchEvent(lifeCycle.beforeRender, emptyObject())
+    this.dispatchEvent(lifeCycle.created)
+    this.__vnode__ = this.render(this.beforeRender())
+    render([this.__vnode__], this.container)
+    this.dispatchEvent(lifeCycle.beforeRender)
     this.layer.append(this.container)
-    this.dispatchEvent(lifeCycle.rendered, emptyObject())
+    this.dispatchEvent(lifeCycle.rendered)
+  }
+  beforeRender() {
+    return this.renderAttrs
   }
   render() {
     console.warn('this function must be rewrited')
   }
   beforeUpdate() {
-    this.dispatchEvent(lifeCycle.beforeUpdate, emptyObject())
+    this.dispatchEvent(lifeCycle.beforeUpdate)
     this.render(this.renderData)
-    this.dispatchEvent(lifeCycle.updated, emptyObject())
+    this.dispatchEvent(lifeCycle.updated)
   }
   updated() {}
-  mounted() {}
+  dispatchEvent(event, obj = emptyObject()) {
+    super.dispatchEvent(event, obj)
+  }
   defaultAttrs() {
     let attrs = {
       //动画类型
@@ -101,7 +107,8 @@ class Base extends Node {
       //透明度
       opacity: 1,
       //数据布局排列
-      layoutBy: 'row'
+      layoutBy: 'row',
+      layer: 'default'
     }
     return attrs
   }
