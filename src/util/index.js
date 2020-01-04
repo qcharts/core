@@ -16,10 +16,12 @@ function deepObjectMerge(...args) {
 }
 
 function emptyObject() {
+  //创建空对象
   return Object.create(null)
 }
 
 function jsType(value) {
+  //判断js数据类型
   const str = typeof value
   if (str === 'object') {
     return value === null
@@ -31,9 +33,10 @@ function jsType(value) {
   }
   return str
 }
-function throttle(fn, interval = 16) {
+function throttle(fn, interval = 16, immediately = false) {
+  //截流函数
   let timer = null
-  let firstTime = true
+  let firstTime = immediately
   return function(...args) {
     if (firstTime) {
       // 第一次加载
@@ -51,4 +54,10 @@ function throttle(fn, interval = 16) {
     }, interval)
   }
 }
-export { deepObjectMerge, emptyObject, jsType, throttle }
+function getDistancePx(num, distance) {
+  if (jsType(num) === 'string' && num.match(/%$/)) {
+    return (Number(num.substring(0, num.indexOf('%'))) / 100) * distance
+  }
+  return num
+}
+export { deepObjectMerge, emptyObject, jsType, throttle, getDistancePx }
