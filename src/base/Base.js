@@ -57,7 +57,7 @@ class Base extends Node {
   }
   source(data, options) {
     let dataset = data
-    if (!data instanceof Dataset) {
+    if (!(data instanceof Dataset)) {
       dataset = new Dataset(data, options)
     }
     this.dataset = dataset

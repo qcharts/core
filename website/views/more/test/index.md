@@ -4,14 +4,14 @@
 
 ```javascript
 const data = [
-  { date: '05-01', catgory: '图例一', sales: 15.2 },
-  { date: '05-02', catgory: '图例一', sales: 39.2 },
-  { date: '05-03', catgory: '图例一', sales: 31.2 },
-  { date: '05-04', catgory: '图例一', sales: 65.2 },
-  { date: '05-05', catgory: '图例一', sales: 55.2 },
-  { date: '05-06', catgory: '图例一', sales: 75.2 },
-  { date: '05-07', catgory: '图例一', sales: 95.2 },
-  { date: '05-08', catgory: '图例一', sales: 100 }
+  { date: '05-01', category: '图例一', sales: 15.2 },
+  { date: '05-02', category: '图例一', sales: 39.2 },
+  { date: '05-03', category: '图例一', sales: 31.2 },
+  { date: '05-04', category: '图例一', sales: 65.2 },
+  { date: '05-05', category: '图例一', sales: 55.2 },
+  { date: '05-06', category: '图例一', sales: 75.2 },
+  { date: '05-07', category: '图例一', sales: 95.2 },
+  { date: '05-08', category: '图例一', sales: 100 }
 ]
 
 const { Chart, Line } = qcharts
