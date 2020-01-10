@@ -1,7 +1,7 @@
 import { Node, Group } from 'spritejs'
 import { lifeCycle, mixin } from './mixin'
 import { emptyObject, deepObjectMerge, jsType, getDistancePx } from '../util'
-import { render } from '@qcharts/vnode'
+import { patch, diff } from '@qcharts/vnode'
 import filterClone from 'filter-clone'
 import Dataset from '@qcharts/dataset'
 class Base extends Node {
@@ -14,11 +14,10 @@ class Base extends Node {
     this.__vnode__ = null
     this.__isCreated__ = false
     this.__colors = []
+    this.dataset = null
     let defaultAttrs = this.defaultAttrs()
     let mergeAttrs = deepObjectMerge(emptyObject(), defaultAttrs, attrs)
     this.attr(mergeAttrs)
-    this.container = new Group()
-    this.container.attr({ clipOverflow: false })
     //渲染时的数据
     this.$refs = emptyObject()
   }
@@ -58,29 +57,46 @@ class Base extends Node {
   source(data, options) {
     let dataset = data
     if (!(data instanceof Dataset)) {
-      dataset = new Dataset(data, options)
+      let opts = options
+      if (this.dataset) {
+        opts = Object.assign({}, options, this.dataset.option)
+      }
+      dataset = new Dataset(data, opts)
+    }
+    if (this.dataset && this.__isCreated__) {
+      //如果以前存在，则更新
+      this.update()
     }
     this.dataset = dataset
     return this
   }
   created() {
+    //初始化创建的时候执行
     this.dataset = this.dataset || this.chart.dataset
     this.dispatchEvent(lifeCycle.created)
     this.__vnode__ = this.render(this.beforeRender())
-    render([this.__vnode__], this.container)
+    const patches = diff(null, this.__vnode__)
     this.dispatchEvent(lifeCycle.beforeRender)
-    this.layer.append(this.container)
+    patch(this.parent || this.layer, patches)
     this.dispatchEvent(lifeCycle.rendered)
   }
   beforeRender() {
+    //图表初始化准备数据
     return this.renderAttrs
   }
   render() {
     console.warn('this function must be rewrited')
   }
   beforeUpdate() {
+    return this.renderAttrs
+  }
+  update() {
+    //图表更新准备数据
     this.dispatchEvent(lifeCycle.beforeUpdate)
-    this.render(this.renderData)
+    let vnode = this.render(this.beforeUpdate())
+    const patches = diff(this.__vnode__, vnode)
+    patch(this.parent || this.layer, patches)
+    this.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)
   }
   updated() {}
@@ -106,8 +122,6 @@ class Base extends Node {
       },
       //透明度
       opacity: 1,
-      //数据布局排列
-      layoutBy: 'row',
       layer: 'default'
     }
     return attrs
