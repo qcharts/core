@@ -13,16 +13,20 @@ class Base extends Node {
     this.__data__ = null
     this.__vnode__ = null
     this.__isCreated__ = false
-    this.__colors = []
+    this.__colors = null
+    this.__refs = emptyObject()
     this.dataset = null
     let defaultAttrs = this.defaultAttrs()
     let mergeAttrs = deepObjectMerge(emptyObject(), defaultAttrs, attrs)
     this.attr(mergeAttrs)
     //渲染时的数据
-    this.$refs = emptyObject()
+    //this.$refs = emptyObject()
   }
   get layer() {
     return this.scene.layer(this.attr('layer') || 'default')
+  }
+  get $refs() {
+    return this.__refs
   }
   get renderAttrs() {
     //attrs转换
@@ -52,14 +56,21 @@ class Base extends Node {
     } else {
       clientRect.bottom = height - clientRect.top - clientRect.height
     }
+    attrs.colors = this.__colors || this.chart.__colors
     return attrs
+  }
+  color(arr) {
+    this.__colors = arr
+  }
+  getData() {
+    return this.dataset
   }
   source(data, options) {
     let dataset = data
     if (!(data instanceof Dataset)) {
       let opts = options
       if (this.dataset) {
-        opts = Object.assign({}, options, this.dataset.option)
+        opts = deepObjectMerge({}, options, this.dataset.option)
       }
       dataset = new Dataset(data, opts)
     }
@@ -76,9 +87,11 @@ class Base extends Node {
     this.dispatchEvent(lifeCycle.created)
     this.__vnode__ = this.render(this.beforeRender())
     const patches = diff(null, this.__vnode__)
+    console.log('vnode')
     this.dispatchEvent(lifeCycle.beforeRender)
-    patch(this.parent || this.layer, patches)
+    patch.bind(this)(this.parent || this.layer, patches)
     this.dispatchEvent(lifeCycle.rendered)
+    this.rendered()
   }
   beforeRender() {
     //图表初始化准备数据
@@ -95,7 +108,7 @@ class Base extends Node {
     this.dispatchEvent(lifeCycle.beforeUpdate)
     let vnode = this.render(this.beforeUpdate())
     const patches = diff(this.__vnode__, vnode)
-    patch(this.parent || this.layer, patches)
+    patch.bind(this)(this.parent || this.layer, patches)
     this.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)
   }
@@ -137,6 +150,10 @@ class Base extends Node {
     } else if (name === undefined) {
       return this.__attrs
     }
+  }
+  addRef(ref, el) {
+    this.__refs[ref] = el
+    //在vnode中调用，存储到this.__refs中
   }
   style(type, style) {
     //样式设置，样式用attr逻辑存储，添加@符号
