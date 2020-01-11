@@ -122,6 +122,7 @@ class Base extends Node {
       animation: {
         use: true,
         duration: 300,
+        useTween: true,
         easing: 'linear'
       },
       //位置布局信息
