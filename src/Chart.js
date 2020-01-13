@@ -1,10 +1,9 @@
 import Base from './base/Base'
-import { jsType, emptyObject } from './util'
+import { jsType, emptyObject, throttle } from '@qcharts/utils'
 import platform from './base/platform'
 import BaseVisual from './base/BaseVisual'
 import BasePlugin from './base/BasePlugin'
 import { Scene } from 'spritejs'
-import { throttle } from './util'
 class Chart extends Base {
   constructor(attr) {
     super()

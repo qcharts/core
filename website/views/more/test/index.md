@@ -35,7 +35,7 @@ chart.source(data, {
 })
 let newData = chart.dataset.selectRows(['图例一'])
 console.log(newData)
-const line = new Line({ clientRect: { height: '50%' }, smooth: true, splitNumber: 5 })
+const line = new Line({ smooth: true, splitNumber: 5 })
 
 chart.append([line])
 chart.source(data, {

@@ -1,6 +1,6 @@
 import { Node, Group } from 'spritejs'
 import { lifeCycle, mixin } from './mixin'
-import { emptyObject, deepObjectMerge, jsType, getDistancePx } from '../util'
+import { emptyObject, deepObjectMerge, jsType, getDistancePx } from '@qcharts/utils'
 import { patch, diff } from '@qcharts/vnode'
 import filterClone from 'filter-clone'
 import Dataset from '@qcharts/dataset'
@@ -13,7 +13,6 @@ class Base extends Node {
     this.__data__ = null
     this.__vnode__ = null
     this.__isCreated__ = false
-    this.__colors = null
     this.__refs = emptyObject()
     this.dataset = null
     let defaultAttrs = this.defaultAttrs()
@@ -59,9 +58,6 @@ class Base extends Node {
     attrs.colors = this.__colors || this.chart.__colors
     return attrs
   }
-  color(arr) {
-    this.__colors = arr
-  }
   getData() {
     return this.dataset
   }
@@ -87,7 +83,6 @@ class Base extends Node {
     this.dispatchEvent(lifeCycle.created)
     this.__vnode__ = this.render(this.beforeRender())
     const patches = diff(null, this.__vnode__)
-    console.log('vnode')
     this.dispatchEvent(lifeCycle.beforeRender)
     patch.bind(this)(this.parent || this.layer, patches)
     this.dispatchEvent(lifeCycle.rendered)
@@ -136,7 +131,8 @@ class Base extends Node {
       },
       //透明度
       opacity: 1,
-      layer: 'default'
+      layer: 'default',
+      layoutBy: 'rows' //按照哪个数据布局 ['rows','cols']
     }
     return attrs
   }
