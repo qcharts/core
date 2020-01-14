@@ -55,7 +55,7 @@ class Base extends Node {
     } else {
       clientRect.bottom = height - clientRect.top - clientRect.height
     }
-    attrs.colors = this.__colors || this.chart.__colors
+    attrs.colors = this.theme.colors
     return attrs
   }
   getData() {
@@ -142,6 +142,9 @@ class Base extends Node {
       for (let key in name) {
         this.attr(key, name[key])
       }
+    } else if (val === undefined) {
+      //获取属性
+      return this.__attrs[name]
     } else if (name !== undefined) {
       this.__attrs[name] = val
     } else if (name === undefined) {

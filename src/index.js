@@ -1,6 +1,6 @@
 import { h } from '@qcharts/vnode'
 import Dataset from '@qcharts/dataset'
-import Line from './visuals/Line'
+import Line from './visuals/Line/index'
 import platform from './base/platform'
 import Chart from './Chart'
 import theme from './theme/default'
