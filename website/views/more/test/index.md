@@ -34,7 +34,7 @@ chart.source(data, {
   text: 'date'
 })
 let newData = chart.dataset.selectRows(['图例一'])
-console.log(newData)
+// console.log(newData)
 const line = new Line({ smooth: true, splitNumber: 5 })
 
 chart.append([line])

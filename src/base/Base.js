@@ -66,7 +66,7 @@ class Base extends Node {
     if (!(data instanceof Dataset)) {
       let opts = options
       if (this.dataset) {
-        opts = deepObjectMerge({}, options, this.dataset.option)
+        opts = deepObjectMerge({}, this.dataset.option, options)
       }
       dataset = new Dataset(data, opts)
     }

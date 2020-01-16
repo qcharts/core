@@ -1,5 +1,6 @@
 import Base from '../../base/BaseVisual'
 import { Group, Label, Polyline } from 'spritejs'
+import { deepObjectMerge } from '@qcharts/utils'
 import layout from './layout'
 class Line extends Base {
   constructor(attrs) {
@@ -21,6 +22,12 @@ class Line extends Base {
   }
   rendered() {
     console.log(this.$refs['wrap'])
+  }
+  defaultAttrs() {
+    let attrs = deepObjectMerge({}, super.defaultAttrs(), {
+      stack: false
+    })
+    return attrs
   }
   render(lines) {
     //console.log(renderAttrs, data)
