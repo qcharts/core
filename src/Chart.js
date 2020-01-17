@@ -24,7 +24,7 @@ class Chart extends Base {
         child.created()
         this.dataset.addDep(child)
       })
-      this.__isCreated__ = true
+      this.__store.__isCreated__ = true
       this.dispatchEvent('updated', emptyObject())
     })
   }

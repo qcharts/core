@@ -9,27 +9,29 @@ class Base extends Node {
     super()
     this.dispatchEvent(lifeCycle.beforeCreate)
     mixin(this)
-    this.__attrs = emptyObject()
-    this.__data__ = null
-    this.__vnode__ = null
-    this.__isCreated__ = false
-    this.__refs = emptyObject()
-    this.dataset = null
-    let defaultAttrs = this.defaultAttrs()
-    let mergeAttrs = deepObjectMerge(emptyObject(), defaultAttrs, attrs)
-    this.attr(mergeAttrs)
+    this['__store'] = emptyObject()
+    let store = this['__store']
+    store.__attrs = emptyObject()
+    store.__vnode__ = null
+    store.__isCreated__ = false
+    store.__refs = emptyObject()
+    store.dataset = null
+    this.attr(attrs)
     //渲染时的数据
     //this.$refs = emptyObject()
+  }
+  get store() {
+    return this['__store']
   }
   get layer() {
     return this.scene.layer(this.attr('layer') || 'default')
   }
   get $refs() {
-    return this.__refs
+    return this['__store'].__refs
   }
   get renderAttrs() {
     //attrs转换
-    let attrs = filterClone(deepObjectMerge(this.defaultAttrs(), this.attr()))
+    let attrs = filterClone(deepObjectMerge(this.baseAttrs(), this.defaultAttrs(), this.attr()))
     let { animation, clientRect } = attrs
     //动画数据转换
     if (jsType(animation) === 'boolean') {
@@ -58,31 +60,33 @@ class Base extends Node {
     attrs.colors = this.theme.colors
     return attrs
   }
-  getData() {
-    return this.dataset
+  get dataset() {
+    console.log('abc')
+    return this['__store'].dataset || (this.chart && this.chart.dataset)
   }
   source(data, options) {
     let dataset = data
+    let store = this['__store']
     if (!(data instanceof Dataset)) {
       let opts = options
-      if (this.dataset) {
-        opts = deepObjectMerge({}, this.dataset.option, options)
+      if (store.dataset) {
+        opts = deepObjectMerge({}, store.dataset.option, options)
       }
       dataset = new Dataset(data, opts)
     }
-    if (this.dataset && this.__isCreated__) {
+    if (store.dataset && store.__isCreated__) {
       //如果以前存在，则更新
       this.update()
     }
-    this.dataset = dataset
+    store.dataset = dataset
     return this
   }
   created() {
     //初始化创建的时候执行
-    this.dataset = this.dataset || this.chart.dataset
+    let store = this['__store']
     this.dispatchEvent(lifeCycle.created)
-    this.__vnode__ = this.render(this.beforeRender())
-    const patches = diff(null, this.__vnode__)
+    store.__vnode__ = this.render(this.beforeRender())
+    const patches = diff(null, store.__vnode__)
     this.dispatchEvent(lifeCycle.beforeRender)
     patch.bind(this)(this.parent || this.layer, patches)
     this.dispatchEvent(lifeCycle.rendered)
@@ -100,18 +104,20 @@ class Base extends Node {
   }
   update() {
     //图表更新准备数据
+    let store = this['__store']
     this.dispatchEvent(lifeCycle.beforeUpdate)
     let vnode = this.render(this.beforeUpdate())
-    const patches = diff(this.__vnode__, vnode)
+    const patches = diff(store.__vnode__, vnode)
     patch.bind(this)(this.parent || this.layer, patches)
-    this.__vnode__ = vnode
+    store.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)
   }
   updated() {}
   dispatchEvent(event, obj = emptyObject()) {
     super.dispatchEvent(event, obj)
   }
-  defaultAttrs() {
+  defaultAttrs() {}
+  baseAttrs() {
     let attrs = {
       //动画类型
       animation: {
@@ -138,21 +144,22 @@ class Base extends Node {
   }
   attr(name, val) {
     //属性设置
+    let store = this['__store']
     if (jsType(name) === 'object') {
       for (let key in name) {
         this.attr(key, name[key])
       }
     } else if (val === undefined) {
       //获取属性
-      return this.__attrs[name]
+      return store.__attrs[name]
     } else if (name !== undefined) {
-      this.__attrs[name] = val
+      store.__attrs[name] = val
     } else if (name === undefined) {
-      return this.__attrs
+      return store.__attrs
     }
   }
   addRef(ref, el) {
-    this.__refs[ref] = el
+    this['__store'].__refs[ref] = el
     //在vnode中调用，存储到this.__refs中
   }
   style(type, style) {

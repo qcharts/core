@@ -13,7 +13,8 @@ class Line extends Base {
   }
   beforeRender() {
     let renderAttrs = this.renderAttrs
-    let renderData = this.getData()[renderAttrs.layoutBy]
+    console.log('abc')
+    let renderData = this.dataset[renderAttrs.layoutBy]
     let lines = layout(renderData, renderAttrs)
     return lines
   }
@@ -24,10 +25,9 @@ class Line extends Base {
     console.log(this.$refs['wrap'])
   }
   defaultAttrs() {
-    let attrs = deepObjectMerge({}, super.defaultAttrs(), {
+    return {
       stack: false
-    })
-    return attrs
+    }
   }
   render(lines) {
     //console.log(renderAttrs, data)
