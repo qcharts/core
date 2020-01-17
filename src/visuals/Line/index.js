@@ -13,7 +13,6 @@ class Line extends Base {
   }
   beforeRender() {
     let renderAttrs = this.renderAttrs
-    console.log('abc')
     let renderData = this.dataset[renderAttrs.layoutBy]
     let lines = layout(renderData, renderAttrs)
     return lines
@@ -30,10 +29,15 @@ class Line extends Base {
     }
   }
   render(lines) {
-    //console.log(renderAttrs, data)
+    console.log(lines)
     return (
-      <Group ref="wrap" state={'mytest'}>
-        <Label pos={[100, 100]} text="折线图"></Label>
+      <Group class="container" ref="wrap">
+        <Group ref="lines" class="lines-group">
+          {lines.map(line => {
+            return <Polyline strokeColor={'#f00'} lineWidth={1} points={line.points} />
+          })}
+        </Group>
+        <Label class="label" pos={[100, 100]} text="折线图"></Label>
       </Group>
     )
   }

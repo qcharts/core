@@ -38,11 +38,11 @@ let newData = chart.dataset.selectRows(['图例一'])
 const line = new Line({ smooth: true, splitNumber: 5 })
 
 chart.append([line])
-chart.source(data, {
-  row: 'date',
-  value: 'sales',
-  text: 'category'
-})
+// chart.source(data, {
+//   row: 'date',
+//   value: 'sales',
+//   text: 'category'
+// })
 ```
 
 :::

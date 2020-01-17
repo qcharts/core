@@ -18,7 +18,6 @@ class Base extends Node {
     store.dataset = null
     this.attr(attrs)
     //渲染时的数据
-    //this.$refs = emptyObject()
   }
   get store() {
     return this['__store']
@@ -61,7 +60,6 @@ class Base extends Node {
     return attrs
   }
   get dataset() {
-    console.log('abc')
     return this['__store'].dataset || (this.chart && this.chart.dataset)
   }
   source(data, options) {
