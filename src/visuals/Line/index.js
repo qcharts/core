@@ -18,7 +18,11 @@ class Line extends Base {
     return lines
   }
   beforeUpdate() {
-    return this.renderAttrs
+    let renderAttrs = this.renderAttrs
+    let renderData = this.dataset[renderAttrs.layoutBy]
+    let lines = layout(renderData, renderAttrs)
+    console.log('update')
+    return lines
   }
   rendered() {
     console.log(this.$refs['wrap'])
@@ -29,10 +33,10 @@ class Line extends Base {
     }
   }
   render(lines) {
-    console.log(lines)
+    let { clientRect } = this.renderAttrs
     return (
       <Group class="container" ref="wrap">
-        <Group ref="lines" class="lines-group">
+        <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map(line => {
             return <Polyline strokeColor={'#f00'} lineWidth={1} points={line.points} />
           })}

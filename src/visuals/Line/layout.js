@@ -7,7 +7,6 @@ export default function layout(arr, attrs) {
   let scales = axis({ dataSet: arr, stack, splitNumber })
   let maxVal = Math.max.apply(this, scales)
   let minVal = Math.min.apply(this, scales)
-  console.log(maxVal, minVal)
   arr.forEach(row => {
     let line = { points: [] }
     row.forEach((cell, i) => {

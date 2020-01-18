@@ -16,8 +16,14 @@ class Chart extends Base {
     this.scene = new Scene({ container, displayRatio: platform.devicePixelRatio })
     this.scene.addEventListener('resize', _ => {
       //舞台变化的时候
-      this.update()
+      this.checkUpdate()
     })
+    this.checkUpdate = throttle(_ => {
+      let nodes = [].concat(this.plugins).concat(this.visuals)
+      nodes.forEach(node => {
+        node.update()
+      })
+    }, 300)
     this.checkRender = throttle(_ => {
       let children = [].concat(this.visuals).concat(this.plugins)
       children.forEach(child => {
@@ -30,10 +36,7 @@ class Chart extends Base {
   }
   update() {
     //图表发生更新，触发图表内组件更新
-    let nodes = [].concat(this.plugins).concat(this.visuals)
-    nodes.forEach(node => {
-      node.update()
-    })
+    this.checkUpdate()
   }
   append(node) {
     if (!this.dataset) {
