@@ -106,6 +106,7 @@ class Base extends Node {
     this.dispatchEvent(lifeCycle.beforeUpdate)
     let vnode = this.render(this.beforeUpdate())
     const patches = diff(store.__vnode__, vnode)
+    console.log('abc')
     patch.bind(this)(this.parent || this.layer, patches)
     store.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)

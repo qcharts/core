@@ -5,6 +5,7 @@ import layout from './layout'
 class Line extends Base {
   constructor(attrs) {
     super(attrs)
+    this.renderLines = []
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
@@ -14,14 +15,38 @@ class Line extends Base {
   beforeRender() {
     let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy]
-    let lines = layout(renderData, renderAttrs)
+    let arrLayout = layout(renderData, renderAttrs)
+    let lines = arrLayout.map(item => {
+      return {
+        from: {
+          points: item.points
+        },
+        to: {
+          points: item.points
+        }
+      }
+    })
     return lines
   }
   beforeUpdate() {
     let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy]
-    let lines = layout(renderData, renderAttrs)
-    console.log('update')
+    let arrLayout = layout(renderData, renderAttrs)
+    let renderLines = this.renderLines
+    let lines = arrLayout.map((item, i) => {
+      let from = { points: item.points }
+      if (renderLines[i]) {
+        from = {
+          points: renderLines[i].to.points
+        }
+      }
+      return {
+        from,
+        to: {
+          points: item.points
+        }
+      }
+    })
     return lines
   }
   rendered() {
@@ -34,14 +59,14 @@ class Line extends Base {
   }
   render(lines) {
     let { clientRect } = this.renderAttrs
+    this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map(line => {
-            return <Polyline strokeColor={'#f00'} lineWidth={1} points={line.points} />
+            return <Polyline strokeColor={'#f00'} lineWidth={1} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
-        <Label class="label" pos={[100, 100]} text="折线图"></Label>
       </Group>
     )
   }
