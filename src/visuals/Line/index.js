@@ -58,13 +58,15 @@ class Line extends Base {
     }
   }
   render(lines) {
-    let { clientRect } = this.renderAttrs
+    let { clientRect, smooth } = this.renderAttrs
+    console.log(this.renderAttrs)
+    console.log(smooth)
     this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map(line => {
-            return <Polyline strokeColor={'#f00'} lineWidth={1} animation={{ from: line.from, to: line.to }} />
+            return <Polyline strokeColor={'#f00'} smooth={smooth} lineWidth={1} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
       </Group>

@@ -31,6 +31,7 @@ class Base extends Node {
   get renderAttrs() {
     //attrs转换
     let attrs = filterClone(deepObjectMerge(this.baseAttrs(), this.defaultAttrs(), this.attr()))
+    console.log('aaa', this.attr())
     let { animation, clientRect } = attrs
     //动画数据转换
     if (jsType(animation) === 'boolean') {
@@ -106,7 +107,6 @@ class Base extends Node {
     this.dispatchEvent(lifeCycle.beforeUpdate)
     let vnode = this.render(this.beforeUpdate())
     const patches = diff(store.__vnode__, vnode)
-    console.log('abc')
     patch.bind(this)(this.parent || this.layer, patches)
     store.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)
@@ -148,13 +148,13 @@ class Base extends Node {
       for (let key in name) {
         this.attr(key, name[key])
       }
+    } else if (name === undefined) {
+      return store.__attrs
     } else if (val === undefined) {
       //获取属性
       return store.__attrs[name]
     } else if (name !== undefined) {
       store.__attrs[name] = val
-    } else if (name === undefined) {
-      return store.__attrs
     }
   }
   addRef(ref, el) {
