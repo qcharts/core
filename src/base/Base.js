@@ -31,7 +31,6 @@ class Base extends Node {
   get renderAttrs() {
     //attrs转换
     let attrs = filterClone(deepObjectMerge(this.baseAttrs(), this.defaultAttrs(), this.attr()))
-    console.log('aaa', this.attr())
     let { animation, clientRect } = attrs
     //动画数据转换
     if (jsType(animation) === 'boolean') {

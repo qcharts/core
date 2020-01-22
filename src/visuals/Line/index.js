@@ -60,7 +60,6 @@ class Line extends Base {
   render(lines) {
     let { clientRect, smooth } = this.renderAttrs
     console.log(this.renderAttrs)
-    console.log(smooth)
     this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
