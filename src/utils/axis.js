@@ -97,7 +97,7 @@ function dataHandle(attr) {
   const stack = attr.stack || false
   const data = attr.dataSet || []
   // const field = attr.field || '__valueGetter__'
-  let field = '__valueGetter__'
+  //let field = '__valueGetter__'
 
   const arr = []
 
@@ -111,7 +111,7 @@ function dataHandle(attr) {
         }
         // const value =
         // attr && attr.field ? data[j][i][field] : data[j][i][field]()
-        const value = data[j][i][field]()
+        const value = data[j][i].value
         if (value < 0) {
           sumDown = sumDown + value
         } else {
