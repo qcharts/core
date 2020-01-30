@@ -55,10 +55,16 @@ chart.source(data, {
 let newData = chart.dataset.selectRows(['图例一'])
 // console.log(newData)
 const line = new Line({ smooth: true, splitNumber: 5 })
+chart.dataset.on('change', function(res) {
+  console.log('dataset', res)
+})
+newData.on('change', function(res) {
+  console.log('newData', res)
+})
 
 chart.append([line])
 setTimeout(function() {
-  chart.source(data1)
+  //chart.source(data1)
 }, 1000)
 ```
 

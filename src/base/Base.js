@@ -63,20 +63,20 @@ class Base extends Node {
     return this['__store'].dataset || (this.chart && this.chart.dataset)
   }
   source(data, options) {
-    let dataset = data
     let store = this['__store']
     if (!(data instanceof Dataset)) {
       let opts = options
       if (store.dataset) {
         opts = deepObjectMerge({}, store.dataset.option, options)
       }
-      dataset = new Dataset(data, opts)
+      store.dataset = new Dataset(data, opts)
+    } else {
+      store.dataset = dataset
     }
     if (store.dataset && store.__isCreated__) {
       //如果以前存在，则更新
       this.update()
     }
-    store.dataset = dataset
     return this
   }
   created() {
