@@ -1,6 +1,6 @@
 import { Node, Group } from 'spritejs'
 import { lifeCycle, mixin } from './mixin'
-import { emptyObject, deepObjectMerge, jsType, getDistancePx } from '@qcharts/utils'
+import { emptyObject, deepObjectMerge, jsType, getDistancePx, throttle } from '@qcharts/utils'
 import { patch, diff } from '@qcharts/vnode'
 import filterClone from 'filter-clone'
 import Dataset from '@qcharts/dataset'
@@ -19,16 +19,16 @@ class Base extends Node {
     this.attr(attrs)
     //渲染时的数据
   }
-  get store() {
+  get store () {
     return this['__store']
   }
-  get layer() {
+  get layer () {
     return this.scene.layer(this.attr('layer') || 'default')
   }
-  get $refs() {
+  get $refs () {
     return this['__store'].__refs
   }
-  get renderAttrs() {
+  get renderAttrs () {
     //attrs转换
     let attrs = filterClone(deepObjectMerge(this.baseAttrs(), this.defaultAttrs(), this.attr()))
     let { animation, clientRect } = attrs
@@ -59,10 +59,10 @@ class Base extends Node {
     attrs.colors = this.theme.colors
     return attrs
   }
-  get dataset() {
+  get dataset () {
     return this['__store'].dataset || (this.chart && this.chart.dataset)
   }
-  source(data, options) {
+  source (data, options) {
     let store = this['__store']
     if (!(data instanceof Dataset)) {
       let opts = options
@@ -71,7 +71,7 @@ class Base extends Node {
       }
       store.dataset = new Dataset(data, opts)
     } else {
-      store.dataset = dataset
+      store.dataset = data
     }
     if (store.dataset && store.__isCreated__) {
       //如果以前存在，则更新
@@ -79,7 +79,7 @@ class Base extends Node {
     }
     return this
   }
-  created() {
+  created () {
     //初始化创建的时候执行
     let store = this['__store']
     this.dispatchEvent(lifeCycle.created)
@@ -89,18 +89,22 @@ class Base extends Node {
     patch.bind(this)(this.parent || this.layer, patches)
     this.dispatchEvent(lifeCycle.rendered)
     this.rendered()
+    this.dataset.on('change', throttle(_ => {
+      this.update()
+    })
+    )
   }
-  beforeRender() {
+  beforeRender () {
     //图表初始化准备数据
     return this.renderAttrs
   }
-  render() {
+  render () {
     console.warn('this function must be rewrited')
   }
-  beforeUpdate() {
+  beforeUpdate () {
     return this.renderAttrs
   }
-  update() {
+  update () {
     //图表更新准备数据
     let store = this['__store']
     this.dispatchEvent(lifeCycle.beforeUpdate)
@@ -110,12 +114,12 @@ class Base extends Node {
     store.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)
   }
-  updated() {}
-  dispatchEvent(event, obj = emptyObject()) {
+  updated () { }
+  dispatchEvent (event, obj = emptyObject()) {
     super.dispatchEvent(event, obj)
   }
-  defaultAttrs() {}
-  baseAttrs() {
+  defaultAttrs () { }
+  baseAttrs () {
     let attrs = {
       //动画类型
       animation: {
@@ -140,7 +144,7 @@ class Base extends Node {
     }
     return attrs
   }
-  attr(name, val) {
+  attr (name, val) {
     //属性设置
     let store = this['__store']
     if (jsType(name) === 'object') {
@@ -156,11 +160,11 @@ class Base extends Node {
       store.__attrs[name] = val
     }
   }
-  addRef(ref, el) {
+  addRef (ref, el) {
     this['__store'].__refs[ref] = el
     //在vnode中调用，存储到this.__refs中
   }
-  style(type, style) {
+  style (type, style) {
     //样式设置，样式用attr逻辑存储，添加@符号
     if (jsType(type) === 'object') {
       for (let key in type) {
