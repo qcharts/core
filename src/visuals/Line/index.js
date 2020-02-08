@@ -7,12 +7,12 @@ class Line extends Base {
     super(attrs)
     this.renderLines = []
   }
-  get renderAttrs () {
+  get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
     let attrs = super.renderAttrs
     return attrs
   }
-  beforeRender () {
+  beforeRender() {
     let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
@@ -24,7 +24,7 @@ class Line extends Base {
     })
     return lines
   }
-  beforeUpdate () {
+  beforeUpdate() {
     let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
@@ -44,25 +44,23 @@ class Line extends Base {
     })
     return lines
   }
-  rendered () {
+  rendered() {
     console.log(this.$refs['wrap'])
   }
-  defaultAttrs () {
+  defaultAttrs() {
     return {
       stack: false
     }
   }
-  render (lines) {
+  render(lines) {
     let { clientRect, smooth } = this.renderAttrs
-    console.log(this.renderAttrs)
     this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map(line => {
             console.log(line.state)
-            return line.state === 'disabled' ? null :
-              <Polyline strokeColor={'#f00'} smooth={smooth} lineWidth={1} animation={{ from: line.from, to: line.to }} />
+            return line.state === 'disabled' ? null : <Polyline strokeColor={'#f00'} smooth={smooth} lineWidth={1} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
       </Group>
