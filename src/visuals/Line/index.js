@@ -69,7 +69,7 @@ class Line extends Base {
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map(line => {
-            return line.state === 'disabled' ? null : <Polyline strokeColor={'#f00'} smooth={smooth} lineWidth={1} animation={{ from: line.from, to: line.to }} />
+            return line.state === 'disabled' ? null : <Polyline strokeColor={'#f00'} smooth={smooth} lineWidth={1} animation={{ from: line.from, to: line.to, duration: 1000 }} />
           })}
         </Group>
       </Group>
