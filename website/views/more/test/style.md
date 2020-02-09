@@ -33,7 +33,7 @@ chart.source(data, {
   text: 'date'
 })
 const line = new Line({ splitNumber: 5 })
-line.style({ line: { lineWidth: 2 } })
+//line.style({ line: { lineWidth: 2 } })
 chart.dataset.on('change', function(res) {
   console.log('dataset', res)
 })

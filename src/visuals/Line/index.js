@@ -69,14 +69,18 @@ class Line extends Base {
   }
   render(lines) {
     let { clientRect } = this.renderAttrs
-    let { line: lineStyle } = this.renderStyles
-    console.log(lineStyle)
+    //渲染的样式，合并了theme中的styles与组件上的defaultStyles
+    let styles = this.renderStyles
+    //当前主体颜色
+    let colors = this.theme.colors
     this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
-          {lines.map(line => {
-            return line.state === 'disabled' ? null : <Polyline {...lineStyle} strokeColor={'#f00'} animation={{ from: line.from, to: line.to }} />
+          {lines.map((line, ind) => {
+            let style = this.style('line')(line, ind)
+            let lineStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.line, style)
+            return line.state === 'disabled' || style === false ? null : <Polyline {...lineStyle} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
       </Group>

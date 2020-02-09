@@ -29,8 +29,7 @@ class Base extends Node {
     return this['__store'].__refs
   }
   get renderStyles() {
-    let styles = filterClone(deepObjectMerge(this.defaultStyles(), this.theme.styles, this.style()))
-    console.log(styles)
+    let styles = filterClone(deepObjectMerge(this.defaultStyles(), this.theme.styles))
     return styles
   }
   get renderAttrs() {
@@ -190,7 +189,7 @@ class Base extends Node {
       //获取样式，统一返回成函数
       const style = this.attr('style@' + type)
       return (...args) => {
-        if (isFunction(style)) {
+        if (jsType(style) === 'function') {
           return style.apply(this, args)
         } else {
           return style
