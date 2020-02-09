@@ -30,6 +30,7 @@ class Base extends Node {
   }
   get renderStyles() {
     let styles = filterClone(deepObjectMerge(this.defaultStyles(), this.theme.styles, this.style()))
+    console.log(styles)
     return styles
   }
   get renderAttrs() {

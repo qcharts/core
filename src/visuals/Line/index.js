@@ -14,7 +14,6 @@ class Line extends Base {
   }
   beforeRender() {
     let renderAttrs = this.renderAttrs
-    console.log(this.theme)
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
     let { height, width } = renderAttrs.clientRect
@@ -71,6 +70,7 @@ class Line extends Base {
   render(lines) {
     let { clientRect } = this.renderAttrs
     let { line: lineStyle } = this.renderStyles
+    console.log(lineStyle)
     this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
