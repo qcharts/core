@@ -16,10 +16,13 @@ class Line extends Base {
     let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
+    let { height, width } = renderAttrs.clientRect
+    //对角线长度的1.5保证会大于曲线的长度
+    let maxLen = Math.sqrt(height ** 2, width ** 2) * 1.5
     let lines = arrLayout.map(item => {
       return {
-        from: { points: item.points, lineDash: [4, 500] },
-        to: { points: item.points, lineDash: [100, 500] }
+        from: { points: item.points, lineDash: [1, maxLen] },
+        to: { points: item.points, lineDash: [maxLen, maxLen] }
       }
     })
     return lines
@@ -29,17 +32,23 @@ class Line extends Base {
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
     let renderLines = this.renderLines
+    let { height, width } = renderAttrs.clientRect
+    //对角线长度的1.5保证会大于曲线的长度
+    let maxLen = Math.sqrt(height ** 2, width ** 2) * 1.5
     let lines = arrLayout.map((item, i) => {
       let from = { points: item.points }
       if (renderLines[i]) {
-        from = { points: renderLines[i].to.points, lineDash: [4, 500] }
+        from = { points: renderLines[i].to.points }
+      }
+      if (!renderLines[i] || renderLines[i].state === 'disabled') {
+        from.lineDash = [4, maxLen]
       }
       return {
         state: item.state,
         from,
         to: {
           points: item.points,
-          lineDash: [100, 500]
+          lineDash: [maxLen, maxLen]
         }
       }
     })
@@ -53,28 +62,21 @@ class Line extends Base {
       stack: false
     }
   }
+  defaultStyles() {
+    return {
+      line: { lineWidth: 1 }
+    }
+  }
   render(lines) {
-    let { clientRect, smooth } = this.renderAttrs
+    let { clientRect } = this.renderAttrs
+    let { line: lineStyle } = this.renderStyles
+    console.log(lineStyle)
     this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map(line => {
-            return line.state === 'disabled' ? null : (
-              <Polyline
-                strokeColor={'#f00'}
-                smooth={smooth}
-                lineWidth={1}
-                animation={{
-                  from: line.from,
-                  to: line.to,
-                  formatter: function(obj) {
-                    console.log(obj)
-                    return obj
-                  }
-                }}
-              />
-            )
+            return line.state === 'disabled' ? null : <Polyline {...lineStyle} strokeColor={'#f00'} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
       </Group>

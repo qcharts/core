@@ -32,22 +32,8 @@ chart.source(data, {
   value: 'sales',
   text: 'date'
 })
-
-let rows = chart.dataset.rows
-rows.forEach(row => {
-  let span = document.createElement('span')
-  span.setAttribute('style', 'padding:10px;position:relative;z-index:1')
-  span.innerHTML = row.name
-  $wrap.append(span)
-  span.addEventListener(
-    'click',
-    _ => {
-      row.state = row.state === 'disabled' ? 'default' : 'disabled'
-    },
-    false
-  )
-})
 const line = new Line({ splitNumber: 5 })
+line.style({ line: { lineWidth: 2 } })
 chart.dataset.on('change', function(res) {
   console.log('dataset', res)
 })
