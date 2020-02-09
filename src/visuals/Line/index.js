@@ -18,8 +18,8 @@ class Line extends Base {
     let arrLayout = layout(renderData, renderAttrs)
     let lines = arrLayout.map(item => {
       return {
-        from: { points: item.points },
-        to: { points: item.points }
+        from: { points: item.points, lineDash: [4, 500] },
+        to: { points: item.points, lineDash: [100, 500] }
       }
     })
     return lines
@@ -32,13 +32,14 @@ class Line extends Base {
     let lines = arrLayout.map((item, i) => {
       let from = { points: item.points }
       if (renderLines[i]) {
-        from = { points: renderLines[i].to.points }
+        from = { points: renderLines[i].to.points, lineDash: [4, 500] }
       }
       return {
         state: item.state,
         from,
         to: {
-          points: item.points
+          points: item.points,
+          lineDash: [100, 500]
         }
       }
     })
@@ -59,8 +60,21 @@ class Line extends Base {
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map(line => {
-            console.log(line.state)
-            return line.state === 'disabled' ? null : <Polyline strokeColor={'#f00'} smooth={smooth} lineWidth={1} animation={{ from: line.from, to: line.to }} />
+            return line.state === 'disabled' ? null : (
+              <Polyline
+                strokeColor={'#f00'}
+                smooth={smooth}
+                lineWidth={1}
+                animation={{
+                  from: line.from,
+                  to: line.to,
+                  formatter: function(obj) {
+                    console.log(obj)
+                    return obj
+                  }
+                }}
+              />
+            )
           })}
         </Group>
       </Group>
