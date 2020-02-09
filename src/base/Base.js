@@ -19,18 +19,22 @@ class Base extends Node {
     this.attr(attrs)
     //渲染时的数据
   }
-  get store () {
+  get store() {
     return this['__store']
   }
-  get layer () {
+  get layer() {
     return this.scene.layer(this.attr('layer') || 'default')
   }
-  get $refs () {
+  get $refs() {
     return this['__store'].__refs
   }
-  get renderAttrs () {
+  get renderStyles() {
+    let styles = filterClone(deepObjectMerge(this.defaultStyles(), this.theme.styles, this.style()))
+    return styles
+  }
+  get renderAttrs() {
     //attrs转换
-    let attrs = filterClone(deepObjectMerge(this.baseAttrs(), this.defaultAttrs(), this.attr()))
+    let attrs = filterClone(deepObjectMerge(this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr()))
     let { animation, clientRect } = attrs
     //动画数据转换
     if (jsType(animation) === 'boolean') {
@@ -59,10 +63,10 @@ class Base extends Node {
     attrs.colors = this.theme.colors
     return attrs
   }
-  get dataset () {
+  get dataset() {
     return this['__store'].dataset || (this.chart && this.chart.dataset)
   }
-  source (data, options) {
+  source(data, options) {
     let store = this['__store']
     if (!(data instanceof Dataset)) {
       let opts = options
@@ -79,7 +83,7 @@ class Base extends Node {
     }
     return this
   }
-  created () {
+  created() {
     //初始化创建的时候执行
     let store = this['__store']
     this.dispatchEvent(lifeCycle.created)
@@ -89,22 +93,24 @@ class Base extends Node {
     patch.bind(this)(this.parent || this.layer, patches)
     this.dispatchEvent(lifeCycle.rendered)
     this.rendered()
-    this.dataset.on('change', throttle(_ => {
-      this.update()
-    })
+    this.dataset.on(
+      'change',
+      throttle(_ => {
+        this.update()
+      })
     )
   }
-  beforeRender () {
+  beforeRender() {
     //图表初始化准备数据
     return this.renderAttrs
   }
-  render () {
+  render() {
     console.warn('this function must be rewrited')
   }
-  beforeUpdate () {
+  beforeUpdate() {
     return this.renderAttrs
   }
-  update () {
+  update() {
     //图表更新准备数据
     let store = this['__store']
     this.dispatchEvent(lifeCycle.beforeUpdate)
@@ -114,12 +120,13 @@ class Base extends Node {
     store.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)
   }
-  updated () { }
-  dispatchEvent (event, obj = emptyObject()) {
+  updated() {}
+  dispatchEvent(event, obj = emptyObject()) {
     super.dispatchEvent(event, obj)
   }
-  defaultAttrs () { }
-  baseAttrs () {
+  defaultAttrs() {}
+  defaultStyles() {}
+  baseAttrs() {
     let attrs = {
       //动画类型
       animation: {
@@ -144,7 +151,7 @@ class Base extends Node {
     }
     return attrs
   }
-  attr (name, val) {
+  attr(name, val) {
     //属性设置
     let store = this['__store']
     if (jsType(name) === 'object') {
@@ -152,7 +159,14 @@ class Base extends Node {
         this.attr(key, name[key])
       }
     } else if (name === undefined) {
-      return store.__attrs
+      let res = emptyObject()
+      for (let key in store.__attrs) {
+        //过滤style属性
+        if (key.indexOf('style@') !== 0) {
+          res[key] = store.__attrs[key]
+        }
+      }
+      return res
     } else if (val === undefined) {
       //获取属性
       return store.__attrs[name]
@@ -160,17 +174,19 @@ class Base extends Node {
       store.__attrs[name] = val
     }
   }
-  addRef (ref, el) {
+  addRef(ref, el) {
     this['__store'].__refs[ref] = el
     //在vnode中调用，存储到this.__refs中
   }
-  style (type, style) {
+  style(type, style) {
     //样式设置，样式用attr逻辑存储，添加@符号
     if (jsType(type) === 'object') {
+      //多样式赋值
       for (let key in type) {
         this.style(key, type[key])
       }
     } else if (type !== undefined && style === undefined) {
+      //获取样式，统一返回成函数
       const style = this.attr('style@' + type)
       return (...args) => {
         if (isFunction(style)) {
@@ -179,9 +195,21 @@ class Base extends Node {
           return style
         }
       }
-    } else if (type !== undefined) {
+    } else if (type !== undefined && style !== undefined) {
+      //赋值
       this.attr('style@' + type, style)
       return this
+    } else if (type === undefined && style === undefined) {
+      //获取全部样式
+      let res = emptyObject()
+      let attrs = this['__store'].__attrs
+      for (let key in attrs) {
+        if (key.indexOf('style@') === 0) {
+          let styleKey = key.substr(6)
+          res[styleKey] = this.style(styleKey)
+        }
+      }
+      return res
     }
   }
 }

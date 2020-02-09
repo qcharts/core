@@ -14,6 +14,7 @@ class Line extends Base {
   }
   beforeRender() {
     let renderAttrs = this.renderAttrs
+    console.log(this.theme)
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
     let { height, width } = renderAttrs.clientRect
@@ -21,7 +22,7 @@ class Line extends Base {
     let maxLen = Math.sqrt(height ** 2, width ** 2) * 1.5
     let lines = arrLayout.map(item => {
       return {
-        from: { points: item.points, lineDash: [4, maxLen] },
+        from: { points: item.points, lineDash: [1, maxLen] },
         to: { points: item.points, lineDash: [maxLen, maxLen] }
       }
     })
@@ -62,14 +63,20 @@ class Line extends Base {
       stack: false
     }
   }
+  defaultStyles() {
+    return {
+      line: { lineWidth: 1 }
+    }
+  }
   render(lines) {
-    let { clientRect, smooth } = this.renderAttrs
+    let { clientRect } = this.renderAttrs
+    let { line: lineStyle } = this.renderStyles
     this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map(line => {
-            return line.state === 'disabled' ? null : <Polyline strokeColor={'#f00'} smooth={smooth} lineWidth={1} animation={{ from: line.from, to: line.to, duration: 1000 }} />
+            return line.state === 'disabled' ? null : <Polyline {...lineStyle} strokeColor={'#f00'} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
       </Group>
