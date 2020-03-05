@@ -18,8 +18,9 @@ class Line extends Base {
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
     let { height, width } = renderAttrs.clientRect
-    //对角线长度的1.5保证会大于曲线的长度
-    let maxLen = Math.sqrt(height ** 2, width ** 2) * 1.5
+    console.log(width, height)
+    //对角线长度的2保证会大于曲线的长度
+    let maxLen = Math.sqrt(height ** 2, width ** 2) * 2
     let lines = arrLayout.map(item => {
       return {
         axisPoints: item.axisPoints,
@@ -35,8 +36,8 @@ class Line extends Base {
     let arrLayout = layout(renderData, renderAttrs)
     let renderLines = this.renderLines
     let { height, width } = renderAttrs.clientRect
-    //对角线长度的1.5保证会大于曲线的长度
-    let maxLen = Math.sqrt(height ** 2, width ** 2) * 1.5
+    //对角线长度的2保证会大于曲线的长度
+    let maxLen = Math.sqrt(height ** 2, width ** 2) * 2
     let lines = arrLayout.map((item, i) => {
       let from = { points: item.points }
       if (renderLines[i]) {
@@ -58,7 +59,7 @@ class Line extends Base {
     return lines
   }
   rendered() {
-    console.log(this.$refs['wrap'])
+    //console.log(this.$refs['wrap'])
   }
   defaultAttrs() {
     return {
@@ -92,15 +93,23 @@ class Line extends Base {
             ? null
             : lines.map((line, ind) => {
                 let fromPoints = deepObjectMerge([], line.from.points)
+                //插入点逻辑
+                fromPoints.unshift(fromPoints[0])
+                fromPoints.push(fromPoints[fromPoints.length - 1])
                 let fromxx = [fromPoints[0][0], fromPoints[fromPoints.length - 1][0]]
                 let toPoints = deepObjectMerge([], line.to.points)
+                toPoints.unshift(toPoints[0])
+                toPoints.push(toPoints[toPoints.length - 1])
                 let toxx = [toPoints[0][0], toPoints[toPoints.length - 1][0]]
                 fromPoints.unshift([fromxx[0], line.axisPoints[0][1]])
                 fromPoints.push([fromxx[1], line.axisPoints[1][1]])
                 toPoints.unshift([toxx[0], line.axisPoints[0][1]])
                 toPoints.push([toxx[1], line.axisPoints[1][1]])
                 let style = this.style('line')(this.dataset.rows[ind], ind)
-                return line.state === 'disabled' || style === false ? null : <Polyline fillColor={colors[ind]} animation={{ from: { points: fromPoints }, to: { points: toPoints, opacity: 0.5 } }} />
+                let lineStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.line, style)
+                return line.state === 'disabled' || style === false ? null : (
+                  <Polyline smooth={lineStyle.smooth} smoothRange={[1, toPoints.length - 2]} fillColor={colors[ind]} animation={{ from: { points: fromPoints }, to: { points: toPoints } }} />
+                )
               })}
         </Group>
       </Group>
