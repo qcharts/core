@@ -23,7 +23,8 @@ class Base extends Node {
     return this['__store']
   }
   get layer() {
-    return this.scene.layer(this.attr('layer') || 'default')
+    let layerName = this.attr('layer') || this.defaultAttrs().layer || 'default'
+    return this.scene.layer(layerName)
   }
   get $refs() {
     return this['__store'].__refs

@@ -6,6 +6,7 @@ class Line extends Base {
   constructor(attrs) {
     super(attrs)
     this.renderLines = []
+    this.type = 'line'
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
@@ -21,6 +22,7 @@ class Line extends Base {
     let maxLen = Math.sqrt(height ** 2, width ** 2) * 1.5
     let lines = arrLayout.map(item => {
       return {
+        axisPoints: item.axisPoints,
         from: { points: item.points, lineDash: [1, maxLen] },
         to: { points: item.points, lineDash: [maxLen, maxLen] }
       }
@@ -45,6 +47,7 @@ class Line extends Base {
       }
       return {
         state: item.state,
+        axisPoints: item.axisPoints,
         from,
         to: {
           points: item.points,
@@ -59,7 +62,8 @@ class Line extends Base {
   }
   defaultAttrs() {
     return {
-      stack: false
+      stack: false,
+      layer: 'line'
     }
   }
   defaultStyles() {
@@ -78,10 +82,26 @@ class Line extends Base {
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map((line, ind) => {
-            let style = this.style('line')(line, ind)
+            let style = this.style('line')(this.dataset.rows[ind], ind)
             let lineStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.line, style)
             return line.state === 'disabled' || style === false ? null : <Polyline {...lineStyle} animation={{ from: line.from, to: line.to }} />
           })}
+        </Group>
+        <Group ref="areas" class="areas-group" pos={[clientRect.left, clientRect.top]}>
+          {this.type !== 'area'
+            ? null
+            : lines.map((line, ind) => {
+                let fromPoints = deepObjectMerge([], line.from.points)
+                let fromxx = [fromPoints[0][0], fromPoints[fromPoints.length - 1][0]]
+                let toPoints = deepObjectMerge([], line.to.points)
+                let toxx = [toPoints[0][0], toPoints[toPoints.length - 1][0]]
+                fromPoints.unshift([fromxx[0], line.axisPoints[0][1]])
+                fromPoints.push([fromxx[1], line.axisPoints[1][1]])
+                toPoints.unshift([toxx[0], line.axisPoints[0][1]])
+                toPoints.push([toxx[1], line.axisPoints[1][1]])
+                let style = this.style('line')(this.dataset.rows[ind], ind)
+                return line.state === 'disabled' || style === false ? null : <Polyline fillColor={colors[ind]} animation={{ from: { points: fromPoints }, to: { points: toPoints, opacity: 0.5 } }} />
+              })}
         </Group>
       </Group>
     )

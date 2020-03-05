@@ -27,6 +27,11 @@ theme.visuals = {
     colors: theme.colors,
     styles: {},
     attrs: {}
+  },
+  Area: {
+    colors: theme.colors,
+    styles: {},
+    attrs: {}
   }
 }
 theme.plugins = {}
