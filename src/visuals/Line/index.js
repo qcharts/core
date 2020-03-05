@@ -14,12 +14,7 @@ class Line extends Base {
     return attrs
   }
   beforeRender() {
-    let renderAttrs = this.renderAttrs
-    let renderData = this.dataset[renderAttrs.layoutBy]
-    let arrLayout = layout(renderData, renderAttrs)
-    let { height, width } = renderAttrs.clientRect
-    //对角线长度的2保证会大于曲线的长度
-    let maxLen = Math.sqrt(height ** 2, width ** 2) * 2
+    let { arrLayout, maxLen } = this.getRenderData()
     let lines = arrLayout.map(item => {
       return {
         axisPoints: item.axisPoints,
@@ -30,13 +25,8 @@ class Line extends Base {
     return lines
   }
   beforeUpdate() {
-    let renderAttrs = this.renderAttrs
-    let renderData = this.dataset[renderAttrs.layoutBy]
-    let arrLayout = layout(renderData, renderAttrs)
+    let { arrLayout, maxLen } = this.getRenderData()
     let renderLines = this.renderLines
-    let { height, width } = renderAttrs.clientRect
-    //对角线长度的2保证会大于曲线的长度
-    let maxLen = Math.sqrt(height ** 2, width ** 2) * 2
     let lines = arrLayout.map((item, i) => {
       let from = { points: item.points }
       if (renderLines[i]) {
@@ -56,6 +46,15 @@ class Line extends Base {
       }
     })
     return lines
+  }
+  getRenderData() {
+    let renderAttrs = this.renderAttrs
+    let renderData = this.dataset[renderAttrs.layoutBy]
+    let arrLayout = layout(renderData, renderAttrs)
+    let { height, width } = renderAttrs.clientRect
+    //对角线长度的2保证会大于曲线的长度
+    let maxLen = Math.sqrt(height ** 2, width ** 2) * 2
+    return { width, height, arrLayout, maxLen }
   }
   rendered() {
     //console.log(this.$refs['wrap'])
