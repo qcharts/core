@@ -18,7 +18,6 @@ class Line extends Base {
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
     let { height, width } = renderAttrs.clientRect
-    console.log(width, height)
     //对角线长度的2保证会大于曲线的长度
     let maxLen = Math.sqrt(height ** 2, width ** 2) * 2
     let lines = arrLayout.map(item => {
@@ -106,9 +105,10 @@ class Line extends Base {
                 toPoints.unshift([toxx[0], line.axisPoints[0][1]])
                 toPoints.push([toxx[1], line.axisPoints[1][1]])
                 let style = this.style('line')(this.dataset.rows[ind], ind)
-                let lineStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.line, style)
+                let areaStyle = this.style('area')(this.dataset.rows[ind], ind)
+                areaStyle = deepObjectMerge({ fillColor: colors[ind] }, styles.area, style, areaStyle)
                 return line.state === 'disabled' || style === false ? null : (
-                  <Polyline smooth={lineStyle.smooth} smoothRange={[1, toPoints.length - 2]} fillColor={colors[ind]} animation={{ from: { points: fromPoints }, to: { points: toPoints } }} />
+                  <Polyline smoothRange={[1, toPoints.length - 2]} {...areaStyle} animation={{ from: { points: fromPoints }, to: { points: toPoints } }} />
                 )
               })}
         </Group>

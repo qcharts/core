@@ -30,10 +30,18 @@ theme.visuals = {
   },
   Area: {
     colors: theme.colors,
+    styles: {
+      area: { opacity: 0.5 }
+    },
+    attrs: {}
+  }
+}
+theme.plugins = {
+  Axis: {
+    colors: theme.colors,
     styles: {},
     attrs: {}
   }
 }
-theme.plugins = {}
 
 export default theme

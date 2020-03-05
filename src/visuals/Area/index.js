@@ -4,5 +4,11 @@ class Area extends Line {
     super()
     this.type = 'area'
   }
+  defaultAttrs() {
+    return {
+      stack: true,
+      layer: 'area'
+    }
+  }
 }
 export default Area
