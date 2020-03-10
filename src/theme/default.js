@@ -25,8 +25,12 @@ const theme = {
 theme.visuals = {
   Line: {
     colors: theme.colors,
-    styles: {},
-    attrs: {}
+    styles: {
+      line: { lineWidth: 1 }
+    },
+    attrs: {
+      statck: false
+    }
   },
   Area: {
     colors: theme.colors,
@@ -39,8 +43,23 @@ theme.visuals = {
 theme.plugins = {
   Axis: {
     colors: theme.colors,
-    styles: {},
-    attrs: {}
+    styles: {
+      axis: {
+        strokeColor: '#ccc',
+        lineWidth: 1
+      },
+      scale: {
+        bgcolor: '#ccc'
+      },
+      label: {
+        fontSize: 12,
+        fillColor: '#666'
+        //bgcolor: 'rgba(255,255,255,0.0001)'
+      }
+    },
+    attrs: {
+      orient: 'bottom'
+    }
   }
 }
 

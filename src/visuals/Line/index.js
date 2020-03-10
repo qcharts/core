@@ -9,11 +9,12 @@ class Line extends Base {
     this.type = 'line'
   }
   get renderAttrs() {
-    //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
+    //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
     let attrs = super.renderAttrs
     return attrs
   }
   beforeRender() {
+    //渲染前的处理函数，返回lines,继承base
     let { arrLayout, maxLen } = this.getRenderData()
     let lines = arrLayout.map(item => {
       return {
@@ -25,6 +26,7 @@ class Line extends Base {
     return lines
   }
   beforeUpdate() {
+    //更新前的处理函数，返回lines,继承base
     let { arrLayout, maxLen } = this.getRenderData()
     let renderLines = this.renderLines
     let lines = arrLayout.map((item, i) => {
@@ -48,6 +50,7 @@ class Line extends Base {
     return lines
   }
   getRenderData() {
+    //根据line的特性返回需要数据
     let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
@@ -60,15 +63,14 @@ class Line extends Base {
     //console.log(this.$refs['wrap'])
   }
   defaultAttrs() {
+    // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
-      stack: false,
       layer: 'line'
     }
   }
   defaultStyles() {
-    return {
-      line: { lineWidth: 1 }
-    }
+    // 默认的样式,继承base
+    return {}
   }
   render(lines) {
     let { clientRect } = this.renderAttrs
@@ -81,7 +83,7 @@ class Line extends Base {
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map((line, ind) => {
-            let style = this.style('line')(this.dataset.rows[ind], ind)
+            let style = this.style('line')(deepObjectMerge({ strokeColor: colors[ind] }, styles.line), this.dataset.rows[ind], ind)
             let lineStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.line, style)
             return line.state === 'disabled' || style === false ? null : <Polyline {...lineStyle} animation={{ from: line.from, to: line.to }} />
           })}
@@ -104,7 +106,7 @@ class Line extends Base {
                 toPoints.unshift([toxx[0], line.axisPoints[0][1]])
                 toPoints.push([toxx[1], line.axisPoints[1][1]])
                 let style = this.style('line')(this.dataset.rows[ind], ind)
-                let areaStyle = this.style('area')(this.dataset.rows[ind], ind)
+                let areaStyle = this.style('area')(deepObjectMerge({ fillColor: colors[ind] }, styles.area), this.dataset.rows[ind], ind)
                 areaStyle = deepObjectMerge({ fillColor: colors[ind] }, styles.area, style, areaStyle)
                 return line.state === 'disabled' || style === false ? null : (
                   <Polyline smoothRange={[1, toPoints.length - 2]} {...areaStyle} animation={{ from: { points: fromPoints }, to: { points: toPoints } }} />

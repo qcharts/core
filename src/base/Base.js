@@ -1,8 +1,7 @@
 import { Node, Group } from 'spritejs'
 import { lifeCycle, mixin } from './mixin'
-import { emptyObject, deepObjectMerge, jsType, getDistancePx, throttle } from '@qcharts/utils'
+import { emptyObject, deepObjectMerge, jsType, getDistancePx, debounce } from '@qcharts/utils'
 import { patch, diff } from '@qcharts/vnode'
-import filterClone from 'filter-clone'
 import Dataset from '@qcharts/dataset'
 class Base extends Node {
   constructor(attrs) {
@@ -23,19 +22,19 @@ class Base extends Node {
     return this['__store']
   }
   get layer() {
-    let layerName = this.attr('layer') || this.defaultAttrs().layer || 'default'
+    let layerName = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr()).layer
     return this.scene.layer(layerName)
   }
   get $refs() {
     return this['__store'].__refs
   }
   get renderStyles() {
-    let styles = filterClone(deepObjectMerge(this.defaultStyles(), this.theme.styles))
+    let styles = deepObjectMerge({}, this.defaultStyles(), this.theme.styles)
     return styles
   }
   get renderAttrs() {
     //attrs转换
-    let attrs = filterClone(deepObjectMerge(this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr()))
+    let attrs = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr())
     let { animation, clientRect } = attrs
     //动画数据转换
     if (jsType(animation) === 'boolean') {
@@ -91,12 +90,12 @@ class Base extends Node {
     store.__vnode__ = this.render(this.beforeRender())
     const patches = diff(null, store.__vnode__)
     this.dispatchEvent(lifeCycle.beforeRender)
-    patch.bind(this)(this.parent || this.layer, patches)
+    patch.bind(this)(this.$el || this.layer, patches, 1)
     this.dispatchEvent(lifeCycle.rendered)
     this.rendered()
     this.dataset.on(
       'change',
-      throttle(_ => {
+      debounce(_ => {
         this.update()
       })
     )
@@ -117,7 +116,7 @@ class Base extends Node {
     this.dispatchEvent(lifeCycle.beforeUpdate)
     let vnode = this.render(this.beforeUpdate())
     const patches = diff(store.__vnode__, vnode)
-    patch.bind(this)(this.parent || this.layer, patches)
+    patch.bind(this)(this.$el || this.layer, patches)
     store.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)
   }
@@ -125,8 +124,12 @@ class Base extends Node {
   dispatchEvent(event, obj = emptyObject()) {
     super.dispatchEvent(event, obj)
   }
-  defaultAttrs() {}
-  defaultStyles() {}
+  defaultAttrs() {
+    return emptyObject()
+  }
+  defaultStyles() {
+    return emptyObject()
+  }
   baseAttrs() {
     let attrs = {
       //动画类型
