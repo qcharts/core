@@ -14,9 +14,9 @@
     "prepublishOnly": "npm run babel && npm run build:chart"
   },
   "dependencies": {
-    "@qcharts/dataset": "^0.0.2",
-    "@qcharts/utils": "^0.0.2",
-    "@qcharts/vnode": "^0.0.2",
+    "@qcharts/dataset": "^0.0.4",
+    "@qcharts/utils": "^0.0.3",
+    "@qcharts/vnode": "^0.0.3",
     "filter-clone": "0.0.12"
   },
   "devDependencies": {
