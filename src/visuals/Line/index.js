@@ -52,6 +52,7 @@ class Line extends Base {
   getRenderData() {
     //根据line的特性返回需要数据
     let renderAttrs = this.renderAttrs
+    //console.log(renderAttrs)
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout(renderData, renderAttrs)
     let { height, width } = renderAttrs.clientRect
@@ -83,7 +84,7 @@ class Line extends Base {
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map((line, ind) => {
-            let style = this.style('line')(deepObjectMerge({ strokeColor: colors[ind] }, styles.line), this.dataset.rows[ind], ind)
+            let style = this.style('line')(deepObjectMerge({ strokeColor: colors[ind] }, styles.line), this.dataset.rows[ind].data, ind)
             let lineStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.line, style)
             return line.state === 'disabled' || style === false ? null : <Polyline {...lineStyle} animation={{ from: line.from, to: line.to }} />
           })}
