@@ -76,10 +76,12 @@ class Line extends Base {
   }
   defaultStyles() {
     // 默认的样式,继承base
-    return {}
+    return {
+      smooth: false
+    }
   }
   render(lines) {
-    let { clientRect } = this.renderAttrs
+    let { clientRect, smooth } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
     //当前主体颜色
@@ -89,8 +91,9 @@ class Line extends Base {
       <Group class="container" ref="wrap">
         <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
           {lines.map((line, ind) => {
-            let style = this.style('line')(deepObjectMerge({ strokeColor: colors[ind] }, styles.line), this.dataset.rows[ind], ind)
-            let lineStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.line, style)
+            let mergeStyle = deepObjectMerge({ strokeColor: colors[ind], smooth }, styles.line)
+            let style = this.style('line')(mergeStyle, this.dataset.rows[ind], ind)
+            let lineStyle = deepObjectMerge(mergeStyle, style)
             return line.state === 'disabled' || style === false ? null : <Polyline {...lineStyle} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
@@ -98,9 +101,9 @@ class Line extends Base {
           {this.type !== 'area'
             ? null
             : lines.map((line, ind) => {
-                let style = this.style('line')(this.dataset.rows[ind], ind)
-                let areaStyle = this.style('area')(deepObjectMerge({ fillColor: colors[ind] }, styles.area), this.dataset.rows[ind], ind)
-                areaStyle = deepObjectMerge({ fillColor: colors[ind] }, styles.area, style, areaStyle)
+                let mergeStyle = deepObjectMerge({ fillColor: colors[ind], smooth }, styles.area)
+                let style = this.style('area')(mergeStyle, this.dataset.rows[ind], ind)
+                let areaStyle = deepObjectMerge(mergeStyle, style)
                 return line.state === 'disabled' || style === false ? null : <Polyline smoothRange={line.smoothRange} {...areaStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
         </Group>

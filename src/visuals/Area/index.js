@@ -1,7 +1,7 @@
 import Line from '../Line'
 class Area extends Line {
-  constructor() {
-    super()
+  constructor(attrs) {
+    super(attrs)
     this.type = 'area'
   }
   defaultAttrs() {
