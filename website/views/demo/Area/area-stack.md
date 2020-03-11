@@ -34,7 +34,7 @@ chart.source(data, {
   text: 'date'
 })
 
-const area = new Area().style('point', { fillColor: 'transparent', strokeColor: 'transparent' }).style('point:hover', { strokeColor: '#fff' })
+const area = new Area({ smooth: true }).style('point', { fillColor: 'transparent', strokeColor: 'transparent' }).style('point:hover', { strokeColor: '#fff' })
 
 const axisBottom = new Axis()
 
