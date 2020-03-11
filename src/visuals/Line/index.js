@@ -58,6 +58,7 @@ class Line extends Base {
   getRenderData() {
     //根据line的特性返回需要数据
     let renderAttrs = this.renderAttrs
+    //console.log(renderAttrs)
     let renderData = this.dataset[renderAttrs.layoutBy]
     let arrLayout = layout.call(this, renderData, renderAttrs)
     let { height, width } = renderAttrs.clientRect
