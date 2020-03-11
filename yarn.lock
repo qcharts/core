@@ -810,12 +810,12 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@qcharts/dataset@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npm.taobao.org/@qcharts/dataset/download/@qcharts/dataset-0.0.3.tgz?cache=0&sync_timestamp=1583804681529&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Fdataset%2Fdownload%2F%40qcharts%2Fdataset-0.0.3.tgz#6ca1cbb89ffaa24f3e5090c8b42c905781d7bcba"
-  integrity sha1-bKHLuJ/6ok8+UJDItCyQV4HXvLo=
+"@qcharts/dataset@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.npm.taobao.org/@qcharts/dataset/download/@qcharts/dataset-0.0.4.tgz#cd117c55c5735d8afff166601d9690a8c972e8b4"
+  integrity sha1-zRF8VcVzXYr/8WZgHZaQqMly6LQ=
   dependencies:
-    "@qcharts/utils" "^0.0.1"
+    "@qcharts/utils" "^0.0.3"
 
 "@qcharts/utils@^0.0.1":
   version "0.0.1"
@@ -827,10 +827,10 @@
   resolved "https://registry.npm.taobao.org/@qcharts/utils/download/@qcharts/utils-0.0.3.tgz#bfc7a7c36d7d5a7ef47994e4f9d74f9589ccbc56"
   integrity sha1-v8enw219Wn70eZTk+ddPlYnMvFY=
 
-"@qcharts/vnode@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.3.tgz#e9c07543b2711a6213189ef2101e2bab20ed77f4"
-  integrity sha1-6cB1Q7JxGmITGJ7yEB4rqyDtd/Q=
+"@qcharts/vnode@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.4.tgz?cache=0&sync_timestamp=1583936755761&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Fvnode%2Fdownload%2F%40qcharts%2Fvnode-0.0.4.tgz#563a142f103a95105a3fff5a252a0d08fa1a125f"
+  integrity sha1-VjoULxA6lRBaP/9aJSoNCPoaEl8=
   dependencies:
     "@qcharts/utils" "^0.0.1"
     filter-clone "0.0.12"
