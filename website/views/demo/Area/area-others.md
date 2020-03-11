@@ -36,24 +36,17 @@ const newData = [
 ]
 
 const { Chart, Area, Axis } = qcharts
-
 const chart = new Chart({
   container: '#app'
 })
-
 chart.source(data, {
   row: 'year',
   value: 'sales',
   text: 'product'
 })
-
 const area = new Area().style('point', { fillColor: 'transparent', strokeColor: 'transparent' }).style('point:hover', { strokeColor: '#fff' })
-
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
-
-area.style('symbol:hover', { fillColor: '#f00' })
-
 chart.append([area, axisBottom, axisLeft])
 chart.render()
 
