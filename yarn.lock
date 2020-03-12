@@ -827,10 +827,10 @@
   resolved "https://registry.npm.taobao.org/@qcharts/utils/download/@qcharts/utils-0.0.3.tgz#bfc7a7c36d7d5a7ef47994e4f9d74f9589ccbc56"
   integrity sha1-v8enw219Wn70eZTk+ddPlYnMvFY=
 
-"@qcharts/vnode@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.5.tgz?cache=0&sync_timestamp=1584021051308&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Fvnode%2Fdownload%2F%40qcharts%2Fvnode-0.0.5.tgz#5ac49a0c1204db8022f48209dfb1fef0481c7bb6"
-  integrity sha1-WsSaDBIE24Ai9IIJ37H+8Egce7Y=
+"@qcharts/vnode@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.6.tgz?cache=0&sync_timestamp=1584023356247&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Fvnode%2Fdownload%2F%40qcharts%2Fvnode-0.0.6.tgz#8a922d3ec67b27264a55356edfc4a6d4bd47e50b"
+  integrity sha1-ipItPsZ7JyZKVTVu38Sm1L1H5Qs=
   dependencies:
     "@qcharts/utils" "^0.0.1"
     filter-clone "0.0.12"
