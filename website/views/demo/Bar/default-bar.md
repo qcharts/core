@@ -28,7 +28,7 @@ const bar = new Bar({
   transpose: true,
   barWidth: 18
 })
-bar.style('pillar', { fillColor: '#47A1FF' })
+bar.style('pillar', { bgcolor: '#47A1FF' })
 // const tooltip = new Tooltip({
 //   formatter: d => `${d.label}: ${d.value}`
 // }).style('icon', { fillColor: '#47A1FF' })
