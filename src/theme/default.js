@@ -38,6 +38,16 @@ theme.visuals = {
       area: { opacity: 0.5 }
     },
     attrs: {}
+  },
+  Bar: {
+    colors: theme.colors,
+    styles: {
+      bar: {},
+      groupBar: { opacity: 0.1 }
+    },
+    attrs: {
+      statck: false
+    }
   }
 }
 theme.plugins = {

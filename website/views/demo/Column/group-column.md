@@ -63,15 +63,15 @@ const bar = new Bar({
   transpose: false,
   barWidth: 20
 })
-const tooltip = new Tooltip({
-  formatter: d => `${d.product} - ${d.year} - ${d.sales}`
-})
-const legend = new Legend({ align: ['center', 'bottom'] })
+// const tooltip = new Tooltip({
+//   formatter: d => `${d.product} - ${d.year} - ${d.sales}`
+// })
+// const legend = new Legend({ align: ['center', 'bottom'] })
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
   .style('axis', false)
   .style('scale', false)
-chart.add([bar, tooltip, legend, axisBottom, axisLeft])
+chart.append([bar, axisBottom, axisLeft])
 chart.render()
 ```
 

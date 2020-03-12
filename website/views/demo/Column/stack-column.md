@@ -97,15 +97,15 @@ chart.source(data, {
 const bar = new Bar({
   stack: true
 })
-const tooltip = new Tooltip({
-  formatter: d => `${d.type}: ${d.value}`
-})
-const legend = new Legend({ align: ['center', 'bottom'] })
+// const tooltip = new Tooltip({
+//   formatter: d => `${d.type}: ${d.value}`
+// })
+// const legend = new Legend({ align: ['center', 'bottom'] })
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
   .style('axis', false)
   .style('scale', false)
-chart.add([bar, tooltip, legend, axisBottom, axisLeft])
+chart.append([bar, axisBottom, axisLeft])
 chart.render()
 ```
 
