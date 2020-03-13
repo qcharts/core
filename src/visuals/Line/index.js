@@ -7,6 +7,7 @@ class Line extends Base {
     super(attrs)
     this.renderLines = []
     this.type = 'line'
+    this.guidePoints = []
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -81,6 +82,34 @@ class Line extends Base {
       smooth: false
     }
   }
+  guidelinemove(event, el) {
+    if (this.renderLines.length) {
+      //获取 x轴坐标的刻度
+      let arrX = this.renderLines[0].to.points.map(pos => pos[0])
+      //转换
+      let [x, y] = el.getOffsetPosition(event.x, event.y)
+      let curInd = 0
+      //查找当前位置
+      for (let i = 0; i < arrX.length; i++) {
+        if (x > arrX[i] && x < arrX[i + 1]) {
+          curInd = Math.abs(x - arrX[i]) < Math.abs(x - arrX[i + 1]) ? i : i + 1
+          break
+        }
+      }
+      //重置所有的dateset的状态
+      this.dataset.resetState()
+      //设置当前列的state为hover
+      this.dataset.cols[curInd].state = 'hover'
+      let { clientRect } = this.renderAttrs
+      let posX = arrX[curInd]
+      this.guidePoints = [
+        [posX, 0],
+        [posX, clientRect.height]
+      ]
+      console.log(this.guidePoints)
+      this.update()
+    }
+  }
   render(lines) {
     let { clientRect, smooth } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
@@ -107,6 +136,9 @@ class Line extends Base {
                 let areaStyle = deepObjectMerge(mergeStyle, style)
                 return line.state === 'disabled' || style === false ? null : <Polyline smoothRange={line.smoothRange} {...areaStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
+        </Group>
+        <Group class="guide-line-group" onMousemove={this.guidelinemove} size={[clientRect.width, clientRect.height]} pos={[clientRect.left, clientRect.top]}>
+          {this.guidePoints.length ? <Polyline points={this.guidePoints} ref="guideline" strokeColor={'#f00'} /> : null}
         </Group>
       </Group>
     )
