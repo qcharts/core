@@ -14,7 +14,6 @@ class Tooltip extends Base {
   beforeRender() {}
   beforeUpdate() {}
   rendered() {
-    console.log('aaa', this.renderAttrs)
     let targetVisual = this.chart.visuals[0]
     targetVisual.dataset.on('change', data => {
       let { option } = data
@@ -29,8 +28,8 @@ class Tooltip extends Base {
       }
     })
     document.body.addEventListener('mousemove', e => {
-      this.$tooltip.style.left = e.x + 'px'
-      this.$tooltip.style.top = e.y + 'px'
+      this.$tooltip.style.left = e.x + 5 + 'px'
+      this.$tooltip.style.top = e.y + 5 + 'px'
     })
   }
   tipMousemove(event, el) {
@@ -43,6 +42,7 @@ class Tooltip extends Base {
       this.$tooltip.className = 'qcharts-tooltip'
       this.$tooltip.style.position = 'absolute'
       this.$tooltip.style.pointerEvents = 'none'
+      this.$tooltip.style.border = '1px solid #ddd'
     }
     document.body.append(this.$tooltip)
   }
