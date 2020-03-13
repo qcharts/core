@@ -119,12 +119,12 @@ class Line extends Base {
     this.renderLines = lines
     return (
       <Group class="container" ref="wrap">
-        <Group ref="lines" class="lines-group" pos={[clientRect.left, clientRect.top]}>
+        <Group onClick={this.myclick} ref="lines" class="lines-group" size={[clientRect.width, clientRect.height]} pos={[clientRect.left, clientRect.top]}>
           {lines.map((line, ind) => {
             let mergeStyle = deepObjectMerge({ strokeColor: colors[ind], smooth }, styles.line)
             let style = this.style('line')(mergeStyle, this.dataset.rows[ind], ind)
             let lineStyle = deepObjectMerge(mergeStyle, style)
-            return line.state === 'disabled' || style === false ? null : <Polyline {...lineStyle} animation={{ from: line.from, to: line.to }} />
+            return line.state === 'disabled' || style === false ? null : <Polyline onClick={this.lineClick} {...lineStyle} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
         <Group ref="areas" class="areas-group" pos={[clientRect.left, clientRect.top]}>
