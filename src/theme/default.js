@@ -41,6 +41,11 @@ theme.visuals = {
   }
 }
 theme.plugins = {
+  Tooltip: {
+    colors: theme.colors,
+    styles: {},
+    attrs: {}
+  },
   Axis: {
     colors: theme.colors,
     styles: {

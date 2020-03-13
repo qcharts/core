@@ -31,9 +31,11 @@ line.style('point', { strokeColor: '#fff' })
 
 const axisBottom = new Axis()
 
+const toolTip = new Tooltip()
+
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-chart.append([line, axisBottom, axisLeft])
+chart.append([line, axisBottom, axisLeft, toolTip])
 chart.render()
 ```
 
