@@ -74,6 +74,7 @@ class LineTest extends Base {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
       guidePoints: [],
+      //添加一些state做演示效果
       lineState: 'default',
       states: {
         line: {
@@ -91,7 +92,9 @@ class LineTest extends Base {
     }
   }
   guidelineleave(event, el) {
+    //重置guidePoints属性，此时视图会自动更新
     this.attr('guidePoints', [])
+    //重置dataset，此时会触发dataset的change事件，name为reset
     this.dataset.resetState()
   }
   guidelinemove(event, el) {
@@ -111,11 +114,12 @@ class LineTest extends Base {
       //重置所有的dateset的状态
       if (this.hoverIndex !== curInd) {
         this.dataset.resetState()
-        //设置当前列的state为hover
+        //设置当前列的state为hover,此时会触发dataset的change事件，其中，cell与对应的col都会触发
         this.dataset.cols[curInd].state = 'hover'
         let { clientRect } = this.renderAttrs
         let posX = arrX[curInd]
         this.hoverIndex = curInd
+        //修改lineState、guidePoints属性，attr修改会触发视图自动更新
         this.attr({
           guidePoints: [
             [posX, 0],
@@ -127,6 +131,7 @@ class LineTest extends Base {
     }
   }
   myclick() {
+    //修改lineState属性，attr修改会触发视图自动更新
     this.attr('lineState', 'hover')
   }
   render(lines) {
