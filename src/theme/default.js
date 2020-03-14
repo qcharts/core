@@ -32,6 +32,15 @@ theme.visuals = {
       statck: false
     }
   },
+  LineTest: {
+    colors: theme.colors,
+    styles: {
+      line: { lineWidth: 1 }
+    },
+    attrs: {
+      statck: false
+    }
+  },
   Area: {
     colors: theme.colors,
     styles: {
@@ -41,6 +50,11 @@ theme.visuals = {
   }
 }
 theme.plugins = {
+  Tooltip: {
+    colors: theme.colors,
+    styles: {},
+    attrs: {}
+  },
   Axis: {
     colors: theme.colors,
     styles: {
