@@ -53,7 +53,6 @@ class Chart extends Base {
     } else if (node instanceof BasePlugin) {
       this.plugins.push(node)
     }
-    console.log(node)
     node.chart = this
     node.scene = this.scene
     this.checkRender()
