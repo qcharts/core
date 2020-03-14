@@ -1,6 +1,6 @@
 import { Node, Group } from 'spritejs'
 import { lifeCycle, mixin } from './mixin'
-import { emptyObject, deepObjectMerge, jsType, getDistancePx, debounce } from '@qcharts/utils'
+import { emptyObject, deepObjectMerge, jsType, getDistancePx, debounce, throttle } from '@qcharts/utils'
 import { patch, diff } from '@qcharts/vnode'
 import Dataset from '@qcharts/dataset'
 class Base extends Node {
@@ -16,6 +16,11 @@ class Base extends Node {
     store.__refs = emptyObject()
     store.dataset = null
     this.attr(attrs)
+    this.__update = throttle(_ => {
+      if (store.__isCreated__) {
+        this.update()
+      }
+    })
     //渲染时的数据
   }
   get store() {
@@ -79,7 +84,7 @@ class Base extends Node {
     }
     if (store.dataset && store.__isCreated__) {
       //如果以前存在，则更新
-      this.update()
+      this.__update()
     }
     return this
   }
@@ -93,12 +98,8 @@ class Base extends Node {
     patch.bind(this)(this.$el || this.layer, patches, 1)
     this.dispatchEvent(lifeCycle.rendered)
     this.rendered()
-    this.dataset.on(
-      'change',
-      debounce(_ => {
-        this.update()
-      })
-    )
+    store.__isCreated__ = true
+    this.dataset.on('change', this.__update)
   }
   beforeRender() {
     //图表初始化准备数据
@@ -176,6 +177,7 @@ class Base extends Node {
       return store.__attrs[name]
     } else if (name !== undefined) {
       store.__attrs[name] = val
+      store.__isCreated__ && this.__update()
     }
   }
   addRef(ref, el) {

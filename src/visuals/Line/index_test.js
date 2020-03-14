@@ -2,7 +2,7 @@ import Base from '../../base/BaseVisual'
 import { Group, Polyline } from 'spritejs'
 import { deepObjectMerge } from '@qcharts/utils'
 import layout from './layout'
-class Line extends Base {
+class LineTest extends Base {
   constructor(attrs) {
     super(attrs)
     this.renderLines = []
@@ -74,6 +74,13 @@ class Line extends Base {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
       guidePoints: [],
+      lineState: 'default',
+      states: {
+        line: {
+          default: { strokeColor: '#0ff' },
+          hover: { strokeColor: '#f00' }
+        }
+      },
       layer: 'line'
     }
   }
@@ -88,7 +95,6 @@ class Line extends Base {
     this.dataset.resetState()
   }
   guidelinemove(event, el) {
-    //throttle(_ => {
     if (this.renderLines.length) {
       //获取 x轴坐标的刻度
       let arrX = this.renderLines[0].to.points.map(pos => pos[0])
@@ -119,7 +125,6 @@ class Line extends Base {
         })
       }
     }
-    //})()
   }
   myclick() {
     this.attr('lineState', 'hover')
@@ -145,7 +150,9 @@ class Line extends Base {
             let mergeStyle = deepObjectMerge({ strokeColor: colors[ind], smooth }, styles.line)
             let style = this.style('line')(mergeStyle, this.dataset.rows[ind], ind)
             let lineStyle = deepObjectMerge(mergeStyle, style)
-            return line.state === 'disabled' || style === false ? null : <Polyline onClick={this.lineClick} {...lineStyle} animation={{ from: line.from, to: line.to }} />
+            return line.state === 'disabled' || style === false ? null : (
+              <Polyline state={lineState} states={states.line} onClick={this.lineClick} {...lineStyle} animation={{ from: line.from, to: line.to }} />
+            )
           })}
         </Group>
         <Group ref="areas" class="areas-group">
@@ -163,4 +170,4 @@ class Line extends Base {
     )
   }
 }
-export default Line
+export default LineTest
