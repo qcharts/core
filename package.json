@@ -9,8 +9,8 @@
     "build": "npm run build:docs && npm run build:chart && echo 'Build successfully!'",
     "babel": "rimraf lib && cross-env NODE_ENV=babel babel src --out-dir lib",
     "build:chart": "rimraf dist && webpack --config ./build/webpack.conf.prod.chart.js",
-    "build:wxapp": "cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.chart.wxapp.js",
-    "build:docs": "rimraf docs && cross-env NODE_ENV=production webpack --config ./build/webpack.conf.prod.docs.js",
+    "build:wxapp": "webpack --config ./build/webpack.conf.prod.chart.wxapp.js",
+    "build:docs": "rimraf docs && webpack --config ./build/webpack.conf.prod.docs.js",
     "prepublishOnly": "npm run babel && npm run build:chart"
   },
   "dependencies": {

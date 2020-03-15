@@ -6,7 +6,7 @@ const common = require('./webpack.conf.common')
 
 module.exports = merge(common, {
   mode: 'production',
-  entry: path.resolve(__dirname, '../demo/'),
+  entry: path.resolve(__dirname, '../website/'),
   output: {
     path: path.join(__dirname, '../docs'),
     filename: '[name].[hash].js',
@@ -40,7 +40,7 @@ module.exports = merge(common, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../demo/index.html'),
+      template: path.resolve(__dirname, '../website/index.html'),
       filename: 'index.html'
     })
   ]
