@@ -1,6 +1,6 @@
 import Base from '../../base/BasePlugin'
 import { Group, Label, Polyline } from 'spritejs'
-import { deepObjectMerge, emptyObject } from '@qcharts/utils'
+import { emptyObject } from '@qcharts/utils'
 import filterClone from 'filter-clone'
 import layout from './layout'
 class Axis extends Base {
@@ -14,6 +14,7 @@ class Axis extends Base {
     return attrs
   }
   beforeRender() {
+    this.layer.zIndex = -1
     let { axis } = this.getRenderData()
     return axis
   }
