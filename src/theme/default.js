@@ -1,12 +1,5 @@
-const theme = {
-  __colors__: ['#47A1FF', '#6CD3FF', '#A2E5FF', '#4DCCCB', '#3FDDC7', '#84E0BE', '#59CB74', '#ADDF84', '#FBD54A', '#FFB952', '#F79452', '#E37474', '#FC6980', '#ED8CCE', '#DA65CC', '#9861E5', '#9F8CF1', '#6367EC', '#5982F6', '#659AEC'],
-  get colors() {
-    return this.__colors__
-  },
-  set colors(arr) {
-    return this.__colors__.splice(0, this.__colors__.length - 1, ...arr)
-  }
-}
+import { deepObjectMerge } from '@qcharts/utils'
+const theme = { colors: ['#47A1FF', '#6CD3FF', '#A2E5FF', '#4DCCCB', '#3FDDC7', '#84E0BE', '#59CB74', '#ADDF84', '#FBD54A', '#FFB952', '#F79452', '#E37474', '#FC6980', '#ED8CCE', '#DA65CC', '#9861E5', '#9F8CF1', '#6367EC', '#5982F6', '#659AEC'] }
 theme.visuals = {
   Line: {
     colors: theme.colors,
@@ -62,5 +55,8 @@ theme.plugins = {
     }
   }
 }
-
+theme.merge = function(obj) {
+  //合并样式
+  deepObjectMerge(theme, obj)
+}
 export default theme
