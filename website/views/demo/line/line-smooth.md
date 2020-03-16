@@ -22,7 +22,17 @@ const data = [
   { date: '05-08', catgory: '图例二', sales: 85.2 }
 ]
 
-const { Chart, Line, Axis, Tooltip } = qcharts
+const { Chart, Line, Axis, Tooltip, theme } = qcharts
+//修改全局样式
+theme.set({
+  visuals: {
+    Line: {
+      styles: {
+        line: { lineWidth: 2 }
+      }
+    }
+  }
+})
 
 const chart = new Chart({
   container: '#app'
