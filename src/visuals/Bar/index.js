@@ -116,15 +116,13 @@ class Bar extends Base {
     return {}
   }
   onMouseenter(e, el, ind) {
-    console.log('enter---' + ind)
     let { bgpillarState } = this.renderAttrs
     bgpillarState[ind] = 'hover'
     this.attr('bgpillarState', bgpillarState)
     this.dataset.resetState()
-    //设置当前列的state为hover
     this.dataset.cols[ind].state = 'hover'
-    // el.attr({ opacity: 0.1 })
   }
+
   onMouseleave(e, el, ind) {
     this.dataset.resetState()
     let { bgpillarState } = this.renderAttrs
