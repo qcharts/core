@@ -24,7 +24,7 @@ const data = [
 
 const { Chart, Line, Axis, Tooltip, theme } = qcharts
 //修改全局样式
-theme.merge({
+theme.set({
   visuals: {
     Line: {
       styles: {

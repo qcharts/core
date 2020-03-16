@@ -55,7 +55,7 @@ theme.plugins = {
     }
   }
 }
-theme.merge = function(obj) {
+theme.set = function(obj) {
   //合并样式
   deepObjectMerge(theme, obj)
 }

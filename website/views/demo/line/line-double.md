@@ -24,7 +24,7 @@ const data = [
 
 const { Chart, Line, Axis, Tooltip, theme } = qcharts
 
-theme.merge({
+theme.set({
   colors: ['#71dac7', '#d57a77']
 })
 const chart = new Chart({
