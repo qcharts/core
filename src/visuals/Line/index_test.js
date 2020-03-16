@@ -2,11 +2,12 @@ import Base from '../../base/BaseVisual'
 import { Group, Polyline } from 'spritejs'
 import { deepObjectMerge } from '@qcharts/utils'
 import layout from './layout'
-class Line extends Base {
+class LineTest extends Base {
   constructor(attrs) {
     super(attrs)
     this.renderLines = []
     this.type = 'line'
+    this.guidePoints = []
     this.hoverIndex = -1
   }
   get renderAttrs() {
@@ -73,6 +74,14 @@ class Line extends Base {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
       guidePoints: [],
+      //添加一些state做演示效果
+      lineState: 'default',
+      states: {
+        line: {
+          default: { strokeColor: '#0ff' },
+          hover: { strokeColor: '#f00' }
+        }
+      },
       layer: 'line'
     }
   }
@@ -83,7 +92,9 @@ class Line extends Base {
     }
   }
   guidelineleave(event, el) {
+    //重置guidePoints属性，此时视图会自动更新
     this.attr('guidePoints', [])
+    //重置dataset，此时会触发dataset的change事件，name为reset
     this.dataset.resetState()
   }
   guidelinemove(event, el) {
@@ -103,11 +114,12 @@ class Line extends Base {
       //重置所有的dateset的状态
       if (this.hoverIndex !== curInd) {
         this.dataset.resetState()
-        //设置当前列的state为hover
+        //设置当前列的state为hover,此时会触发dataset的change事件，其中，cell与对应的col都会触发
         this.dataset.cols[curInd].state = 'hover'
         let { clientRect } = this.renderAttrs
         let posX = arrX[curInd]
         this.hoverIndex = curInd
+        //修改lineState、guidePoints属性，attr修改会触发视图自动更新
         this.attr({
           guidePoints: [
             [posX, 0],
@@ -118,45 +130,49 @@ class Line extends Base {
       }
     }
   }
+  myclick() {
+    //修改lineState属性，attr修改会触发视图自动更新
+    this.attr('lineState', 'hover')
+  }
   render(lines) {
-    let { clientRect, smooth, guidePoints } = this.renderAttrs
+    let { clientRect, smooth, states, lineState, guidePoints } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
     //当前主体颜色
     let colors = this.theme.colors
     this.renderLines = lines
     return (
-      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove} size={[clientRect.width, clientRect.height]}>
-        <Group class="lines-group">
+      <Group
+        class="container"
+        pos={[clientRect.left, clientRect.top]}
+        onMouseleave={this.guidelineleave}
+        onMousemove={this.guidelinemove}
+        size={[clientRect.width, clientRect.height]}
+        onClick={this.myclick}
+      >
+        <Group ref="lines" class="lines-group">
           {lines.map((line, ind) => {
             let mergeStyle = deepObjectMerge({ strokeColor: colors[ind], smooth }, styles.line)
             let style = this.style('line')(mergeStyle, this.dataset.rows[ind], ind)
-            let renderStyle = deepObjectMerge(mergeStyle, style)
-            return line.state === 'disabled' || style === false ? null : <Polyline onClick={this.lineClick} {...renderStyle} animation={{ from: line.from, to: line.to }} />
+            let lineStyle = deepObjectMerge(mergeStyle, style)
+            return line.state === 'disabled' || style === false ? null : (
+              <Polyline state={lineState} states={states.line} onClick={this.lineClick} {...lineStyle} animation={{ from: line.from, to: line.to }} />
+            )
           })}
         </Group>
-        <Group class="areas-group">
+        <Group ref="areas" class="areas-group">
           {this.type !== 'area'
             ? null
             : lines.map((line, ind) => {
                 let mergeStyle = deepObjectMerge({ fillColor: colors[ind], smooth }, styles.area)
                 let style = this.style('area')(mergeStyle, this.dataset.rows[ind], ind)
-                let renderStyle = deepObjectMerge(mergeStyle, style)
-                return line.state === 'disabled' || style === false ? null : <Polyline smoothRange={line.smoothRange} {...renderStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
+                let areaStyle = deepObjectMerge(mergeStyle, style)
+                return line.state === 'disabled' || style === false ? null : <Polyline smoothRange={line.smoothRange} {...areaStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
         </Group>
-        <Group class="guide-line-group">
-          {guidePoints.length
-            ? (_ => {
-                let mergeStyle = deepObjectMerge({}, styles.guideline)
-                let style = this.style('area')(mergeStyle)
-                let renderStyle = deepObjectMerge(mergeStyle, style)
-                return <Polyline points={guidePoints} {...renderStyle} />
-              })()
-            : null}
-        </Group>
+        <Group class="guide-line-group">{guidePoints.length ? <Polyline points={guidePoints} strokeColor={'#f00'} /> : null}</Group>
       </Group>
     )
   }
 }
-export default Line
+export default LineTest

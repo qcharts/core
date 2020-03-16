@@ -22,7 +22,7 @@ const data = [
   { date: '05-08', category: '图例二', sales: 45.2 }
 ]
 
-const { Chart, Area, Axis } = qcharts
+const { Chart, Area, Axis, Tooltip } = qcharts
 
 const chart = new Chart({
   container: '#app'
@@ -37,10 +37,10 @@ chart.source(data, {
 const area = new Area({ smooth: true }).style('point', { fillColor: 'transparent', strokeColor: 'transparent' }).style('point:hover', { strokeColor: '#fff' })
 
 const axisBottom = new Axis()
-
+const tooltip = new Tooltip()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-chart.append([area, axisBottom, axisLeft])
+chart.append([area, axisBottom, axisLeft, tooltip])
 chart.render()
 ```
 

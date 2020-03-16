@@ -14,7 +14,7 @@ const data = [
   { date: '05-08', catgory: '图例一', sales: 100 }
 ]
 
-const { Chart, Line, Legend, Tooltip, Axis } = qcharts
+const { Chart, LineTest, Legend, Tooltip, Axis } = qcharts
 
 const chart = new Chart({
   container: '#app'
@@ -26,7 +26,7 @@ chart.source(data, {
   text: 'date'
 })
 
-const line = new Line()
+const line = new LineTest()
 line.style('point', { strokeColor: '#fff' })
 
 const axisBottom = new Axis()

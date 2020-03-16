@@ -17,7 +17,11 @@ module.exports = merge(common, {
     libraryTarget: 'umd'
   },
   optimization: {
-    minimizer: [new TerserPlugin()]
+    minimizer: [
+      new TerserPlugin({
+        sourceMap: true
+      })
+    ]
   },
   externals: {
     spritejs: {
