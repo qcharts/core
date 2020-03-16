@@ -94,23 +94,45 @@ class Bar extends Base {
     //console.log(this.$refs['wrap'])
   }
   defaultAttrs() {
+    let renderData = this.dataset['rows']
+    let stateArray = Array.from(
+      { length: renderData[0].length },
+      () => 'defalut'
+    )
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
-      layer: 'bar'
+      layer: 'bar',
+      bgpillarState: stateArray,
+      states: {
+        bgpillar: {
+          default: { opacity: 0.01 },
+          hover: { opacity: 0.1 }
+        }
+      }
     }
   }
   defaultStyles() {
     // 默认的样式,继承base
     return {}
   }
-  onMouseenter(e, el) {
-    el.attr({ opacity: 0.1 })
+  onMouseenter(e, el, ind) {
+    console.log('enter---' + ind)
+    let { bgpillarState } = this.renderAttrs
+    bgpillarState[ind] = 'hover'
+    this.attr('bgpillarState', bgpillarState)
+    this.dataset.resetState()
+    //设置当前列的state为hover
+    this.dataset.cols[ind].state = 'hover'
+    // el.attr({ opacity: 0.1 })
   }
-  onMouseleave(e, el) {
-    el.attr({ opacity: 0.01 })
+  onMouseleave(e, el, ind) {
+    this.dataset.resetState()
+    let { bgpillarState } = this.renderAttrs
+    bgpillarState[ind] = 'defualt'
+    this.attr('bgpillarState', bgpillarState)
   }
   render(data) {
-    let { clientRect } = this.renderAttrs
+    let { clientRect, bgpillarState, states } = this.renderAttrs
     return (
       <Group
         class="container"
@@ -130,12 +152,17 @@ class Bar extends Base {
         </Group>
         <Group ref="bgpillar" class="bgpillars-group">
           {data.groupData.map((pillar, ind) => {
-            console.log(pillar)
             return (
               <Sprite
+                state={bgpillarState[ind]}
+                states={states.bgpillar}
                 {...pillar}
-                onMouseenter={this.onMouseenter}
-                onMouseleave={this.onMouseleave}
+                onMouseenter={(e, el) => {
+                  this.onMouseenter(e, el, ind)
+                }}
+                onMouseleave={(e, el) => {
+                  this.onMouseleave(e, el, ind)
+                }}
               />
             )
           })}
