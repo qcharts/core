@@ -29,9 +29,7 @@ class Tooltip extends Base {
   beforeUpdate() {}
   rendered() {
     let targetVisual = this.chart.visuals[0]
-    let renderAttrs = this.renderAttrs
     let { colors, sort, formatter } = this.renderAttrs
-    console.log(renderAttrs)
     targetVisual.dataset.on('change', data => {
       let { option } = data
       this.$tooltip.innerHTML = ''
