@@ -13,7 +13,7 @@ export default function layout(arr, attrs) {
   const barData = []
   const groupData = []
 
-  const bgPillarAttr = { opacity: 0.00001, bgcolor: '#000' }
+  const bgPillarAttr = { opacity: 0.01, bgcolor: '#000' }
 
   const valueAxis = axis({ dataSet: data, stack, splitNumber })
   if (!valueAxis || !valueAxis.length) {

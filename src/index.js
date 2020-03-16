@@ -3,6 +3,7 @@ import Dataset from '@qcharts/dataset'
 import Line from './visuals/Line/index'
 import Area from './visuals/Area/index'
 import Bar from './visuals/Bar/index'
+import PolarBar from './visuals/PolarBar/index'
 import Axis from './plugins/Axis/index'
 import platform from './base/platform'
 import Chart from './Chart'
@@ -12,6 +13,7 @@ const qcharts = {
   Line,
   Area,
   Bar,
+  PolarBar,
   Axis,
   h,
   theme,
@@ -20,5 +22,5 @@ const qcharts = {
 if (process.env.NODE_ENV === 'development') {
   platform.qcharts = qcharts
 }
-export { qcharts, Dataset, Line, Area, Bar, Axis, Chart, h, theme }
+export { qcharts, Dataset, Line, Area, Bar, PolarBar, Axis, Chart, h, theme }
 export default qcharts

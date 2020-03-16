@@ -6,7 +6,6 @@ import filterClone from 'filter-clone'
 class Bar extends Base {
   constructor(attrs) {
     super(attrs)
-    this.renderLines = []
     this.type = 'bar'
     this.pillars = null
     this.groups = null
@@ -104,21 +103,39 @@ class Bar extends Base {
     // 默认的样式,继承base
     return {}
   }
+  onMouseenter(e, el) {
+    el.attr({ opacity: 0.1 })
+  }
+  onMouseleave(e, el) {
+    el.attr({ opacity: 0.01 })
+  }
   render(data) {
     let { clientRect } = this.renderAttrs
     return (
-      <Group class="container" ref="wrap">
-        <Group
-          ref="pillars"
-          class="pillars-group"
-          pos={[clientRect.left, clientRect.top]}
-        >
+      <Group
+        class="container"
+        ref="wrap"
+        pos={[clientRect.left, clientRect.top]}
+      >
+        <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
             return (
               <Sprite
                 {...pillar.attrs}
                 size={pillar.from.size}
                 animation={{ from: pillar.from, to: pillar.to }}
+              />
+            )
+          })}
+        </Group>
+        <Group ref="bgpillar" class="bgpillars-group">
+          {data.groupData.map((pillar, ind) => {
+            console.log(pillar)
+            return (
+              <Sprite
+                {...pillar}
+                onMouseenter={this.onMouseenter}
+                onMouseleave={this.onMouseleave}
               />
             )
           })}

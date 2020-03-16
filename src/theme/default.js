@@ -48,6 +48,15 @@ theme.visuals = {
     attrs: {
       statck: false
     }
+  },
+  PolarBar: {
+    colors: theme.colors,
+    styles: {
+      bar: {}
+    },
+    attrs: {
+      statck: false
+    }
   }
 }
 theme.plugins = {
