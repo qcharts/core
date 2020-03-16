@@ -22,8 +22,9 @@ const data = [
   { date: '05-08', catgory: '图例二', sales: 85.2 }
 ]
 
-const { Chart, Line, Axis, Tooltip } = qcharts
+const { Chart, Line, Axis, Tooltip, theme } = qcharts
 
+theme.colors = ['#cb6fc7', '#5ca2f8']
 const chart = new Chart({
   container: '#app'
 })
