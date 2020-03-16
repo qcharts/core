@@ -24,7 +24,8 @@ theme.visuals = {
   Area: {
     colors: theme.colors,
     styles: {
-      area: { opacity: 0.5 }
+      area: { opacity: 0.5 },
+      guideline: { strokeColor: '#ddd' }
     },
     attrs: {}
   }

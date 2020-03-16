@@ -108,7 +108,6 @@ export default {
       oDemo.innerHTML = `<iframe class="chart-frame" frameborder="0"></iframe>`
 
       // FIXME: 发布以后改地址
-      console.log(process.env.NODE_ENV)
       let qchartsSrc =
         process.env.NODE_ENV === 'development'
           ? location.origin + '/qcharts.js'
@@ -117,10 +116,9 @@ export default {
         process.env.NODE_ENV === 'development'
           ? 'https://unpkg.com/spritejs@3/dist/spritejs.min.js'
           : 'https://unpkg.com/spritejs@3/dist/spritejs.min.js'
-
       const iframe = oDemo.querySelector('iframe')
       iframe.contentWindow.document.write(
-        `<div id="app" style="width: 100%; height: 100%; overflow: hidden"><\/div>
+        `<style>body{width:100%;overflow:hidden}</style><div id="app" style="width: 100%; height: 100%; overflow: hidden"><\/div>
         <script src=${spritejsSrc}><\/script>
         <script src=${qchartsSrc}><\/script>
         <script>${this.editor.getValue()}<\/script>`
