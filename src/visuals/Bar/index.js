@@ -10,6 +10,7 @@ class Bar extends Base {
     this.pillars = null
     this.groups = null
     this.fromTos = null
+    this.hoverIndex = -1
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -116,18 +117,28 @@ class Bar extends Base {
     return {}
   }
   onMouseenter(e, el, ind) {
-    let { bgpillarState } = this.renderAttrs
-    bgpillarState[ind] = 'hover'
-    this.attr('bgpillarState', bgpillarState)
-    this.dataset.resetState()
-    this.dataset.cols[ind].state = 'hover'
+    if (this.hoverIndex !== ind) {
+      console.log('mouseenter' + ind)
+      let { bgpillarState } = this.renderAttrs
+      bgpillarState[ind] = 'hover'
+      this.attr('bgpillarState', bgpillarState)
+      this.dataset.resetState()
+      this.dataset.cols[ind].state = 'hover'
+      this.hoverIndex = ind
+    }
   }
 
   onMouseleave(e, el, ind) {
+    if (this.hoverIndex !== ind) {
+      console.log('mouseleave' + ind)
+      let { bgpillarState } = this.renderAttrs
+      bgpillarState[ind] = 'defualt'
+      this.attr('bgpillarState', bgpillarState)
+      this.hoverIndex = ind
+    }
+  }
+  onContainerMouseleave() {
     this.dataset.resetState()
-    let { bgpillarState } = this.renderAttrs
-    bgpillarState[ind] = 'defualt'
-    this.attr('bgpillarState', bgpillarState)
   }
   render(data) {
     let { clientRect, bgpillarState, states } = this.renderAttrs
@@ -136,6 +147,8 @@ class Bar extends Base {
         class="container"
         ref="wrap"
         pos={[clientRect.left, clientRect.top]}
+        size={[clientRect.width, clientRect.height]}
+        onMouseleave={this.onContainerMouseleave}
       >
         <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
@@ -156,6 +169,9 @@ class Bar extends Base {
                 states={states.bgpillar}
                 {...pillar}
                 onMouseenter={(e, el) => {
+                  this.onMouseenter(e, el, ind)
+                }}
+                onMousemove={(e, el) => {
                   this.onMouseenter(e, el, ind)
                 }}
                 onMouseleave={(e, el) => {

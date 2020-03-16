@@ -35,11 +35,12 @@ bar.style('pillar', { bgcolor: '#47A1FF' })
 // const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
 //   text: '图例一'
 // })
+const tooltip = new Tooltip()
 const axisBottom = new Axis().style('scale', false).style('grid', true)
 const axisLeft = new Axis({
   orient: 'left'
 }).style('grid', false)
-chart.append([bar, axisBottom, axisLeft])
+chart.append([bar, tooltip, axisBottom, axisLeft])
 chart.render()
 ```
 

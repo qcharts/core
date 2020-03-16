@@ -81,13 +81,11 @@ const bar = new Bar({
   transpose: false,
   barWidth: 20
 })
-// const tooltip = new Tooltip({
-//   formatter: d => `${d.product} - ${d.year} - ${d.sales}`
-// })
+const tooltip = new Tooltip()
 // const legend = new Legend({ align: ['center', 'bottom'] })
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
-chart.append([bar, axisBottom, axisLeft])
+chart.append([bar, tooltip, axisBottom, axisLeft])
 chart.render()
 ```
 
@@ -235,12 +233,11 @@ chart.source(data, {
   text: 'product'
 })
 const bar = new Bar()
-// const tooltip = new Tooltip({
-//   formatter: d => `${d.year}: ${d.product}: ${d.sales}`
-// })
+const tooltip = new Tooltip()
 // const legend = new Legend({ align: ['center', 'bottom'] })
-// const axisBottom = new Axis({ type: 'category', axisGap: true })
-const axisLeft = new Axis({ orient: 'left' }) / chart.append([bar])
+const axisBottom = new Axis()
+const axisLeft = new Axis({ orient: 'left' })
+chart.append([bar, tooltip, axisBottom, axisLeft])
 chart.render()
 setTimeout(changeData, 3000)
 function changeData() {
@@ -292,10 +289,9 @@ chart.source(data, {
   text: 'label',
   layoutScale: 'sqrt'
 })
-const bar = new Bar({}).style('pillar', { fillColor: '#47A1FF' })
-// const tooltip = new Tooltip({
-//   formatter: d => `${d.label}: ${d.abc}`
-// })
+const bar = new Bar({}).style('pillar', { bgcolor: '#47A1FF' })
+const tooltip = new Tooltip()
+
 // const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
 //   text: '图例一'
 // })
@@ -303,7 +299,7 @@ const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
   .style('axis', false)
   .style('scale', false)
-chart.append([bar, axisBottom, axisLeft])
+chart.append([bar, tooltip, axisBottom, axisLeft])
 chart.render()
 ```
 

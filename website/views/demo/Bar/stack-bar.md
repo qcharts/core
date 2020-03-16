@@ -99,15 +99,13 @@ const bar = new Bar({
   transpose: true,
   barWidth: 20
 })
-// const tooltip = new Tooltip({
-//   formatter: d => ` ${d.type}: ${d.value}`
-// })
+const tooltip = new Tooltip()
 // const legend = new Legend({ align: ['center', 'bottom'] })
 const axisBottom = new Axis().style('scale', false).style('grid', true)
 const axisLeft = new Axis({
   orient: 'left'
 }).style('grid', false)
-chart.append([bar, axisBottom, axisLeft])
+chart.append([bar, tooltip, axisBottom, axisLeft])
 chart.render()
 ```
 
