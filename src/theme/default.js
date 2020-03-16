@@ -4,7 +4,7 @@ const theme = {
     return this.__colors__
   },
   set colors(arr) {
-    return this.__colors__.splice(0, this.__colors__.length - 1, ...arr)
+    return this.__colors__.splice(0, this.__colors__.length, ...arr)
   }
 }
 theme.visuals = {
