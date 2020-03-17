@@ -26,9 +26,7 @@ class Bar extends Base {
       return {
         attrs: item,
         from: {
-          size: this.renderAttrs.transpose
-            ? [0, item.size[1]]
-            : [item.size[0], 0]
+          size: this.renderAttrs.transpose ? [0, item.size[1]] : [item.size[0], 0]
         },
         to: {
           size: item.size
@@ -53,11 +51,7 @@ class Bar extends Base {
       return {
         attrs: nextPillar,
         from: {
-          size: prev.disable
-            ? this.attr('transpose')
-              ? [0, prev.size[1]]
-              : [prev.size[0], 0]
-            : prev.size,
+          size: prev.disable ? (this.attr('transpose') ? [0, prev.size[1]] : [prev.size[0], 0]) : prev.size,
           pos: prev.pos
         },
         to: {
@@ -74,18 +68,13 @@ class Bar extends Base {
     let renderAttrs = this.renderAttrs
 
     let renderData = this.dataset[renderAttrs.layoutBy]
-    const dataLength =
-      renderData.length > 1 ? renderData.length : renderData[0].length
+    const dataLength = renderData.length > 1 ? renderData.length : renderData[0].length
     let arrLayout = layout(renderData, renderAttrs)
     let colors = this.theme.colors
     let styles = this.renderStyles
     arrLayout.barData = arrLayout.barData.map((bar, i) => {
       let style = this.style('pillar')(bar.attrs, this.dataset.rows[i], i)
-      let barStyle = deepObjectMerge(
-        { bgcolor: bar.bgcolor || colors[i % dataLength] },
-        styles.bar,
-        style
-      )
+      let barStyle = deepObjectMerge({ bgcolor: bar.bgcolor || colors[i % dataLength] }, styles.bar, style)
       bar = deepObjectMerge(bar, barStyle)
       return bar
     })
@@ -96,16 +85,14 @@ class Bar extends Base {
   }
   defaultAttrs() {
     let renderData = this.dataset['rows']
-    let stateArray = Array.from(
-      { length: renderData[0].length },
-      () => 'defalut'
-    )
+    let stateArray = Array.from({ length: renderData[0].length }, () => 'defalut')
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
       layer: 'bar',
       bgpillarState: stateArray,
       states: {
         bgpillar: {
+          animation: { duration: 20 },
           default: { opacity: 0.01 },
           hover: { opacity: 0.1 }
         }
@@ -145,35 +132,15 @@ class Bar extends Base {
   render(data) {
     let { clientRect, bgpillarState, states } = this.renderAttrs
     return (
-      <Group
-        class="container"
-        ref="wrap"
-        pos={[clientRect.left, clientRect.top]}
-        size={[clientRect.width, clientRect.height]}
-        onMouseleave={this.onMouseleave}
-        onMouseenter={this.onMouseenter}
-        onMousemove={this.onMouseenter}
-      >
+      <Group class="container" ref="wrap" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]} onMouseleave={this.onMouseleave} onMouseenter={this.onMouseenter} onMousemove={this.onMouseenter}>
         <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
-            return (
-              <Sprite
-                {...pillar.attrs}
-                size={pillar.from.size}
-                animation={{ from: pillar.from, to: pillar.to }}
-              />
-            )
+            return <Sprite {...pillar.attrs} size={pillar.from.size} animation={{ from: pillar.from, to: pillar.to }} />
           })}
         </Group>
         <Group ref="bgpillar" class="bgpillars-group">
           {data.groupData.map((pillar, ind) => {
-            return (
-              <Sprite
-                state={bgpillarState[ind]}
-                states={states.bgpillar}
-                {...pillar}
-              />
-            )
+            return <Sprite state={bgpillarState[ind]} states={states.bgpillar} {...pillar} />
           })}
         </Group>
       </Group>
