@@ -1,8 +1,7 @@
 import Base from '../../base/BaseVisual'
 import { Group, Sprite } from 'spritejs'
-import { deepObjectMerge } from '@qcharts/utils'
+import { deepObjectMerge, throttle } from '@qcharts/utils'
 import layout from './layout'
-import filterClone from 'filter-clone'
 class Bar extends Base {
   constructor(attrs) {
     super(attrs)
@@ -20,8 +19,6 @@ class Bar extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
     let { arrLayout } = this.getRenderData()
-    this.pillars = arrLayout.barData
-    this.groups = arrLayout.groupData
     let barData = arrLayout.barData.map(item => {
       return {
         attrs: item,
@@ -35,8 +32,9 @@ class Bar extends Base {
         }
       }
     })
-    let groupData = arrLayout.groupData
-    return { barData, groupData }
+    this.pillars = barData
+    this.groups = arrLayout.groupData
+    return { barData, groupData: arrLayout.groupData }
   }
   beforeUpdate() {
     const pillars = this.pillars
@@ -53,12 +51,12 @@ class Bar extends Base {
       return {
         attrs: nextPillar,
         from: {
-          size: prev.disable
+          size: prev.attrs.disable
             ? this.attr('transpose')
-              ? [0, prev.size[1]]
-              : [prev.size[0], 0]
-            : prev.size,
-          pos: prev.pos
+              ? [0, prev.attrs.size[1]]
+              : [prev.attrs.size[0], 0]
+            : prev.attrs.size,
+          pos: prev.attrs.pos
         },
         to: {
           size: nextPillar.size,
@@ -66,7 +64,7 @@ class Bar extends Base {
         }
       }
     })
-    this.pillars = arrLayout.barData
+    this.pillars = barData
     this.groups = arrLayout.groupData
     return { barData, groupData: arrLayout.groupData }
   }
@@ -117,13 +115,18 @@ class Bar extends Base {
     return {}
   }
   onMouseenter(event, el) {
+    console.log('move')
     if (this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
       //获取 x轴坐标的刻度
       let width = this.groups[0].size[0]
       //转换cancas坐标到当前group的相对坐标
       let [x] = el.getOffsetPosition(event.x, event.y)
       let curInd = Math.floor(x / width)
-      console.log(curInd)
+      if (curInd < 1) {
+        curInd = 0
+      } else if (curInd > this.groups.length - 1) {
+        curInd = this.groups.length - 1
+      }
       if (this.hoverIndex !== curInd) {
         let { bgpillarState } = this.renderAttrs
         bgpillarState[curInd] = 'hover'
@@ -136,6 +139,7 @@ class Bar extends Base {
     }
   }
   onMouseleave(e, el) {
+    console.log('leave')
     this.dataset.resetState()
     let { bgpillarState } = this.renderAttrs
     bgpillarState[this.hoverIndex] = 'defualt'
@@ -152,14 +156,14 @@ class Bar extends Base {
         size={[clientRect.width, clientRect.height]}
         onMouseleave={this.onMouseleave}
         onMouseenter={this.onMouseenter}
-        onMousemove={this.onMouseenter}
+        onMousemove={throttle(this.onMouseenter)}
       >
         <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
             return (
               <Sprite
                 {...pillar.attrs}
-                size={pillar.from.size}
+                {...pillar.from}
                 animation={{ from: pillar.from, to: pillar.to }}
               />
             )
