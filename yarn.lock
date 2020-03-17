@@ -895,15 +895,25 @@
   resolved "https://registry.npm.taobao.org/@qcharts/utils/download/@qcharts/utils-0.0.3.tgz#bfc7a7c36d7d5a7ef47994e4f9d74f9589ccbc56"
   integrity sha1-v8enw219Wn70eZTk+ddPlYnMvFY=
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+"@qcharts/vnode@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.6.tgz?cache=0&sync_timestamp=1584023356247&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Fvnode%2Fdownload%2F%40qcharts%2Fvnode-0.0.6.tgz#8a922d3ec67b27264a55356edfc4a6d4bd47e50b"
+  integrity sha1-ipItPsZ7JyZKVTVu38Sm1L1H5Qs=
+=======
+=======
 "@qcharts/utils@^0.0.4":
   version "0.0.4"
   resolved "https://registry.npm.taobao.org/@qcharts/utils/download/@qcharts/utils-0.0.4.tgz?cache=0&sync_timestamp=1584331682927&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Futils%2Fdownload%2F%40qcharts%2Futils-0.0.4.tgz#aae24887674a4dc6f57787ab7f125583ea761d17"
   integrity sha1-quJIh2dKTcb1d4erfxJVg+p2HRc=
 
+>>>>>>> master
 "@qcharts/vnode@^0.0.9":
   version "0.0.9"
   resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.9.tgz#608b4c1d23756e430c309c442bddc83a5a92d620"
   integrity sha1-YItMHSN1bkMMMJxEK93IOlqS1iA=
+>>>>>>> master
   dependencies:
     "@qcharts/utils" "^0.0.1"
     filter-clone "0.0.12"

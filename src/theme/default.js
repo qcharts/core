@@ -27,6 +27,25 @@ theme.visuals = {
       guideline: { strokeColor: '#ddd' }
     },
     attrs: {}
+  },
+  Bar: {
+    colors: theme.colors,
+    styles: {
+      bar: {},
+      groupBar: { opacity: 0.1 }
+    },
+    attrs: {
+      statck: false
+    }
+  },
+  PolarBar: {
+    colors: theme.colors,
+    styles: {
+      bar: {}
+    },
+    attrs: {
+      statck: false
+    }
   }
 }
 theme.plugins = {
