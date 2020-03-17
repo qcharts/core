@@ -15,7 +15,7 @@ class Axis extends Base {
       //如果axisGap没有赋值
       attrs.axisGap = false
       let targetVisual = this.chart.visuals[0]
-      if (targetVisual && targetVisual.constructor.name === 'bar') {
+      if (targetVisual && targetVisual.constructor.name === 'Bar') {
         //如果是柱状图
         attrs.axisGap = true
       }
