@@ -59,7 +59,8 @@ export default function layout(arr, attrs) {
       type: 'value'
     }
   }
-  const { stack, splitNumber, clientRect, orient } = attrs
+  const { stack, splitNumber, clientRect, orient, axisGap } = attrs
+  console.log(attrs)
   const { width, height, left } = clientRect
   let scales = axis({ dataSet: arr, stack, splitNumber })
   let maxVal = Math.max.apply(this, scales)
