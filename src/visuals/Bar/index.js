@@ -104,6 +104,7 @@ class Bar extends Base {
       bgpillarState: stateArray,
       states: {
         bgpillar: {
+          animation: { duration: 20 },
           default: { opacity: 0.01 },
           hover: { opacity: 0.1 }
         }
