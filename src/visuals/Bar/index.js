@@ -115,14 +115,20 @@ class Bar extends Base {
     // 默认的样式,继承base
     return {}
   }
-  onMouseenter(event, el) {
-    console.log('move')
+  onMousemove(event, el) {
     if (this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
-      //获取 x轴坐标的刻度
-      let width = this.groups[0].size[0]
-      //转换cancas坐标到当前group的相对坐标
-      let [x] = el.getOffsetPosition(event.x, event.y)
-      let curInd = Math.floor(x / width)
+      let curInd = 0
+      let [x, y] = el.getOffsetPosition(event.x, event.y)
+      if (!this.renderAttrs.transpose) {
+        //获取 x轴坐标的刻度
+        let width = this.groups[0].size[0]
+        //转换canvas坐标到当前group的相对坐标
+        curInd = Math.floor(x / width)
+      } else {
+        let width = this.groups[0].size[1]
+        //转换canvas坐标到当前group的相对坐标
+        curInd = Math.floor(y / width)
+      }
       if (curInd < 1) {
         curInd = 0
       } else if (curInd > this.groups.length - 1) {
@@ -140,13 +146,13 @@ class Bar extends Base {
     }
   }
   onMouseleave(e, el) {
-    console.log('leave')
     this.dataset.resetState()
     let { bgpillarState } = this.renderAttrs
     bgpillarState[this.hoverIndex] = 'defualt'
     this.attr('bgpillarState', bgpillarState)
     this.hoverIndex = -1
   }
+
   render(data) {
     let { clientRect, bgpillarState, states } = this.renderAttrs
     return (
@@ -156,8 +162,9 @@ class Bar extends Base {
         pos={[clientRect.left, clientRect.top]}
         size={[clientRect.width, clientRect.height]}
         onMouseleave={this.onMouseleave}
-        onMouseenter={this.onMouseenter}
-        onMousemove={throttle(this.onMouseenter)}
+        onMouseenter={this.onMousemove}
+        onMousemove={this.onMousemove}
+        // onMousemove={throttle(this.onMousemove)}
       >
         <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
