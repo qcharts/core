@@ -59,51 +59,39 @@ export default function layout(arr, attrs) {
       type: 'value'
     }
   }
-  const { stack, splitNumber, clientRect, orient } = attrs
-  const { width, height, left } = clientRect
+  const { stack, splitNumber, clientRect, orient, axisGap } = attrs
+  const { width, height } = clientRect
   let scales = axis({ dataSet: arr, stack, splitNumber })
   let maxVal = Math.max.apply(this, scales)
   let minVal = Math.min.apply(this, scales)
   let type = attrs.type || defaultAttrs[orient].type
-  let scaleAttr = emptyObject()
-  let labelAttr = emptyObject()
+  let distance = orient === 'left' || orient === 'right' ? height : width
   if (type === 'value') {
-    let distance = orient === 'left' || orient === 'right' ? height : width
     let scaleFY = scaleLinear()
       .domain([minVal, maxVal])
       .range([0, distance])
-    scales.forEach((num, ind) => {
-      if (orient === 'left' || orient === 'right') {
-        let x = orient === 'left' ? 0 : width
-        scaleAttr = { ...defaultAttrs[orient].scale, pos: [x, height - scaleFY(num)] }
-        labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + num, index: ind, pos: [x, height - scaleFY(num)] }
-      } else if (orient === 'top' || orient === 'bottom') {
-        let y = orient === 'top' ? 0 : height
-        scaleAttr = { ...defaultAttrs[orient].scale, pos: [scaleFY(num), y] }
-        labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + num, index: ind, pos: [scaleFY(num), y] }
-      }
+    scales.forEach(num => {
+      let { scaleAttr, labelAttr } = getItemAttrs(defaultAttrs, orient, { text: '' + num }, num, scaleFY, clientRect)
       res.scales.push(scaleAttr)
       res.labels.push(labelAttr)
     })
   } else if (type === 'category') {
     let curArr = arr[0]
-    let distance = orient === 'left' || orient === 'right' ? height : width
+    let len = axisGap ? curArr.length : curArr.length - 1
     let scaleFY = scaleLinear()
-      .domain([0, curArr.length - 1])
+      .domain([0, len])
       .range([0, distance])
     curArr.forEach((cell, ind) => {
-      if (orient === 'left' || orient === 'right') {
-        let x = orient === 'left' ? 0 : width
-        scaleAttr = { ...defaultAttrs[orient].scale, pos: [x, height - scaleFY(num)] }
-        labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + cell.text, index: ind, pos: [x, height - scaleFY(ind)] }
-      } else if (orient === 'top' || orient === 'bottom') {
-        let y = orient === 'top' ? 0 : height
-        scaleAttr = { ...defaultAttrs[orient].scale, pos: [scaleFY(ind), y] }
-        labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + cell.text, index: ind, pos: [scaleFY(ind), y] }
-      }
+      let { scaleAttr, labelAttr } = getItemAttrs(defaultAttrs, orient, cell, ind, scaleFY, clientRect, axisGap)
       res.scales.push(scaleAttr)
+      //labelAttr.anchor[0] = 0.5
       res.labels.push(labelAttr)
     })
+    if (axisGap) {
+      // 如果是axisGap为true，需要添加一个点
+      let { scaleAttr } = getItemAttrs(defaultAttrs, orient, {}, curArr.length, scaleFY, clientRect, axisGap)
+      res.scales.push(scaleAttr)
+    }
   }
   if (orient === 'left' || orient === 'right') {
     res.axisPoints = [
@@ -115,6 +103,24 @@ export default function layout(arr, attrs) {
       [0, height],
       [width, height]
     ]
+  }
+  return res
+}
+function getItemAttrs(defaultAttrs, orient, cell, value, scaleF, clientRect, axisGap) {
+  let res = emptyObject()
+  let { width, height, left } = clientRect
+  if (orient === 'left' || orient === 'right') {
+    let x = orient === 'left' ? 0 : width
+    res.scaleAttr = { ...defaultAttrs[orient].scale, pos: [x, height - scaleF(value)] }
+    res.labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + cell.text, pos: [x, height - scaleF(value)] }
+  } else if (orient === 'top' || orient === 'bottom') {
+    let y = orient === 'top' ? 0 : height
+    let labelPosValue = value
+    if (axisGap) {
+      labelPosValue += 0.5
+    }
+    res.scaleAttr = { ...defaultAttrs[orient].scale, pos: [scaleF(value), y] }
+    res.labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + cell.text, pos: [scaleF(labelPosValue), y] }
   }
   return res
 }
