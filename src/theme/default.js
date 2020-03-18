@@ -1,3 +1,4 @@
+
 import { deepObjectMerge } from '@qcharts/utils'
 const theme = { colors: ['#47A1FF', '#6CD3FF', '#A2E5FF', '#4DCCCB', '#3FDDC7', '#84E0BE', '#59CB74', '#ADDF84', '#FBD54A', '#FFB952', '#F79452', '#E37474', '#FC6980', '#ED8CCE', '#DA65CC', '#9861E5', '#9F8CF1', '#6367EC', '#5982F6', '#659AEC'] }
 theme.visuals = {
@@ -25,6 +26,14 @@ theme.visuals = {
     styles: {
       area: { opacity: 0.5 },
       guideline: { strokeColor: '#ddd' }
+    },
+    attrs: {}
+  },
+
+  Radar: {
+    colors: theme.colors,
+    styles: {
+      area: { opacity: 0.5 }
     },
     attrs: {}
   },
