@@ -59,7 +59,12 @@ export default function layout(arr, attrs) {
       type: 'value'
     }
   }
-  const { stack, splitNumber, clientRect, orient, axisGap } = attrs
+  const { stack, splitNumber, clientRect, orient, axisGap, transpose } = attrs
+  if (transpose) {
+    ;['top', 'bottom', 'right', 'left'].forEach(str => {
+      defaultAttrs[str].type = defaultAttrs[str].type === 'value' ? 'category' : 'value'
+    })
+  }
   const { width, height } = clientRect
   let scales = axis({ dataSet: arr, stack, splitNumber })
   let maxVal = Math.max.apply(this, scales)
@@ -84,7 +89,6 @@ export default function layout(arr, attrs) {
     curArr.forEach((cell, ind) => {
       let { scaleAttr, labelAttr } = getItemAttrs(defaultAttrs, orient, cell, ind, scaleFY, clientRect, axisGap)
       res.scales.push(scaleAttr)
-      //labelAttr.anchor[0] = 0.5
       res.labels.push(labelAttr)
     })
     if (axisGap) {
@@ -109,16 +113,13 @@ export default function layout(arr, attrs) {
 function getItemAttrs(defaultAttrs, orient, cell, value, scaleF, clientRect, axisGap) {
   let res = emptyObject()
   let { width, height, left } = clientRect
+  let labelPosValue = axisGap ? value + 0.5 : value
   if (orient === 'left' || orient === 'right') {
     let x = orient === 'left' ? 0 : width
     res.scaleAttr = { ...defaultAttrs[orient].scale, pos: [x, height - scaleF(value)] }
-    res.labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + cell.text, pos: [x, height - scaleF(value)] }
+    res.labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + cell.text, pos: [x, height - scaleF(labelPosValue)] }
   } else if (orient === 'top' || orient === 'bottom') {
     let y = orient === 'top' ? 0 : height
-    let labelPosValue = value
-    if (axisGap) {
-      labelPosValue += 0.5
-    }
     res.scaleAttr = { ...defaultAttrs[orient].scale, pos: [scaleF(value), y] }
     res.labelAttr = { ...defaultAttrs[orient].label, width: left, text: '' + cell.text, pos: [scaleF(labelPosValue), y] }
   }

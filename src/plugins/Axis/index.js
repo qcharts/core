@@ -11,14 +11,15 @@ class Axis extends Base {
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
     let attrs = super.renderAttrs
-    if (attrs.axisGap === undefined) {
+    let targetVisual = this.chart.visuals[0]
+    if (attrs.axisGap === undefined && targetVisual && targetVisual.constructor.name === 'Bar') {
       //如果axisGap没有赋值
-      attrs.axisGap = false
-      let targetVisual = this.chart.visuals[0]
-      if (targetVisual && targetVisual.constructor.name === 'Bar') {
-        //如果是柱状图
-        attrs.axisGap = true
-      }
+      //如果是柱状图
+      attrs.axisGap = true
+    }
+    if (attrs.transpose === undefined && targetVisual) {
+      //坐标轴转换
+      attrs.transpose = targetVisual.renderAttrs.transpose
     }
     return attrs
   }
