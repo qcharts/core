@@ -44,6 +44,7 @@ module.exports = {
       }
     ]
   },
+  devtool: 'source-map',
   externals: {
     spritejs: 'spritejs',
     vue: 'Vue',

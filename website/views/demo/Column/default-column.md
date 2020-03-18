@@ -22,18 +22,20 @@ chart.source(data, {
   value: 'value',
   text: 'label'
 })
-const bar = new Bar().style('pillar', { fillColor: '#47A1FF' })
-const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
-}).style('icon', { fillColor: '#47A1FF' })
-const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
-  text: '图例一'
-})
+const bar = new Bar()
+bar.style('pillar', { bgcolor: '#47A1FF' })
+// const tooltip = new Tooltip({
+//   formatter: d => `${d.label}: ${d.value}`
+// }).style('icon', { fillColor: '#47A1FF' })
+// const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
+//   text: '图例一'
+// })
+const tooltip = new Tooltip()
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
   .style('axis', false)
   .style('scale', false)
-chart.add([bar, tooltip, legend, axisBottom, axisLeft])
+chart.append([bar, tooltip, axisBottom, axisLeft])
 chart.render()
 ```
 

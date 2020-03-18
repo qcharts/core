@@ -22,7 +22,17 @@ const data = [
   { date: '05-08', catgory: '图例二', sales: 85.2 }
 ]
 
-const { Chart, Line, Axis } = qcharts
+const { Chart, Line, Axis, Tooltip, theme } = qcharts
+//修改全局样式
+theme.set({
+  visuals: {
+    Line: {
+      styles: {
+        line: { lineWidth: 2 }
+      }
+    }
+  }
+})
 
 const chart = new Chart({
   container: '#app'
@@ -42,10 +52,11 @@ line.style('line', function(attrs, data, i) {
 })
 
 const axisBottom = new Axis()
+const tooltip = new Tooltip()
 
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-chart.append([line, axisBottom, axisLeft])
+chart.append([line, axisBottom, axisLeft, tooltip])
 chart.render()
 ```
 

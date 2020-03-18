@@ -2,6 +2,7 @@ const path = require('path')
 
 module.exports = {
   mode: 'production',
+  devtool: 'source-map',
   entry: {
     index: './src/index.js'
   },
@@ -11,12 +12,7 @@ module.exports = {
     library: 'qcharts',
     libraryTarget: 'umd'
   },
-  devtool: 'source-map',
   externals: {
     spritejs: 'spritejs'
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'examples'),
-    hot: true
   }
 }

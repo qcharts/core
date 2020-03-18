@@ -13,7 +13,7 @@ const data = [
   { value: 5300, label: 'TOP7' },
   { value: 3400, label: 'TOP8' }
 ]
-const { Chart, PolarBar, Tooltip, Axis, Legend } = qcharts
+const { Chart, PolarBar } = qcharts
 const chart = new Chart({
   container: '#app'
 })
@@ -26,12 +26,12 @@ const bar = new PolarBar({
   innerRadius: 0.1,
   radius: 0.8
 })
-bar.style('pillar', { lineWidth: 1, strokeColor: '#FFF' })
-const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
-})
+// bar.style('pillar', { lineWidth: 1, strokeColor: '#FFF' })
+// const tooltip = new Tooltip({
+//   formatter: d => `${d.label}: ${d.value}`
+// })
 
-chart.add([bar, tooltip])
+chart.append([bar])
 chart.render()
 ```
 

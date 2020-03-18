@@ -1,6 +1,6 @@
-import { Node, Group } from 'spritejs'
+import { Node } from 'spritejs'
 import { lifeCycle, mixin } from './mixin'
-import { emptyObject, deepObjectMerge, jsType, getDistancePx, debounce, throttle } from '@qcharts/utils'
+import { emptyObject, deepObjectMerge, jsType, getDistancePx, throttle } from '@qcharts/utils'
 import { patch, diff } from '@qcharts/vnode'
 import Dataset from '@qcharts/dataset'
 class Base extends Node {
