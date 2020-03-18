@@ -3,6 +3,7 @@ import Dataset from '@qcharts/dataset'
 import Line from './visuals/Line/index'
 import LineTest from './visuals/Line/index_test'
 import Area from './visuals/Area/index'
+import Radar from './visuals/Radar/index'
 import Axis from './plugins/Axis/index'
 import Tooltip from './plugins/Tooltip/index'
 import platform from './base/platform'
@@ -12,6 +13,7 @@ const qcharts = {
   version: 3.1,
   Line,
   Area,
+  Radar,
   Axis,
   LineTest,
   Tooltip,
@@ -22,5 +24,5 @@ const qcharts = {
 if (process.env.NODE_ENV === 'development') {
   platform.qcharts = qcharts
 }
-export { qcharts, Dataset, Line, Area, LineTest, Tooltip, Axis, Chart, h, theme }
+export { qcharts, Dataset, Line, Area, Radar, LineTest, Tooltip, Axis, Chart, h, theme }
 export default qcharts
