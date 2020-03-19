@@ -11,6 +11,7 @@ class Chart extends Base {
     if (jsType(container) === 'string') {
       container = document.querySelector(container)
     }
+    this.$el = container
     this.visuals = []
     this.plugins = []
     this.scene = new Scene({ container, displayRatio: platform.devicePixelRatio })

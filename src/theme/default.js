@@ -54,6 +54,11 @@ theme.plugins = {
     styles: {},
     attrs: {}
   },
+  Legend: {
+    colors: theme.colors,
+    styles: {},
+    attrs: {}
+  },
   Axis: {
     colors: theme.colors,
     styles: {
