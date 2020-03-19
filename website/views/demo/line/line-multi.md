@@ -46,7 +46,7 @@ const data = [
   { date: '05-08', catgory: '图例五', sales: 80.2 }
 ]
 
-const { Chart, Line, Axis, Tooltip } = qcharts
+const { Chart, Line, Axis, Legend, Tooltip } = qcharts
 
 const chart = new Chart({
   container: '#app'
@@ -63,10 +63,11 @@ line.style('point', { strokeColor: '#fff' })
 
 const axisBottom = new Axis()
 const tooltip = new Tooltip()
+const legend = new Legend()
 
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-chart.append([line, axisBottom, axisLeft, tooltip])
+chart.append([line, axisBottom, axisLeft, tooltip, legend])
 chart.render()
 ```
 

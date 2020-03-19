@@ -43,7 +43,7 @@ class Line extends Base {
       return {
         state: item.state,
         smoothRange: item.smoothRange,
-        areaFrom: renderLines[i].areaTo,
+        areaFrom: (renderLines[i] && renderLines[i].areaTo) || item.areaPoints,
         areaTo: {
           points: item.areaPoints
         },
@@ -142,7 +142,7 @@ class Line extends Base {
                 let mergeStyle = deepObjectMerge({ fillColor: colors[ind], smooth }, styles.area)
                 let style = this.style('area')(mergeStyle, this.dataset.rows[ind], ind)
                 let renderStyle = deepObjectMerge(mergeStyle, style)
-                return line.state === 'disabled' || style === <Node /> ? <Polyline display={'none'} /> : <Polyline smoothRange={line.smoothRange} {...renderStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
+                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...renderStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
         </Group>
         <Group class="guide-line-group">

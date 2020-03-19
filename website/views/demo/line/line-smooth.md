@@ -22,7 +22,7 @@ const data = [
   { date: '05-08', catgory: '图例二', sales: 85.2 }
 ]
 
-const { Chart, Line, Axis, Tooltip, theme } = qcharts
+const { Chart, Line, Axis, Legend, Tooltip, theme } = qcharts
 //修改全局样式
 theme.set({
   visuals: {
@@ -53,10 +53,10 @@ line.style('line', function(attrs, data, i) {
 
 const axisBottom = new Axis()
 const tooltip = new Tooltip()
-
+const legend = new Legend()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-chart.append([line, axisBottom, axisLeft, tooltip])
+chart.append([line, axisBottom, axisLeft, tooltip, legend])
 chart.render()
 ```
 
