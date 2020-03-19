@@ -11,14 +11,17 @@ export default function layout(arr, attrs) {
   let scaleFY = scaleLinear()
     .domain([minVal, maxVal])
     .range([0, height])
-  arr.forEach((row, ind) => {
+  let prevRow = null
+  arr.forEach(row => {
+    //if (row.state === 'disabled') return
     let line = { points: [], areaPoints: [], smoothRange: [], state: row.state }
     row.forEach((cell, i) => {
       let val = cell.value
       let dx = width / (row.length - 1)
       let curPos = [dx * i, height - scaleFY(val)]
-      if (ind > 0 && stack) {
-        curPos = [dx * i, height - scaleFY(val + arr[ind - 1][i].value)]
+      if (stack && prevRow) {
+        //如果是堆叠并且前一个row存在，则叠加
+        curPos = [dx * i, height - scaleFY(val + prevRow[i].value)]
       }
       line.points.push(curPos)
     })
@@ -26,20 +29,27 @@ export default function layout(arr, attrs) {
       [line.points[0][0], height - scaleFY(0)],
       [line.points[line.points.length - 1][0], height - scaleFY(0)]
     ]
+    if (line.state !== 'disabled') {
+      prevRow = row
+    }
     lines.push(line)
   })
   if (type === 'area') {
+    let curLine = null
     lines.forEach((line, ind) => {
       let nextPoints = [
         [line.points[line.points.length - 1][0], height],
         [line.points[0][0], height]
       ]
-      if (ind > 0 && attrs.stack) {
+      if (curLine && attrs.stack) {
         nextPoints = [].concat(lines[ind - 1].points).reverse()
       }
       let res = transAreaPoint(line.points, nextPoints)
       line.areaPoints = res.areaPoints
       line.smoothRange = res.smoothRange
+      if (line.state !== 'disabled') {
+        curLine = line
+      }
     })
   }
   return lines

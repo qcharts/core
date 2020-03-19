@@ -7,6 +7,7 @@ import Radar from './visuals/Radar/index'
 import Bar from './visuals/Bar/index'
 import PolarBar from './visuals/PolarBar/index'
 import Axis from './plugins/Axis/index'
+import Legend from './plugins/Legend/index'
 import Tooltip from './plugins/Tooltip/index'
 import platform from './base/platform'
 import Chart from './Chart'
@@ -18,6 +19,7 @@ const qcharts = {
   Radar,
   Bar,
   PolarBar,
+  Legend,
   Axis,
   LineTest,
   Tooltip,
@@ -29,7 +31,6 @@ if (process.env.NODE_ENV === 'development') {
   platform.qcharts = qcharts
 }
 
-
-export { qcharts, Dataset, Line, Area, Radar,  LineTest, Tooltip,Bar, PolarBar, Axis, Chart, h, theme }
+export { qcharts, Dataset, Line, Area, Radar, LineTest, Tooltip, Bar, PolarBar, Axis, Legend, Chart, h, theme }
 
 export default qcharts
