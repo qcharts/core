@@ -6,11 +6,16 @@ const common = require('./webpack.conf.common')
 
 module.exports = merge(common, {
   mode: 'production',
-  entry: path.resolve(__dirname, '../website/'),
+  entry: {
+    qcharts: path.join(__dirname, '../src/index.js'),
+    main: path.resolve(__dirname, '../website/')
+  },
   output: {
     path: path.join(__dirname, '../docs'),
-    filename: '[name].[hash].js',
-    chunkFilename: '[name].[hash:7].js'
+    filename: '[name].js',
+    library: '[name]',
+    libraryTarget: 'umd',
+    chunkFilename: '[name].js?v=[hash:7]'
   },
   module: {
     rules: [

@@ -1,6 +1,6 @@
 const path = require('path')
 const merge = require('webpack-merge')
-const TerserPlugin = require('terser-webpack-plugin')
+
 const common = require('./webpack.conf.common')
 
 module.exports = merge(common, {
@@ -15,13 +15,6 @@ module.exports = merge(common, {
     library: 'qcharts',
     libraryExport: 'default',
     libraryTarget: 'umd'
-  },
-  optimization: {
-    minimizer: [
-      new TerserPlugin({
-        sourceMap: true
-      })
-    ]
   },
   externals: {
     spritejs: {

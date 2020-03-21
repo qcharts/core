@@ -3,6 +3,7 @@ const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const VueMdLoader = require('./vue-md-loader')
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
   module: {
@@ -49,6 +50,20 @@ module.exports = {
     spritejs: 'spritejs',
     vue: 'Vue',
     'vue-router': 'VueRouter'
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        sourceMap: true,
+        terserOptions: {
+          mangle: {
+            // mangle options
+            keep_classnames: true,
+            keep_fnames: true
+          }
+        }
+      })
+    ]
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
