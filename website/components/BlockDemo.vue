@@ -111,7 +111,7 @@ export default {
       let qchartsSrc =
         process.env.NODE_ENV === 'development'
           ? location.origin + '/qcharts.js'
-          : 'https://s4.ssl.qhres.com/static/eee4270b9365f11e.js'
+          : './qcharts.js'
       const spritejsSrc =
         process.env.NODE_ENV === 'development'
           ? 'https://unpkg.com/spritejs@3/dist/spritejs.min.js'
