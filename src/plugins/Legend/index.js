@@ -29,23 +29,29 @@ class Legend extends Base {
   beforeUpdate() {}
 
   rendered() {
-    let items = this.$el.querySelectorAll('.legend-item')
-    let dataset = this.dataset
-    let $el = this.$el
-    $el.addEventListener(
-      'click',
-      e => {
-        let target = e.target
-        let $dom = getParent($el, target, '.legend-item')
-        if ($dom) {
-          let ind = $dom.getAttribute('data-id')
-          let state = dataset.rows[ind].state
-          dataset.rows[ind].state = state === 'disabled' ? 'default' : 'disabled'
-        }
-        this.render(dataset.rows)
-      },
-      false
-    )
+    let clickAble = this.renderAttrs.clickAble
+    if (clickAble !== false) {
+      let items = this.$el.querySelectorAll('.legend-item')
+      items.forEach(item => {
+        item.style.cursor = 'pointer'
+      })
+      let dataset = this.dataset
+      let $el = this.$el
+      $el.addEventListener(
+        'click',
+        e => {
+          let target = e.target
+          let $dom = getParent($el, target, '.legend-item')
+          if ($dom) {
+            let ind = $dom.getAttribute('data-id')
+            let state = dataset.rows[ind].state
+            dataset.rows[ind].state = state === 'disabled' ? 'default' : 'disabled'
+          }
+          this.render(dataset.rows)
+        },
+        false
+      )
+    }
   }
   render(arr) {
     if (arr) {
@@ -61,7 +67,7 @@ class Legend extends Base {
       arr.forEach((row, ind) => {
         let state = this.dataset.rows[ind].state
         let curColor = state !== 'disabled' ? colors[ind] : '#ddd'
-        html += `<div style="cursor:pointer;display:inline-block;padding:0 4px" class="legend-item" data-id="${ind}"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${curColor}"></span><span class="text" style="color:#666">${row.name}</span></div>`
+        html += `<div style="display:inline-block;padding:0 4px" class="legend-item" data-id="${ind}"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${curColor}"></span><span class="text" style="color:#666">${row.name}</span></div>`
       })
       this.$el.innerHTML = html
     }
