@@ -1,6 +1,6 @@
 import Base from '../../base/BasePlugin'
 import { Group, Label, Polyline } from 'spritejs'
-import { emptyObject } from '@qcharts/utils'
+import { emptyObject, deepObjectMerge } from '@qcharts/utils'
 import filterClone from 'filter-clone'
 import layout from './layout'
 class Axis extends Base {
@@ -24,7 +24,6 @@ class Axis extends Base {
     return attrs
   }
   beforeRender() {
-    this.layer.zIndex = -1
     let { axis } = this.getRenderData()
     return axis
   }
@@ -37,7 +36,7 @@ class Axis extends Base {
   }
   defaultAttrs() {
     return {
-      layer: 'axis'
+      layer: 'axis',
     }
   }
   //defaultStyles() {}
@@ -65,12 +64,16 @@ class Axis extends Base {
             let fromPos = (oldAxis.scales && oldAxis.scales[ind] && oldAxis.scales[ind].pos) || scale.pos
             let ani = { from: { pos: fromPos }, to: { pos: scale.pos } }
             // 排除pos属性，pos属性用来处理动画，其它属性直接赋值
-            return <Group {...filterClone(scale, [], ['pos'])} {...scaleStyle} animation={ani}></Group>
+            let style = this.style('scale')(scaleStyle, scale, ind)
+            let renderStyle = deepObjectMerge({}, scaleStyle, style)
+            return <Group {...filterClone(scale, [], ['pos'])} {...renderStyle} animation={ani}></Group>
           })}
           {axis.labels.map((label, ind) => {
             let fromPos = (oldAxis.labels && oldAxis.labels[ind] && oldAxis.labels[ind].pos) || label.pos
+            let style = this.style('label')(labelStyle, label, ind)
+            let renderStyle = deepObjectMerge({}, labelStyle, style)
             let ani = { from: { pos: fromPos }, to: { pos: label.pos } }
-            return <Label {...filterClone(label, [], ['pos'])} {...labelStyle} animation={ani}></Label>
+            return <Label {...filterClone(label, [], ['pos'])} {...renderStyle} animation={ani}></Label>
           })}
         </Group>
       </Group>
