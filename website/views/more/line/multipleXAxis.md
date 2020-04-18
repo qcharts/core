@@ -31,7 +31,7 @@ const data = [
   { date: '2016-12', category: '2016年降水量', val: 6.6 }
 ]
 
-const { Chart, Line, Legend, Tooltip, Axis } = qcharts
+const { Chart, Line, Legend, Tooltip, Axis, theme } = qcharts
 
 const chart = new Chart({
   container: '#app'
@@ -42,39 +42,34 @@ chart.source(data, {
   value: 'val',
   text: 'date'
 })
+//legend与line颜色同步
+theme.set({ colors: ['#47A1FF', '#6CD3FF'] })
 
 const ds = chart.dataset
 
 const d1 = ds.selectRows('2015年降水量')
 const line = new Line().source(d1)
-line
-  .style('point', { strokeColor: '#fff' })
-  .style('line', { strokeColor: '#47A1FF' })
+
+line.style('line', { strokeColor: '#47A1FF' })
 const axisBottom = new Axis({ orient: 'bottom' }).source(d1)
 
 const d2 = ds.selectRows('2016年降水量')
 const line2 = new Line().source(d2)
-line2.style('point', { strokeColor: '#fff' })
-line2.color(['#59CB74'])
+line2.style('line', { strokeColor: '#6CD3FF' })
 
 const axisTop = new Axis({
   orient: 'top'
 }).source(d2)
 
-const axisLeft = new Axis({ orient: 'left' })
-  .style('scale', true)
-  .style('grid', function(attr, data, i) {
-    if (i === 6) {
-      return false
-    }
-  })
+const axisLeft = new Axis({ orient: 'left' }).style('scale', true).style('grid', function(attr, data, i) {
+  if (i === 6) {
+    return false
+  }
+})
 
-const legend = new Legend({ align: ['center', 'bottom'] })
-  .style('icon', { borderRadius: 10 })
-  .style('text', { fontSize: 12 })
+const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 
-chart.add([line, line2, axisBottom, axisLeft, axisTop, legend])
-chart.render()
+chart.append([line, line2, axisBottom, axisLeft, axisTop, legend])
 ```
 
 :::
