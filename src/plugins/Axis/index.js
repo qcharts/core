@@ -55,10 +55,13 @@ class Axis extends Base {
     let styles = this.renderStyles
     let scaleStyle = styles.scale
     let labelStyle = styles.label
+    let axisStyle = styles.axis
+    let renderStyle = this.style('axis')(axisStyle)
+    renderStyle = deepObjectMerge({}, axisStyle, renderStyle)
     //当前主体颜色
     return (
       <Group ref="wrap" pos={[clientRect.left, clientRect.top]}>
-        <Polyline {...styles.axis} animation={{ from: { points: oldAxis.axisPoints }, to: { points: axis.axisPoints } }}></Polyline>
+        <Polyline {...renderStyle} animation={{ from: { points: oldAxis.axisPoints }, to: { points: axis.axisPoints } }}></Polyline>
         <Group>
           {axis.scales.map((scale, ind) => {
             let fromPos = (oldAxis.scales && oldAxis.scales[ind] && oldAxis.scales[ind].pos) || scale.pos
