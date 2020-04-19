@@ -11,10 +11,12 @@ export default function layout(arr, attrs) {
   let defaultAttrs = {
     top: {
       label: {
-        anchor: [0.5, 1]
+        anchor: [0.5, 1],
+        padding: [0, 0, 6, 0],
+        textAlign: 'center'
       },
       scale: {
-        anchor: [1, 1],
+        anchor: [0.5, 1],
         width: 1,
         height: 4
       },
@@ -24,7 +26,6 @@ export default function layout(arr, attrs) {
       scale: {
         anchor: [0.5, 0],
         width: 1,
-        bgcolor: '#f00',
         height: 4
       },
       label: {
@@ -49,10 +50,11 @@ export default function layout(arr, attrs) {
     },
     right: {
       label: {
-        anchor: [1, 0]
+        anchor: [0, 0.5],
+        padding: [0, 0, 0, 8]
       },
       scale: {
-        anchor: [0, 1],
+        anchor: [0, 0.5],
         width: 4,
         height: 1
       },
@@ -61,7 +63,7 @@ export default function layout(arr, attrs) {
   }
   const { stack, splitNumber, clientRect, orient, axisGap, transpose } = attrs
   if (transpose) {
-    ;['top', 'bottom', 'right', 'left'].forEach(str => {
+    ;['top', 'bottom', 'right', 'left'].forEach((str) => {
       defaultAttrs[str].type = defaultAttrs[str].type === 'value' ? 'category' : 'value'
     })
   }
@@ -75,7 +77,7 @@ export default function layout(arr, attrs) {
     let scaleFY = scaleLinear()
       .domain([minVal, maxVal])
       .range([0, distance])
-    scales.forEach(num => {
+    scales.forEach((num) => {
       let { scaleAttr, labelAttr } = getItemAttrs(defaultAttrs, orient, { text: '' + num }, num, scaleFY, clientRect)
       res.scales.push(scaleAttr)
       res.labels.push(labelAttr)
@@ -98,14 +100,16 @@ export default function layout(arr, attrs) {
     }
   }
   if (orient === 'left' || orient === 'right') {
+    let dx = orient === 'left' ? 0 : width
     res.axisPoints = [
-      [0, height],
-      [0, 0]
+      [dx, height],
+      [dx, 0]
     ]
   } else if (orient === 'bottom' || orient === 'top') {
+    let dy = orient === 'bottom' ? height : 0
     res.axisPoints = [
-      [0, height],
-      [width, height]
+      [0, dy],
+      [width, dy]
     ]
   }
   return res

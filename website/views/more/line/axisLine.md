@@ -43,12 +43,10 @@ chart.source(data, {
 })
 
 const line = new Line()
-  .color(['#3e97ff', '#37dbc0'])
-  .style('point', { strokeColor: '#fff' })
 
 const axisLeft = new Axis({
   orient: 'left',
-  formatter: val => {
+  formatter: (val) => {
     return `${val} ml`
   }
 })
@@ -62,12 +60,9 @@ function hideAxis(attrs, data, i) {
     return false
   }
 }
-const legend = new Legend({ align: ['center', 'bottom'] })
-  .style('icon', { borderRadius: 10 })
-  .style('text', { fontSize: 12 })
+const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 
-chart.add([line, axisBottom, axisLeft, legend])
-chart.render()
+chart.append([line, axisBottom, axisLeft, legend])
 ```
 
 :::

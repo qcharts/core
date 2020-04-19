@@ -57,28 +57,24 @@ const axisLeft = new Axis({
   orient: 'left',
   splitNumber: 5,
   name: '降水量（毫升）',
-  formatter: val => {
+  formatter: (val) => {
     return `${val} ml`
   }
 })
   .style('axis', false)
   .style('scale', false)
-  .style('name', { color: '#f00', translate: [-10, -10] })
   .source(d1)
 
 const d2 = ds.selectRows('气温')
 const line2 = new Line({
   splitNumber: 5
-})
-  .source(d2)
-  .style('point', { strokeColor: '#fff' })
-line2.color(['#59CB74'])
+}).source(d2)
 
 const axisRight = new Axis({
   splitNumber: 5,
   orient: 'right',
   name: '温度（摄氏度）',
-  formatter: val => {
+  formatter: (val) => {
     return `${val} °C`
   }
 })
@@ -89,21 +85,18 @@ const axisRight = new Axis({
 
 const axisBottom = new Axis().style('scale', true)
 
-const legend = new Legend({ align: ['center', 'bottom'] })
-  .style('icon', { borderRadius: 10 })
-  .style('text', { fontSize: 12 })
+const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 
 const tooltip = new Tooltip({
-  title: t => t[0].date,
+  title: (t) => t[0].date,
   formatter: function(d) {
     const date = d.date
-    const curData = data.filter(item => item.date === date)
+    const curData = data.filter((item) => item.date === date)
     return `气温:${curData[1].val}°C  降水:${curData[0].val}ml`
   }
 })
 
-chart.add([line, line2, axisBottom, axisLeft, axisRight, legend, tooltip])
-chart.render()
+chart.append([line, line2, axisBottom, axisLeft, axisRight, legend, tooltip])
 ```
 
 :::

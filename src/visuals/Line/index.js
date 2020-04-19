@@ -124,7 +124,6 @@ class Line extends Base {
     let styles = this.renderStyles
     //当前主体颜色
     let colors = this.theme.colors
-    console.log(colors)
     this.renderLines = lines
     return (
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove} size={[clientRect.width, clientRect.height]}>

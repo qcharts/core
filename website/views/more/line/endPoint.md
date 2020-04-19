@@ -42,16 +42,11 @@ const tooltip = new Tooltip({
 
 const axisBottom = new Axis().style('grid', { lineDash: [0, 0] })
 
-const axisLeft = new Axis({ orient: 'left' })
-  .style('scale', false)
-  .style('grid', false)
+const axisLeft = new Axis({ orient: 'left' }).style('scale', false).style('grid', false)
 
-const legend = new Legend({ align: ['center', 'bottom'] })
-  .style('icon', { borderRadius: 10 })
-  .style('text', { fontSize: 12 })
+const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 
-chart.add([line, tooltip, axisBottom, axisLeft, legend])
-chart.render()
+chart.append([line, tooltip, axisBottom, axisLeft, legend])
 ```
 
 :::

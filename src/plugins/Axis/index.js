@@ -37,6 +37,7 @@ class Axis extends Base {
   defaultAttrs() {
     return {
       layer: 'axis',
+      formatter: (e) => e
     }
   }
   //defaultStyles() {}
@@ -50,7 +51,7 @@ class Axis extends Base {
   render(axis) {
     let oldAxis = this.renderAxis || emptyObject()
     this.renderAxis = axis
-    let { clientRect } = this.renderAttrs
+    let { clientRect, formatter } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
     let scaleStyle = styles.scale
@@ -58,6 +59,7 @@ class Axis extends Base {
     let axisStyle = styles.axis
     let renderStyle = this.style('axis')(axisStyle)
     renderStyle = deepObjectMerge({}, axisStyle, renderStyle)
+    //console.log('axis', renderStyle, axis)
     //当前主体颜色
     return (
       <Group ref="wrap" pos={[clientRect.left, clientRect.top]}>
@@ -76,7 +78,7 @@ class Axis extends Base {
             let style = this.style('label')(labelStyle, label, ind)
             let renderStyle = deepObjectMerge({}, labelStyle, style)
             let ani = { from: { pos: fromPos }, to: { pos: label.pos } }
-            return <Label {...filterClone(label, [], ['pos'])} {...renderStyle} animation={ani}></Label>
+            return <Label {...filterClone(label, [], ['pos', 'text'])} text={formatter(label.text)} {...renderStyle} animation={ani}></Label>
           })}
         </Group>
       </Group>
