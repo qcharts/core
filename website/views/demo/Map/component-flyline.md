@@ -4,8 +4,8 @@
 
 ```javascript
 fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
-  .then(res => res.json())
-  .then(mapData => {
+  .then((res) => res.json())
+  .then((mapData) => {
     const data = [
       {
         name: '新疆维吾尔自治区',
@@ -171,10 +171,8 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
     map
       .setGeomData(mapData, { items: mapData.features })
       .mapGeomDataToBind((mapData, i) => {
-        const target = data.filter(d => d.name === mapData.properties.name)
-        return (
-          (target && target[0]) || { name: mapData.properties.name, gdp: 0 }
-        )
+        const target = data.filter((d) => d.name === mapData.properties.name)
+        return (target && target[0]) || { name: mapData.properties.name, gdp: 0 }
       })
       .style('normal', { fillColor: '#00186E', color: '#2b5bbd' })
 
@@ -215,8 +213,7 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
     const colors = ['#46bee9', '#ffa022', '#a6c84c'] // 航线的颜色
 
     map.add(Map.FlyLine, {
-      symbol:
-        'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z', // 指定符号类型，支持图片和 svg path（使用需加前缀：path://）
+      symbol: 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z', // 指定符号类型，支持图片和 svg path（使用需加前缀：path://）
       symbolSize: 40, // 大小,
       symbolEffect(attrs, dataOrigin, i) {
         return { duration: 3000 }
@@ -243,7 +240,7 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
     })
 
     const tooltip = new Tooltip()
-    tooltip.formatter(data => `${data.name}`)
+    tooltip.formatter((data) => `${data.name}`)
 
     chart
       .add(map)
@@ -251,7 +248,6 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
       .add(new Text({ text: '中国部分航班航线' }))
 
     chart.setTheme('dark')
-    chart.render()
   })
 ```
 
@@ -261,8 +257,8 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
 
 ```javascript
 fetch('http://s3.qhres.com/static/cc45789da954676b.json')
-  .then(res => res.json())
-  .then(mapData => {
+  .then((res) => res.json())
+  .then((mapData) => {
     const data = [
       {
         name: 'Russia',
@@ -364,10 +360,8 @@ fetch('http://s3.qhres.com/static/cc45789da954676b.json')
     map
       .setGeomData(mapData, { items: mapData.features })
       .mapGeomDataToBind((mapData, i) => {
-        const target = data.filter(d => d.name === mapData.properties.name)
-        return (
-          (target && target[0]) || { name: mapData.properties.name, gdp: 0 }
-        )
+        const target = data.filter((d) => d.name === mapData.properties.name)
+        return (target && target[0]) || { name: mapData.properties.name, gdp: 0 }
       })
       .style('normal', { fillColor: '#04284e', color: '#5bc1c9' })
 
@@ -450,7 +444,7 @@ fetch('http://s3.qhres.com/static/cc45789da954676b.json')
     })
 
     const tooltip = new Tooltip()
-    tooltip.formatter(data => `${data.name}: ${data.value}`)
+    tooltip.formatter((data) => `${data.name}: ${data.value}`)
 
     chart
       .add(map)
@@ -458,7 +452,6 @@ fetch('http://s3.qhres.com/static/cc45789da954676b.json')
       .add(new Text({ text: '攻击线世界地图' }))
 
     chart.setTheme('dark')
-    chart.render()
   })
 ```
 

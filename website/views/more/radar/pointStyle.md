@@ -39,8 +39,7 @@ radar.style('point', (d, data, i) => {
 })
 
 const legend = new Legend({ align: ['center', 'bottom'] })
-chart.add([radar, legend])
-chart.render()
+chart.append([radar, legend])
 ```
 
 :::

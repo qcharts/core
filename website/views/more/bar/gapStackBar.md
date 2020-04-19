@@ -122,14 +122,11 @@ const bar = new Bar({
     }
   })
 const tooltip = new Tooltip({
-  formatter: d => ` ${d.type}: ${d.value}`
+  formatter: (d) => ` ${d.type}: ${d.value}`
 })
-const legend = new Legend({ align: ['left', 'top'] }).style(
-  'icon',
-  (attr, data, i) => {
-    return { bgcolor: colors[i] }
-  }
-)
+const legend = new Legend({ align: ['left', 'top'] }).style('icon', (attr, data, i) => {
+  return { bgcolor: colors[i] }
+})
 const axisLeft = new Axis({
   orient: 'left'
 })
@@ -137,8 +134,7 @@ const axisLeft = new Axis({
   .style('grid', false)
   .style('scale', false)
   .style('label', { color: '#1DCE91' })
-chart.add([bar, legend, axisLeft])
-chart.render()
+chart.append([bar, legend, axisLeft])
 ```
 
 :::

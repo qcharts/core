@@ -17,7 +17,7 @@ class Line extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
     let { arrLayout, maxLen } = this.getRenderData()
-    let lines = arrLayout.map(item => {
+    let lines = arrLayout.map((item) => {
       return {
         smoothRange: item.smoothRange,
         areaFrom: { points: item.areaPoints },
@@ -63,7 +63,7 @@ class Line extends Base {
     let arrLayout = layout.call(this, renderData, renderAttrs)
     let { height, width } = renderAttrs.clientRect
     //对角线长度的2保证会大于曲线的长度
-    let maxLen = Math.sqrt(height ** 2, width ** 2) * 2
+    let maxLen = Math.sqrt(height ** 2, width ** 2) * 5
     return { width, height, arrLayout, maxLen }
   }
   rendered() {
@@ -89,7 +89,7 @@ class Line extends Base {
   guidelinemove(event, el) {
     if (this.renderLines.length) {
       //获取 x轴坐标的刻度
-      let arrX = this.renderLines[0].to.points.map(pos => pos[0])
+      let arrX = this.renderLines[0].to.points.map((pos) => pos[0])
       //转换cancas坐标到当前group的相对坐标
       let [x] = el.getOffsetPosition(event.x, event.y)
       let curInd = 0
@@ -147,7 +147,7 @@ class Line extends Base {
         </Group>
         <Group class="guide-line-group">
           {guidePoints.length
-            ? (_ => {
+            ? ((_) => {
                 let mergeStyle = deepObjectMerge({}, styles.guideline)
                 let style = this.style('area')(mergeStyle)
                 let renderStyle = deepObjectMerge(mergeStyle, style)

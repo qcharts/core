@@ -1,6 +1,6 @@
 ## Legend
 
-当实例化 `chart` 后，向 `chart` 添加 `Legend` 插件即可，`chart.add(new Legend())`。
+当实例化 `chart` 后，向 `chart` 添加 `Legend` 插件即可，`chart.append(new Legend())`。
 
 :::demo
 
@@ -19,9 +19,7 @@ const l3 = new Legend({ orient: 'vertical', align: ['center', 'center'] })
 const l4 = new Legend({ orient: 'vertical', align: ['right', 'top'] })
 const l5 = new Legend({ orient: 'vertical', align: ['right', 'bottom'] })
 
-chart.add([l1, l2, l3, l4, l5])
-
-chart.render()
+chart.append([l1, l2, l3, l4, l5])
 ```
 
 :::

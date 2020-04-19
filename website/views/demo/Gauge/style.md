@@ -53,9 +53,7 @@ gauge.style('tickText', (attrs, data, i) => {
   }
 })
 
-chart.add(gauge)
-
-chart.render()
+chart.append(gauge)
 ```
 
 :::

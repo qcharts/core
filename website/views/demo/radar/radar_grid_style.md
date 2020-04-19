@@ -42,8 +42,7 @@ radar
   })
   .style('grid:hover', (attr, data, i) => ({ lineWidth: 3 }))
 
-chart.add(radar)
-chart.render()
+chart.append(radar)
 ```
 
 :::

@@ -32,7 +32,6 @@ const bar = new PolarBar({
 // })
 
 chart.append([bar])
-chart.render()
 ```
 
 :::

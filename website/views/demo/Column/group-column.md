@@ -69,11 +69,8 @@ const tooltip = new Tooltip()
 // })
 // const legend = new Legend({ align: ['center', 'bottom'] })
 const axisBottom = new Axis()
-const axisLeft = new Axis({ orient: 'left' })
-  .style('axis', false)
-  .style('scale', false)
+const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 chart.append([bar, tooltip, axisBottom, axisLeft])
-chart.render()
 ```
 
 :::

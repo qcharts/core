@@ -28,9 +28,7 @@ const l01 = new Legend({ orient: 'vertical', align: ['75%', 130] })
 const l02 = new Legend({ orient: 'vertical', align: ['25%', '75%'] })
 const l03 = new Legend({ orient: 'vertical', align: ['75%', 375] })
 
-chart.add([l1, l2, l3, l4, l5, l6, l7, l8, l9, l00, l01, l02, l03])
-
-chart.render()
+chart.append([l1, l2, l3, l4, l5, l6, l7, l8, l9, l00, l01, l02, l03])
 ```
 
 :::

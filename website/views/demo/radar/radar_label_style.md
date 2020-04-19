@@ -41,8 +41,7 @@ radar
   })
   .style('label:hover', (attr, data, i) => ({ font: '17px 宋体' }))
 
-chart.add(radar)
-chart.render()
+chart.append(radar)
 ```
 
 :::

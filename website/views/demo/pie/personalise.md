@@ -43,9 +43,7 @@ const pie = new qcharts.Pie({
     img.style.width = 32 + 'px'
     img.style.height = 32 + 'px'
 
-    img.src = isFemale
-      ? 'https://user-images.githubusercontent.com/26452939/51729951-b08eeb00-20b0-11e9-87fb-1b4360c79ec4.png'
-      : 'https://user-images.githubusercontent.com/26452939/51741061-c44a4980-20d0-11e9-8666-08075f5de98a.png'
+    img.src = isFemale ? 'https://user-images.githubusercontent.com/26452939/51729951-b08eeb00-20b0-11e9-87fb-1b4360c79ec4.png' : 'https://user-images.githubusercontent.com/26452939/51741061-c44a4980-20d0-11e9-8666-08075f5de98a.png'
 
     oDemo.appendChild(img)
     return false // 返回 false ，图表便不会进行该部分的渲染
@@ -56,16 +54,7 @@ const pie = new qcharts.Pie({
     console.log('click', attrs, d, i)
   })
 
-chart
-  .add(pie)
-  .add(
-    new Tooltip({ lineHight: 22 }).formatter(
-      data =>
-        `男女员工占比：\n${data.sex} ${(data.proportion * 100).toFixed(0)}%`
-    )
-  )
-
-chart.render()
+chart.add(pie).add(new Tooltip({ lineHight: 22 }).formatter((data) => `男女员工占比：\n${data.sex} ${(data.proportion * 100).toFixed(0)}%`))
 ```
 
 :::
@@ -119,9 +108,7 @@ const pie = new qcharts.Pie({
   .style('guideText', true)
   .style('text', (attrs, d, i) => d.value > 0.08)
 
-chart.add(pie)
-
-chart.render()
+chart.append(pie)
 ```
 
 :::
@@ -164,9 +151,7 @@ const pie = new qcharts.Pie({
     return { font: '12px "楷体"' }
   })
 
-chart.add(pie)
-
-chart.render()
+chart.append(pie)
 ```
 
 :::
@@ -229,9 +214,9 @@ const pie = new qcharts.Pie({
     }
   })
 
-chart.add(pie)
+chart.append(pie)
 
-chart.on(InteractionHooks.showTooltip, e => {
+chart.on(InteractionHooks.showTooltip, (e) => {
   const { data } = e
   updateText(data)
 })
@@ -241,7 +226,7 @@ chart.on('resize', () => {
   oDemo.removeChild(oDemo.querySelector('div'))
 })
 
-chart.on(InteractionHooks.hideTooltip, e => {
+chart.on(InteractionHooks.hideTooltip, (e) => {
   updateText({ type: '总共', value: total })
 })
 
@@ -272,8 +257,6 @@ function updateText(data) {
     <span>${data.value}</span>
   `
 }
-
-chart.render()
 ```
 
 :::
@@ -309,9 +292,7 @@ const pie = new qcharts.Pie({
     lineWidth: 2
   })
 
-chart.add(pie)
-
-chart.render()
+chart.append(pie)
 ```
 
 :::

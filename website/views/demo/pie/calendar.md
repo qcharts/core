@@ -5,7 +5,7 @@
 ```javascript
 const days = Array.from({ length: 28 }, (d, i) => `2月${i + 1}日`)
 const data = days.reduce((a, c) => {
-  const data = ['工作', '娱乐', '睡觉'].map(type => ({
+  const data = ['工作', '娱乐', '睡觉'].map((type) => ({
     day: c,
     type,
     value: Math.round(Math.random() * 24)
@@ -15,7 +15,7 @@ const data = days.reduce((a, c) => {
 }, [])
 
 const data2 = days.reduce((a, c) => {
-  const data = ['工作', '娱乐', '睡觉'].map(type => ({
+  const data = ['工作', '娱乐', '睡觉'].map((type) => ({
     day: c,
     type,
     value: Math.round(Math.random() * 24)
@@ -46,7 +46,7 @@ days.slice(0, 7).forEach((d, i) => {
     text: '星期' + weekdays[i],
     pos
   })
-  chart.add(text)
+  chart.append(text)
 })
 
 days.forEach((d, i) => {
@@ -63,7 +63,7 @@ days.forEach((d, i) => {
     anchor: [1.5, 1.0]
   })
 
-  chart.add([text, pie])
+  chart.append([text, pie])
 })
 
 const legend = new Legend({
@@ -76,8 +76,7 @@ const legend = new Legend({
 })
 legend.source(['工作', '娱乐', '睡觉'])
 
-chart.add([legend])
-chart.render()
+chart.append([legend])
 ```
 
 :::

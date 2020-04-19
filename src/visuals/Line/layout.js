@@ -12,18 +12,21 @@ export default function layout(arr, attrs) {
     .domain([minVal, maxVal])
     .range([0, height])
   let prevRow = null
-  arr.forEach(row => {
+  arr.forEach((row) => {
     //if (row.state === 'disabled') return
     let line = { points: [], areaPoints: [], smoothRange: [], state: row.state }
     row.forEach((cell, i) => {
       let val = cell.value
-      let dx = width / (row.length - 1)
-      let curPos = [dx * i, height - scaleFY(val)]
-      if (stack && prevRow) {
-        //如果是堆叠并且前一个row存在，则叠加
-        curPos = [dx * i, height - scaleFY(val + prevRow[i].value)]
+      if (cell.value !== undefined) {
+        //如果为undefined 不渲染
+        let dx = width / (row.length - 1)
+        let curPos = [dx * i, height - scaleFY(val)]
+        if (stack && prevRow) {
+          //如果是堆叠并且前一个row存在，则叠加
+          curPos = [dx * i, height - scaleFY(val + prevRow[i].value)]
+        }
+        line.points.push(curPos)
       }
-      line.points.push(curPos)
     })
     line.axisPoints = [
       [line.points[0][0], height - scaleFY(0)],

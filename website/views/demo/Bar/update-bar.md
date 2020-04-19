@@ -55,7 +55,7 @@ const bar = new Bar({
 })
 // bar.style('pillar', { fillColor: '#47A1FF' })
 const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
+  formatter: (d) => `${d.label}: ${d.value}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
   text: '图例一'
@@ -64,8 +64,8 @@ const axisBottom = new Axis().style('scale', false).style('grid', true)
 const axisLeft = new Axis({
   orient: 'left'
 }).style('grid', false)
-chart.add([bar, tooltip, legend, axisBottom, axisLeft])
-chart.render()
+chart.append([bar, tooltip, legend, axisBottom, axisLeft])
+
 // setTimeout(changeData, 3000)
 let i = 1
 let str = 'data'

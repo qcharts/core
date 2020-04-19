@@ -37,11 +37,9 @@ const progress = new Progress({
   .style('normal', (attrs, d, i) => {
     return { fillColor: colors[i], color: colors[3 - i] }
   })
-  .formatter(d => `${d.value}`)
+  .formatter((d) => `${d.value}`)
 
-chart.add(progress).add(new Tooltip().formatter(d => `${d.value}`))
-
-chart.render()
+chart.append(progress).add(new Tooltip().formatter((d) => `${d.value}`))
 ```
 
 :::

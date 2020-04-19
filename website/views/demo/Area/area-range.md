@@ -50,7 +50,6 @@ const tooltip = new Tooltip()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
 chart.append([area, axisBottom, axisLeft, tooltip])
-chart.render()
 ```
 
 :::

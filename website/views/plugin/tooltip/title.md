@@ -5,7 +5,7 @@
 :::demo
 
 ```javascript
-const data = [1, 2, 3, 4, 5].map(num => {
+const data = [1, 2, 3, 4, 5].map((num) => {
   return { value: num }
 })
 
@@ -20,10 +20,9 @@ chart.source(data, { value: 'value' })
 
 const pie = new Pie()
 
-const tooltip = new Tooltip({ title: '数字', formatter: d => d.value })
+const tooltip = new Tooltip({ title: '数字', formatter: (d) => d.value })
 
-chart.add([pie, tooltip])
-chart.render()
+chart.append([pie, tooltip])
 ```
 
 :::
@@ -31,7 +30,7 @@ chart.render()
 :::demo
 
 ```javascript
-const data = [1, 2, 3, 4, 5].map(num => {
+const data = [1, 2, 3, 4, 5].map((num) => {
   return { value: num }
 })
 
@@ -47,14 +46,13 @@ chart.source(data, { value: 'value' })
 const pie = new Pie()
 
 const tooltip = new Tooltip({
-  title: d => {
+  title: (d) => {
     return `数组 ${d[0].value}`
   },
-  formatter: d => d.value
+  formatter: (d) => d.value
 })
 
-chart.add([pie, tooltip])
-chart.render()
+chart.append([pie, tooltip])
 ```
 
 :::

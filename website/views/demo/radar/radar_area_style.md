@@ -43,8 +43,7 @@ radar
   })
   .style('section:hover', (attr, data, i) => ({ fillColor: 'red' }))
 
-chart.add(radar)
-chart.render()
+chart.append(radar)
 ```
 
 :::

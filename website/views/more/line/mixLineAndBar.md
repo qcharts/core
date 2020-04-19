@@ -46,14 +46,11 @@ chart.source(data, {
 const ds = chart.dataset
 
 const d1 = ds.selectRows('降水量')
-const line = new Line({ axisGap: true })
-  .source(d1)
-  .color(['#59CB74'])
-  .style('point', { strokeColor: '#fff' })
+const line = new Line({ axisGap: true }).source(d1).style('point', { strokeColor: '#fff' })
 
 const axisLeft = new Axis({
   orient: 'left',
-  formatter: val => {
+  formatter: (val) => {
     return `${val} ml`
   }
 })
@@ -67,7 +64,7 @@ bar.style('pillar', { fillColor: '#47A1FF' })
 
 const axisRight = new Axis({
   orient: 'right',
-  formatter: val => {
+  formatter: (val) => {
     return `${val} °C`
   }
 })
@@ -77,12 +74,9 @@ const axisRight = new Axis({
 
 const axisBottom = new Axis().style('scale', true)
 
-const legend = new Legend({ align: ['center', 'bottom'] })
-  .style('icon', { borderRadius: 10 })
-  .style('text', { fontSize: 12 })
+const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 
-chart.add([bar, line, axisBottom, axisLeft, axisRight, legend])
-chart.render()
+chart.append([bar, line, axisBottom, axisLeft, axisRight, legend])
 ```
 
 :::

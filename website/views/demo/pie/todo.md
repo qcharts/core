@@ -103,15 +103,7 @@ const pie = new qcharts.Pie({
   .style('guideline', true)
   .style('guideText', { font: '12px "宋体"' })
 
-chart
-  .add(pie)
-  .add(
-    new Tooltip({ lineHight: 22 }).formatter(
-      data => `居民负债比：${data.area}: ${data.visitors}%`
-    )
-  )
-
-chart.render()
+chart.add(pie).add(new Tooltip({ lineHight: 22 }).formatter((data) => `居民负债比：${data.area}: ${data.visitors}%`))
 ```
 
 :::
@@ -210,15 +202,7 @@ const pie = new qcharts.Pie({
   .setDataFields({ x: 'area', y: 'visitors' })
   .style('text', true)
 
-chart
-  .add(pie)
-  .add(
-    new Tooltip({ lineHight: 22 }).formatter(
-      data => `居民负债比：${data.area}: ${data.visitors}%`
-    )
-  )
-
-chart.render()
+chart.add(pie).add(new Tooltip({ lineHight: 22 }).formatter((data) => `居民负债比：${data.area}: ${data.visitors}%`))
 ```
 
 :::

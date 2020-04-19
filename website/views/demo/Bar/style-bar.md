@@ -33,7 +33,10 @@ const bar = new Bar()
       opacity: 1.0,
       fillColor: {
         vector: [0, 0, 0, 100],
-        colors: [{ color: 'red', offset: 0 }, { color: 'blue', offset: 1 }]
+        colors: [
+          { color: 'red', offset: 0 },
+          { color: 'blue', offset: 1 }
+        ]
       }
     }
   })
@@ -72,14 +75,13 @@ const bar = new Bar()
   .style('backgroundpillar:hover', { borderRadius: 20 })
 
 const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
+  formatter: (d) => `${d.label}: ${d.value}`
 })
 
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 
-chart.add([bar, tooltip, axisBottom, axisLeft])
-chart.render()
+chart.append([bar, tooltip, axisBottom, axisLeft])
 ```
 
 :::
@@ -197,7 +199,7 @@ const bar = new Bar({
   }
 })
 const tooltip = new Tooltip({
-  formatter: d => `${d.product} - ${d.year} - ${d.sales}`
+  formatter: (d) => `${d.product} - ${d.year} - ${d.sales}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] })
 
@@ -210,8 +212,7 @@ const axisLeft = new Axis({
   })
   .style('scale', false)
   .style('axis', false)
-chart.add([bar, tooltip, legend, axisLeft])
-chart.render()
+chart.append([bar, tooltip, legend, axisLeft])
 ```
 
 :::
@@ -251,31 +252,27 @@ chart.source(data, {
   text: 'label'
 })
 let bool = true
-const bar = new Bar({})
-  .style('pillar', { fillColor: '#47A1FF' })
-  .style('text', (attrs, data, i) => {
-    let anchor = attrs.anchor || [0, 0]
-    let size = attrs.size
-    let pos = attrs.pos
-    return {
-      rotate: 0,
-      text: data.value,
-      anchor: [0.5, 1],
-      pos: [pos[0] + size[0] / 2, pos[1] - size[1]]
-    }
-  })
+const bar = new Bar({}).style('pillar', { fillColor: '#47A1FF' }).style('text', (attrs, data, i) => {
+  let anchor = attrs.anchor || [0, 0]
+  let size = attrs.size
+  let pos = attrs.pos
+  return {
+    rotate: 0,
+    text: data.value,
+    anchor: [0.5, 1],
+    pos: [pos[0] + size[0] / 2, pos[1] - size[1]]
+  }
+})
 const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
+  formatter: (d) => `${d.label}: ${d.value}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
   text: '图例一'
 })
 const axisBottom = new Axis()
-const axisLeft = new Axis({ orient: 'left' })
-  .style('axis', false)
-  .style('scale', false)
-chart.add([bar, tooltip, legend, axisBottom, axisLeft])
-chart.render()
+const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
+chart.append([bar, tooltip, legend, axisBottom, axisLeft])
+
 setTimeout(changeData, 3000)
 function changeData() {
   if (bool) {

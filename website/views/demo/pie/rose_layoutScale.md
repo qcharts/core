@@ -45,10 +45,8 @@ legend.style('text', (attrs, d, i) => ({
   marginTop: i > 0 ? 15 : 0
 }))
 
-chart.add(pie)
-chart.add(legend)
-
-chart.render()
+chart.append(pie)
+chart.append(legend)
 ```
 
 :::

@@ -1,7 +1,6 @@
 ## 基础坐标轴
 
-
-坐标轴组件会自己根据chart的source数据进行layout计算，并且进行默认布局，也会根据chart中的visual进行适配
+坐标轴组件会自己根据 chart 的 source 数据进行 layout 计算，并且进行默认布局，也会根据 chart 中的 visual 进行适配
 
 :::demo 基础坐标
 
@@ -29,10 +28,7 @@ const chart = new Chart({
 let xAxis = new Axis({ orient: 'bottom' })
 let yAxis = new Axis({ orient: 'left' })
 
-
-chart.add(xAxis).add(yAxis)
-chart.render()
+chart.append(xAxis).add(yAxis)
 ```
 
 :::
-

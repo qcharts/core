@@ -35,7 +35,7 @@ const oApp = document.querySelector('#app')
 const total = data.reduce((a, c) => (a += c.value), 0)
 const legends = []
 
-const createLegend = data => {
+const createLegend = (data) => {
   if (legends[data.index]) {
     // 已经创建
     return
@@ -48,7 +48,7 @@ const createLegend = data => {
     z-index: 1000;
   `
 
-  const setInnerHTML = data => {
+  const setInnerHTML = (data) => {
     const color1 = data.disabled ? '#ccc' : '#333'
     const color2 = data.disabled ? '#ccc' : data.color
 
@@ -81,8 +81,7 @@ const createLegend = data => {
 // 监听交互钩子
 chart.on(InteractionHooks.renderLegend, createLegend)
 
-chart.add(pie)
-chart.render()
+chart.append(pie)
 ```
 
 :::

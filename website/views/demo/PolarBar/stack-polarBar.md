@@ -133,12 +133,11 @@ const bar = new PolarBar({
   lineWidth: 1
 })
 const tooltip = new Tooltip({
-  formatter: d => `${d.product}: ${d.sales}`
+  formatter: (d) => `${d.product}: ${d.sales}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] })
 
-chart.add([bar, legend, tooltip])
-chart.render()
+chart.append([bar, legend, tooltip])
 ```
 
 :::

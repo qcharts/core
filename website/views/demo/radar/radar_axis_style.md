@@ -36,16 +36,13 @@ const radar = new Radar()
 
 radar
   .style('axis', (attr, data, i) => {
-    return i % 2 === 0
-      ? { color: 'red' }
-      : { color: 'green', lineDash: [2, 10] }
+    return i % 2 === 0 ? { color: 'red' } : { color: 'green', lineDash: [2, 10] }
   })
   .style('axis:hover', (attr, data, i) => ({
     lineWidth: attr.lineWidth + 2
   }))
 
-chart.add(radar)
-chart.render()
+chart.append(radar)
 ```
 
 :::
