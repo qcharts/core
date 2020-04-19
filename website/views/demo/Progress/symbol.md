@@ -24,7 +24,7 @@ chart.source(data, {
   text: 'sex',
   value: 'value'
 })
-setTimeout(e => {
+setTimeout((e) => {
   chart.source([
     {
       sex: 'male',
@@ -37,7 +37,7 @@ const progress = new Progress({
   min: 0,
   max: 100,
   type: 'wave',
-  formatter: d => `当前工作进度：${d.value}%`,
+  formatter: (d) => `当前工作进度：${d.value}%`,
   lineWidth: 2
 }).style('normal', (attrs, d, i) => {
   return {
@@ -49,11 +49,7 @@ const progress = new Progress({
   }
 })
 
-chart
-  .add(progress)
-  .add(new Tooltip({ formatter: d => `${d.sex}: ${d.value}%` }))
-
-chart.render()
+chart.add(progress).add(new Tooltip({ formatter: (d) => `${d.sex}: ${d.value}%` }))
 ```
 
 :::
@@ -96,7 +92,7 @@ const progress = new Progress({
   max: 100,
   lineWidth: 2,
   type: 'wave',
-  formatter: d => `${d.value}`
+  formatter: (d) => `${d.value}`
 }).style('normal', (attrs, d, i) => {
   return {
     outlineColor: colors[i],
@@ -107,9 +103,7 @@ const progress = new Progress({
   }
 })
 
-chart.add(progress).add(new Tooltip({ formatter: d => `${d.value}` }))
-
-chart.render()
+chart.append(progress).add(new Tooltip({ formatter: (d) => `${d.value}` }))
 ```
 
 :::

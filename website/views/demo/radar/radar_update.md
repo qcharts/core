@@ -34,7 +34,7 @@ chart.source(data, {
 
 const radar = new Radar()
 
-chart.add(new Legend())
+chart.append(new Legend())
 
 const data2 = [
   { label: '客服', category: '添加测试', value: 130 },
@@ -56,8 +56,7 @@ setInterval(() => {
   change = !change
 }, 3000)
 
-chart.add(radar)
-chart.render()
+chart.append(radar)
 ```
 
 :::

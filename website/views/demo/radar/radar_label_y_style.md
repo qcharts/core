@@ -37,14 +37,11 @@ const radar = new Radar()
 radar
   .style('scale', (attr, data, i) => {
     const colors = ['red', 'green', 'blue', 'black']
-    return i < 4
-      ? { color: colors[i], display: 'block' }
-      : { color: colors[4 - i], display: 'block' }
+    return i < 4 ? { color: colors[i], display: 'block' } : { color: colors[4 - i], display: 'block' }
   })
   .style('scale:hover', (attr, data, i) => ({ font: '17px 宋体' }))
 
-chart.add(radar)
-chart.render()
+chart.append(radar)
 ```
 
 :::

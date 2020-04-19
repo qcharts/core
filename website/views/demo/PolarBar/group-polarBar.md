@@ -98,12 +98,11 @@ const bar = new PolarBar({
   groupPadAngle: Math.PI * 0.2
 })
 const tooltip = new Tooltip({
-  formatter: d => `${d.product}: ${d.sales}`
+  formatter: (d) => `${d.product}: ${d.sales}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] })
 
-chart.add([bar, legend, tooltip])
-chart.render()
+chart.append([bar, legend, tooltip])
 ```
 
 :::

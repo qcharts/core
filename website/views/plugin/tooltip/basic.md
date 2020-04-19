@@ -1,11 +1,11 @@
 ## Tooltip
 
-当实例化 `chart` 后，向 `chart` 添加 `Tooltip` 插件即可，`chart.add(new Tooltip())`。
+当实例化 `chart` 后，向 `chart` 添加 `Tooltip` 插件即可，`chart.append(new Tooltip())`。
 
 :::demo
 
 ```javascript
-const data = [1, 2, 3, 4, 5].map(num => {
+const data = [1, 2, 3, 4, 5].map((num) => {
   return { value: num }
 })
 
@@ -20,10 +20,9 @@ chart.source(data, { value: 'value' })
 
 const pie = new Pie()
 
-const tooltip = new Tooltip({ formatter: d => d.value })
+const tooltip = new Tooltip({ formatter: (d) => d.value })
 
-chart.add([pie, tooltip])
-chart.render()
+chart.append([pie, tooltip])
 ```
 
 :::

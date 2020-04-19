@@ -26,15 +26,13 @@ const gauge = new Gauge({
   max: 10,
   tickStep: 1,
   tickLength: -10,
-  title: d => `${d.value}`,
+  title: (d) => `${d.value}`,
   subTitle: 'Hello'
 })
 
 gauge.style('title', { fontSize: 36 })
 
-chart.add(gauge)
-
-chart.render()
+chart.append(gauge)
 ```
 
 :::
@@ -66,15 +64,13 @@ const gauge = new Gauge({
   tickStep: 1,
   tickLength: 10,
   labelOffset: 20,
-  title: d => `${d.value}`,
+  title: (d) => `${d.value}`,
   subTitle: 'Hello'
 })
 
 gauge.style('title', { fontSize: 36 })
 
-chart.add(gauge)
-
-chart.render()
+chart.append(gauge)
 ```
 
 :::

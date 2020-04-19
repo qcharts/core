@@ -32,7 +32,7 @@ const colors = ['#49d088', '#FE5555', '#F4B30E', '#473C8B']
 const progress = new Progress({
   min: 0,
   max: 100,
-  formatter: d => `${d.value}%`,
+  formatter: (d) => `${d.value}%`,
   labelPosition: 'top',
   startAngle: Math.PI * 0.8,
   endAngle: Math.PI * 2.2
@@ -41,9 +41,7 @@ const progress = new Progress({
 chart
   .add(progress)
   .add(new qcharts.Legend())
-  .add(new Tooltip({ formatter: d => `${d.value}` }))
-
-chart.render()
+  .add(new Tooltip({ formatter: (d) => `${d.value}` }))
 ;(function step() {
   setTimeout(() => {
     chart.source(data2)
@@ -85,15 +83,13 @@ const progress = new Progress({
   min: 0,
   max: 100,
   type: 'wave',
-  formatter: d => `${d.value}%`
+  formatter: (d) => `${d.value}%`
 })
 
 chart
   .add(progress)
   .add(new qcharts.Legend())
-  .add(new Tooltip({ formatter: d => `${d.value}` }))
-
-chart.render()
+  .add(new Tooltip({ formatter: (d) => `${d.value}` }))
 ```
 
 :::

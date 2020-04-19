@@ -27,13 +27,13 @@ chart.source(data, {
   sort: (a, b) => b.value - a.value
 })
 const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
+  formatter: (d) => `${d.label}: ${d.value}`
 })
 const funnel = new Funnel({
   size: ['50%', '80%'],
   pos: ['25%', '10%'],
   align: 'center',
-  formatter: d => `${d.value}`
+  formatter: (d) => `${d.value}`
 })
   .style('guideline', true)
   .style('guideText', true)
@@ -41,8 +41,7 @@ const funnel = new Funnel({
     return { opacity: 0.5 }
   })
 const legend = new Legend({ align: ['center', 'bottom'] })
-chart.add([funnel, tooltip, legend])
-chart.render()
+chart.append([funnel, tooltip, legend])
 ```
 
 :::

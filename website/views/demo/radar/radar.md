@@ -32,7 +32,6 @@ chart.source(data, {
 const radar = new Radar()
 
 chart.append([radar])
-chart.render()
 ```
 
 :::

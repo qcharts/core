@@ -236,7 +236,7 @@ const data = [
   }
 ]
 
-const render = data => {
+const render = (data) => {
   const { Chart, Axis, Scatter, Legend, Tooltip } = qcharts
 
   const chart = new Chart({
@@ -257,18 +257,16 @@ const render = data => {
 
   const legend = new Legend({ align: ['center', 'bottom'] })
 
-  chart.add(
+  chart.append(
     new Tooltip({
-      title: data => data[0].gender,
-      formatter: data => {
+      title: (data) => data[0].gender,
+      formatter: (data) => {
         return `身高：${data.height}CM  体重：${data.weight}KG `
       }
     })
   )
 
-  chart.add([scatter, legend, axisBottom, axisLeft])
-
-  chart.render()
+  chart.append([scatter, legend, axisBottom, axisLeft])
 }
 
 render(data)

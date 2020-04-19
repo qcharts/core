@@ -36,22 +36,19 @@ const progress = new Progress({
   pos: ['75%', 0],
   size: ['25%', '25%'],
   lineWidth: 2,
-  formatter: d => d.label + ':' + ((d.value / total) * 100).toFixed(0) + '%'
+  formatter: (d) => d.label + ':' + ((d.value / total) * 100).toFixed(0) + '%'
 })
 const legend = new Legend()
 
 pie.on('select', (attrs, data, index) => {
   const { label } = data
   const color = pie.color(index)
-  progress
-    .style('normal', { wavesColor: color, outlineColor: color })
-    .source(ds.selectRows(label))
+  progress.style('normal', { wavesColor: color, outlineColor: color }).source(ds.selectRows(label))
 })
 
 progress.source(ds.selectRows('直接访问'))
 
-chart.add([pie, legend, progress])
-chart.render()
+chart.append([pie, legend, progress])
 ```
 
 :::

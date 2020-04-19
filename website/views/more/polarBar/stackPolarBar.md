@@ -83,7 +83,7 @@ const bar = new PolarBar({
   }
 })
 const tooltip = new Tooltip({
-  formatter: d => `${d.product} - ${d.year} - ${d.sales}`
+  formatter: (d) => `${d.product} - ${d.year} - ${d.sales}`
 }).style('icon', (attr, data, i) => {
   if (i % 2 !== 0) {
     return { strokeColor: '#fff', lineWidth: 1, fillColor: '#226464' }
@@ -95,8 +95,7 @@ const tooltip = new Tooltip({
     }
   }
 })
-chart.add([bar, tooltip])
-chart.render()
+chart.append([bar, tooltip])
 ```
 
 :::

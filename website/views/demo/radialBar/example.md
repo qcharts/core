@@ -59,8 +59,8 @@ const radial = chart
   .setDataFields({ x: 'reason', y: 'value' })
   .useStyle('hover', { opacity: 0.5 })
 
-chart.addPlugin(
-  new Tooltip({ lineHight: 22 }).formatter(data => {
+chart.appendPlugin(
+  new Tooltip({ lineHight: 22 }).formatter((data) => {
     return `${data.reason}: ${data.value}%`
   })
 )
@@ -129,8 +129,8 @@ const radial = chart
   .setDataFields({ x: 'reason', y: 'value' })
   .useStyle('hover', { opacity: 0.5 })
 
-chart.addPlugin(
-  new Tooltip({ lineHight: 22 }).formatter(data => {
+chart.appendPlugin(
+  new Tooltip({ lineHight: 22 }).formatter((data) => {
     return `${data.reason}: ${data.value}%`
   })
 )

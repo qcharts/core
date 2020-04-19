@@ -86,7 +86,6 @@ const tooltip = new Tooltip()
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 chart.append([bar, tooltip, axisBottom, axisLeft])
-chart.render()
 ```
 
 :::
@@ -238,7 +237,7 @@ const tooltip = new Tooltip()
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 chart.append([bar, tooltip, axisBottom, axisLeft])
-chart.render()
+
 setTimeout(changeData, 3000)
 function changeData() {
   if (bool) {
@@ -296,11 +295,8 @@ const tooltip = new Tooltip()
 //   text: '图例一'
 // })
 const axisBottom = new Axis()
-const axisLeft = new Axis({ orient: 'left' })
-  .style('axis', false)
-  .style('scale', false)
+const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 chart.append([bar, tooltip, axisBottom, axisLeft])
-chart.render()
 ```
 
 :::

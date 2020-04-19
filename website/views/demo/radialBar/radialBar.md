@@ -80,8 +80,7 @@ legend.style('text', (attrs, d, i) => ({
   marginTop: i > 0 ? 10 : 0
 }))
 
-chart.add([radialBar, legend])
-chart.render()
+chart.append([radialBar, legend])
 ```
 
 :::

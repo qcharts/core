@@ -86,14 +86,13 @@ const bar = new Bar()
   .style('backgroundpillar:hover', { borderRadius: 20 })
 
 const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
+  formatter: (d) => `${d.label}: ${d.value}`
 })
 
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 
-chart.add([bar, tooltip, axisBottom, axisLeft])
-chart.render()
+chart.append([bar, tooltip, axisBottom, axisLeft])
 ```
 
 :::

@@ -12,7 +12,7 @@ const data = [
   { month: 'Jun', city: 'London', value: 15.2 }
 ]
 
-const { Chart, Axis ,Line } = qcharts
+const { Chart, Axis, Line } = qcharts
 
 const chart = new Chart({
   container: '#app',
@@ -23,35 +23,33 @@ const chart = new Chart({
   text: 'month'
 })
 
-const line = new Line().style('point',{color:'#fff'})
+const line = new Line().style('point', { color: '#fff' })
 
-let xAxis = new Axis({ })
-.style('label',function(attrs,data,i){
-	if(i%2 === 0){
-    	return false
-    }else{
-      if(data.text.indexOf('A')===0){
+let xAxis = new Axis({})
+  .style('label', function(attrs, data, i) {
+    if (i % 2 === 0) {
+      return false
+    } else {
+      if (data.text.indexOf('A') === 0) {
         return {
-          rotate:45,
-          translate:[-5,-5],
-          anchor:[0,0],
-          color:'#00f'
+          rotate: 45,
+          translate: [-5, -5],
+          anchor: [0, 0],
+          color: '#00f'
         }
-      }else{
-        return {color:'#f00'}
+      } else {
+        return { color: '#f00' }
       }
     }
-})
-.style('scale',function(attrs,data,i){
-	if(i%2 === 0){
-    	return false
+  })
+  .style('scale', function(attrs, data, i) {
+    if (i % 2 === 0) {
+      return false
     }
-})
+  })
 let yAxis = new Axis({ orient: 'left' })
 
-chart.add([line,xAxis,yAxis])
-chart.render()
+chart.append([line, xAxis, yAxis])
 ```
 
 :::
-

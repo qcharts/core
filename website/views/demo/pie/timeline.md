@@ -269,7 +269,7 @@ const tl = new Timeline({
   timeline: [1800, 1810, 1820, 1830, 1840],
   autorun: true,
   playInterval: 2000,
-  onChange: time => {
+  onChange: (time) => {
     pie.source(ds.selectRows(time))
   }
 })
@@ -278,15 +278,8 @@ chart
   .add(pie)
   .add(tl)
   .add(new Text({ text: '各国人均寿命与人均收入关系演变', pos: [200, 10] }))
-  .add(
-    new Tooltip({ lineHight: 22 }).formatter(
-      data =>
-        `${data.year}年：${data.country} 收入${data.income} 寿命${data.life}`
-    )
-  )
+  .add(new Tooltip({ lineHight: 22 }).formatter((data) => `${data.year}年：${data.country} 收入${data.income} 寿命${data.life}`))
   .add(new Toolbox())
-
-chart.render()
 ```
 
 :::

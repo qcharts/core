@@ -119,7 +119,7 @@ const bar = new Bar({
   }
 })
 const tooltip = new Tooltip({
-  formatter: d => ` ${d.type}: ${d.value}`
+  formatter: (d) => ` ${d.type}: ${d.value}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] })
 const axisBottom = new Axis().style('scale', false).style('grid', false)
@@ -133,8 +133,7 @@ const axisLeft = new Axis({
   .style('grid', false)
   .style('scale', false)
   .style('label', true)
-chart.add([bar, tooltip, legend, axisBottom, axisLeft])
-chart.render()
+chart.append([bar, tooltip, legend, axisBottom, axisLeft])
 ```
 
 :::

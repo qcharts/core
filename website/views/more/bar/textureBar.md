@@ -31,17 +31,11 @@ bar
   .style('pillar', (attrs, data, i) => {
     if (i === 0) {
       return {
-        textures: [
-          { src: texture1 },
-          { src: texture1, rect: [445, 0, 450, 40] }
-        ]
+        textures: [{ src: texture1 }, { src: texture1, rect: [445, 0, 450, 40] }]
       }
     } else {
       return {
-        textures: [
-          { src: texture2 },
-          { src: texture2, rect: [445, 0, 450, 40] }
-        ]
+        textures: [{ src: texture2 }, { src: texture2, rect: [445, 0, 450, 40] }]
       }
     }
   })
@@ -58,7 +52,7 @@ bar
     }
   })
 const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
+  formatter: (d) => `${d.label}: ${d.value}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
   text: '图例一'
@@ -71,8 +65,7 @@ const axisLeft = new Axis({
   .style('grid', false)
   .style('scale', false)
   .style('label', { color: '#1DCE91' })
-chart.add([bar, axisLeft])
-chart.render()
+chart.append([bar, axisLeft])
 ```
 
 :::

@@ -30,9 +30,7 @@ tooltip.style('title', () => ({ color: 'red' }))
 tooltip.style('icon', () => ({ bgcolor: 'red' }))
 tooltip.style('text', () => ({ color: 'blue' }))
 
-chart.add(pie).add(tooltip)
-
-chart.render()
+chart.append(pie).add(tooltip)
 ```
 
 :::

@@ -4,8 +4,8 @@
 
 ```javascript
 fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
-  .then(res => res.json())
-  .then(mapData => {
+  .then((res) => res.json())
+  .then((mapData) => {
     const { Chart, Tooltip, Text, Map } = qcharts
 
     const chart = new Chart({
@@ -16,9 +16,7 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
       projection: 'geoMercator'
     })
 
-    map
-      .setGeomData(mapData, { items: mapData.features })
-      .style('normal', { fillColor: '#214882', color: '#479cd3' })
+    map.setGeomData(mapData, { items: mapData.features }).style('normal', { fillColor: '#214882', color: '#479cd3' })
 
     map.add(Map.Text, {
       style: {
@@ -35,7 +33,7 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
     })
 
     const tooltip = new Tooltip()
-    tooltip.formatter(data => `${data.properties.name}`)
+    tooltip.formatter((data) => `${data.properties.name}`)
 
     chart
       .add(map)
@@ -43,7 +41,6 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
       .add(new Text({ text: '中国各省市' }))
 
     chart.setTheme('dark')
-    chart.render()
   })
 ```
 

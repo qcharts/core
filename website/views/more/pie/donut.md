@@ -52,7 +52,7 @@ pie.style('sector', {
   lineWidth: 1,
   strokeColor: '#fff'
 })
-pie.style('title', rings => {
+pie.style('title', (rings) => {
   let center = rings[0].center
   return {
     animation: false,
@@ -61,7 +61,7 @@ pie.style('title', rings => {
     anchor: [0.5, 0.5]
   }
 })
-pie.style('subtitle', rings => {
+pie.style('subtitle', (rings) => {
   let center = rings[0].center
   return {
     animation: { duration: 500 },
@@ -71,15 +71,13 @@ pie.style('subtitle', rings => {
     pos: [center[0], center[1] + 30]
   }
 })
-chart.add([pie])
-chart.render()
+chart.append([pie])
 
 setInterval(changeData, 3000)
 //数据被选中动画模拟，轮流设置数据的selected属性，同时移除上一个数据的selected属性
 function changeData() {
   counter++
-  let last =
-    (counter % length) - 1 < 0 ? data.length - 1 : (counter % length) - 1
+  let last = (counter % length) - 1 < 0 ? data.length - 1 : (counter % length) - 1
   delete data[last].selected
   data[counter % length].selected = true
 

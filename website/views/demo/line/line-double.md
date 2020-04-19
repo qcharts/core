@@ -47,7 +47,6 @@ const legend = new Legend()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
 chart.append([line, axisBottom, legend, axisLeft, tooltip])
-chart.render()
 ```
 
 :::
