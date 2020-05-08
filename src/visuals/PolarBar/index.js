@@ -88,33 +88,28 @@ class PolarBar extends Base {
     let arrLayout = layout(renderData, renderAttrs);
     let colors = this.theme.colors;
     let styles = this.renderStyles;
+    arrLayout.groupData.forEach((bar, i) => {
+      bar.pos = this.pos;
+    });
     arrLayout.barData.forEach((bar, i) => {
       let style = this.style("pillar")(bar.attrs, this.dataset.rows[i], i);
       bar.fillColor = bar.fillColor || colors[i % dataLength];
       bar.strokeColor = renderAttrs.strokeColor || "#FFF";
       bar.pos = this.pos;
-      bar.lineWidth = 1;
+      if (
+        !bar.hasOwnProperty("startAngle") ||
+        !bar.hasOwnProperty("endAngle")
+      ) {
+        bar.lineWidth = 0;
+      } else {
+        bar.lineWidth = 1;
+      }
       let barStyle = deepObjectMerge(
         { bgcolor: bar.bgcolor || colors[i % dataLength] },
         styles.bar,
         style
       );
       bar = deepObjectMerge(bar, barStyle);
-      if (bar.lineWidth && bar.lineWidth >= 1) {
-        // 避免只展示一个扇形时出现边框
-        const { startAngle, endAngle } = bar;
-        const angle = (startAngle + endAngle) % (Math.PI * 1);
-        let groupBarNumber =
-          arrLayout.barData.length / arrLayout.groupData.length;
-        if (
-          angle <= 0 &&
-          arrLayout.barData.filter((ring) => !ring.disabled).length /
-            groupBarNumber <=
-            1
-        ) {
-          bar.lineWidth = 0;
-        }
-      }
     });
     return { arrLayout };
   }
@@ -138,78 +133,74 @@ class PolarBar extends Base {
     el.attr({ opacity: 0.01 });
   }
 
-  // onClick(e, el, attr) {
-  //   console.log(e);
-  //   console.log(el);
-  //   console.log(attr);
-  // }
-
-  onClick = (evt, el, attrs) => {
+  onClick = (evt, el, i, attrs) => {
+    if (
+      this.renderAttrs.stack ||
+      !attrs.hasOwnProperty("startAngle") ||
+      !attrs.hasOwnProperty("endAngle")
+    ) {
+      return;
+    }
+    let { width, height } = this.renderAttrs.clientRect;
     let isTranslated = el.isTranslated;
-    const offset = Math.max(20, attrs.maxRadius * 0.1);
+    const offset = Math.max(20, Math.min(width / 2, height / 2) * 0.1);
     const { startAngle, endAngle } = attrs;
-    const angle = (startAngle + endAngle) / 2;
+    const angle = (Math.PI * (startAngle + endAngle)) / 360;
     const translate = [offset * Math.cos(angle), offset * Math.sin(angle)];
-
-    // let target = el.parentNode
     let target = el;
-
-    // if (target.attr('name') === 'pieRoot') {
-    //   target = el
-    // }
-
     if (isTranslated) {
       target.transition(0.3).attr("translate", [0, 0]);
-
       el.isTranslated = false;
     } else {
       target.transition(0.3).attr("translate", translate);
-
       el.isTranslated = true;
-      for (let i = 0, len = this.$pillars.length; i < len; i++) {
+      for (let i = 0, len = this.pillars.length; i < len; i++) {
         if (
-          el.id !== this.$pillars[i].id &&
-          this.$pillars[i].isTranslated === true
+          el.id !== this.$refs["pillar" + i].id &&
+          this.$refs["pillar" + i].isTranslated === true
         ) {
-          this.$pillars[i].transition(0.3).attr("translate", [0, 0]);
-          this.$pillars[i].isTranslated = false;
+          this.$refs["pillar" + i].transition(0.3).attr("translate", [0, 0]);
+          this.$refs["pillar" + i].isTranslated = false;
         }
       }
     }
   };
 
-  getRing = (ring, i, el) => {
-    if (!el) {
-      return;
-    }
-    this.$pillars[i] = el;
-  };
-  onMouseleave(e, el) {}
+  onMouseleave(index) {
+    // this.dataset.resetState();
+  }
 
-  onMousemove = throttle((event, el) => {});
+  onMousemove = throttle(
+    (index) => {
+      console.log(index);
+    },
+    16,
+    true
+  );
 
   render(data) {
     let { clientRect } = this.renderAttrs;
     // console.log(data);
     return (
       <Group class="container" ref="wrap">
-        <Group
-          onMouseleave={this.onMouseleave}
-          onMouseenter={this.onMousemove}
-          onMousemove={this.onMousemove}
-          onClick={(e, el) => {
-            this.onClick(e, el, pillar.attrs);
-          }}
-        >
+        <Group>
           {data.barData.map((pillar, i) => {
             return (
               <Ring
-                ref={(el) => this.getRing(pillar, i, el)}
+                ref={"pillar" + i}
                 {...pillar.attrs}
+                onClick={(e, el) => {
+                  this.onClick(e, el, i, pillar.attrs);
+                }}
               />
             );
           })}
         </Group>
+        {/* <Group>
+          {data.groupData.map((pillar, i) => {
+            return <Ring {...pillar} />;
+          })}
+        </Group> */}
       </Group>
     );
   }

@@ -16,7 +16,7 @@ export default function layout(arr, attrs) {
   const barData = [];
   const groupData = [];
 
-  const bgPillarAttr = { opacity: 0.01, fillColor: "#000" };
+  const bgPillarAttr = { opacity: 0.01, fillColor: "#FF0000" };
 
   // const valueAxis = getAxis(stack, data)
   const valueAxis = axis({ dataSet: data, stack, splitNumber });
@@ -47,7 +47,7 @@ export default function layout(arr, attrs) {
         }
         let barAngle = groupAngle / GROUP_BAR_NUM;
         let startAngle =
-          (groupAngle + groupGap) * i + barAngle * (j - flag) - 90;
+          (groupAngle + groupGap) * i + barAngle * (j - flag) - Math.PI * 0.5;
         value = data[j][i].value;
         let barHeight = BAR_HEIGHT_FACTOR * value;
         let innerRadius =
@@ -62,6 +62,7 @@ export default function layout(arr, attrs) {
           ...data[j][i],
           id: i * lenj + j,
         };
+
         if (rect.disabled) {
           rect.endAngle = rect.startAngle;
           rect.radius = 0;
@@ -71,16 +72,27 @@ export default function layout(arr, attrs) {
           rect.opacity = 1;
           gpData.rects.push(rect);
         }
+        if (GROUP_NUM < 2) {
+          delete rect.startAngle;
+          delete rect.endAngle;
+        }
         barData.push(rect);
       }
       // 柱子整体属性
       gpData = Object.assign(gpData, {
         innerRadius: barInnerRadius * 0.5 * tableSize,
         outerRadius: (barInnerRadius + radius) * 0.5 * tableSize,
-        startAngle: (groupGap + groupAngle) * i - Math.PI * 0.5,
-        endAngle: (groupGap + groupAngle) * i + groupAngle - Math.PI * 0.5,
+        startAngle:
+          (((groupGap + groupAngle) * i - Math.PI * 0.5) * 180) / Math.PI,
+        endAngle:
+          (((groupGap + groupAngle) * i + groupAngle - Math.PI * 0.5) * 180) /
+          Math.PI,
         ...bgPillarAttr,
       });
+      if (GROUP_NUM < 2) {
+        delete gpData.startAngle;
+        delete gpData.endAngle;
+      }
       groupData.push(gpData);
     }
   } else {
@@ -127,16 +139,17 @@ export default function layout(arr, attrs) {
       gpData = Object.assign(gpData, {
         innerRadius: barInnerRadius * 0.5 * tableSize,
         outerRadius: (barInnerRadius + radius) * 0.5 * tableSize,
-        startAngle: (groupGap + groupAngle) * i - Math.PI * 0.5,
-        endAngle: (groupGap + groupAngle) * i + groupAngle - Math.PI * 0.5,
+        startAngle:
+          (((groupGap + groupAngle) * i - Math.PI * 0.5) * 180) / Math.PI,
+        endAngle:
+          (((groupGap + groupAngle) * i + groupAngle - Math.PI * 0.5) * 180) /
+          Math.PI,
         ...bgPillarAttr,
       });
       groupData.push(gpData);
     }
   }
   // attachPadAngleOfArr(barData, padAngle)
-  console.log(barData);
-  console.log(groupData);
   return { barData, groupData };
 }
 
