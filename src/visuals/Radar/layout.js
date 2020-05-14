@@ -39,12 +39,13 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
   let gridAttrs = [] // 蜘蛛网图背景
   let axisAttrs = [] // 坐标轴
   let sectionAttrs = [] // 多边形数据
-  if (data.some(d => d.length === 0)) {
+
+  if (data.some((d) => d.length === 0)) {
     return { sectionAttrs, axisAttrs, gridAttrs }
   }
 
   const allDataValue = data.reduce((t, row) => {
-    return t.concat(row.map(cell => cell.value))
+    return t.concat(row.map((cell) => cell.value))
   }, [])
 
   const max = getMax(allDataValue, splitNumber)
@@ -61,7 +62,7 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
 
     bgPoints.push({
       point,
-      radian: currentRadian
+      radian: currentRadian,
     })
 
     // 类别指示坐标
@@ -77,7 +78,7 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
       labelPos,
       radian: currentRadian,
       maxScale: max,
-      splitNumber: splitNumber
+      splitNumber: splitNumber,
     })
   }
 
@@ -88,18 +89,19 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
       return getPointCoordinate(radian, (value / max) * radius)
     })
 
-    const dataOrigin = row.map(d => d.data)
-
     sectionAttrs.push({
-      points: categoryPoints,
       index: index,
-      dataOrigin,
-      close: true
+      name: row.name,
+      dataOrigin: row.data,
+      lineWidth: 1,
+      points: categoryPoints,
+      state: row.state,
+      close: true,
     })
   })
 
   // 背景网格多边形坐标
-  const gridPoints = bgPoints.map(p => p.point)
+  const gridPoints = bgPoints.map((p) => p.point)
   for (let i = 0; i < splitNumber; i++) {
     let scale = 1 - i / splitNumber
     gridAttrs.push({
@@ -110,7 +112,7 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
       close: true,
       lineWidth: 1,
       strokeColor: '#DDE0E5',
-      anchor: [0.5, 0.5]
+      anchor: [0.5, 0.5],
     })
   }
 
