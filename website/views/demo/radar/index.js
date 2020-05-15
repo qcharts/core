@@ -13,7 +13,7 @@ export default [
     title: '双色雷达图',
     path: 'radarPoint',
     component: () => import('./radar_point_style.md')
-  }
+  },
   // {
   //   title: '边样式',
   //   path: 'radarBorder',
@@ -44,9 +44,9 @@ export default [
   //   path: 'radarYLabel',
   //   component: () => import('./radar_label_y_style.md')
   // },
-  // {
-  //   title: '数据更新',
-  //   path: 'radar_update',
-  //   component: () => import('./radar_update.md')
-  // }
+  {
+    title: '数据更新',
+    path: 'radar_update',
+    component: () => import('./radar_update.md')
+  }
 ]
