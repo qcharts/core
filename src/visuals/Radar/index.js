@@ -73,7 +73,7 @@ class Radar extends BaseVisual {
       }
     }
     this.sectionData = [...updateData.sectionAttrs]
-    console.log(JSON.parse(JSON.stringify(this.sectionData)))
+    console.log(JSON.parse(JSON.stringify(updateData)))
     return updateData
   }
 
@@ -175,7 +175,7 @@ class Radar extends BaseVisual {
   }
 
   renderAxis(axisAttrs) {
-    const animation = this.sectionData.length > 0 ? {} : this._getScaleAnimation(1)
+    const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(1)
     return axisAttrs.map((attr, i) => {
       if (attr.disabled) {
         return
@@ -212,7 +212,7 @@ class Radar extends BaseVisual {
       anchor,
       fontSize: 12,
     }
-    const animation = this.sectionData.length > 0 ? {} : this._getScaleAnimation(1)
+    const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(1)
     const { style, ...other } = this._getStyle('label', attr, { text: attr.label, radian }, i)
     if (style === false) {
       return
