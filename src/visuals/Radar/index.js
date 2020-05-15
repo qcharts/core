@@ -66,7 +66,14 @@ class Radar extends BaseVisual {
   beforeUpdate() {
     super.beforeUpdate()
     const updateData = this._processData()
+    if (updateData.sectionAttrs) {
+      const len = Math.max(this.sectionData.length, updateData.sectionAttrs.length)
+      for (let i = 0; i < len; i++) {
+        this.sectionData[i] = updateData.sectionAttrs[i]
+      }
+    }
     this.sectionData = [...updateData.sectionAttrs]
+    console.log(JSON.parse(JSON.stringify(this.sectionData)))
     return updateData
   }
 
@@ -80,22 +87,27 @@ class Radar extends BaseVisual {
   rendered() {}
 
   _processData() {
-    const renderData = this.getRenderData()
-    renderData.sectionAttrs.forEach((attr, i) => {
-      const { points, ...otherAttrs } = attr
-      const animation = this._getPolylineAnimation(points, i)
-      const { style, hoverStyle } = this._getStyle('section', attr, { ...attr.dataOrigin }, i)
-      if (style === false) {
-        attr.display = 'none'
-      }
-      let defaultHoverStyle = { lineWidth: attr.lineWidth }
-      if (attr.state === 'hover') {
-        defaultHoverStyle = { ...hoverStyle, lineWidth: attr.lineWidth + 1 }
-      }
-      // 由于有着动画的原因，一开始的points需要设置为from points
-      renderData.sectionAttrs[i] = deepObjectMerge(otherAttrs, { points: animation.from.points }, { animation }, style, defaultHoverStyle)
-    })
-    return renderData
+    const { sectionAttrs, ...otherData } = this.getRenderData()
+    const processSectionAttrs = sectionAttrs
+      .filter((attr) => attr.state !== 'disabled')
+      .map((attr, i) => {
+        const { points, ...otherAttrs } = attr
+        const animation = this._getPolylineAnimation(points, i)
+        const { style, hoverStyle } = this._getStyle('section', attr, { ...attr.dataOrigin }, i)
+        if (style === false) {
+          attr.display = 'none'
+        }
+        let stateStyle = { lineWidth: attr.lineWidth, display: 'block' }
+        if (attr.state === 'hover') {
+          stateStyle = { ...hoverStyle, lineWidth: attr.lineWidth + 1 }
+        }
+        if (attr.state === 'disabled') {
+          stateStyle = { display: 'none' }
+        }
+        // 由于有着动画的原因，一开始的points需要设置为from points
+        return deepObjectMerge(otherAttrs, { points: animation.from.points }, { animation }, style, stateStyle)
+      })
+    return { ...otherData, sectionAttrs: processSectionAttrs }
   }
 
   _getScaleAnimation(toScale) {
@@ -257,7 +269,7 @@ class Radar extends BaseVisual {
         } else {
           animation = {
             from: { pos: [0, 0] },
-            to: { pos: point }
+            to: { pos: point },
           }
         }
         this.scaleEl[i] = { text: Number(text.toFixed(0)) }
@@ -271,16 +283,18 @@ class Radar extends BaseVisual {
     (event, el) => {
       this.dataset.resetState()
       const name = el.attributes.name
-      this.dataset.rows.forEach((row) => {
-        row.state = row.name === name ? 'hover' : 'default'
-      })
+      this.dataset.rows
+        .filter((row) => row.state !== 'disabled')
+        .forEach((row) => {
+          row.state = row.name === name ? 'hover' : 'default'
+        })
     },
     16,
     true
   )
   onMouseleave() {
     this.dataset.resetState()
-    this.dataset.rows.forEach((row) => row.state === 'default')
+    this.dataset.rows.filter((row) => row.state !== 'disabled').forEach((row) => row.state === 'default')
   }
 
   renderSection(sectionAttrs) {
