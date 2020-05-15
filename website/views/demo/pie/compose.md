@@ -103,17 +103,15 @@ const ds = chart.dataset
   pie.style('guideline', true)
   pie.style('guideText', true)
 
-  chart.add(pie)
+  chart.append(pie)
 })
 
 const legend = new qcharts.Legend({ vertical: 0 })
 const tooltip = new qcharts.Tooltip({
-  formatter: d => `${d.product}: ${d.year}: ${d.sales}`
+  formatter: (d) => `${d.product}: ${d.year}: ${d.sales}`
 })
 
-chart.add([legend, tooltip])
-
-chart.render()
+chart.append([legend, tooltip])
 ```
 
 :::
@@ -224,17 +222,15 @@ const ds = chart.dataset
   pie.style('guideText', { color: 'red' })
   pie.style('guideText:hover', { color: 'blue' })
 
-  chart.add(pie)
+  chart.append(pie)
 })
 
 const legend = new qcharts.Legend({ vertical: 0 })
 const tooltip = new qcharts.Tooltip({
-  formatter: d => `${d.product}: ${d.year}: ${d.sales}`
+  formatter: (d) => `${d.product}: ${d.year}: ${d.sales}`
 })
 
-chart.add([legend, tooltip])
-
-chart.render()
+chart.append([legend, tooltip])
 ```
 
 :::

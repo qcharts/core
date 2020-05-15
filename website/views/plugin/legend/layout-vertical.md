@@ -16,9 +16,7 @@ const l2 = new Legend({ orient: 'vertical', align: ['left', 'top'] })
 const l3 = new Legend({ orient: 'vertical', align: ['center', 'top'] })
 const l4 = new Legend({ orient: 'vertical', align: ['right', 'top'] })
 
-chart.add([l2, l3, l4])
-
-chart.render()
+chart.append([l2, l3, l4])
 ```
 
 :::

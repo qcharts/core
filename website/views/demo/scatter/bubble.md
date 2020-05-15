@@ -110,7 +110,7 @@ const data = [
     country: 'New Zealand'
   }
 ]
-const render = data => {
+const render = (data) => {
   data.sort((a, b) => a.height - b.height)
   const { Chart, Axis, Scatter, Legend, Tooltip } = qcharts
 
@@ -136,17 +136,15 @@ const render = data => {
 
   const axisLeft = new Axis({ orient: 'left' })
 
-  chart.add([scatter, axisBottom, axisLeft])
+  chart.append([scatter, axisBottom, axisLeft])
 
-  chart.add(
+  chart.append(
     new Tooltip({
-      formatter: data => {
+      formatter: (data) => {
         return `${data.name} x：${data.x} y：${data.y} z：${data.z}`
       }
     })
   )
-
-  chart.render()
 }
 
 render(data)

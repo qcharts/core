@@ -1,6 +1,6 @@
 import Base from '../../base/BasePlugin'
 import { Group, Label, Polyline } from 'spritejs'
-import { emptyObject } from '@qcharts/utils'
+import { emptyObject, deepObjectMerge } from '@qcharts/utils'
 import filterClone from 'filter-clone'
 import layout from './layout'
 class Axis extends Base {
@@ -24,7 +24,6 @@ class Axis extends Base {
     return attrs
   }
   beforeRender() {
-    this.layer.zIndex = -1
     let { axis } = this.getRenderData()
     return axis
   }
@@ -37,7 +36,8 @@ class Axis extends Base {
   }
   defaultAttrs() {
     return {
-      layer: 'axis'
+      layer: 'axis',
+      formatter: (e) => e
     }
   }
   //defaultStyles() {}
@@ -51,26 +51,34 @@ class Axis extends Base {
   render(axis) {
     let oldAxis = this.renderAxis || emptyObject()
     this.renderAxis = axis
-    let { clientRect } = this.renderAttrs
+    let { clientRect, formatter } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
     let scaleStyle = styles.scale
     let labelStyle = styles.label
+    let axisStyle = styles.axis
+    let renderStyle = this.style('axis')(axisStyle)
+    renderStyle = deepObjectMerge({}, axisStyle, renderStyle)
+    //console.log('axis', renderStyle, axis)
     //当前主体颜色
     return (
       <Group ref="wrap" pos={[clientRect.left, clientRect.top]}>
-        <Polyline {...styles.axis} animation={{ from: { points: oldAxis.axisPoints }, to: { points: axis.axisPoints } }}></Polyline>
+        <Polyline {...renderStyle} animation={{ from: { points: oldAxis.axisPoints }, to: { points: axis.axisPoints } }}></Polyline>
         <Group>
           {axis.scales.map((scale, ind) => {
             let fromPos = (oldAxis.scales && oldAxis.scales[ind] && oldAxis.scales[ind].pos) || scale.pos
             let ani = { from: { pos: fromPos }, to: { pos: scale.pos } }
             // 排除pos属性，pos属性用来处理动画，其它属性直接赋值
-            return <Group {...filterClone(scale, [], ['pos'])} {...scaleStyle} animation={ani}></Group>
+            let style = this.style('scale')(scaleStyle, scale, ind)
+            let renderStyle = deepObjectMerge({}, scaleStyle, style)
+            return <Group {...filterClone(scale, [], ['pos'])} {...renderStyle} animation={ani}></Group>
           })}
           {axis.labels.map((label, ind) => {
             let fromPos = (oldAxis.labels && oldAxis.labels[ind] && oldAxis.labels[ind].pos) || label.pos
+            let style = this.style('label')(labelStyle, label, ind)
+            let renderStyle = deepObjectMerge({}, labelStyle, style)
             let ani = { from: { pos: fromPos }, to: { pos: label.pos } }
-            return <Label {...filterClone(label, [], ['pos'])} {...labelStyle} animation={ani}></Label>
+            return <Label {...filterClone(label, [], ['pos', 'text'])} text={formatter(label.text)} {...renderStyle} animation={ani}></Label>
           })}
         </Group>
       </Group>

@@ -24,7 +24,7 @@ const data = [
 
 const { Chart, Progress, Tooltip } = qcharts
 
-const chart = new Chart({ container: '#app'})
+const chart = new Chart({ container: '#app' })
 
 chart.source(data, {
   row: 'sex',
@@ -39,12 +39,10 @@ const progress = new Progress({
   max: 100,
   label: true,
   labelPosition: 'top',
-  formatter: d => `${d.value}`
+  formatter: (d) => `${d.value}`
 })
 
-chart.add(progress).add(new Tooltip({ formatter: d => `${d.value}` }))
-
-chart.render()
+chart.append(progress).add(new Tooltip({ formatter: (d) => `${d.value}` }))
 ```
 
 :::

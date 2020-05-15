@@ -80,7 +80,7 @@ const bar = new Bar({ barWidth: 12 })
   })
 
 const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
+  formatter: (d) => `${d.label}: ${d.value}`
 })
 
 const axisBottom = new Axis()
@@ -88,8 +88,7 @@ const axisBottom = new Axis()
   .style('axis', false)
   .style('label', { padding: [20, 5] })
 
-chart.add([bar, tooltip, axisBottom])
-chart.render()
+chart.append([bar, tooltip, axisBottom])
 ```
 
 :::

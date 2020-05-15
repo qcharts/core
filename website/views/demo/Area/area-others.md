@@ -48,7 +48,6 @@ const area = new Area().style('point', { fillColor: 'transparent', strokeColor: 
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 chart.append([area, axisBottom, axisLeft])
-chart.render()
 
 setTimeout(() => {
   chart.source(newData, {
@@ -107,7 +106,6 @@ const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
 chart.append([area, axisBottom, axisLeft])
-chart.render()
 ```
 
 :::

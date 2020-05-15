@@ -24,15 +24,13 @@ const gauge = new Gauge({
   max: 100,
   lineWidth: 20,
   tickStep: 10,
-  title: d => `${d.value}`,
-  subTitle: d => `${d.text}`
+  title: (d) => `${d.value}`,
+  subTitle: (d) => `${d.text}`
 })
 
 gauge.style('title', { fontSize: 36 })
 
-chart.add(gauge)
-
-chart.render()
+chart.append(gauge)
 ```
 
 :::

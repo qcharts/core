@@ -16,23 +16,23 @@ const data = [
   { label: '分类三', category: '类别二', value: 70 },
   { label: '分类四', category: '类别二', value: 26 },
   { label: '分类五', category: '类别二', value: 50 },
-  { label: '分类六', category: '类别二', value: 52 }
+  { label: '分类六', category: '类别二', value: 52 },
 ]
 
-const { Chart, Radar } = qcharts
+const { Chart, Radar, Tooltip } = qcharts
 
 const chart = new Chart({
-  container: '#app'
+  container: '#app',
 })
 chart.source(data, {
   row: 'category',
   value: 'value',
-  text: 'label'
+  text: 'label',
 })
 const radar = new Radar()
+radar.style('section', (d) => ({ opacity: 0.3 }))
 
-chart.append([radar])
-chart.render()
+chart.append([radar, new Tooltip()])
 ```
 
 :::

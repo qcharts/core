@@ -46,8 +46,7 @@ radar
     strokeColor: 'red'
   }))
 
-chart.add(radar)
-chart.render()
+chart.append(radar)
 ```
 
 :::

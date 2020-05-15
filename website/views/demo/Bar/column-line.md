@@ -112,15 +112,14 @@ const line = new Line({
 })
 
 const tooltip = new qcharts.Tooltip({
-  formatter: d => `${d.name}: ${d['月份']}： ${d['月均降雨量']}`
+  formatter: (d) => `${d.name}: ${d['月份']}： ${d['月均降雨量']}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] })
 
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 
-chart.add([bar, line, tooltip, legend, axisBottom, axisLeft])
-chart.render()
+chart.append([bar, line, tooltip, legend, axisBottom, axisLeft])
 ```
 
 :::

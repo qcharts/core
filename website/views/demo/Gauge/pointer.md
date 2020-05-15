@@ -30,8 +30,8 @@ const gauge = new Gauge({
   // 修改指针宽度
   pointerWidth: 10,
   tickStep: 10,
-  title: d => `${d.value}`,
-  subTitle: d => `${d.text}`
+  title: (d) => `${d.value}`,
+  subTitle: (d) => `${d.text}`
 })
 
 gauge
@@ -39,9 +39,7 @@ gauge
   .style('arc', { strokeColor: '#006666' })
   .style('pointer', { fillColor: '#006666' })
 
-chart.add(gauge)
-
-chart.render()
+chart.append(gauge)
 
 setInterval(() => {
   chart.source([

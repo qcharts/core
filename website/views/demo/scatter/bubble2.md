@@ -449,18 +449,16 @@ const axisLeft = new Axis({ orient: 'left' })
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 
-chart.add([scatter, axisBottom, axisLeft, legend])
+chart.append([scatter, axisBottom, axisLeft, legend])
 
-chart.add(
+chart.append(
   new Tooltip({
-    title: data => data[0].Country,
-    formatter: data => {
+    title: (data) => data[0].Country,
+    formatter: (data) => {
       return ` 人均寿命：${data.LifeExpectancy} GDP：${data.GDP} `
     }
   })
 )
-
-chart.render()
 ```
 
 :::

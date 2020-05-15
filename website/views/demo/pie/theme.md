@@ -34,8 +34,7 @@ const step = () => {
 
 requestAnimationFrame(step)
 
-chart.add(pie)
-chart.render()
+chart.append(pie)
 ```
 
 :::

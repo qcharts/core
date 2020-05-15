@@ -74,8 +74,7 @@ const legend = new Legend({ align: ['center', 'top'] })
 const xAxis = new Axis()
 const yAxis = new Axis({ orient: 'left' })
 
-chart.add([bar, legend, xAxis, yAxis])
-chart.render()
+chart.append([bar, legend, xAxis, yAxis])
 ```
 
 :::
@@ -196,7 +195,7 @@ chart.source(data, {
   const legend = new Legend({ align: ['center', 'default'] })
   const xAxis = new Axis({ target: bar })
   const yAxis = new Axis({ target: bar, orient: 'left' })
-  chart.add([bar, legend, xAxis, yAxis])
+  chart.append([bar, legend, xAxis, yAxis])
 }
 
 {
@@ -208,10 +207,8 @@ chart.source(data, {
   const legend = new Legend({ layoutBy: 'col', align: ['center', 'center'] })
   const xAxis = new Axis({ target: bar, layoutBy: 'col' })
   const yAxis = new Axis({ target: bar, layoutBy: 'col', orient: 'left' })
-  chart.add([bar, legend, xAxis, yAxis])
+  chart.append([bar, legend, xAxis, yAxis])
 }
-
-chart.render()
 ```
 
 :::

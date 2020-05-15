@@ -852,13 +852,11 @@ const wordCloud = new WordCloud({
 })
   .source(data.slice(0))
   .setDataFields({ x: 'text', y: 'value' })
-  .rotate(d => (d.value % 90) - 45)
-  .fontSize(d => d.value / 20)
+  .rotate((d) => (d.value % 90) - 45)
+  .fontSize((d) => d.value / 20)
   .style('normal', (attrs, d, i) => ({ color: colors[i % 4] }))
 
-chart.add(wordCloud).add(new Tooltip().formatter(d => `${d.text}: ${d.value}`))
-
-chart.render()
+chart.append(wordCloud).add(new Tooltip().formatter((d) => `${d.text}: ${d.value}`))
 ```
 
 :::

@@ -32,11 +32,8 @@ bar.style('pillar', { bgcolor: '#47A1FF' })
 // })
 const tooltip = new Tooltip()
 const axisBottom = new Axis()
-const axisLeft = new Axis({ orient: 'left' })
-  .style('axis', false)
-  .style('scale', false)
+const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 chart.append([bar, tooltip, axisBottom, axisLeft])
-chart.render()
 ```
 
 :::

@@ -6,8 +6,8 @@
 
 ```javascript
 fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
-  .then(res => res.json())
-  .then(mapData => {
+  .then((res) => res.json())
+  .then((mapData) => {
     const data = [
       {
         name: '海南省',
@@ -65,10 +65,8 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
     map
       .setGeomData(mapData, { items: mapData.features })
       .mapGeomDataToBind((mapData, i) => {
-        const target = data.filter(d => d.name === mapData.properties.name)
-        return (
-          (target && target[0]) || { name: mapData.properties.name, gdp: 0 }
-        )
+        const target = data.filter((d) => d.name === mapData.properties.name)
+        return (target && target[0]) || { name: mapData.properties.name, gdp: 0 }
       })
       .style('normal', (attrs, dataOrigin, i) => ({
         fillColor: data.includes(dataOrigin) ? '#25243f' : '#0f0c29',
@@ -100,14 +98,12 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
     })
 
     const tooltip = new Tooltip()
-    tooltip.formatter(data => `${data.name} 购买力 ${data.value}`)
+    tooltip.formatter((data) => `${data.name} 购买力 ${data.value}`)
 
     chart
       .add(map)
       .add(tooltip)
       .add(new Text({ text: '201X 双十一中国各省购买力' }))
-
-    chart.render()
   })
 ```
 

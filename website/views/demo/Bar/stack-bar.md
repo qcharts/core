@@ -106,7 +106,6 @@ const axisLeft = new Axis({
   orient: 'left'
 }).style('grid', false)
 chart.append([bar, tooltip, axisBottom, axisLeft])
-chart.render()
 ```
 
 :::

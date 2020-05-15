@@ -1,5 +1,5 @@
 import Base from '../../base/BaseVisual'
-import { Group, Polyline } from 'spritejs'
+import { Group, Polyline, Node } from 'spritejs'
 import { deepObjectMerge } from '@qcharts/utils'
 import layout from './layout'
 class Line extends Base {
@@ -17,7 +17,7 @@ class Line extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
     let { arrLayout, maxLen } = this.getRenderData()
-    let lines = arrLayout.map(item => {
+    let lines = arrLayout.map((item) => {
       return {
         smoothRange: item.smoothRange,
         areaFrom: { points: item.areaPoints },
@@ -43,7 +43,7 @@ class Line extends Base {
       return {
         state: item.state,
         smoothRange: item.smoothRange,
-        areaFrom: renderLines[i].areaTo,
+        areaFrom: (renderLines[i] && renderLines[i].areaTo) || item.areaPoints,
         areaTo: {
           points: item.areaPoints
         },
@@ -63,7 +63,7 @@ class Line extends Base {
     let arrLayout = layout.call(this, renderData, renderAttrs)
     let { height, width } = renderAttrs.clientRect
     //对角线长度的2保证会大于曲线的长度
-    let maxLen = Math.sqrt(height ** 2, width ** 2) * 2
+    let maxLen = Math.sqrt(height ** 2, width ** 2) * 5
     return { width, height, arrLayout, maxLen }
   }
   rendered() {
@@ -84,12 +84,12 @@ class Line extends Base {
   }
   guidelineleave(event, el) {
     this.attr('guidePoints', [])
-    this.dataset.resetState()
+    this.dataset.resetState('hover')
   }
   guidelinemove(event, el) {
     if (this.renderLines.length) {
       //获取 x轴坐标的刻度
-      let arrX = this.renderLines[0].to.points.map(pos => pos[0])
+      let arrX = this.renderLines[0].to.points.map((pos) => pos[0])
       //转换cancas坐标到当前group的相对坐标
       let [x] = el.getOffsetPosition(event.x, event.y)
       let curInd = 0
@@ -102,7 +102,7 @@ class Line extends Base {
       }
       //重置所有的dateset的状态
       if (this.hoverIndex !== curInd) {
-        this.dataset.resetState()
+        this.dataset.resetState('hover')
         //设置当前列的state为hover
         this.dataset.cols[curInd].state = 'hover'
         let { clientRect } = this.renderAttrs
@@ -132,7 +132,7 @@ class Line extends Base {
             let mergeStyle = deepObjectMerge({ strokeColor: colors[ind], smooth }, styles.line)
             let style = this.style('line')(mergeStyle, this.dataset.rows[ind], ind)
             let renderStyle = deepObjectMerge(mergeStyle, style)
-            return line.state === 'disabled' || style === false ? null : <Polyline onClick={this.lineClick} {...renderStyle} animation={{ from: line.from, to: line.to }} />
+            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...renderStyle} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
         <Group class="areas-group">
@@ -142,12 +142,12 @@ class Line extends Base {
                 let mergeStyle = deepObjectMerge({ fillColor: colors[ind], smooth }, styles.area)
                 let style = this.style('area')(mergeStyle, this.dataset.rows[ind], ind)
                 let renderStyle = deepObjectMerge(mergeStyle, style)
-                return line.state === 'disabled' || style === false ? null : <Polyline smoothRange={line.smoothRange} {...renderStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
+                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...renderStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
         </Group>
         <Group class="guide-line-group">
           {guidePoints.length
-            ? (_ => {
+            ? ((_) => {
                 let mergeStyle = deepObjectMerge({}, styles.guideline)
                 let style = this.style('area')(mergeStyle)
                 let renderStyle = deepObjectMerge(mergeStyle, style)

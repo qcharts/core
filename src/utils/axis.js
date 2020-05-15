@@ -86,7 +86,7 @@ export function axis(attr) {
     }
   }
   if (attr.needReverse) {
-    axisArray = axisArray.map(value => {
+    axisArray = axisArray.map((value) => {
       return Global.datasetReverse ? Math.round(Global.datasetReverse(value)) : value
     })
   }
@@ -96,9 +96,6 @@ export function axis(attr) {
 function dataHandle(attr) {
   const stack = attr.stack || false
   const data = attr.dataSet || []
-  // const field = attr.field || '__valueGetter__'
-  //let field = '__valueGetter__'
-
   const arr = []
 
   if (stack && data.length !== 0 && data[0].length) {
@@ -106,16 +103,14 @@ function dataHandle(attr) {
       let sum = 0
       let sumDown = 0
       for (let j = 0, leng = data.length; j < leng; j++) {
-        if (data[j][i].disabled === true) {
+        let val = data[j][i].value
+        if (data[j][i].disabled === true || val === undefined) {
           continue
         }
-        // const value =
-        // attr && attr.field ? data[j][i][field] : data[j][i][field]()
-        const value = data[j][i].value
-        if (value < 0) {
-          sumDown = sumDown + value
+        if (val < 0) {
+          sumDown = sumDown + val
         } else {
-          sum = sum + value
+          sum = sum + val
         }
       }
       sum && arr.push(sum)
@@ -124,11 +119,11 @@ function dataHandle(attr) {
   } else {
     for (let m = 0; m < data.length; m++) {
       for (let n = 0; n < data[m].length; n++) {
-        if (data[m][n].disabled === true) {
+        let val = data[m][n].value
+        if (data[m][n].disabled === true || val === undefined) {
           continue
         }
-        // arr.push(attr && attr.field ? data[i][n][field] : data[i][n][field]())
-        arr.push(data[m][n].value)
+        arr.push(val)
       }
     }
   }

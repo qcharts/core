@@ -102,7 +102,7 @@ const tooltip = new Tooltip({
 });
 
 chart.append([bar, tooltip]);
-chart.render();
+
 ```
 
 :::

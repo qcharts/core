@@ -1,6 +1,7 @@
 ## 其它
 
 #### 样式调整
+
 :::demo
 
 ```javascript
@@ -42,44 +43,44 @@ const tooltip = new Tooltip({
 
 const axisBottom = new Axis()
 
-const axisLeft = new Axis({ orient: 'left' })
-.style('axis',false).style('scale',false)
+const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-line.style('point',{pointType: 'star',strokeColor:'transparent',size:8})
-line.style('point:hover',  function(attrs,data,i,j){ //设置symbol样式
-  if(data.sales > 60){
-    return {scale:1.4}
-  }else if(data.sales > 30){
-    return {fillColor:'#0ff'}
-  }else{
-    return {fillColor:'#0f0'}
-  }
-})
-.style('guideline',{fillColor:'#ff0'})
-.style('line',function(attrs,data,i){
-  if(i===1){
-    return {strokeColor:'#00fafc'}
-  }
-})
-.style('line:hover',function(attrs,data,i){
-  return {strokeColor:'#fa3300'}
-})
+line.style('point', { pointType: 'star', strokeColor: 'transparent', size: 8 })
+line
+  .style('point:hover', function(attrs, data, i, j) {
+    //设置symbol样式
+    if (data.sales > 60) {
+      return { scale: 1.4 }
+    } else if (data.sales > 30) {
+      return { fillColor: '#0ff' }
+    } else {
+      return { fillColor: '#0f0' }
+    }
+  })
+  .style('guideline', { fillColor: '#ff0' })
+  .style('line', function(attrs, data, i) {
+    if (i === 1) {
+      return { strokeColor: '#00fafc' }
+    }
+  })
+  .style('line:hover', function(attrs, data, i) {
+    return { strokeColor: '#fa3300' }
+  })
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 
-chart.add([line, tooltip, axisBottom, axisLeft, legend])
-chart.render()
+chart.append([line, tooltip, axisBottom, axisLeft, legend])
 ```
 
 :::
 
 #### 数据更新
 
-:::demo 
+:::demo
 
 ```javascript
 const data = [
-{ product: '茶叶', year: '2016', sales: 81.2 },
+  { product: '茶叶', year: '2016', sales: 81.2 },
   { product: '茶叶', year: '2017', sales: 121.2 },
   { product: '茶叶', year: '2018', sales: 41.2 },
   { product: '牛奶', year: '2016', sales: 89.2 },
@@ -108,7 +109,6 @@ const newData = [
   { product: '椰汁', year: '2018', sales: 31.2 }
 ]
 
-
 const { Chart, Line, Legend, Tooltip, Axis } = qcharts
 
 const chart = new Chart({
@@ -130,34 +130,32 @@ const tooltip = new Tooltip({
 })
 
 const axisBottom = new Axis()
-const axisLeft = new Axis({ orient: 'left' })
-.style('axis',false).style('scale',false)
+const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-line.style('symbol:hover', { fillColor: '#f00' }).style('point',{strokeColor:'#fff'})
+line.style('symbol:hover', { fillColor: '#f00' }).style('point', { strokeColor: '#fff' })
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 
-chart.add([line, axisBottom, axisLeft, tooltip, legend])
-chart.render()
+chart.append([line, axisBottom, axisLeft, tooltip, legend])
 
-setTimeout(()=>{
-  chart.source(newData,{
+setTimeout(() => {
+  chart.source(newData, {
     row: 'year',
     value: 'sales',
     text: 'product'
   })
-},2000)
+}, 2000)
 ```
 
 :::
 
 #### 多图融合
 
-:::demo 
+:::demo
 
 ```javascript
 const data = [
-{ product: '茶叶', year: '2016', sales: 81.2 },
+  { product: '茶叶', year: '2016', sales: 81.2 },
   { product: '茶叶', year: '2017', sales: 121.2 },
   { product: '茶叶', year: '2018', sales: 41.2 },
   { product: '牛奶', year: '2016', sales: 89.2 },
@@ -184,7 +182,7 @@ chart.source(data, {
 })
 
 const bar = new Bar()
-const line = new Line({ axisGap:true })
+const line = new Line({ axisGap: true })
 
 const tooltip = new Tooltip({
   formatter: function(data) {
@@ -194,15 +192,13 @@ const tooltip = new Tooltip({
 
 const axisBottom = new Axis()
 
-const axisLeft = new Axis({ orient: 'left' })
-.style('axis',false).style('scale',false)
+const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-line.style('symbol:hover',  {fillColor:'#f00'}).style('point',{strokeColor:'#fff'})
+line.style('symbol:hover', { fillColor: '#f00' }).style('point', { strokeColor: '#fff' })
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 
-chart.add([bar, line, tooltip,axisBottom, axisLeft, legend])
-chart.render()
+chart.append([bar, line, tooltip, axisBottom, axisLeft, legend])
 ```
 
 :::

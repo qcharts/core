@@ -6,8 +6,8 @@
 
 ```javascript
 fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
-  .then(res => res.json())
-  .then(mapData => {
+  .then((res) => res.json())
+  .then((mapData) => {
     const { Chart, Tooltip, Text, Map } = qcharts
 
     const chart = new Chart({
@@ -24,18 +24,12 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
       })
       .style('normal', { fillColor: '#214882', color: '#479cd3' })
 
-    chart.add(map).add(new Text({ text: '美国地图' }))
-
-    chart.render()
+    chart.append(map).add(new Text({ text: '美国地图' }))
   })
 
 // https://github.com/topojson/topojson-client Version 1.8.0. Copyright 2016 Mike Bostock.
 !(function(n, t) {
-  'object' == typeof exports && 'undefined' != typeof module
-    ? t(exports)
-    : 'function' == typeof define && define.amd
-    ? define(['exports'], t)
-    : t((n.topojson = n.topojson || {}))
+  'object' == typeof exports && 'undefined' != typeof module ? t(exports) : 'function' == typeof define && define.amd ? define(['exports'], t) : t((n.topojson = n.topojson || {}))
 })(this, function(n) {
   'use strict'
   function t(n) {
@@ -47,9 +41,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
       i = n.translate[0],
       u = n.translate[1]
     return function(n, f) {
-      f || (t = r = 0),
-        (n[0] = (t += n[0]) * e + i),
-        (n[1] = (r += n[1]) * o + u)
+      f || (t = r = 0), (n[0] = (t += n[0]) * e + i), (n[1] = (r += n[1]) * o + u)
     }
   }
   function r(n) {
@@ -68,8 +60,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
     }
   }
   function e(n, t) {
-    for (var r, e = n.length, o = e - t; o < --e; )
-      (r = n[o]), (n[o++] = n[e]), (n[e] = r)
+    for (var r, e = n.length, o = e - t; o < --e; ) (r = n[o]), (n[o++] = n[e]), (n[e] = r)
   }
   function o(n, t) {
     for (var r = 0, e = n.length; r < e; ) {
@@ -90,8 +81,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
   function u(n, r) {
     function o(n, t) {
       t.length && t.pop()
-      for (var r, o = l[n < 0 ? ~n : n], i = 0, u = o.length; i < u; ++i)
-        t.push((r = o[i].slice())), s(r, i)
+      for (var r, o = l[n < 0 ? ~n : n], i = 0, u = o.length; i < u; ++i) t.push((r = o[i].slice())), s(r, i)
       n < 0 && e(t, u)
     }
     function i(n) {
@@ -161,9 +151,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
       n.forEach(o)
     }
     function u(n) {
-      'GeometryCollection' === n.type
-        ? n.geometries.forEach(u)
-        : n.type in s && ((c = n), s[n.type](n.arcs))
+      'GeometryCollection' === n.type ? n.geometries.forEach(u) : n.type in s && ((c = n), s[n.type](n.arcs))
     }
     var f = []
     if (arguments.length > 1) {
@@ -197,13 +185,10 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
     var t = n[0],
       r = n[1],
       e = n[2]
-    return Math.abs(
-      (t[0] - e[0]) * (r[1] - t[1]) - (t[0] - r[0]) * (e[1] - t[1])
-    )
+    return Math.abs((t[0] - e[0]) * (r[1] - t[1]) - (t[0] - r[0]) * (e[1] - t[1]))
   }
   function a(n) {
-    for (var t, r = -1, e = n.length, o = n[e - 1], i = 0; ++r < e; )
-      (t = o), (o = n[r]), (i += t[0] * o[1] - t[1] * o[0])
+    for (var t, r = -1, e = n.length, o = n[e - 1], i = 0; ++r < e; ) (t = o), (o = n[r]), (i += t[0] * o[1] - t[1] * o[0])
     return i / 2
   }
   function s(n, t) {
@@ -230,9 +215,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
       f = []
     return (
       t.forEach(function(n) {
-        'Polygon' === n.type
-          ? r(n.arcs)
-          : 'MultiPolygon' === n.type && n.arcs.forEach(r)
+        'Polygon' === n.type ? r(n.arcs) : 'MultiPolygon' === n.type && n.arcs.forEach(r)
       }),
       i.forEach(function(n) {
         if (!n._) {
@@ -268,9 +251,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
             (i = v(n, i)),
             (r = i.length) > 1)
           )
-            for (var u, f, c = 1, a = e(i[0]); c < r; ++c)
-              (u = e(i[c])) > a &&
-                ((f = i[0]), (i[0] = i[c]), (i[c] = f), (a = u))
+            for (var u, f, c = 1, a = e(i[0]); c < r; ++c) (u = e(i[c])) > a && ((f = i[0]), (i[0] = i[c]), (i[c] = f), (a = u))
           return i
         })
       }
@@ -326,10 +307,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
         t.forEach(function(r, e) {
           var o,
             i = n.arcs[r < 0 ? ~r : r]
-          i.length < 3 &&
-            !i[1][0] &&
-            !i[1][1] &&
-            ((o = t[++c]), (t[c] = r), (t[e] = o))
+          i.length < 3 && !i[1][0] && !i[1][1] && ((o = t[++c]), (t[c] = r), (t[e] = o))
         }),
         t.forEach(function(n) {
           var t,
@@ -406,8 +384,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
             var p,
               v = a[l],
               g = a[h]
-            ;(p = u[v])[(c = o(p, g))] !== g && p.splice(c, 0, g),
-              (p = u[g])[(c = o(p, v))] !== v && p.splice(c, 0, v)
+            ;(p = u[v])[(c = o(p, g))] !== g && p.splice(c, 0, g), (p = u[g])[(c = o(p, v))] !== v && p.splice(c, 0, v)
           }
       return u
     },
@@ -426,12 +403,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
             i = r - 1,
             u = t,
             f = e[u]
-          if (
-            (i < o && l(e[i], f) < 0 && (f = e[(u = i)]),
-            r < o && l(e[r], f) < 0 && (f = e[(u = r)]),
-            u === t)
-          )
-            break
+          if ((i < o && l(e[i], f) < 0 && (f = e[(u = i)]), r < o && l(e[r], f) < 0 && (f = e[(u = r)]), u === t)) break
           ;(e[(f._ = t)] = f), (e[(n._ = t = u)] = n)
         }
       }
@@ -452,12 +424,7 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
         (r.remove = function(r) {
           var i,
             u = r._
-          if (e[u] === r)
-            return (
-              u !== --o &&
-                ((i = e[o]), (l(i, r) < 0 ? n : t)((e[(i._ = u)] = i), u)),
-              u
-            )
+          if (e[u] === r) return u !== --o && ((i = e[o]), (l(i, r) < 0 ? n : t)((e[(i._ = u)] = i), u)), u
         }),
         r
       )
@@ -478,18 +445,13 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
             a,
             s = [],
             l = 0
-          for (r = 0, c = n.length; r < c; ++r)
-            (a = n[r]), i((n[r] = [a[0], a[1], 1 / 0]), r)
-          for (r = 1, c = n.length - 1; r < c; ++r)
-            (t = n.slice(r - 1, r + 2)), (t[1][2] = e(t)), s.push(t), f.push(t)
-          for (r = 0, c = s.length; r < c; ++r)
-            (t = s[r]), (t.previous = s[r - 1]), (t.next = s[r + 1])
+          for (r = 0, c = n.length; r < c; ++r) (a = n[r]), i((n[r] = [a[0], a[1], 1 / 0]), r)
+          for (r = 1, c = n.length - 1; r < c; ++r) (t = n.slice(r - 1, r + 2)), (t[1][2] = e(t)), s.push(t), f.push(t)
+          for (r = 0, c = s.length; r < c; ++r) (t = s[r]), (t.previous = s[r - 1]), (t.next = s[r + 1])
           for (; (t = f.pop()); ) {
             var h = t.previous,
               p = t.next
-            t[1][2] < l ? (t[1][2] = l) : (l = t[1][2]),
-              h && ((h.next = p), (h[2] = t[2]), o(h)),
-              p && ((p.previous = h), (p[0] = t[0]), o(p))
+            t[1][2] < l ? (t[1][2] = l) : (l = t[1][2]), h && ((h.next = p), (h[2] = t[2]), o(h)), p && ((p.previous = h), (p[0] = t[0]), o(p))
           }
           n.forEach(u)
         }),
@@ -515,8 +477,8 @@ fetch('http://s0.qhres.com/static/4e8ebcccf5b5ea78.json')
 
 ```javascript
 fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
-  .then(res => res.json())
-  .then(mapData => {
+  .then((res) => res.json())
+  .then((mapData) => {
     const { Chart, Tooltip, Text, Map } = qcharts
 
     const chart = new Chart({
@@ -534,18 +496,12 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
       })
       .style('normal', { fillColor: '#214882', color: '#479cd3' })
 
-    chart.add(map).add(new Text({ text: '地球' }))
-
-    chart.render()
+    chart.append(map).add(new Text({ text: '地球' }))
   })
 
 // https://github.com/topojson/topojson-client Version 1.8.0. Copyright 2016 Mike Bostock.
 !(function(n, t) {
-  'object' == typeof exports && 'undefined' != typeof module
-    ? t(exports)
-    : 'function' == typeof define && define.amd
-    ? define(['exports'], t)
-    : t((n.topojson = n.topojson || {}))
+  'object' == typeof exports && 'undefined' != typeof module ? t(exports) : 'function' == typeof define && define.amd ? define(['exports'], t) : t((n.topojson = n.topojson || {}))
 })(this, function(n) {
   'use strict'
   function t(n) {
@@ -557,9 +513,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
       i = n.translate[0],
       u = n.translate[1]
     return function(n, f) {
-      f || (t = r = 0),
-        (n[0] = (t += n[0]) * e + i),
-        (n[1] = (r += n[1]) * o + u)
+      f || (t = r = 0), (n[0] = (t += n[0]) * e + i), (n[1] = (r += n[1]) * o + u)
     }
   }
   function r(n) {
@@ -578,8 +532,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
     }
   }
   function e(n, t) {
-    for (var r, e = n.length, o = e - t; o < --e; )
-      (r = n[o]), (n[o++] = n[e]), (n[e] = r)
+    for (var r, e = n.length, o = e - t; o < --e; ) (r = n[o]), (n[o++] = n[e]), (n[e] = r)
   }
   function o(n, t) {
     for (var r = 0, e = n.length; r < e; ) {
@@ -600,8 +553,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
   function u(n, r) {
     function o(n, t) {
       t.length && t.pop()
-      for (var r, o = l[n < 0 ? ~n : n], i = 0, u = o.length; i < u; ++i)
-        t.push((r = o[i].slice())), s(r, i)
+      for (var r, o = l[n < 0 ? ~n : n], i = 0, u = o.length; i < u; ++i) t.push((r = o[i].slice())), s(r, i)
       n < 0 && e(t, u)
     }
     function i(n) {
@@ -671,9 +623,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
       n.forEach(o)
     }
     function u(n) {
-      'GeometryCollection' === n.type
-        ? n.geometries.forEach(u)
-        : n.type in s && ((c = n), s[n.type](n.arcs))
+      'GeometryCollection' === n.type ? n.geometries.forEach(u) : n.type in s && ((c = n), s[n.type](n.arcs))
     }
     var f = []
     if (arguments.length > 1) {
@@ -707,13 +657,10 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
     var t = n[0],
       r = n[1],
       e = n[2]
-    return Math.abs(
-      (t[0] - e[0]) * (r[1] - t[1]) - (t[0] - r[0]) * (e[1] - t[1])
-    )
+    return Math.abs((t[0] - e[0]) * (r[1] - t[1]) - (t[0] - r[0]) * (e[1] - t[1]))
   }
   function a(n) {
-    for (var t, r = -1, e = n.length, o = n[e - 1], i = 0; ++r < e; )
-      (t = o), (o = n[r]), (i += t[0] * o[1] - t[1] * o[0])
+    for (var t, r = -1, e = n.length, o = n[e - 1], i = 0; ++r < e; ) (t = o), (o = n[r]), (i += t[0] * o[1] - t[1] * o[0])
     return i / 2
   }
   function s(n, t) {
@@ -740,9 +687,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
       f = []
     return (
       t.forEach(function(n) {
-        'Polygon' === n.type
-          ? r(n.arcs)
-          : 'MultiPolygon' === n.type && n.arcs.forEach(r)
+        'Polygon' === n.type ? r(n.arcs) : 'MultiPolygon' === n.type && n.arcs.forEach(r)
       }),
       i.forEach(function(n) {
         if (!n._) {
@@ -778,9 +723,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
             (i = v(n, i)),
             (r = i.length) > 1)
           )
-            for (var u, f, c = 1, a = e(i[0]); c < r; ++c)
-              (u = e(i[c])) > a &&
-                ((f = i[0]), (i[0] = i[c]), (i[c] = f), (a = u))
+            for (var u, f, c = 1, a = e(i[0]); c < r; ++c) (u = e(i[c])) > a && ((f = i[0]), (i[0] = i[c]), (i[c] = f), (a = u))
           return i
         })
       }
@@ -836,10 +779,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
         t.forEach(function(r, e) {
           var o,
             i = n.arcs[r < 0 ? ~r : r]
-          i.length < 3 &&
-            !i[1][0] &&
-            !i[1][1] &&
-            ((o = t[++c]), (t[c] = r), (t[e] = o))
+          i.length < 3 && !i[1][0] && !i[1][1] && ((o = t[++c]), (t[c] = r), (t[e] = o))
         }),
         t.forEach(function(n) {
           var t,
@@ -916,8 +856,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
             var p,
               v = a[l],
               g = a[h]
-            ;(p = u[v])[(c = o(p, g))] !== g && p.splice(c, 0, g),
-              (p = u[g])[(c = o(p, v))] !== v && p.splice(c, 0, v)
+            ;(p = u[v])[(c = o(p, g))] !== g && p.splice(c, 0, g), (p = u[g])[(c = o(p, v))] !== v && p.splice(c, 0, v)
           }
       return u
     },
@@ -936,12 +875,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
             i = r - 1,
             u = t,
             f = e[u]
-          if (
-            (i < o && l(e[i], f) < 0 && (f = e[(u = i)]),
-            r < o && l(e[r], f) < 0 && (f = e[(u = r)]),
-            u === t)
-          )
-            break
+          if ((i < o && l(e[i], f) < 0 && (f = e[(u = i)]), r < o && l(e[r], f) < 0 && (f = e[(u = r)]), u === t)) break
           ;(e[(f._ = t)] = f), (e[(n._ = t = u)] = n)
         }
       }
@@ -962,12 +896,7 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
         (r.remove = function(r) {
           var i,
             u = r._
-          if (e[u] === r)
-            return (
-              u !== --o &&
-                ((i = e[o]), (l(i, r) < 0 ? n : t)((e[(i._ = u)] = i), u)),
-              u
-            )
+          if (e[u] === r) return u !== --o && ((i = e[o]), (l(i, r) < 0 ? n : t)((e[(i._ = u)] = i), u)), u
         }),
         r
       )
@@ -988,18 +917,13 @@ fetch('http://s0.qhres.com/static/10ae1d45499595ba.json')
             a,
             s = [],
             l = 0
-          for (r = 0, c = n.length; r < c; ++r)
-            (a = n[r]), i((n[r] = [a[0], a[1], 1 / 0]), r)
-          for (r = 1, c = n.length - 1; r < c; ++r)
-            (t = n.slice(r - 1, r + 2)), (t[1][2] = e(t)), s.push(t), f.push(t)
-          for (r = 0, c = s.length; r < c; ++r)
-            (t = s[r]), (t.previous = s[r - 1]), (t.next = s[r + 1])
+          for (r = 0, c = n.length; r < c; ++r) (a = n[r]), i((n[r] = [a[0], a[1], 1 / 0]), r)
+          for (r = 1, c = n.length - 1; r < c; ++r) (t = n.slice(r - 1, r + 2)), (t[1][2] = e(t)), s.push(t), f.push(t)
+          for (r = 0, c = s.length; r < c; ++r) (t = s[r]), (t.previous = s[r - 1]), (t.next = s[r + 1])
           for (; (t = f.pop()); ) {
             var h = t.previous,
               p = t.next
-            t[1][2] < l ? (t[1][2] = l) : (l = t[1][2]),
-              h && ((h.next = p), (h[2] = t[2]), o(h)),
-              p && ((p.previous = h), (p[0] = t[0]), o(p))
+            t[1][2] < l ? (t[1][2] = l) : (l = t[1][2]), h && ((h.next = p), (h[2] = t[2]), o(h)), p && ((p.previous = h), (p[0] = t[0]), o(p))
           }
           n.forEach(u)
         }),

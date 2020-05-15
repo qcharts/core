@@ -32,14 +32,10 @@ chart
     radius: 0.8,
     innerRadius: 0.6
   })
-  .source(data[0].hour.map(d => ({ question: data[0].question, hour: d })))
+  .source(data[0].hour.map((d) => ({ question: data[0].question, hour: d })))
   .setDataFields({ x: 'question', y: 'hour' })
 
-chart.addPlugin(
-  new Tooltip({ lineHight: 22 }).formatter(
-    data => `${data.question}: ${data.percent}%`
-  )
-)
+chart.appendPlugin(new Tooltip({ lineHight: 22 }).formatter((data) => `${data.question}: ${data.percent}%`))
 
 plot.addChart(chart)
 plot.render()

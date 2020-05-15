@@ -26,14 +26,13 @@ const chart = new Chart({
 const line = new Line().style('point', { color: '#fff' })
 
 let xAxis = new Axis({
-  formatter: str => {
+  formatter: (str) => {
     return str + '-' + 1
   }
 })
 let yAxis = new Axis({ orient: 'left' })
 
-chart.add([line, xAxis, yAxis])
-chart.render()
+chart.append([line, xAxis, yAxis])
 ```
 
 :::

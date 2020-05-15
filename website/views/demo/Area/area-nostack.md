@@ -2,7 +2,7 @@
 
 ```javascript
 const data = [
-{ product: '茶叶', year: '2016', sales: 81.2 },
+  { product: '茶叶', year: '2016', sales: 81.2 },
   { product: '茶叶', year: '2017', sales: 121.2 },
   { product: '茶叶', year: '2018', sales: 41.2 },
   { product: '牛奶', year: '2016', sales: 89.2 },
@@ -28,7 +28,7 @@ chart.source(data, {
   text: 'product'
 })
 
-const area = new Area({stack:false})
+const area = new Area({ stack: false })
 
 const tooltip = new Tooltip({
   formatter: function(data) {
@@ -36,19 +36,13 @@ const tooltip = new Tooltip({
   }
 })
 
-const axisBottom = new Axis()
-.style('point',{fillColor:'transparent'})
-.style('point:hover',{color:'#fff'})
+const axisBottom = new Axis().style('point', { fillColor: 'transparent' }).style('point:hover', { color: '#fff' })
 
-const axisLeft = new Axis({ orient: 'left' })
-.style('axis',false).style('scale',false)
+const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 
-chart.add([area, tooltip, axisBottom, axisLeft, legend])
-chart.render()
+chart.append([area, tooltip, axisBottom, axisLeft, legend])
 ```
 
 :::
-
-

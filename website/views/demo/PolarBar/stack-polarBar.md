@@ -138,7 +138,8 @@ const tooltip = new Tooltip({
 // const legend = new Legend({ align: ['center', 'bottom'] })
 
 chart.append([bar, tooltip]);
-chart.render();
+
+
 ```
 
 :::

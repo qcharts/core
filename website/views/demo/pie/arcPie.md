@@ -44,8 +44,8 @@ const arcPie = new ArcPie({
   innerRadius: 0.1,
   lineWidth: 15,
   padAngle: 0.02,
-  title: d => `${d[0].dataOrigin.type}`,
-  subTitle: d => `${d[0].dataOrigin.count}`
+  title: (d) => `${d[0].dataOrigin.type}`,
+  subTitle: (d) => `${d[0].dataOrigin.count}`
 })
 
 arcPie.style('arc', { lineCap: 'round' })
@@ -72,8 +72,7 @@ legend.style('text', (attrs, d, i) => ({
   marginTop: i > 0 ? 10 : 0
 }))
 
-chart.add([arcPie, legend])
-chart.render()
+chart.append([arcPie, legend])
 ```
 
 :::

@@ -27,9 +27,7 @@ const legend = new Legend()
 legend.top(50)
 legend.left('80%')
 
-chart.add(pie).add(legend)
-
-chart.render()
+chart.append(pie).add(legend)
 ```
 
 :::

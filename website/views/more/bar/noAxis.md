@@ -23,30 +23,28 @@ chart.source(data, {
   text: 'label'
 })
 let bool = true
-const bar = new Bar({})
-  .style('pillar', { fillColor: '#47A1FF' })
-  .style('text', (attrs, data, i) => {
-    let anchor = attrs.anchor || [0, 0]
-    let size = attrs.size
-    let pos = attrs.pos
-    let str = data.value + ''
+const bar = new Bar({}).style('pillar', { fillColor: '#47A1FF' }).style('text', (attrs, data, i) => {
+  let anchor = attrs.anchor || [0, 0]
+  let size = attrs.size
+  let pos = attrs.pos
+  let str = data.value + ''
 
-    let result = str
-      .split('')
-      .reverse()
-      .reduce((prev, next, index) => {
-        return (index % 3 ? next : next + ',') + prev
-      })
-    return {
-      color: '#2AAAFF',
-      rotate: 0,
-      text: result,
-      anchor: [0.5, 1],
-      pos: [pos[0] + size[0] / 2, pos[1] - size[1]]
-    }
-  })
+  let result = str
+    .split('')
+    .reverse()
+    .reduce((prev, next, index) => {
+      return (index % 3 ? next : next + ',') + prev
+    })
+  return {
+    color: '#2AAAFF',
+    rotate: 0,
+    text: result,
+    anchor: [0.5, 1],
+    pos: [pos[0] + size[0] / 2, pos[1] - size[1]]
+  }
+})
 const tooltip = new Tooltip({
-  formatter: d => `${d.label}: ${d.value}`
+  formatter: (d) => `${d.label}: ${d.value}`
 })
 
 const axisBottom = new Axis()
@@ -60,8 +58,7 @@ const axisBottom = new Axis()
     }
   })
 
-chart.add([bar, tooltip, axisBottom])
-chart.render()
+chart.append([bar, tooltip, axisBottom])
 ```
 
 :::

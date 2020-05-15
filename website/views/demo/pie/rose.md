@@ -37,10 +37,8 @@ legend.style('text', (attrs, d, i) => ({
   marginTop: i > 0 ? 15 : 0
 }))
 
-chart.add(pie)
-chart.add(legend)
-
-chart.render()
+chart.append(pie)
+chart.append(legend)
 ```
 
 :::
@@ -92,10 +90,8 @@ const axisLeft = new Axis({
   coordPos: ['100%', '100%']
 })
 
-chart.add(pie)
-chart.add([legend, axisBottom, axisLeft])
-
-chart.render()
+chart.append(pie)
+chart.append([legend, axisBottom, axisLeft])
 ```
 
 :::

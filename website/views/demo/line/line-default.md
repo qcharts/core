@@ -15,28 +15,21 @@ const data = [
 ]
 
 const { Chart, Line, Legend, Tooltip, Axis } = qcharts
-
 const chart = new Chart({
   container: '#app'
 })
-
 chart.source(data, {
   row: 'catgory',
   value: 'sales',
   text: 'date'
 })
-
 const line = new Line()
-line.style('point', { strokeColor: '#fff' })
-
 const axisBottom = new Axis()
-
 const toolTip = new Tooltip()
-
+const legend = new Legend()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
-chart.append([line, axisBottom, axisLeft, toolTip])
-chart.render()
+chart.append([line, axisBottom, axisLeft, toolTip, legend])
 ```
 
 :::

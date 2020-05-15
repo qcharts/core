@@ -118,14 +118,12 @@ const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 
 const tooltip = new Tooltip({
-  formatter: data => {
+  formatter: (data) => {
     return `${data.name} x：${data.x} y：${data.y} `
   }
 })
 
-chart.add([scatter, axisBottom, axisLeft, tooltip])
-
-chart.render()
+chart.append([scatter, axisBottom, axisLeft, tooltip])
 ```
 
 :::

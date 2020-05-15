@@ -17,8 +17,8 @@
 
 ```javascript
 fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
-  .then(res => res.json())
-  .then(mapData => {
+  .then((res) => res.json())
+  .then((mapData) => {
     const { Chart, Map, Text, Tooltip } = qcharts
 
     const chart = new Chart({
@@ -29,19 +29,15 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
       projection: 'geoMercator'
     })
 
-    map
-      .setGeomData(mapData, { items: mapData.features })
-      .style('normal', { fillColor: '#214882', color: '#479cd3' })
+    map.setGeomData(mapData, { items: mapData.features }).style('normal', { fillColor: '#214882', color: '#479cd3' })
 
     const tooltip = new Tooltip()
-    tooltip.formatter(data => `${data.properties.name}`)
+    tooltip.formatter((data) => `${data.properties.name}`)
 
     chart
       .add(map)
       .add(tooltip)
       .add(new Text({ text: '中国各省市地图' }))
-
-    chart.render()
   })
 ```
 
@@ -55,8 +51,8 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
 
 ```javascript
 fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
-  .then(res => res.json())
-  .then(mapData => {
+  .then((res) => res.json())
+  .then((mapData) => {
     const data = [
       {
         name: '新疆维吾尔自治区',
@@ -222,10 +218,8 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
     map
       .setGeomData(mapData, { items: mapData.features })
       .mapGeomDataToBind((mapData, i) => {
-        const target = data.filter(d => d.name === mapData.properties.name)
-        return (
-          (target && target[0]) || { name: mapData.properties.name, gdp: 0 }
-        )
+        const target = data.filter((d) => d.name === mapData.properties.name)
+        return (target && target[0]) || { name: mapData.properties.name, gdp: 0 }
       })
       .style('normal', (attrs, data, i) => {
         const gdp = +data.gdp || 0
@@ -252,14 +246,12 @@ fetch('http://s5.qhres.com/static/81bf507dbbc7c08d.json')
       })
 
     const tooltip = new Tooltip({ title: '2018上半年全国各省GDP' })
-    tooltip.formatter(data => `${data.name}: ${data.gdp}万亿元`)
+    tooltip.formatter((data) => `${data.name}: ${data.gdp}万亿元`)
 
     chart
       .add(map)
       .add(tooltip)
       .add(new Text({ text: '2018 年中国上半年各省市 GDP 数据可视化' }))
-
-    chart.render()
   })
 ```
 
