@@ -1,5 +1,5 @@
 import { Group, Polyline, Label, Arc } from 'spritejs'
-import { deepObjectMerge } from '@qcharts/utils'
+import { deepObjectMerge, throttle } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
 
@@ -66,7 +66,6 @@ class Radar extends BaseVisual {
   beforeUpdate() {
     super.beforeUpdate()
     const updateData = this._processData()
-    console.log('update', JSON.parse(JSON.stringify(updateData)))
     this.sectionData = [...updateData.sectionAttrs]
     return updateData
   }
@@ -83,18 +82,18 @@ class Radar extends BaseVisual {
   _processData() {
     const renderData = this.getRenderData()
     renderData.sectionAttrs.forEach((attr, i) => {
-      const animation = this._getPolylineAnimation(attr, i)
+      const { points, ...otherAttrs } = attr
+      const animation = this._getPolylineAnimation(points, i)
       const { style, hoverStyle } = this._getStyle('section', attr, { ...attr.dataOrigin }, i)
       if (style === false) {
         attr.display = 'none'
       }
-      let defaultHoverStyle = hoverStyle || { lineWidth: attr.lineWidth }
+      let defaultHoverStyle = { lineWidth: attr.lineWidth }
       if (attr.state === 'hover') {
-        if (!hoverStyle) {
-          defaultHoverStyle.lineWidth = attr.lineWidth + 1
-        }
+        defaultHoverStyle = { ...hoverStyle, lineWidth: attr.lineWidth + 1 }
       }
-      deepObjectMerge(attr, { animation }, style, defaultHoverStyle)
+      // 由于有着动画的原因，一开始的points需要设置为from points
+      renderData.sectionAttrs[i] = deepObjectMerge(otherAttrs, { points: animation.from.points }, { animation }, style, defaultHoverStyle)
     })
     return renderData
   }
@@ -109,7 +108,7 @@ class Radar extends BaseVisual {
   _getStyle(type, attr, data, index) {
     return {
       style: this.style(type)(attr, data, index) || {},
-      hoverState: this.style(`${type}:hover`)(attr, data, index) || {},
+      hoverStyle: this.style(`${type}:hover`)(attr, data, index) || {},
     }
   }
 
@@ -117,15 +116,20 @@ class Radar extends BaseVisual {
     return fromPts.toString() === toPts.toString()
   }
 
-  _getPolylineAnimation(attr, index) {
-    const { points: toPoints } = attr
+  _getPolylineAnimation(toPoints, index) {
     let preData = this.sectionData[index]
     if (!preData) {
-      preData = {}
-      preData.points = new Array(toPoints.length).fill([0, 0])
+      const fromPoints = new Array(toPoints.length).fill([0, 0])
+      preData = {
+        animation: {
+          to: {
+            points: fromPoints,
+          },
+        },
+      }
     }
     return {
-      from: { points: preData.points },
+      from: { points: preData.animation.to.points },
       to: { points: toPoints },
     }
   }
@@ -139,7 +143,7 @@ class Radar extends BaseVisual {
     const { gridType } = this.attr()
     const GridShape = gridType === 'circle' ? Ring : Polyline
     return gridAttrs.map((attr, i) => {
-      const animation = this.sectionData.length > 0 ? {} : this._getScaleAnimation(attr.scale)
+      const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(attr.scale)
       const { style, ...other } = this._getStyle('grid', attr, null, i)
       if (style === false) {
         return
@@ -235,43 +239,46 @@ class Radar extends BaseVisual {
         return
       }
       if (attr.display !== 'none') {
+        let animation = {}
         const elIndex = index * attrs.splitNumber + i
         const preEl = this.scaleEl[elIndex]
-        let animation =
-          this.sectionData.length > 0
-            ? {}
-            : {
-                from: { pos: [0, 0] },
-                to: { pos: point },
-              }
         if (preEl) {
-          const { text: preText } = preEl.attr()
-          const numText = Number(preText)
-          if (numText !== text) {
+          const { text: preText } = preEl
+          if (preText !== text) {
             animation = {
-              from: { text: numText },
+              from: { text: preText },
               to: { text },
-              attrFormatter: (attr) => {
+              formatter: (attr) => {
                 attr.text = attr.text.toFixed(0)
                 return attr
               },
             }
           }
+        } else {
+          animation = {
+            from: { pos: [0, 0] },
+            to: { pos: point }
+          }
         }
+        this.scaleEl[i] = { text: Number(text.toFixed(0)) }
         labels.push(<Label {...attr} {...style} {...other} animation={animation} />)
       }
     }
     return labels
   }
 
-  onMouseenter(event, el) {
-    this.dataset.resetState()
-    const name = el.attributes.name
-    this.dataset.rows.forEach((row) => {
-      row.state = row.name === name ? 'hover' : 'default'
-    })
-  }
-  onMouseleave(event, el) {
+  onMouseenter = throttle(
+    (event, el) => {
+      this.dataset.resetState()
+      const name = el.attributes.name
+      this.dataset.rows.forEach((row) => {
+        row.state = row.name === name ? 'hover' : 'default'
+      })
+    },
+    16,
+    true
+  )
+  onMouseleave() {
     this.dataset.resetState()
     this.dataset.rows.forEach((row) => row.state === 'default')
   }
@@ -292,9 +299,10 @@ class Radar extends BaseVisual {
       if (attrs.disabled) {
         return
       }
-      const { points, animation: secAnimation, dataOrigin, strokeColor } = attrs
+      const { animation: secAnimation, dataOrigin, strokeColor } = attrs
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
-      return points.map((point, i) => {
+      const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
+      return toPoints.map((point, i) => {
         let attr = {
           pos: point,
           fillColor: strokeColor,
@@ -312,9 +320,9 @@ class Radar extends BaseVisual {
         if (prePoints && prePoints[i]) {
           if (!this._isSamePoints(prePoints[i], point)) {
             animation.from.pos = prePoints[i]
+            attr.pos = prePoints[i]
           } else {
             animation = {}
-            attr.pos = point
           }
         }
         const style = this.style('point')(attr, { ...attr.dataOrigin }, i)
