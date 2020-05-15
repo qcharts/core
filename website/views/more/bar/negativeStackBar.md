@@ -103,7 +103,6 @@ const bar = new Bar({
   let pos = attrs.pos
   let anchor = [0, 0.5]
   let newPos = [pos[0] + size[0], pos[1] + size[1] / 2]
-  console.log(123, pos)
   if (i % 2 === 0) {
     anchor = [1, 0.5]
     newPos = [pos[0] - size[0], pos[1] + size[1] / 2]
@@ -119,7 +118,7 @@ const bar = new Bar({
   }
 })
 const tooltip = new Tooltip({
-  formatter: (d) => ` ${d.type}: ${d.value}`
+  formatter: d => ` ${d.type}: ${d.value}`
 })
 const legend = new Legend({ align: ['center', 'bottom'] })
 const axisBottom = new Axis().style('scale', false).style('grid', false)
