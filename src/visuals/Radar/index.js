@@ -9,8 +9,6 @@ class Radar extends BaseVisual {
     this.type = 'radar'
     this.sectionData = []
     this.scaleEl = []
-    // 网格背景数据备份，数据全部隐藏的时候显示上一个备份的数据
-    this.lastGridAttr = []
   }
 
   //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -52,40 +50,6 @@ class Radar extends BaseVisual {
     return { sectionAttrs, axisAttrs, gridAttrs }
   }
 
-  showTooltip(evt, attr) {
-    this.dataset.hoverData({
-      data: { color: attr.fillColor, data: attr.dataOrigin },
-      ...evt,
-    })
-  }
-
-  hideTooltip() {
-    this.dataset.hoverData(null)
-  }
-
-  beforeUpdate() {
-    super.beforeUpdate()
-    const updateData = this._processData()
-    if (updateData.sectionAttrs) {
-      const len = Math.max(this.sectionData.length, updateData.sectionAttrs.length)
-      for (let i = 0; i < len; i++) {
-        this.sectionData[i] = updateData.sectionAttrs[i]
-      }
-    }
-    this.sectionData = [...updateData.sectionAttrs]
-    console.log(JSON.parse(JSON.stringify(updateData)))
-    return updateData
-  }
-
-  beforeRender() {
-    super.beforeRender()
-    const renderData = this._processData()
-    this.sectionData = [...renderData.sectionAttrs]
-    return renderData
-  }
-
-  rendered() {}
-
   _processData() {
     const { sectionAttrs, ...otherData } = this.getRenderData()
     const processSectionAttrs = sectionAttrs
@@ -101,14 +65,33 @@ class Radar extends BaseVisual {
         if (attr.state === 'hover') {
           stateStyle = { ...hoverStyle, lineWidth: attr.lineWidth + 1 }
         }
-        if (attr.state === 'disabled') {
-          stateStyle = { display: 'none' }
-        }
         // 由于有着动画的原因，一开始的points需要设置为from points
         return deepObjectMerge(otherAttrs, { points: animation.from.points }, { animation }, style, stateStyle)
       })
     return { ...otherData, sectionAttrs: processSectionAttrs }
   }
+
+  beforeUpdate() {
+    super.beforeUpdate()
+    const updateData = this._processData()
+    if (updateData.sectionAttrs) {
+      const len = Math.max(this.sectionData.length, updateData.sectionAttrs.length)
+      for (let i = 0; i < len; i++) {
+        this.sectionData[i] = updateData.sectionAttrs[i]
+      }
+    }
+    this.sectionData = [...updateData.sectionAttrs]
+    return updateData
+  }
+
+  beforeRender() {
+    super.beforeRender()
+    const renderData = this._processData()
+    this.sectionData = [...renderData.sectionAttrs]
+    return renderData
+  }
+
+  rendered() {}
 
   _getScaleAnimation(toScale) {
     return {
@@ -147,13 +130,8 @@ class Radar extends BaseVisual {
   }
 
   renderGrid(gridAttrs) {
-    if (gridAttrs.length !== 0) {
-      this.lastGridAttr = gridAttrs
-    } else {
-      gridAttrs = this.lastGridAttr
-    }
-    const { gridType } = this.attr()
-    const GridShape = gridType === 'circle' ? Ring : Polyline
+    const { gridType } = this.renderAttrs
+    const GridShape = gridType === 'circle' ? Arc : Polyline
     return gridAttrs.map((attr, i) => {
       const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(attr.scale)
       const { style, ...other } = this._getStyle('grid', attr, null, i)
@@ -165,34 +143,11 @@ class Radar extends BaseVisual {
         gridAttr = {
           lineWidth: attr.lineWidth,
           strokeColor: attr.strokeColor,
-          innerRadius: 0,
-          outerRadius: attr.radius,
+          radius: attr.radius,
           scale: attr.scale,
         }
       }
       return <GridShape {...gridAttr} {...style} {...other} animation={animation} />
-    })
-  }
-
-  renderAxis(axisAttrs) {
-    const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(1)
-    return axisAttrs.map((attr, i) => {
-      if (attr.disabled) {
-        return
-      }
-
-      const { style, ...other } = this._getStyle('axis', attr, { text: attr.label }, i)
-      if (style === false) {
-        return
-      }
-      const axisStyle = deepObjectMerge(attr, style, other)
-      return (
-        <Group clipOverflow={false} size={[1, 1]}>
-          <Polyline {...axisStyle} animation={animation} />
-          {this._renderAxisLabel(attr, i)}
-          {this._renderAxisScale(attr, i)}
-        </Group>
-      )
     })
   }
 
@@ -279,40 +234,26 @@ class Radar extends BaseVisual {
     return labels
   }
 
-  onMouseenter = throttle(
-    (event, el) => {
-      this.dataset.resetState()
-      const name = el.attributes.name
-      this.dataset.rows
-        .filter((row) => row.state !== 'disabled')
-        .forEach((row) => {
-          row.state = row.name === name ? 'hover' : 'default'
-        })
-    },
-    16,
-    true
-  )
-  onMouseleave() {
-    this.dataset.resetState()
-    this.dataset.rows.filter((row) => row.state !== 'disabled').forEach((row) => row.state === 'default')
-  }
-
-  renderSection(sectionAttrs) {
-    return sectionAttrs.map((attr, i) => {
-      if (attr.disabled) {
-        this.sectionData[i] = null
+  renderAxis(axisAttrs) {
+    const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(1)
+    return axisAttrs.map((attr, i) => {
+      const { style, ...other } = this._getStyle('axis', attr, { text: attr.label }, i)
+      if (style === false) {
         return
       }
-      const { animation, ...otherAttr } = attr
-      return <Polyline zIndex={9 + i} animation={animation} {...otherAttr} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
+      const axisStyle = deepObjectMerge(attr, style, other)
+      return (
+        <Group clipOverflow={false} size={[1, 1]}>
+          <Polyline {...axisStyle} animation={animation} />
+          {this._renderAxisLabel(attr, i)}
+          {this._renderAxisScale(attr, i)}
+        </Group>
+      )
     })
   }
 
   renderPoints(sectionAttrs) {
     const allPoints = sectionAttrs.map((attrs, index) => {
-      if (attrs.disabled) {
-        return
-      }
       const { animation: secAnimation, dataOrigin, strokeColor } = attrs
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
       const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
@@ -348,6 +289,31 @@ class Radar extends BaseVisual {
     })
 
     return allPoints.reduce((pre, cur) => pre.concat(cur), [])
+  }
+
+  renderSection(sectionAttrs) {
+    return sectionAttrs.map((attr, i) => {
+      const { animation, ...otherAttr } = attr
+      return <Polyline zIndex={9 + i} animation={animation} {...otherAttr} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
+    })
+  }
+
+  onMouseenter = throttle(
+    (event, el) => {
+      this.dataset.resetState()
+      const name = el.attributes.name
+      this.dataset.rows
+        .filter((row) => row.state !== 'disabled')
+        .forEach((row) => {
+          row.state = row.name === name ? 'hover' : 'default'
+        })
+    },
+    16,
+    true
+  )
+  onMouseleave() {
+    this.dataset.resetState()
+    this.dataset.rows.filter((row) => row.state !== 'disabled').forEach((row) => row.state === 'default')
   }
 
   render({ sectionAttrs, axisAttrs, gridAttrs }) {
