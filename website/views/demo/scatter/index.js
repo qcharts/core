@@ -10,6 +10,11 @@ export default [
     component: () => import('./scatter.md')
   },
   {
+    title: '散点图数据更新',
+    path: 'scatter_update',
+    component: () => import('./scatter_update.md')
+  },
+  {
     title: '气泡图',
     path: 'bubble',
     component: () => import('./bubble2.md')

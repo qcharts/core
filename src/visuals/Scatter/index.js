@@ -9,7 +9,7 @@ class Scatter extends BaseVisual {
   constructor(attrs = {}) {
     super(attrs)
     this.type = 'radar'
-    this.scatterData = {}
+    this.scatterData = []
     this.guideLineData = []
   }
 
@@ -35,8 +35,6 @@ class Scatter extends BaseVisual {
 
     deepObjectMerge(this.renderAttrs.layoutWay || {}, newLayoutWay)
 
-    console.log(data)
-
     data.forEach((item, i) => {
       const color = this.theme.colors[i]
       const fillColor = hexToRgba(color, 0.3)
@@ -50,26 +48,64 @@ class Scatter extends BaseVisual {
 
   beforeUpdate() {
     super.beforeUpdate()
-    return this._processData()
+    const updateData = this._processData()
+    const temp = updateData.map((row) => deepObjectMerge({}, row))
+    updateData.forEach((row, ind) => {
+      const oldRow = this.scatterData[ind]
+      row.attrs.forEach((cell, cInd) => {
+        if (oldRow && oldRow.attrs[cInd]) {
+          const curCell = oldRow.attrs[cInd]
+          const toPos = [...cell.pos]
+          const fromPos = curCell.animation.to.pos ? [...curCell.animation.to.pos] : [...curCell.pos]
+          cell.scale = 1
+          cell.pos = [...fromPos]
+          cell.animation = {
+            from: { pos: fromPos },
+            to: { pos: toPos },
+          }
+        } else {
+          cell.scale = 0
+          cell.animation = {
+            from: { scale: 0 },
+            to: { scale: 1 },
+          }
+        }
+      })
+    })
+    this.scatterData = temp.map((row) => deepObjectMerge({}, row))
+    return updateData
   }
 
   beforeRender() {
     super.beforeRender()
-    return this._processData()
+    const renderData = this._processData()
+    this.scatterData = renderData.map((row) => deepObjectMerge({}, row))
+    renderData.forEach((row) => {
+      row.attrs.forEach((cell) => {
+        cell.scale = 0
+        cell.animation = {
+          from: { scale: 0 },
+          to: { scale: 1 },
+        }
+      })
+    })
+    return renderData
   }
 
   rendered() {}
 
   getRealRadius(attr) {
-    const { areaRange, areaField } = this.attr()
+    const { areaRange, areaField } = this.renderAttrs
     const { radius, dataOrigin } = attr
+    // 面积字段未定义，直接返回半径
     if (!areaField || !dataOrigin.hasOwnProperty(areaField)) {
       return radius
     }
+    // 面积范围未定义，直接返回数据中的面积
     if (!areaRange) {
       return dataOrigin[areaField]
     }
-    const allData = this.dataset.dataOrigin.map((d) => d[areaField]).sort((a, b) => a - b)
+    const allData = [...this.dataset].filter((cell) => cell.state !== 'disabled').sort((a, b) => a - b)
     const linear = scaleLinear()
       .domain([allData[0], allData[allData.length - 1]])
       .range(areaRange)
@@ -143,46 +179,14 @@ class Scatter extends BaseVisual {
           return
         }
         style = { size: radius, ...style }
-        // let hStyle = this.style('point:hover')(attr, attr.dataOrigin, i)
-        // if (!hStyle) {
-        //   hStyle = { size: attr.radius + 1 }
-        //   if (style) {
-        //     if (isNumber(style.scale)) {
-        //       hStyle.scale = style.scale * 1.2
-        //     } else if (isNumber(style.size)) {
-        //       hStyle.size = style.size * 1.2
-        //     } else if (isArray(style.size)) {
-        //       hStyle.size = style.size.map((s) => s * 1.2)
-        //     }
-        //   }
-        // }
-
-        const preEl = this.scatterData[i]
-        let animation = {
-          from: { scale: 0 },
-          to: { scale: 1 },
-          duration: 5000,
-        }
-        if (preEl) {
-          const pos = preEl.attr('pos')
-          if (pos.toString() !== attr.pos.toString()) {
-            animation = {
-              from: { pos },
-              to: { pos: attr.pos },
-            }
-          } else {
-            animation = {}
-          }
+        const hStyle = this.style('point:hover')(attr, attr.dataOrigin, i) || { size: radius + 1 }
+        if (attr.state === 'hover') {
+          style = { size: radius, ...style, ...hStyle }
         }
         return (
           <Group clipOverflow={false}>
-            <Arc
-              animation={animation}
-              {...{ ...attr, ...animation.from }}
-              onMouseenter={this.onMouseenter}
-              onMouseleave={this.onMouseleave}
-            />
-            {this.renderLabel(attr, {}, animation, index)}
+            <Arc {...attr} {...style} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
+            {this.renderLabel(attr, {}, {}, index)}
           </Group>
         )
       })
