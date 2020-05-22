@@ -35,7 +35,7 @@ export default function layout(dataSet, size, layoutWay) {
   const [width, height] = size
 
   const { text: textField, value: valueField } = dataSet.option
-  const allData = [...dataSet].filter(cell => cell.state !== 'disabled')
+  const allData = [...dataSet].filter((cell) => cell.state !== 'disabled')
 
   // 如果X轴是文本框，则进行均分
   const maxLen = getDataRange(dataSet.rows.map((d) => d.length))[1]
@@ -94,11 +94,13 @@ export default function layout(dataSet, size, layoutWay) {
       const pos = [xLinear(x), height - yLinear(y)]
       return {
         pos,
-        radius: 20,
+        radius: 5,
         anchor: [1, 1],
         dataOrigin: { ...d.data },
         state: d.state,
         name: dArry.name,
+        col: d.col,
+        row: d.row,
       }
     })
     return {

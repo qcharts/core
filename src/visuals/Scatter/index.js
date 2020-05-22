@@ -2,7 +2,7 @@ import { Group, Polyline, Arc, Label } from 'spritejs'
 import BaseVisual from '../../base/BaseVisual'
 import { scaleLinear } from '../../utils/scaleLinear'
 import { hexToRgba } from '../../utils/color'
-import { deepObjectMerge } from '@qcharts/utils'
+import { deepObjectMerge, throttle } from '@qcharts/utils'
 import layout from './layout'
 
 class Scatter extends BaseVisual {
@@ -56,12 +56,17 @@ class Scatter extends BaseVisual {
         if (oldRow && oldRow.attrs[cInd]) {
           const curCell = oldRow.attrs[cInd]
           const toPos = [...cell.pos]
-          const fromPos = curCell.animation.to.pos ? [...curCell.animation.to.pos] : [...curCell.pos]
+          const fromPos =
+            curCell.animation.to && curCell.animation.to.pos ? [...curCell.animation.to.pos] : [...curCell.pos]
           cell.scale = 1
-          cell.pos = [...fromPos]
-          cell.animation = {
-            from: { pos: fromPos },
-            to: { pos: toPos },
+          if (toPos.toString() === fromPos.toString()) {
+            cell.animation = {}
+          } else {
+            cell.pos = [...fromPos]
+            cell.animation = {
+              from: { pos: fromPos },
+              to: { pos: toPos },
+            }
           }
         } else {
           cell.scale = 0
@@ -113,8 +118,46 @@ class Scatter extends BaseVisual {
     return realArea
   }
 
-  renderLabel(attr, normalStyle, animation, i) {
-    const { labelField } = this.attr()
+  onMouseenter = throttle(
+    (event, el) => {
+      const { row, col } = el.attributes
+      this.dataset.resetState()
+      this.dataset.rows[row][col].state = 'hover'
+      const { showGuideLine } = this.renderAttrs
+      if (showGuideLine) {
+        const pos = el.attr('pos')
+        const { height, width } = this.renderAttrs.clientRect
+        this.guideLineData = [
+          [
+            [0, pos[1]],
+            [width, pos[1]],
+          ],
+          [
+            [pos[0], 0],
+            [pos[0], height],
+          ],
+        ]
+      }
+    },
+    16,
+    true
+  )
+  onMouseleave() {
+    this.dataset.resetState()
+    this.guideLineData = []
+  }
+
+  renderGuideLine() {
+    if (this.guideLineData.length > 0) {
+      return this.guideLineData.map((points) => {
+        return <Polyline points={points} strokeColor={'#ddd'} lineWidth={1} translate={[0.5, 0.5]} />
+      })
+    }
+    return
+  }
+
+  renderLabel(attr, i) {
+    const { labelField } = this.renderAttrs
     const dataOrigin = attr.dataOrigin
     const style = this.style('label')(attr, { ...attr.dataOrigin }, i)
     if (style === false) {
@@ -122,71 +165,45 @@ class Scatter extends BaseVisual {
     }
     if ((labelField && dataOrigin.hasOwnProperty(labelField)) || style) {
       const { strokeColor, ...other } = attr
-      const { size, lineWidth = 0 } = normalStyle
       const text = dataOrigin[labelField]
-      const renderText = (style && style.text) || text
-      const ctx = this.chart.layer.context
-      const textWidth = ctx.measureText(renderText).width
-      let translate = [0, 0]
-      if (size * 2 - lineWidth < textWidth * 1.3) {
-        translate[1] = size + lineWidth + 10
-      }
-      return (
-        <Label
-          {...{
-            ...other,
-            fillColor: strokeColor,
-            text,
-            translate,
-            anchor: [0.5, 0.5],
-            fontSize: '12px',
-          }}
-          animation={animation}
-          {...style}
-          hoverState={this.style('label:hover')(attr, attr.dataOrigin, i)}
-        />
+      const labelAttr = deepObjectMerge(
+        other,
+        {
+          fillColor: strokeColor,
+          text,
+          anchor: [0.5, 0.5],
+          fontSize: '12px',
+        },
+        style
       )
+      return <Label {...labelAttr} />
     }
   }
-
-  renderGuideLine() {
-    const guildLine = []
-    const attr = {
-      points: [
-        [0, 0],
-        [0, 0],
-      ],
-      strokeColor: '#ddd',
-      lineWidth: 1,
-    }
-    for (let i = 0; i < 2; i++) {
-      const guideLineType = i === 0 ? 'horizontal' : 'vertical '
-      guildLine.push(<Polyline {...attr} guideLineType={guideLineType} translate={[0.5, 0.5]} />)
-    }
-    return guildLine
-  }
-
-  onMouseenter() {}
-  onMouseleave() {}
 
   renderScatter(data) {
-    const scatters = data.map((item, index) => {
+    const scatters = data.map((item) => {
       return item.attrs.map((attr, i) => {
-        // 根据用户设置的面积字段获得半径
-        let radius = this.getRealRadius(attr)
+        const radius = this.getRealRadius({ ...attr })
+
         let style = this.style('point')(attr, { ...attr.dataOrigin }, i)
         if (style === false) {
           return
         }
-        style = { size: radius, ...style }
-        const hStyle = this.style('point:hover')(attr, attr.dataOrigin, i) || { size: radius + 1 }
+
+        const hStyle = this.style('point:hover')(attr, attr.dataOrigin, i) || { radius: radius + 1 }
         if (attr.state === 'hover') {
-          style = { size: radius, ...style, ...hStyle }
+          style = deepObjectMerge(style || {}, hStyle)
+        } else {
+          style = deepObjectMerge(style || {}, { radius })
         }
+
+        const arcAttrs = deepObjectMerge({}, attr, style)
+
+        const { dataOrigin, text, pos, ...other } = arcAttrs
         return (
           <Group clipOverflow={false}>
-            <Arc {...attr} {...style} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
-            {this.renderLabel(attr, {}, {}, index)}
+            <Arc {...arcAttrs} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
+            {this.renderLabel({ dataOrigin, text, pos }, i)}
           </Group>
         )
       })
@@ -201,7 +218,7 @@ class Scatter extends BaseVisual {
     return (
       <Group size={[width, height]} pos={[left, top]} zIndex={100} clipOverflow={false}>
         {this.renderScatter(data)}
-        {/* {this.renderGuideLine()} */}
+        {this.renderGuideLine()}
       </Group>
     )
   }
