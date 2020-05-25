@@ -8,7 +8,7 @@ import layout from './layout'
 class Scatter extends BaseVisual {
   constructor(attrs = {}) {
     super(attrs)
-    this.type = 'radar'
+    this.type = 'scatter'
     this.scatterData = []
     this.guideLineData = []
   }
@@ -118,30 +118,28 @@ class Scatter extends BaseVisual {
     return realArea
   }
 
-  onMouseenter = throttle(
-    (event, el) => {
-      const { row, col } = el.attributes
-      this.dataset.resetState()
-      this.dataset.rows[row][col].state = 'hover'
-      const { showGuideLine } = this.renderAttrs
-      if (showGuideLine) {
-        const pos = el.attr('pos')
-        const { height, width } = this.renderAttrs.clientRect
-        this.guideLineData = [
-          [
-            [0, pos[1]],
-            [width, pos[1]],
-          ],
-          [
-            [pos[0], 0],
-            [pos[0], height],
-          ],
-        ]
-      }
-    },
-    16,
-    true
-  )
+  onMouseenter(event, el) {
+    this.dataset.resetState()
+    const { row, col } = el.attributes
+    this.dataset.forEach(cell => {
+      cell.state = cell.row === row && cell.col === col ? 'hover' : 'default'
+    })
+    const { showGuideLine } = this.renderAttrs
+    if (showGuideLine) {
+      const pos = el.attr('pos')
+      const { height, width } = this.renderAttrs.clientRect
+      this.guideLineData = [
+        [
+          [0, pos[1]],
+          [width, pos[1]],
+        ],
+        [
+          [pos[0], 0],
+          [pos[0], height],
+        ],
+      ]
+    }
+  }
   onMouseleave() {
     this.dataset.resetState()
     this.guideLineData = []
@@ -156,27 +154,36 @@ class Scatter extends BaseVisual {
     return
   }
 
-  renderLabel(attr, i) {
+  renderLabel(data) {
     const { labelField } = this.renderAttrs
-    const dataOrigin = attr.dataOrigin
-    const style = this.style('label')(attr, { ...attr.dataOrigin }, i)
-    if (style === false) {
-      return
-    }
-    if ((labelField && dataOrigin.hasOwnProperty(labelField)) || style) {
-      const { strokeColor, ...other } = attr
-      const text = dataOrigin[labelField]
-      const labelAttr = deepObjectMerge(
-        other,
-        {
-          fillColor: strokeColor,
-          text,
-          anchor: [0.5, 0.5],
-          fontSize: '12px',
-        },
-        style
-      )
-      return <Label {...labelAttr} />
+    if (labelField) {
+      const labels = data.map((item) => {
+        return item.attrs.map((attr, i) => {
+          const style = this.style('label')(attr, { ...attr.dataOrigin }, i)
+          if (style === false) {
+            return
+          }
+          const dataOrigin = attr.dataOrigin
+          if (dataOrigin.hasOwnProperty(labelField)) {
+            const { strokeColor, ...other } = attr
+            const text = dataOrigin[labelField]
+            const labelAttr = deepObjectMerge(
+              other,
+              {
+                fillColor: strokeColor,
+                text,
+                anchor: [0.5, 0.5],
+                fontSize: '12px',
+              },
+              style
+            )
+            return <Label {...labelAttr} />
+          }
+        })
+      })
+      return labels.reduce((pre, cur) => {
+        return pre.concat(cur)
+      }, [])
     }
   }
 
@@ -197,13 +204,9 @@ class Scatter extends BaseVisual {
           style = deepObjectMerge(style || {}, { radius })
         }
 
-        const arcAttrs = deepObjectMerge({}, attr, style)
-
-        const { dataOrigin, text, pos, ...other } = arcAttrs
         return (
           <Group clipOverflow={false}>
-            <Arc {...arcAttrs} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
-            {this.renderLabel({ dataOrigin, text, pos }, i)}
+            <Arc {...attr} {...style} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
           </Group>
         )
       })
@@ -218,6 +221,7 @@ class Scatter extends BaseVisual {
     return (
       <Group size={[width, height]} pos={[left, top]} zIndex={100} clipOverflow={false}>
         {this.renderScatter(data)}
+        {this.renderLabel(data)}
         {this.renderGuideLine()}
       </Group>
     )
