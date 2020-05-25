@@ -16,7 +16,7 @@ class Base extends Node {
     store.__refs = emptyObject()
     store.dataset = null
     this.attr(attrs)
-    this.__update = throttle((_) => {
+    this.__update = throttle(_ => {
       if (store.__isCreated__) {
         this.update()
       }
