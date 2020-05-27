@@ -2,7 +2,7 @@ import { Group, Polyline, Arc, Label } from 'spritejs'
 import BaseVisual from '../../base/BaseVisual'
 import { scaleLinear } from '../../utils/scaleLinear'
 import { hexToRgba } from '../../utils/color'
-import { deepObjectMerge, throttle } from '@qcharts/utils'
+import { deepObjectMerge } from '@qcharts/utils'
 import layout from './layout'
 
 class Scatter extends BaseVisual {
@@ -121,7 +121,7 @@ class Scatter extends BaseVisual {
   onMouseenter(event, el) {
     this.dataset.resetState()
     const { row, col } = el.attributes
-    this.dataset.forEach(cell => {
+    this.dataset.forEach((cell) => {
       cell.state = cell.row === row && cell.col === col ? 'hover' : 'default'
     })
     const { showGuideLine } = this.renderAttrs

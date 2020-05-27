@@ -102,20 +102,15 @@ const axisLeft = new Axis({ orient: 'left' })
 const legend = new Legend({ align: ['center', 'bottom'] })
 
 chart.append([axisBottom, axisLeft, legend, scatter])
-console.log('scatter1', scatter)
 
 let count = 1
 const inter = setInterval(() => {
-  if (count%2===0) {
+  if (count%2 ===0) {
     chart.source(data2)
   } else {
     chart.source(data)
   }
   count+=1
-  if(count===4) {
-    console.log('end')
-    clearInterval(inter)
-  }
 }, 5000)
 
 ```
