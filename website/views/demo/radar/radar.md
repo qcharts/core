@@ -31,6 +31,7 @@ chart.source(data, {
 })
 const radar = new Radar()
 radar.style('section', (d) => ({ opacity: 0.3 }))
+.style('section:hover',d=>({opacity: 0.8,lineWidth:2,strokeColor:'red'}))
 
 chart.append([radar, new Tooltip()])
 ```
