@@ -12,7 +12,7 @@ export default function layout(arr, attrs) {
     .domain([minVal, maxVal])
     .range([0, height])
   let prevRow = null
-  arr.forEach((row) => {
+  arr.forEach(row => {
     //if (row.state === 'disabled') return
     let line = { points: [], areaPoints: [], smoothRange: [], state: row.state }
     row.forEach((cell, i) => {
@@ -40,10 +40,10 @@ export default function layout(arr, attrs) {
   if (type === 'area') {
     let curLine = null
     lines.forEach((line, ind) => {
-      let nextPoints = [
-        [line.points[line.points.length - 1][0], height],
-        [line.points[0][0], height]
-      ]
+      let nextPoints = []
+        .concat(line.points)
+        .reverse()
+        .map(point => [point[0], height])
       if (curLine && attrs.stack) {
         nextPoints = [].concat(lines[ind - 1].points).reverse()
       }
