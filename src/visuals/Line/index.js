@@ -17,7 +17,7 @@ class Line extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
     let { arrLayout, maxLen } = this.getRenderData()
-    let lines = arrLayout.map((item) => {
+    let lines = arrLayout.map(item => {
       return {
         smoothRange: item.smoothRange,
         areaFrom: { points: item.areaPoints },
@@ -84,12 +84,12 @@ class Line extends Base {
   }
   guidelineleave(event, el) {
     this.attr('guidePoints', [])
-    this.dataset.resetState('hover')
+    this.dataset.resetState()
   }
   guidelinemove(event, el) {
     if (this.renderLines.length) {
       //获取 x轴坐标的刻度
-      let arrX = this.renderLines[0].to.points.map((pos) => pos[0])
+      let arrX = this.renderLines[0].to.points.map(pos => pos[0])
       //转换cancas坐标到当前group的相对坐标
       let [x] = el.getOffsetPosition(event.x, event.y)
       let curInd = 0
@@ -102,7 +102,7 @@ class Line extends Base {
       }
       //重置所有的dateset的状态
       if (this.hoverIndex !== curInd) {
-        this.dataset.resetState('hover')
+        this.dataset.resetState()
         //设置当前列的state为hover
         this.dataset.cols[curInd].state = 'hover'
         let { clientRect } = this.renderAttrs
@@ -146,14 +146,16 @@ class Line extends Base {
               })}
         </Group>
         <Group class="guide-line-group">
-          {guidePoints.length
-            ? ((_) => {
-                let mergeStyle = deepObjectMerge({}, styles.guideline)
-                let style = this.style('area')(mergeStyle)
-                let renderStyle = deepObjectMerge(mergeStyle, style)
-                return <Polyline points={guidePoints} {...renderStyle} />
-              })()
-            : null}
+          {guidePoints.length ? (
+            (_ => {
+              let mergeStyle = deepObjectMerge({}, styles.guideline)
+              let style = this.style('area')(mergeStyle)
+              let renderStyle = deepObjectMerge(mergeStyle, style)
+              return <Polyline points={guidePoints} {...renderStyle} />
+            })()
+          ) : (
+            <Node />
+          )}
         </Group>
       </Group>
     )

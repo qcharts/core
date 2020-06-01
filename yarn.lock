@@ -878,10 +878,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@qcharts/dataset@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.npm.taobao.org/@qcharts/dataset/download/@qcharts/dataset-0.0.4.tgz#cd117c55c5735d8afff166601d9690a8c972e8b4"
-  integrity sha1-zRF8VcVzXYr/8WZgHZaQqMly6LQ=
+"@qcharts/dataset@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npm.taobao.org/@qcharts/dataset/download/@qcharts/dataset-0.0.5.tgz?cache=0&sync_timestamp=1589524408172&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Fdataset%2Fdownload%2F%40qcharts%2Fdataset-0.0.5.tgz#b788e57e70488886c2a5c5be5f9359658490e8a0"
+  integrity sha1-t4jlfnBIiIbCpcW+X5NZZYSQ6KA=
   dependencies:
     "@qcharts/utils" "^0.0.3"
 

@@ -4,6 +4,7 @@ import platform from './base/platform'
 import BaseVisual from './base/BaseVisual'
 import BasePlugin from './base/BasePlugin'
 import { Scene } from 'spritejs'
+import { Wave } from './index'
 class Chart extends Base {
   constructor(attr) {
     super()
@@ -40,7 +41,10 @@ class Chart extends Base {
     this.checkUpdate()
   }
   append(node) {
-    if (!this.dataset) {
+    if (node instanceof Wave) {
+      //补齐dataset，wave中不用dataset
+      this.source([], {})
+    } else if (!this.dataset) {
       console.error('Chart should set data before append some graphs')
       return
     }

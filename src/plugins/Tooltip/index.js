@@ -40,19 +40,21 @@ class Tooltip extends Base {
         if (sort) {
           arr.sort(sort)
         }
-        let $div = document.createElement('div')
-        $div.style.cssText = 'white-space:nowrap;padding:6px 10px;background-color:rgba(0,0,0,0.5);color:#fff;'
-        let innerHtml = ''
-        arr.forEach((item, ind) => {
-          let text = `${item.text}：${item.value}`
-          if (formatter) {
-            text = formatter(item.data) || text
-          }
-          let html = `<div class="tooltip-item"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[ind]}"></span><span class="text">${item.text}：${item.value}</span></div>`
-          innerHtml += html
-        })
-        $div.innerHTML = innerHtml
-        this.$el.appendChild($div)
+        if (arr.length) {
+          let innerHtml = ''
+          let $div = document.createElement('div')
+          $div.style.cssText = 'white-space:nowrap;padding:6px 10px;background-color:rgba(0,0,0,0.5);color:#fff;'
+          arr.forEach((item, ind) => {
+            let text = `${item.text}：${item.value}`
+            if (formatter) {
+              text = formatter(item.data) || text
+            }
+            let html = `<div class="tooltip-item"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[ind]}"></span><span class="text">${item.text}：${item.value}</span></div>`
+            innerHtml += html
+          })
+          $div.innerHTML = innerHtml
+          this.$el.appendChild($div)
+        }
       } else if (option.name === 'reset') {
         this.$el.innerHTML = ''
       }

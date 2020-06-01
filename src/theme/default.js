@@ -1,4 +1,3 @@
-
 import { deepObjectMerge } from '@qcharts/utils'
 const theme = { colors: ['#47A1FF', '#6CD3FF', '#A2E5FF', '#4DCCCB', '#3FDDC7', '#84E0BE', '#59CB74', '#ADDF84', '#FBD54A', '#FFB952', '#F79452', '#E37474', '#FC6980', '#ED8CCE', '#DA65CC', '#9861E5', '#9F8CF1', '#6367EC', '#5982F6', '#659AEC'] }
 theme.visuals = {
@@ -55,6 +54,15 @@ theme.visuals = {
     attrs: {
       statck: false
     }
+  },
+  Wave: {
+    colors: theme.colors,
+    styles: {
+      wave: { fillColor: '#37c', strokeColor: '#37c', lineWidth: 0 },
+      text: { color: '#333', fontSize: 24 },
+      shape: { fillColor: '#e6f3ff', lineWidth: 3, strokeColor: '#156cbd' }
+    },
+    attrs: {}
   }
 }
 theme.plugins = {

@@ -1,7 +1,7 @@
 import generateCommonPage from '../../utils/generateCommonPage'
 
 import PieRoutes from './Pie/routes'
-import ProgressRoutes from './Progress/routes'
+import WaveRoutes from './Wave/routes'
 import BarRoutes from './Bar/routes'
 import PolarBarRoutes from './PolarBar/routes'
 import ColumnRoutes from './Column/routes'
@@ -68,10 +68,10 @@ export default [
   },
 
   {
-    title: '进度图',
-    path: 'progress',
-    component: generateCommonPage('/demo/progress/', ProgressRoutes),
-    children: ProgressRoutes
+    title: '水波图',
+    path: 'wave',
+    component: generateCommonPage('/demo/Wave/', WaveRoutes),
+    children: WaveRoutes
   },
 
   {
