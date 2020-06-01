@@ -13,8 +13,10 @@ const wave = new Wave({
 })
 wave.style('wave', {
   fillColor: '#1890ff',
-  strokeColor: '#1477d4',
-  bgcolor: '#d3eaff'
+  strokeColor: '#1477d4'
+})
+wave.style('shape', {
+  fillColor: '#d3eaff'
 })
 chart.append(wave)
 ```
