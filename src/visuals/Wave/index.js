@@ -1,5 +1,5 @@
 import Base from '../../base/BaseVisual'
-import { Group, Polyline, Path, requestAnimationFrame, Label } from 'spritejs'
+import { Group, Polyline, Path, requestAnimationFrame, Label, Node } from 'spritejs'
 import ellipse2path from '../../utils/ellipse2path'
 import { deepObjectMerge } from '@qcharts/utils'
 class Wave extends Base {
@@ -42,7 +42,10 @@ class Wave extends Base {
       amplitude: 8, //振幅
       wavelength: 300, //波长`
       radius: 150,
-      percent: 0.6
+      percent: 0.65,
+      formatter: per => {
+        return per * 100 + '%'
+      }
     }
   }
   wave() {
@@ -77,18 +80,20 @@ class Wave extends Base {
     })
   }
   render() {
-    let { clientRect, shape, center } = this.renderAttrs
+    let { clientRect, shape, center, formatter, percent } = this.renderAttrs
     let renderStyles = this.renderStyles
     let waveStyle = this.style('wave')(renderStyles.wave)
     waveStyle = deepObjectMerge({}, renderStyles.wave, waveStyle)
     let shapeStyle = this.style('shape')(renderStyles.shape)
-    shapeStyle = deepObjectMerge({}, renderStyles.shape, shapeStyle)
-    console.log(shapeStyle)
+    shapeStyle = shapeStyle === false ? false : deepObjectMerge({}, renderStyles.shape, shapeStyle)
+    let textStyle = this.style('text')(renderStyles.text)
+    textStyle = textStyle === false ? false : deepObjectMerge({}, renderStyles.text, textStyle)
     return (
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
         <Path ref="clipPath" d={shape} fillColor={shapeStyle.fillColor} />
         <Polyline ref="clipWave" {...waveStyle} clipPath={shape} smooth={true} />
         <Path ref="clipPath" d={shape} strokeColor={shapeStyle.strokeColor} lineWidth={3} />
+        {textStyle === false ? <Node /> : <Label text={formatter(percent)} {...textStyle} pos={center} anchor={[0.5]} />}
       </Group>
     )
   }

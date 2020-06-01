@@ -9,8 +9,7 @@ const wave = new Wave({
   animation: {
     duration: 300
   },
-  percent: 0.65,
-  formatter: d => `${d.value}%`
+  percent: 0.65
 })
 wave.style('wave', {
   fillColor: '#1890ff',

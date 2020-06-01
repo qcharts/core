@@ -59,6 +59,7 @@ theme.visuals = {
     colors: theme.colors,
     styles: {
       wave: { fillColor: '#37c', strokeColor: '#37c', lineWidth: 0 },
+      text: { color: '#333', fontSize: 24 },
       shape: { fillColor: '#e6f3ff', lineWidth: 3, strokeColor: '#156cbd' }
     },
     attrs: {}

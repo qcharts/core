@@ -11,7 +11,7 @@ export default [
   },
   {
     title: '自定义',
-    path: 'symbol',
-    component: () => import('./symbol.md')
+    path: 'shape',
+    component: () => import('./shape.md')
   }
 ]
