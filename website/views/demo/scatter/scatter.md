@@ -261,6 +261,7 @@ const render = (data) => {
     new Tooltip({
       title: (data) => data[0].gender,
       formatter: (data) => {
+        console.log(data)
         return `身高：${data.height}CM  体重：${data.weight}KG `
       }
     })

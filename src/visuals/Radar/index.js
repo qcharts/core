@@ -1,5 +1,5 @@
 import { Group, Polyline, Label, Arc } from 'spritejs'
-import { deepObjectMerge } from '@qcharts/utils'
+import { deepObjectMerge, throttle } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
 
@@ -9,8 +9,6 @@ class Radar extends BaseVisual {
     this.type = 'radar'
     this.sectionData = []
     this.scaleEl = []
-    // 网格背景数据备份，数据全部隐藏的时候显示上一个备份的数据
-    this.lastGridAttr = []
   }
 
   //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -52,21 +50,36 @@ class Radar extends BaseVisual {
     return { sectionAttrs, axisAttrs, gridAttrs }
   }
 
-  showTooltip(evt, attr) {
-    this.dataset.hoverData({
-      data: { color: attr.fillColor, data: attr.dataOrigin },
-      ...evt,
-    })
-  }
-
-  hideTooltip() {
-    this.dataset.hoverData(null)
+  _processData() {
+    const { sectionAttrs, ...otherData } = this.getRenderData()
+    const processSectionAttrs = sectionAttrs
+      .filter((attr) => attr.state !== 'disabled')
+      .map((attr, i) => {
+        const { points, ...otherAttrs } = attr
+        const animation = this._getPolylineAnimation(points, i)
+        const { style, hoverStyle } = this._getStyle('section', attr, { ...attr.dataOrigin }, i)
+        if (style === false) {
+          attr.display = 'none'
+        }
+        let stateStyle = { lineWidth: attr.lineWidth, display: 'block' }
+        if (attr.state === 'hover') {
+          stateStyle = { ...hoverStyle, lineWidth: attr.lineWidth + 1 }
+        }
+        // 由于有着动画的原因，一开始的points需要设置为from points
+        return deepObjectMerge(otherAttrs, { points: animation.from.points }, { animation }, style, stateStyle)
+      })
+    return { ...otherData, sectionAttrs: processSectionAttrs }
   }
 
   beforeUpdate() {
     super.beforeUpdate()
     const updateData = this._processData()
-    console.log('update', JSON.parse(JSON.stringify(updateData)))
+    if (updateData.sectionAttrs) {
+      const len = Math.max(this.sectionData.length, updateData.sectionAttrs.length)
+      for (let i = 0; i < len; i++) {
+        this.sectionData[i] = updateData.sectionAttrs[i]
+      }
+    }
     this.sectionData = [...updateData.sectionAttrs]
     return updateData
   }
@@ -80,25 +93,6 @@ class Radar extends BaseVisual {
 
   rendered() {}
 
-  _processData() {
-    const renderData = this.getRenderData()
-    renderData.sectionAttrs.forEach((attr, i) => {
-      const animation = this._getPolylineAnimation(attr, i)
-      const { style, hoverStyle } = this._getStyle('section', attr, { ...attr.dataOrigin }, i)
-      if (style === false) {
-        attr.display = 'none'
-      }
-      let defaultHoverStyle = hoverStyle || { lineWidth: attr.lineWidth }
-      if (attr.state === 'hover') {
-        if (!hoverStyle) {
-          defaultHoverStyle.lineWidth = attr.lineWidth + 1
-        }
-      }
-      deepObjectMerge(attr, { animation }, style, defaultHoverStyle)
-    })
-    return renderData
-  }
-
   _getScaleAnimation(toScale) {
     return {
       from: { scale: 0 },
@@ -109,7 +103,7 @@ class Radar extends BaseVisual {
   _getStyle(type, attr, data, index) {
     return {
       style: this.style(type)(attr, data, index) || {},
-      hoverState: this.style(`${type}:hover`)(attr, data, index) || {},
+      hoverStyle: this.style(`${type}:hover`)(attr, data, index) || {},
     }
   }
 
@@ -117,29 +111,29 @@ class Radar extends BaseVisual {
     return fromPts.toString() === toPts.toString()
   }
 
-  _getPolylineAnimation(attr, index) {
-    const { points: toPoints } = attr
+  _getPolylineAnimation(toPoints, index) {
     let preData = this.sectionData[index]
     if (!preData) {
-      preData = {}
-      preData.points = new Array(toPoints.length).fill([0, 0])
+      const fromPoints = new Array(toPoints.length).fill([0, 0])
+      preData = {
+        animation: {
+          to: {
+            points: fromPoints,
+          },
+        },
+      }
     }
     return {
-      from: { points: preData.points },
+      from: { points: preData.animation.to.points },
       to: { points: toPoints },
     }
   }
 
   renderGrid(gridAttrs) {
-    if (gridAttrs.length !== 0) {
-      this.lastGridAttr = gridAttrs
-    } else {
-      gridAttrs = this.lastGridAttr
-    }
-    const { gridType } = this.attr()
-    const GridShape = gridType === 'circle' ? Ring : Polyline
+    const { gridType } = this.renderAttrs
+    const GridShape = gridType === 'circle' ? Arc : Polyline
     return gridAttrs.map((attr, i) => {
-      const animation = this.sectionData.length > 0 ? {} : this._getScaleAnimation(attr.scale)
+      const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(attr.scale)
       const { style, ...other } = this._getStyle('grid', attr, null, i)
       if (style === false) {
         return
@@ -149,34 +143,11 @@ class Radar extends BaseVisual {
         gridAttr = {
           lineWidth: attr.lineWidth,
           strokeColor: attr.strokeColor,
-          innerRadius: 0,
-          outerRadius: attr.radius,
+          radius: attr.radius,
           scale: attr.scale,
         }
       }
       return <GridShape {...gridAttr} {...style} {...other} animation={animation} />
-    })
-  }
-
-  renderAxis(axisAttrs) {
-    const animation = this.sectionData.length > 0 ? {} : this._getScaleAnimation(1)
-    return axisAttrs.map((attr, i) => {
-      if (attr.disabled) {
-        return
-      }
-
-      const { style, ...other } = this._getStyle('axis', attr, { text: attr.label }, i)
-      if (style === false) {
-        return
-      }
-      const axisStyle = deepObjectMerge(attr, style, other)
-      return (
-        <Group clipOverflow={false} size={[1, 1]}>
-          <Polyline {...axisStyle} animation={animation} />
-          {this._renderAxisLabel(attr, i)}
-          {this._renderAxisScale(attr, i)}
-        </Group>
-      )
     })
   }
 
@@ -196,7 +167,7 @@ class Radar extends BaseVisual {
       anchor,
       fontSize: 12,
     }
-    const animation = this.sectionData.length > 0 ? {} : this._getScaleAnimation(1)
+    const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(1)
     const { style, ...other } = this._getStyle('label', attr, { text: attr.label, radian }, i)
     if (style === false) {
       return
@@ -235,66 +206,58 @@ class Radar extends BaseVisual {
         return
       }
       if (attr.display !== 'none') {
+        let animation = {}
         const elIndex = index * attrs.splitNumber + i
         const preEl = this.scaleEl[elIndex]
-        let animation =
-          this.sectionData.length > 0
-            ? {}
-            : {
-                from: { pos: [0, 0] },
-                to: { pos: point },
-              }
         if (preEl) {
-          const { text: preText } = preEl.attr()
-          const numText = Number(preText)
-          if (numText !== text) {
+          const { text: preText } = preEl
+          if (preText !== text) {
             animation = {
-              from: { text: numText },
+              from: { text: preText },
               to: { text },
-              attrFormatter: (attr) => {
+              formatter: (attr) => {
                 attr.text = attr.text.toFixed(0)
                 return attr
               },
             }
           }
+        } else {
+          animation = {
+            from: { pos: [0, 0] },
+            to: { pos: point },
+          }
         }
+        this.scaleEl[i] = { text: Number(text.toFixed(0)) }
         labels.push(<Label {...attr} {...style} {...other} animation={animation} />)
       }
     }
     return labels
   }
 
-  onMouseenter(event, el) {
-    this.dataset.resetState()
-    const name = el.attributes.name
-    this.dataset.rows.forEach((row) => {
-      row.state = row.name === name ? 'hover' : 'default'
-    })
-  }
-  onMouseleave(event, el) {
-    this.dataset.resetState()
-    this.dataset.rows.forEach((row) => row.state === 'default')
-  }
-
-  renderSection(sectionAttrs) {
-    return sectionAttrs.map((attr, i) => {
-      if (attr.disabled) {
-        this.sectionData[i] = null
+  renderAxis(axisAttrs) {
+    const animation = this.scaleEl.length > 0 ? {} : this._getScaleAnimation(1)
+    return axisAttrs.map((attr, i) => {
+      const { style, ...other } = this._getStyle('axis', attr, { text: attr.label }, i)
+      if (style === false) {
         return
       }
-      const { animation, ...otherAttr } = attr
-      return <Polyline zIndex={9 + i} animation={animation} {...otherAttr} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
+      const axisStyle = deepObjectMerge(attr, style, other)
+      return (
+        <Group clipOverflow={false} size={[1, 1]}>
+          <Polyline {...axisStyle} animation={animation} />
+          {this._renderAxisLabel(attr, i)}
+          {this._renderAxisScale(attr, i)}
+        </Group>
+      )
     })
   }
 
   renderPoints(sectionAttrs) {
     const allPoints = sectionAttrs.map((attrs, index) => {
-      if (attrs.disabled) {
-        return
-      }
-      const { points, animation: secAnimation, dataOrigin, strokeColor } = attrs
+      const { animation: secAnimation, dataOrigin, strokeColor } = attrs
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
-      return points.map((point, i) => {
+      const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
+      return toPoints.map((point, i) => {
         let attr = {
           pos: point,
           fillColor: strokeColor,
@@ -312,9 +275,9 @@ class Radar extends BaseVisual {
         if (prePoints && prePoints[i]) {
           if (!this._isSamePoints(prePoints[i], point)) {
             animation.from.pos = prePoints[i]
+            attr.pos = prePoints[i]
           } else {
             animation = {}
-            attr.pos = point
           }
         }
         const style = this.style('point')(attr, { ...attr.dataOrigin }, i)
@@ -326,6 +289,31 @@ class Radar extends BaseVisual {
     })
 
     return allPoints.reduce((pre, cur) => pre.concat(cur), [])
+  }
+
+  renderSection(sectionAttrs) {
+    return sectionAttrs.map((attr, i) => {
+      const { animation, ...otherAttr } = attr
+      return <Polyline zIndex={9 + i} animation={animation} {...otherAttr} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
+    })
+  }
+
+  onMouseenter = throttle(
+    (event, el) => {
+      this.dataset.resetState()
+      const name = el.attributes.name
+      this.dataset.rows
+        .filter((row) => row.state !== 'disabled')
+        .forEach((row) => {
+          row.state = row.name === name ? 'hover' : 'default'
+        })
+    },
+    16,
+    true
+  )
+  onMouseleave() {
+    this.dataset.resetState()
+    this.dataset.rows.filter((row) => row.state !== 'disabled').forEach((row) => row.state === 'default')
   }
 
   render({ sectionAttrs, axisAttrs, gridAttrs }) {
