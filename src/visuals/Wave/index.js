@@ -1,5 +1,5 @@
 import Base from '../../base/BaseVisual'
-import { Group, Polyline, Path, requestAnimationFrame, Label, Node } from 'spritejs'
+import { Group, Polyline, Path, requestAnimationFrame, cancelAnimationFrame, Label, Node } from 'spritejs'
 import ellipse2path from '../../utils/ellipse2path'
 import { deepObjectMerge } from '@qcharts/utils'
 class Wave extends Base {
@@ -7,6 +7,7 @@ class Wave extends Base {
     super(attrs)
     //波纹振偏移量
     this.offsetR = 50
+    this.tickId = ''
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -22,7 +23,6 @@ class Wave extends Base {
   }
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
-
     return []
   }
   beforeUpdate() {
@@ -54,12 +54,12 @@ class Wave extends Base {
     let clipWave = this.$refs['clipWave']
     let clipPath = this.$refs['clipPath'] || clipWave
     let pathHeight = clipPath.originalContentRect[3]
-    let { percent, wavelength, amplitude, clientRect, animation } = this.renderAttrs
+    let { percent, wavelength, amplitude, clientRect, animation, shape } = this.renderAttrs
     let perR = 24 / animation.duration
     let currentX = 0 - clientRect.left
     //以路径的top为起点，计算百分比
     let startY = pathHeight * (1 - percent) + clipPath.originalContentRect[1]
-    requestAnimationFrame(_ => {
+    this.tickId = requestAnimationFrame(_ => {
       this.offsetR += perR
       let points = [[currentX, startY + pathHeight]]
       points.push([currentX, startY + amplitude * Math.sin(currentR + this.offsetR)])
@@ -72,7 +72,7 @@ class Wave extends Base {
       points.push([currentX, startY + lastY])
       points.push([currentX, startY + lastY])
       points.push([currentX, startY + pathHeight])
-      clipWave.attr({ points: points })
+      clipWave.attr({ points: points, clipPath: ' ' + shape })
       if (this.offsetR >= 2 * Math.PI) {
         this.offsetR = this.offsetR % (2 * Math.PI)
       }
@@ -90,7 +90,7 @@ class Wave extends Base {
     textStyle = textStyle === false ? false : deepObjectMerge({}, renderStyles.text, textStyle)
     return (
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
-        <Path ref="clipPath" d={shape} fillColor={shapeStyle.fillColor} />
+        <Path ref="clipPath1" d={shape} fillColor={shapeStyle.fillColor} />
         <Polyline ref="clipWave" {...waveStyle} clipPath={shape} smooth={true} />
         <Path ref="clipPath" d={shape} strokeColor={shapeStyle.strokeColor} lineWidth={3} />
         {textStyle === false ? <Node /> : <Label text={formatter(percent)} {...textStyle} pos={center} anchor={[0.5]} />}

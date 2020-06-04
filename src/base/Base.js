@@ -119,6 +119,7 @@ class Base extends Node {
     patch.bind(this)(this.$el || this.layer, patches)
     store.__vnode__ = vnode
     this.dispatchEvent(lifeCycle.updated)
+    this.updated()
   }
   updated() {}
   dispatchEvent(event, obj = emptyObject()) {
