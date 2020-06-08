@@ -34,7 +34,8 @@ const chart = new Chart({
 
 chart.source(data, {
   row: 'year',
-  value: 'population'
+  value: 'population',
+  text: 'year'
 })
 
 const pie = new Pie({ radius: 0.9 })
@@ -43,8 +44,9 @@ pie.style('guideline', true)
 pie.style('guideText', true)
 
 const legend = new Legend()
+const toolTip = new Tooltip()
 
-chart.append([pie, legend])
+chart.append([pie, legend, toolTip])
 ```
 
 :::

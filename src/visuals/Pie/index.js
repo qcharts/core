@@ -47,7 +47,7 @@ class Pie extends Base {
   getRenderData() {
     //根据line的特性返回需要数据
     let renderAttrs = this.renderAttrs
-    let renderData = this.dataset[renderAttrs.layoutBy]
+    let renderData = this.renderData()
     let rings = layout.call(this, renderData, renderAttrs)
     return { rings }
   }
@@ -68,6 +68,25 @@ class Pie extends Base {
   defaultStyles() {
     // 默认的样式,继承base
   }
+  mousemove(event, el) {
+    let renderData = this.renderData()
+    let ind = el.attr('_index')
+    let curData = renderData[ind]
+    renderData.forEach(row => {
+      row.state = 'default'
+    })
+    curData.state = 'hover'
+  }
+  mouseleave() {
+    let renderData = this.renderData()
+    renderData.forEach(row => {
+      row.state = 'default'
+    })
+  }
+  renderData() {
+    let renderAttrs = this.renderAttrs
+    return this.dataset[renderAttrs.layoutBy]
+  }
   render(rings) {
     let { clientRect, radius, center, innerRadius } = this.renderAttrs
     radius = (Math.min(clientRect.width, clientRect.height) * radius) / 2
@@ -83,8 +102,8 @@ class Pie extends Base {
             let sectorStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.sector)
             let style = this.style('sector')(sectorStyle, this.dataset.rows[ind], ind)
             let renderStyle = deepObjectMerge(sectorStyle, style)
-            let attrs = { fillColor: colors[ind], pos: center, innerRadius, outerRadius: radius }
-            return ring.state === 'disabled' || style === false ? <Node /> : <Ring {...attrs} {...renderStyle} animation={{ from: ring.from, to: ring.to }} />
+            let attrs = { fillColor: colors[ind], pos: center, innerRadius, outerRadius: radius, _index: ind }
+            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMousemove={this.mousemove} onMouseleave={this.mouseleave} {...attrs} {...renderStyle} animation={{ from: ring.from, to: ring.to }} />
           })}
         </Group>
       </Group>
