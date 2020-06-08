@@ -10,11 +10,11 @@ import LineRoutes from './Line/routes'
 import AreaRoutes from './Area/routes'
 import FunnelRoutes from './Funnel/routes'
 import radarRoutes from './radar'
-import MapRoutes from './map/routes'
-import WordCloudRoutes from './WordCloud/routes'
+// import MapRoutes from './map/routes'
+// import WordCloudRoutes from './WordCloud/routes'
 import scatterRoutes from './scatter'
 import gaugeRoutes from './Gauge/routes'
-import VisualLinksRoutes from './VisualLink/routes'
+// import VisualLinksRoutes from './VisualLink/routes'
 
 export default [
   {
