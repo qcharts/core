@@ -16,6 +16,9 @@ const wave = new Wave({
 })
 wave.style('text', false)
 chart.append(wave)
+setTimeout(_ => {
+  wave.attr({ percent: 0.8 })
+}, 2000)
 ```
 
 :::
