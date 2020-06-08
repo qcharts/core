@@ -17,9 +17,16 @@ class Pie extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
-    let arr = rings.map(item => {
+    let arr = rings.map((item, ind) => {
+      if (ind === 0) {
+        return {
+          from: { startAngle: 0, endAngle: 0 },
+          to: { ...item }
+        }
+      }
+      let pervAngle = rings[ind - 1].endAngle
       return {
-        from: { ...item },
+        from: { startAngle: pervAngle, endAngle: pervAngle },
         to: { ...item }
       }
     })
@@ -28,7 +35,14 @@ class Pie extends Base {
   beforeUpdate() {
     //更新前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
-    return rings
+    let oldRings = this.renderRings
+    let arr = rings.map((item, ind) => {
+      return {
+        from: { ...oldRings[ind].to },
+        to: { ...item }
+      }
+    })
+    return arr
   }
   getRenderData() {
     //根据line的特性返回需要数据

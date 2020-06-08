@@ -1,6 +1,6 @@
 export default function layout(arr, attrs) {
   let rings = []
-  let arrVal = arr.map(row => row.reduce((val, item) => val + item.value, 0))
+  let arrVal = arr.map(row => row.reduce((val, item) => (row.state !== 'disabled' ? val + item.value : val), 0))
   let totalVal = arrVal.reduce((val, item) => val + item, 0)
   let { startAngle, endAngle } = attrs
   let minAngle = Math.min(startAngle, endAngle)
