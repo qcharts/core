@@ -6,6 +6,7 @@ class Pie extends Base {
   constructor(attrs) {
     super(attrs)
     this.renderRings = []
+    this.hoverIndex = -1
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -36,10 +37,18 @@ class Pie extends Base {
     //更新前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
     let oldRings = this.renderRings
+    console.log(this.hoverIndex)
     let arr = rings.map((item, ind) => {
-      return {
-        from: { ...oldRings[ind].to },
-        to: { ...item }
+      if (ind === this.hoverIndex) {
+        return {
+          from: { ...oldRings[ind].to },
+          to: { ...item }
+        }
+      } else {
+        return {
+          from: { ...oldRings[ind].to },
+          to: { ...item }
+        }
       }
     })
     return arr
@@ -71,17 +80,22 @@ class Pie extends Base {
   mousemove(event, el) {
     let renderData = this.renderData()
     let ind = el.attr('_index')
-    let curData = renderData[ind]
-    renderData.forEach(row => {
-      row.state = 'default'
-    })
-    curData.state = 'hover'
+    if (ind !== this.hoverIndex) {
+      let curData = renderData[ind]
+      renderData.forEach(row => {
+        row.state = 'default'
+      })
+      curData.state = 'hover'
+      this.hoverIndex = ind
+    }
   }
   mouseleave() {
     let renderData = this.renderData()
     renderData.forEach(row => {
       row.state = 'default'
     })
+    console.log('update')
+    this.hoverIndex = -1
   }
   renderData() {
     let renderAttrs = this.renderAttrs
