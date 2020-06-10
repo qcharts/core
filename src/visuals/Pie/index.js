@@ -6,6 +6,7 @@ class Pie extends Base {
   constructor(attrs) {
     super(attrs)
     this.renderRings = []
+    this.hoverIndex = -1
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -17,9 +18,16 @@ class Pie extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
-    let arr = rings.map(item => {
+    let arr = rings.map((item, ind) => {
+      if (ind === 0) {
+        return {
+          from: { startAngle: 0, endAngle: 0 },
+          to: { ...item }
+        }
+      }
+      let pervAngle = rings[ind - 1].endAngle
       return {
-        from: { ...item },
+        from: { startAngle: pervAngle, endAngle: pervAngle },
         to: { ...item }
       }
     })
@@ -28,12 +36,27 @@ class Pie extends Base {
   beforeUpdate() {
     //更新前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
-    return rings
+    let oldRings = this.renderRings
+    console.log(this.hoverIndex)
+    let arr = rings.map((item, ind) => {
+      if (ind === this.hoverIndex) {
+        return {
+          from: { ...oldRings[ind].to },
+          to: { ...item }
+        }
+      } else {
+        return {
+          from: { ...oldRings[ind].to },
+          to: { ...item }
+        }
+      }
+    })
+    return arr
   }
   getRenderData() {
     //根据line的特性返回需要数据
     let renderAttrs = this.renderAttrs
-    let renderData = this.dataset[renderAttrs.layoutBy]
+    let renderData = this.renderData()
     let rings = layout.call(this, renderData, renderAttrs)
     return { rings }
   }
@@ -54,6 +77,30 @@ class Pie extends Base {
   defaultStyles() {
     // 默认的样式,继承base
   }
+  mousemove(event, el) {
+    let renderData = this.renderData()
+    let ind = el.attr('_index')
+    if (ind !== this.hoverIndex) {
+      let curData = renderData[ind]
+      renderData.forEach(row => {
+        row.state = 'default'
+      })
+      curData.state = 'hover'
+      this.hoverIndex = ind
+    }
+  }
+  mouseleave() {
+    let renderData = this.renderData()
+    renderData.forEach(row => {
+      row.state = 'default'
+    })
+    console.log('update')
+    this.hoverIndex = -1
+  }
+  renderData() {
+    let renderAttrs = this.renderAttrs
+    return this.dataset[renderAttrs.layoutBy]
+  }
   render(rings) {
     let { clientRect, radius, center, innerRadius } = this.renderAttrs
     radius = (Math.min(clientRect.width, clientRect.height) * radius) / 2
@@ -69,8 +116,8 @@ class Pie extends Base {
             let sectorStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.sector)
             let style = this.style('sector')(sectorStyle, this.dataset.rows[ind], ind)
             let renderStyle = deepObjectMerge(sectorStyle, style)
-            let attrs = { fillColor: colors[ind], pos: center, innerRadius, outerRadius: radius }
-            return ring.state === 'disabled' || style === false ? <Node /> : <Ring {...attrs} {...renderStyle} animation={{ from: ring.from, to: ring.to }} />
+            let attrs = { fillColor: colors[ind], pos: center, innerRadius, outerRadius: radius, _index: ind }
+            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMousemove={this.mousemove} onMouseleave={this.mouseleave} {...attrs} {...renderStyle} animation={{ from: ring.from, to: ring.to }} />
           })}
         </Group>
       </Group>
