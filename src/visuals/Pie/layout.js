@@ -14,16 +14,18 @@ export default function layout(arr, attrs) {
     let perAngle = curPercent * totalAngle
     //默认中心坐标偏移量0
     let offsetPos = [0, 0]
+
     let curObj = { startAngle: minAngle, endAngle: minAngle + perAngle, offsetPos }
     if (ind !== 0) {
       let prevRing = rings[ind - 1]
       curObj = { startAngle: prevRing.endAngle, endAngle: prevRing.endAngle + perAngle, offsetPos }
     }
+    let curAngle = ((curObj.startAngle + curObj.endAngle) / 2) % 360
+    curObj.bisectorAngle = curAngle
+    curObj.bisectorRadian = (curAngle / 180) * Math.PI
     if (arr[ind].state === 'hover') {
       //角平分,角度转弧度,默认是顺时针，角度为相反
-      let curAngle = ((curObj.startAngle + curObj.endAngle) / 2) % 360
-      curAngle = (curAngle / 180) * Math.PI
-      curObj.offsetPos = [activeOffset * Math.cos(curAngle), activeOffset * Math.sin(curAngle)]
+      curObj.offsetPos = [activeOffset * Math.cos(curObj.bisectorRadian), activeOffset * Math.sin(curObj.bisectorRadian)]
       //选中状态
     }
     rings.push(curObj)
