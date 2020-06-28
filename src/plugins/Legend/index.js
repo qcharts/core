@@ -1,5 +1,5 @@
 import Base from '../../base/BasePlugin'
-import { debounce } from '@qcharts/utils'
+//import { debounce } from '@qcharts/utils'
 class Legend extends Base {
   constructor(attrs) {
     super(attrs)
@@ -67,7 +67,7 @@ class Legend extends Base {
       arr.forEach((row, ind) => {
         let state = this.dataset.rows[ind].state
         let curColor = state !== 'disabled' ? colors[ind] : '#ddd'
-        html += `<div style="display:inline-block;padding:0 4px" class="legend-item" data-id="${ind}"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${curColor}"></span><span class="text" style="color:#666">${row.name}</span></div>`
+        html += `<div style="display:inline-block;padding:0 4px;cursor:pointer" class="legend-item" data-id="${ind}"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${curColor}"></span><span class="text" style="color:#666">${row.name}</span></div>`
       })
       this.$el.innerHTML = html
     }

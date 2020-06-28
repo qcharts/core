@@ -1,91 +1,74 @@
 import { deepObjectMerge } from '@qcharts/utils'
 const theme = {
-  colors: [
-    '#47A1FF',
-    '#6CD3FF',
-    '#A2E5FF',
-    '#4DCCCB',
-    '#3FDDC7',
-    '#84E0BE',
-    '#59CB74',
-    '#ADDF84',
-    '#FBD54A',
-    '#FFB952',
-    '#F79452',
-    '#E37474',
-    '#FC6980',
-    '#ED8CCE',
-    '#DA65CC',
-    '#9861E5',
-    '#9F8CF1',
-    '#6367EC',
-    '#5982F6',
-    '#659AEC',
-  ],
+  colors: ['#47A1FF', '#6CD3FF', '#A2E5FF', '#4DCCCB', '#3FDDC7', '#84E0BE', '#59CB74', '#ADDF84', '#FBD54A', '#FFB952', '#F79452', '#E37474', '#FC6980', '#ED8CCE', '#DA65CC', '#9861E5', '#9F8CF1', '#6367EC', '#5982F6', '#659AEC']
 }
 theme.visuals = {
   Line: {
     colors: theme.colors,
     styles: {
       line: { lineWidth: 1 },
-      guideline: { strokeColor: '#ddd' },
+      guideline: { strokeColor: '#ddd' }
     },
     attrs: {
-      statck: false,
-    },
+      statck: false
+    }
   },
   LineTest: {
     colors: theme.colors,
     styles: {
-      line: { lineWidth: 1 },
+      line: { lineWidth: 1 }
     },
     attrs: {
-      statck: false,
-    },
+      statck: false
+    }
+  },
+  Pie: {
+    colors: theme.colors,
+    styles: {},
+    attrs: {}
   },
   Area: {
     colors: theme.colors,
     styles: {
       area: { opacity: 0.5 },
-      guideline: { strokeColor: '#ddd' },
+      guideline: { strokeColor: '#ddd' }
     },
-    attrs: {},
+    attrs: {}
   },
-
   Radar: {
     colors: theme.colors,
     styles: {
-      area: { opacity: 0.5 },
+      area: { opacity: 0.5 }
     },
-    attrs: {},
+    attrs: {}
   },
   Bar: {
     colors: theme.colors,
     styles: {
       bar: {},
-      groupBar: { opacity: 0.1 },
+      groupBar: { opacity: 0.1 }
     },
     attrs: {
-      statck: false,
-    },
+      statck: false
+    }
   },
   PolarBar: {
     colors: theme.colors,
     styles: {
-      bar: {},
+      bar: {}
     },
     attrs: {
-      statck: false,
-    },
+      statck: false
+    }
   },
   Scatter: {
     colors: theme.colors,
     styles: {
-      point: {},
+      point: {}
     },
     attrs: {
       showGuideLine: false
-    },
+    }
   },
   Wave: {
     colors: theme.colors,
@@ -101,32 +84,32 @@ theme.plugins = {
   Tooltip: {
     colors: theme.colors,
     styles: {},
-    attrs: {},
+    attrs: {}
   },
   Legend: {
     colors: theme.colors,
     styles: {},
-    attrs: {},
+    attrs: {}
   },
   Axis: {
     colors: theme.colors,
     styles: {
       axis: {
         strokeColor: '#ccc',
-        lineWidth: 1,
+        lineWidth: 1
       },
       scale: {
-        bgcolor: '#ccc',
+        bgcolor: '#ccc'
       },
       label: {
         fontSize: 12,
-        fillColor: '#666',
-      },
+        fillColor: '#666'
+      }
     },
     attrs: {
-      orient: 'bottom',
-    },
-  },
+      orient: 'bottom'
+    }
+  }
 }
 theme.set = function(obj) {
   //合并样式
