@@ -66,11 +66,9 @@ class Pie extends Base {
   }
   computeLine(arr) {
     let { radiusPx } = this.renderAttrs
-    console.log(arr)
     arr.forEach(item => {
-      let { points: fromPoints, labelAnchor: fromAnchor } = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, 15)
-      let { points: toPoints, labelAnchor: toAnchor } = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, 15)
-      console.log(fromPoints[1], toPoints[1])
+      let { points: fromPoints, labelAnchor: fromAnchor, labelPos: fromPos } = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, 15)
+      let { points: toPoints, labelAnchor: toAnchor, labelPos: toPos } = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, 15)
       item.line = {
         from: {
           points: fromPoints
@@ -81,11 +79,11 @@ class Pie extends Base {
       }
       item.label = {
         from: {
-          pos: fromPoints[1],
+          pos: fromPos,
           anchor: fromAnchor
         },
         to: {
-          pos: toPoints[1],
+          pos: toPos,
           anchor: toAnchor
         }
       }
@@ -127,7 +125,9 @@ class Pie extends Base {
     if (ind !== this.hoverIndex) {
       let curData = renderData[ind]
       renderData.forEach(row => {
-        row.state = 'default'
+        if (row.state === 'hover') {
+          row.state = 'default'
+        }
       })
       curData.state = 'hover'
       this.hoverIndex = ind
@@ -136,7 +136,9 @@ class Pie extends Base {
   mouseleave() {
     let renderData = this.renderData()
     renderData.forEach(row => {
-      row.state = 'default'
+      if (row.state === 'hover') {
+        row.state = 'default'
+      }
     })
     this.hoverIndex = -1
   }
@@ -169,23 +171,23 @@ class Pie extends Base {
             let style = this.style('guideline')(defaultStyle, this.dataset.rows[ind], ind)
             let renderStyle = deepObjectMerge(defaultStyle, style)
             let hide = false
-            if (ring.to.startAngle === ring.to.endAngle) {
+            if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
               hide = true
             }
-            return hide || style === false ? <Node /> : <Polyline {...renderStyle} animation={{ from: ring.line.from, to: ring.line.to }} />
+            return hide ? <Node /> : <Polyline {...renderStyle} animation={{ from: ring.line.from, to: ring.line.to }} />
           })}
         </Group>
         <Group class="label-group">
           {rings.map((ring, ind) => {
             let name = this.dataset.rows[ind].name
-            let defaultStyle = deepObjectMerge({ fillColor: '#666', fontSize: 12, padding: [4, 4] }, styles.guideline)
+            let defaultStyle = deepObjectMerge({ fillColor: '#666', fontSize: 12 }, styles.guideline)
             let style = this.style('guideText')(defaultStyle, this.dataset.rows[ind], ind)
             let renderStyle = deepObjectMerge(defaultStyle, style)
             let hide = false
-            if (ring.to.startAngle === ring.to.endAngle) {
+            if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
               hide = true
             }
-            return hide || style === false ? <Node /> : <Label text={name} {...renderStyle} pos={ring.label.from.pos} animation={{ from: ring.label.from, to: ring.label.to }} />
+            return hide ? <Node /> : <Label text={name} {...renderStyle} pos={ring.label.from.pos} animation={{ from: ring.label.from, to: ring.label.to }} />
           })}
         </Group>
       </Group>
