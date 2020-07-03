@@ -24,7 +24,9 @@ theme.visuals = {
   },
   Pie: {
     colors: theme.colors,
-    styles: {},
+    styles: {
+      sector: { lineWidth: 1, strokeColor: '#fff' }
+    },
     attrs: {}
   },
   Area: {

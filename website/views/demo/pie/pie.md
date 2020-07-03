@@ -39,9 +39,6 @@ chart.source(data, {
 })
 
 const pie = new Pie({ radius: 0.9 })
-pie.style('sector', { lineWidth: 1, strokeColor: '#fff' })
-pie.style('guideline', true)
-pie.style('guideText', true)
 
 const legend = new Legend()
 const toolTip = new Tooltip()
