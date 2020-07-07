@@ -42,50 +42,28 @@ chart.source(data, {
 const pie = new Pie({
   innerRadius: 0.4,
   radius: 0.5,
-  animation: { duration: 1000 },
+  animation: { duration: 400 },
   formatter: function(str) {
     return `${str} %`
   }
 })
-pie.style('sector', {
-  animation: { type: 'slide' },
-  lineWidth: 1,
-  strokeColor: '#fff'
-})
-pie.style('title', (rings) => {
-  let center = rings[0].center
-  return {
-    animation: false,
-    pos: center,
-    text: rings[counter % length].sales,
-    anchor: [0.5, 0.5]
-  }
-})
-pie.style('subtitle', (rings) => {
-  let center = rings[0].center
-  return {
-    animation: { duration: 500 },
-    fontSize: 20,
-    text: rings[counter % length].year + '年: ' + rings[counter % length].sales,
-    anchor: [0.5, 0.5],
-    pos: [center[0], center[1] + 30]
-  }
-})
+
 chart.append([pie])
 
 setInterval(changeData, 3000)
 //数据被选中动画模拟，轮流设置数据的selected属性，同时移除上一个数据的selected属性
 function changeData() {
-  counter++
-  let last = (counter % length) - 1 < 0 ? data.length - 1 : (counter % length) - 1
-  delete data[last].selected
-  data[counter % length].selected = true
-
-  //设置图标数据，数据驱动动画
-  chart.source(data, {
-    row: 'year',
-    value: 'sales'
+  if (counter < 4) {
+    counter++
+  } else {
+    counter = 0
+  }
+  pie.dataset.forEach((item, ind) => {
+    if (item.state === 'hover' && ind !== counter) {
+      item.state = 'default'
+    }
   })
+  pie.dataset[counter].state = 'hover'
 }
 ```
 

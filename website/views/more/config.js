@@ -67,7 +67,7 @@ export default [
     path: 'bar-negativeStackBar'
   },
   {
-    img: 'https://p1.ssl.qhimg.com/t01252fdd9637490a10.png',
+    img: 'https://p3.ssl.qhimg.com/t012408ef8db6084cbd.png',
     title: '动态文字环图',
     path: 'pie-donut'
   }
