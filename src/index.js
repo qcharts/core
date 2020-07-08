@@ -15,8 +15,9 @@ import Tooltip from './plugins/Tooltip/index'
 import platform from './base/platform'
 import Chart from './Chart'
 import theme from './theme/default'
+const version = require('../package.json').version
 const qcharts = {
-  version: 3.1,
+  version,
   Line,
   Pie,
   Area,
@@ -37,6 +38,6 @@ if (process.env.NODE_ENV === 'development') {
   platform.qcharts = qcharts
 }
 
-export { qcharts, Dataset, Line, Pie, Area, Wave, Radar, LineTest, Tooltip, Bar, PolarBar, Scatter, Axis, Legend, Chart, h, theme }
+export { qcharts, version, Dataset, Line, Pie, Area, Wave, Radar, LineTest, Tooltip, Bar, PolarBar, Scatter, Axis, Legend, Chart, h, theme }
 
 export default qcharts
