@@ -27,7 +27,6 @@ const qcharts = {
   Legend,
   Axis,
   Wave,
-  LineTest,
   Tooltip,
   h,
   theme,
