@@ -1,9 +1,9 @@
 import Base from '../../base/BaseVisual'
 import { Group, Node, Ring, Polyline, Label } from 'spritejs'
-import { deepObjectMerge } from '@qcharts/utils'
 import filterClone from 'filter-clone'
 import layout from './layout'
 import { computeLinePos } from './layout'
+import { getStyle } from '@/utils/getStyle'
 class Pie extends Base {
   constructor(attrs) {
     super(attrs)
@@ -158,36 +158,29 @@ class Pie extends Base {
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
         <Group class="rings-group" onMouseleave={this.mouseleave}>
           {rings.map((ring, ind) => {
-            let sectorStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.sector)
-            let style = this.style('sector')(sectorStyle, this.dataset.rows[ind], ind)
-            let renderStyle = deepObjectMerge(sectorStyle, style)
-            let attrs = { fillColor: colors[ind], innerRadius: innerRadiusPx, outerRadius: radiusPx, _index: ind }
-            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMousemove={this.mousemove} {...attrs} {...renderStyle} animation={{ from: ring.from, to: ring.to }} />
+            let style = getStyle(this, 'sector', [{ strokeColor: colors[ind], fillColor: colors[ind], innerRadius: innerRadiusPx, outerRadius: radiusPx, _index: ind }, styles.sector], [this.dataset.rows[ind], ind])
+            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMousemove={this.mousemove} {...style} animation={{ from: ring.from, to: ring.to }} />
           })}
         </Group>
         <Group class="line-group">
           {rings.map((ring, ind) => {
-            let defaultStyle = deepObjectMerge({ strokeColor: colors[ind] }, styles.guideline)
-            let style = this.style('guideline')(defaultStyle, this.dataset.rows[ind], ind)
-            let renderStyle = deepObjectMerge(defaultStyle, style)
+            let style = getStyle(this, 'guideline', [{ strokeColor: colors[ind] }, styles.guideline], [this.dataset.rows[ind], ind])
             let hide = false
             if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
               hide = true
             }
-            return hide ? <Node /> : <Polyline {...renderStyle} animation={{ from: ring.line.from, to: ring.line.to }} />
+            return hide || style === false ? <Node /> : <Polyline {...style} animation={{ from: ring.line.from, to: ring.line.to }} />
           })}
         </Group>
         <Group class="label-group">
           {rings.map((ring, ind) => {
             let name = this.dataset.rows[ind].name
-            let defaultStyle = deepObjectMerge({ fillColor: '#666', fontSize: 12 }, styles.guideline)
-            let style = this.style('guideText')(defaultStyle, this.dataset.rows[ind], ind)
-            let renderStyle = deepObjectMerge(defaultStyle, style)
+            let style = getStyle(this, 'guideText', [{ fillColor: '#666', fontSize: 12 }, styles.guideline], [this.dataset.rows[ind], ind])
             let hide = false
             if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
               hide = true
             }
-            return hide ? <Node /> : <Label text={name} {...renderStyle} pos={ring.label.from.pos} animation={{ from: ring.label.from, to: ring.label.to }} />
+            return hide || style === false ? <Node /> : <Label text={name} {...style} pos={ring.label.from.pos} animation={{ from: ring.label.from, to: ring.label.to }} />
           })}
         </Group>
       </Group>
