@@ -2,7 +2,6 @@ import { h } from '@qcharts/vnode'
 import Dataset from '@qcharts/dataset'
 import Line from './visuals/Line/index'
 import Pie from './visuals/Pie/index'
-import LineTest from './visuals/Line/index_test'
 import Area from './visuals/Area/index'
 import Radar from './visuals/Radar/index'
 import Bar from './visuals/Bar/index'
@@ -38,6 +37,6 @@ if (process.env.NODE_ENV === 'development') {
   platform.qcharts = qcharts
 }
 
-export { qcharts, version, Dataset, Line, Pie, Area, Wave, Radar, LineTest, Tooltip, Bar, PolarBar, Scatter, Axis, Legend, Chart, h, theme }
+export { qcharts, version, Dataset, Line, Pie, Area, Wave, Radar, Tooltip, Bar, PolarBar, Scatter, Axis, Legend, Chart, h, theme }
 
 export default qcharts
