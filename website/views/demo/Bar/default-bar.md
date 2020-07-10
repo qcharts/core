@@ -26,7 +26,11 @@ const bar = new Bar({
   pos: ['20%', '10%'],
   size: ['70%', '80%'],
   transpose: true,
-  barWidth: 18
+  barWidth: 18,
+  animation: {
+    duration: 1000,
+    easing: 'elasticOut'
+  }
 })
 bar.style('pillar', { bgcolor: '#47A1FF' })
 // const tooltip = new Tooltip({
