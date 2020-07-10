@@ -28,7 +28,7 @@ bar.style("pillar", { bgcolor: "#47A1FF" });
 //   formatter: d => `${d.label}: ${d.value}`
 // }).style('icon', { fillColor: '#47A1FF' })
 // const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
-//   text: '图例一'
+//   text: '图例二'
 // })
 const tooltip = new Tooltip();
 const axisBottom = new Axis();
