@@ -61,7 +61,6 @@ const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borde
 // 装载组件
 chart.add([line, tooltip, axisBottom, axisLeft, legend])
 // 渲染图表
-chart.render()
 ```
 
 一张折线图就绘制成功
@@ -154,7 +153,6 @@ Page({
     const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 
     chart.add([line, tooltip, axisBottom, axisLeft, legend])
-    chart.render()
   }
 })
 ```
