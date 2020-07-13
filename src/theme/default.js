@@ -78,6 +78,13 @@ theme.visuals = {
       shape: { fillColor: '#e6f3ff', lineWidth: 3, strokeColor: '#156cbd' }
     },
     attrs: {}
+  },
+  Gauge: {
+    colors: theme.colors,
+    styles: {
+      area: { opacity: 0.5 }
+    },
+    attrs: {}
   }
 }
 theme.plugins = {

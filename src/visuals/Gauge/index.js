@@ -1,6 +1,8 @@
-import { Group, Polygon, Arc, Polyline, Label } from 'spritejs'
-import { BaseVisual } from '../../core'
-import { flattern, isFunction, isString, isArray, isNumber } from '../../util'
+import { Group, Polyline, Polygon, Label, Arc } from 'spritejs'
+import { jsType} from '@qcharts/utils'
+import BaseVisual from '../../base/BaseVisual'
+
+const flattern = arr => [].concat.apply([], arr)
 
 function tickLine(radius, angle, tickLength, labelOffset, isInner) {
   const cos = Math.cos(angle)
@@ -12,14 +14,8 @@ function tickLine(radius, angle, tickLength, labelOffset, isInner) {
     ? [x - tickLength * cos, y - tickLength * sin]
     : [x + tickLength * cos, y + tickLength * sin]
   const labelPos = isInner
-    ? [
-      x - (tickLength + labelOffset) * cos,
-      y - (tickLength + labelOffset) * sin
-    ]
-    : [
-      x + (tickLength + labelOffset) * cos,
-      y + (tickLength + labelOffset) * sin
-    ]
+    ? [x - (tickLength + labelOffset) * cos, y - (tickLength + labelOffset) * sin]
+    : [x + (tickLength + labelOffset) * cos, y + (tickLength + labelOffset) * sin]
 
   let anchorX = isInner ? cos : -cos
   let anchorY = isInner ? sin : -sin
@@ -31,26 +27,29 @@ function tickLine(radius, angle, tickLength, labelOffset, isInner) {
     anchor[1] = anchorY > 0 ? anchorY : 0
   }
   return {
-    points: [[x, y], [cX0, cY0]],
+    points: [
+      [x, y],
+      [cX0, cY0],
+    ],
     labelPos,
-    anchor
+    anchor,
   }
 }
 
-export class Gauge extends BaseVisual {
-  constructor(attrs = {}) {
+class Gauge extends BaseVisual {
+  constructor(attrs) {
     super(attrs)
-    this.animations = []
+    this.gaugeAnimations = []
+    this.type = 'Gauge'
     this.style('tickText', true)
     this.style('tickLine', true)
   }
 
-  get name() {
-    return 'Gauge'
-  }
+  get renderAttrs() {
+    const attrs = super.renderAttrs
 
-  getDefaultAttrs() {
     return {
+      ...attrs,
       min: 0,
       max: 1,
       lineCap: 'round',
@@ -59,22 +58,28 @@ export class Gauge extends BaseVisual {
       endAngle: Math.PI * 2.2,
       strokeBgcolor: '#dde3ea',
       hoverBg: '#f8f8f8',
-      title: d => d,
-      subTitle: d => d,
+      title: (d) => d,
+      subTitle: (d) => d,
 
       tickStep: 0.1, // tick 步进，生成 tick 的数量为 (max - min) / tickStep
       tickLength: 5, // 刻度长度，为负值时向外绘制
       labelOffset: 5,
-      tickFormatter: d => d // 刻度文本格式化
+      tickFormatter: (d) => d, // 刻度文本格式化
     }
   }
 
   get radius() {
-    const size = this.attr('size')
-    const lw = this.attr('lineWidth')
-    const len = this.getData().length
+    const attrs = super.renderAttrs
+    const { height, width, lineWidth: lw } = attrs.clientRect
+    const size = [width, height]
+    // const len = this.getData().length
+    const len =1
     return ~~(
-      (Math.min.apply(size, size.map(v => v / 2)) - lw * (len - 1) * 2) /
+      (Math.min.apply(
+        size,
+        size.map((v) => v / 2)
+      ) -
+        lw * (len - 1) * 2) /
       len
     )
   }
@@ -84,7 +89,7 @@ export class Gauge extends BaseVisual {
   }
 
   get center() {
-    const { lineWidth } = this.attr()
+    const { lineWidth } = this.renderAttrs
     const radius = this.radius
     return [radius + lineWidth / 2, radius + lineWidth / 2]
   }
@@ -100,7 +105,7 @@ export class Gauge extends BaseVisual {
       tickLength,
       labelOffset,
       tickFormatter
-    } = this.attr()
+    } = this.renderAttrs
     const count = Math.abs(max - min) / tickStep
 
     let total = endAngle - startAngle
@@ -118,28 +123,19 @@ export class Gauge extends BaseVisual {
 
     while (++i <= count) {
       angle = i * perAngle + startAngle
-      const ret = tickLine(
-        radius,
-        angle,
-        Math.abs(tickLength),
-        Math.abs(labelOffset),
-        isInner
-      )
+      const ret = tickLine(radius, angle, Math.abs(tickLength), Math.abs(labelOffset), isInner)
 
       ticks.push({
         points: ret.points,
         label: {
           text: tickFormatter(i * tickStep),
           pos: ret.labelPos,
-          anchor: ret.anchor
-        }
+          anchor: ret.anchor,
+        },
       })
     }
 
-    if (
-      (ticks[0].angle + ticks[ticks.length - 1].angle) % (Math.PI * 2) ===
-      0
-    ) {
+    if ((ticks[0].angle + ticks[ticks.length - 1].angle) % (Math.PI * 2) === 0) {
       ticks.pop()
     }
 
@@ -147,20 +143,18 @@ export class Gauge extends BaseVisual {
   }
 
   transform(data) {
-    const { startAngle, endAngle, min, max } = this.attr()
+    const { startAngle, endAngle, min, max } = super.renderAttrs
     const total = Math.abs(max - min)
     const radius = this.radius
 
     return data.reduce((a, d, i) => {
-      const value = d.__valueGetter__()
+      const value = d.value
       const arc = {
-        dataOrigin: d.dataOrigin,
+        dataOrigin: d.data,
         startAngle,
         radius,
-        endAngle: d.disabled
-          ? startAngle
-          : ((endAngle - startAngle) * value) / total + startAngle,
-        color: this.color(i)
+        endAngle: d.disabled ? startAngle : ((endAngle - startAngle) * value) / total + startAngle,
+        color: this.color(i),
       }
       a.push(arc)
       return a
@@ -169,12 +163,12 @@ export class Gauge extends BaseVisual {
 
   beforeRender() {
     super.beforeRender()
-    const data = flattern(this.getData())
+    const data = flattern(this.dataset)
     const arcs = this.transform(data)
-    this.animations = arcs.reduce((a, c, i) => {
+    this.gaugeAnimations = arcs.reduce((a, c, i) => {
       a.push({
         from: { startAngle: c.startAngle, endAngle: c.startAngle },
-        to: { startAngle: c.startAngle, endAngle: c.endAngle }
+        to: { startAngle: c.startAngle, endAngle: c.endAngle },
       })
       return a
     }, [])
@@ -183,19 +177,19 @@ export class Gauge extends BaseVisual {
 
   beforeUpdate() {
     super.beforeUpdate()
-    const data = flattern(this.getData())
+    const data = flattern(this.dataset)
     const arcs = this.transform(data)
-    this.animations = arcs.map((arc, i) => {
-      const animation = this.animations[i]
+    this.gaugeAnimations = arcs.map((arc, i) => {
+      const animation = this.gaugeAnimations[i]
       if (animation) {
         return {
           from: animation.to,
-          to: { startAngle: arc.startAngle, endAngle: arc.endAngle }
+          to: { startAngle: arc.startAngle, endAngle: arc.endAngle },
         }
       } else {
         return {
           from: { startAngle: arc.startAngle, endAngle: arc.startAngle },
-          to: { startAngle: arc.startAngle, endAngle: arc.endAngle }
+          to: { startAngle: arc.startAngle, endAngle: arc.endAngle },
         }
       }
     })
@@ -207,7 +201,7 @@ export class Gauge extends BaseVisual {
       this._useBuiltInColors = false
     }
 
-    return super.color(i)
+    return  this.theme.colors[i]
   }
 
   // 将 arc 弧度转为 transform 的 rotate角度，同时加上两者起始位置的偏差度
@@ -225,19 +219,18 @@ export class Gauge extends BaseVisual {
       return
     }
     // 动画
-    let { from, to } = this.animations[i]
+    let { from, to } = this.gaugeAnimations[i]
     const fromRotate = this.transformArcAngle2Rotate(from.endAngle)
     const toRotate = this.transformArcAngle2Rotate(to.endAngle)
     const pointerAnimation = {
       from: { transform: { rotate: fromRotate } },
-      to: { transform: { rotate: toRotate } }
+      to: { transform: { rotate: toRotate } },
     }
     // 半径
     const radius = this.radius
-    const { tickLength, labelOffset, lineWidth, pointerWidth } = this.attr()
+    const { tickLength, labelOffset, lineWidth, pointerWidth } = super.renderAttrs
     // 指针顶部离仪表盘的距离
-    let pointerTopOffset =
-      tickLength + lineWidth + labelOffset + maxTickTextFontSize + 10
+    let pointerTopOffset = tickLength + lineWidth + labelOffset + maxTickTextFontSize + 10
     if (tickLength < 0) {
       pointerTopOffset = pointerTopOffset - tickLength - labelOffset
     }
@@ -245,13 +238,10 @@ export class Gauge extends BaseVisual {
     const pointerLen = radius - pointerTopOffset
     // 指针宽度
     let pWidth = radius / 10
-    if (isNumber(pointerWidth)) {
+    if (jsType(pointerWidth)==='boolean') {
       pWidth = pointerWidth
-    } else if (isArray(pointerWidth)) {
-      pWidth =
-        i < pointerWidth.length
-          ? pointerWidth[i]
-          : pointerWidth[pointerWidth.length - 1]
+    } else if (jsType(pointerWidth)==='array') {
+      pWidth = i < pointerWidth.length ? pointerWidth[i] : pointerWidth[pointerWidth.length - 1]
     }
 
     // 指针角度
@@ -270,32 +260,28 @@ export class Gauge extends BaseVisual {
         [pWidth, pointerTopOffset + pointerLen * 0.9],
         [pWidth / 2, radius],
         [0, pointerTopOffset + pointerLen * 0.9],
-        [pWidth / 2, pointerTopOffset]
-      ]
+        [pWidth / 2, pointerTopOffset],
+      ],
     }
     return (
       <Polygon
         {...attr}
         {...style}
-        animation={this.resolveAnimation({
+        animation={{
           ...pointerAnimation,
           duration: 300
-        })}
+        }}
       />
     )
   }
 
+  isStyleExist(name) {
+    const style = this.attr('@' + name)
+    return Boolean(style)
+  }
+
   render(data = []) {
-    const {
-      title,
-      subTitle,
-      startAngle,
-      endAngle,
-      lineWidth,
-      lineCap,
-      strokeBgcolor,
-      hoverBg
-    } = this.attr()
+    const { title, subTitle, startAngle, endAngle, lineWidth, lineCap, strokeBgcolor, hoverBg } = super.renderAttrs
     const center = this.center
     const radius = this.radius
     const labelCenter = [radius, radius * 1.4]
@@ -306,14 +292,14 @@ export class Gauge extends BaseVisual {
     let gradientColor = null // 默认使用内置的渐变配色方案
 
     if (this._useBuiltInColors !== false) {
-      const colors = this.color().reverse()
+      const colors = this.theme.colors.reverse()
       gradientColor = {
         vector: [0, 0, center[0] * 2, center[1] * 2],
         colors: [
           { color: colors[0], offset: 0 },
           { color: colors[1], offset: 0.3 },
-          { color: colors[2], offset: 1 }
-        ]
+          { color: colors[2], offset: 1 },
+        ],
       }
     }
 
@@ -323,15 +309,12 @@ export class Gauge extends BaseVisual {
         ticks.map((tick, j) => {
           const style = this.style('tickText')(d, d.dataOrigin, j)
           if (style && style.fontSize) {
-            if (
-              isNumber(style.fontSize) &&
-              maxTickTextFontSize < style.fontSize
-            ) {
+            if (jsType(style.fontSize)==='number' && maxTickTextFontSize < style.fontSize) {
               maxTickTextFontSize = style.fontSize
             }
-            if (isString(style.fontSize)) {
+            if (jsType(style.fontSize)==='string') {
               const realSize = Number(style.fontSize.replace('px', ''))
-              if (isNumber(realSize) && maxTickTextFontSize < realSize) {
+              if (jsType(realSize)==='number' && maxTickTextFontSize < realSize) {
                 maxTickTextFontSize = realSize
               }
             }
@@ -349,11 +332,7 @@ export class Gauge extends BaseVisual {
       >
         {data.map((d, i) => {
           return (
-            <Group
-              bgcolor="transparent"
-              clipOverflow={false}
-              hoverState={{ bgcolor: hoverBg }}
-            >
+            <Group bgcolor="transparent" clipOverflow={false} hoverState={{ bgcolor: hoverBg }}>
               <Arc
                 lineWidth={lineWidth}
                 lineCap={lineCap}
@@ -368,19 +347,16 @@ export class Gauge extends BaseVisual {
                 lineWidth={lineWidth}
                 {...d}
                 zIndex={10}
-                animation={this.resolveAnimation({
-                  ...this.animations[i],
-                  duration: 300
-                })}
-                {...(gradientColor
-                  ? { strokeColor: gradientColor }
-                  : { strokeColor: this.color[i] })}
+                animation={{
+                  ...this.gaugeAnimations[i],
+                  duration: 300}}
+                {...(gradientColor ? { strokeColor: gradientColor } : { strokeColor: this.color[i] })}
                 {...this.style('arc')(d, d.dataOrigin, i)}
               />
               {this.renderPointer(d, i, maxTickTextFontSize)}
               {title ? (
                 <Label
-                  text={isFunction(title) ? title(d.dataOrigin) : title}
+                  text={jsType(title)==='function' ? title(d.dataOrigin) : title}
                   pos={labelCenter}
                   textAlign="center"
                   zIndex={10}
@@ -390,9 +366,7 @@ export class Gauge extends BaseVisual {
               ) : null}
               {subTitle ? (
                 <Label
-                  text={
-                    isFunction(subTitle) ? subTitle(d.dataOrigin) : subTitle
-                  }
+                  text={jsType(subTitle)==='function' ? subTitle(d.dataOrigin) : subTitle}
                   pos={labelCenter}
                   textAlign="center"
                   zIndex={10}
@@ -404,28 +378,25 @@ export class Gauge extends BaseVisual {
 
               {tickLine !== false || tickText !== false
                 ? ticks.map((tick, j) => (
-                  <Group
-                    pos={center.map(v => v - lineWidth / 2)}
-                    anchor={[0, 0]}
-                    zIndex={1010}
-                    size={[1, 1]}
-                    clipOverflow={false}
-                  >
-                    {tickLine !== false ? (
-                      <Polyline
-                        points={tick.points}
-                        strokeColor={strokeBgcolor}
-                        {...this.style('tickLine')(d, d.dataOrigin, j)}
-                      />
-                    ) : null}
-                    {tickText !== false ? (
-                      <Label
-                        {...tick.label}
-                        {...this.style('tickText')(d, d.dataOrigin, j)}
-                      />
-                    ) : null}
-                  </Group>
-                ))
+                    <Group
+                      pos={center.map((v) => v - lineWidth / 2)}
+                      anchor={[0, 0]}
+                      zIndex={1010}
+                      size={[1, 1]}
+                      clipOverflow={false}
+                    >
+                      {tickLine !== false ? (
+                        <Polyline
+                          points={tick.points}
+                          strokeColor={strokeBgcolor}
+                          {...this.style('tickLine')(d, d.dataOrigin, j)}
+                        />
+                      ) : null}
+                      {tickText !== false ? (
+                        <Label {...tick.label} {...this.style('tickText')(d, d.dataOrigin, j)} />
+                      ) : null}
+                    </Group>
+                  ))
                 : null}
             </Group>
           )
@@ -438,3 +409,5 @@ export class Gauge extends BaseVisual {
     this.on('resize', () => this.forceUpdate())
   }
 }
+
+export default Gauge
