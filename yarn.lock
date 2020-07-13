@@ -900,10 +900,10 @@
   resolved "https://registry.npm.taobao.org/@qcharts/utils/download/@qcharts/utils-0.0.4.tgz?cache=0&sync_timestamp=1584331682927&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Futils%2Fdownload%2F%40qcharts%2Futils-0.0.4.tgz#aae24887674a4dc6f57787ab7f125583ea761d17"
   integrity sha1-quJIh2dKTcb1d4erfxJVg+p2HRc=
 
-"@qcharts/vnode@0.0.13":
-  version "0.0.13"
-  resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.13.tgz#5d56f5b393e4fc9a1125e3962dac28eb24cb6320"
-  integrity sha1-XVb1s5Pk/JoRJeOWLawo6yTLYyA=
+"@qcharts/vnode@0.0.14":
+  version "0.0.14"
+  resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.14.tgz?cache=0&sync_timestamp=1594363219157&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Fvnode%2Fdownload%2F%40qcharts%2Fvnode-0.0.14.tgz#f152dc4b33bbfd5ce2171681ce65432cf7489a9a"
+  integrity sha1-8VLcSzO7/VziFxaBzmVDLPdImpo=
   dependencies:
     "@qcharts/utils" "^0.0.1"
     filter-clone "0.0.12"
