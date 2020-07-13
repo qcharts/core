@@ -116,7 +116,6 @@ class Bar extends Base {
   }
   onMousemove = throttle(
     (event, el) => {
-      console.log("onMousemove");
       if (this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
         let curInd = 0;
         let [x, y] = el.getOffsetPosition(event.x, event.y);

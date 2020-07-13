@@ -22,7 +22,12 @@ chart.source(data, {
   value: "value",
   text: "label",
 });
-const bar = new Bar();
+const bar = new Bar({
+  animation: {
+    duration: 1000,
+    easing: "elasticOut",
+  },
+});
 bar.style("pillar", { bgcolor: "#47A1FF" });
 // const tooltip = new Tooltip({
 //   formatter: d => `${d.label}: ${d.value}`
