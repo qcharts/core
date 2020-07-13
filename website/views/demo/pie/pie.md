@@ -38,10 +38,15 @@ chart.source(data, {
   text: 'year'
 })
 
-const pie = new Pie({ radius: 0.9 })
-pie.style('sector', { lineWidth: 1, strokeColor: '#fff' })
-pie.style('guideline', true)
-pie.style('guideText', true)
+const pie = new Pie({
+  radius: 0.9,
+  animation: {
+    duration: 700,
+    easing: 'bounceOut'
+    // 缓动类型
+    //["linear", "quadIn", "quadOut", "quadInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut",]
+  }
+})
 
 const legend = new Legend()
 const toolTip = new Tooltip()

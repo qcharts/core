@@ -27,7 +27,7 @@ const data = [
   }
 ]
 
-const { Chart, ArcPie, Legend, Tooltip } = qcharts
+const { Chart, Pie, Legend } = qcharts
 
 const chart = new Chart({
   container: '#app'
@@ -38,41 +38,16 @@ chart.source(data, {
   value: 'count'
 })
 
-const arcPie = new ArcPie({
-  pos: ['-10%', '10%'],
+const pie = new Pie({
   radius: 0.6,
   innerRadius: 0.1,
-  lineWidth: 15,
-  padAngle: 0.02,
-  title: (d) => `${d[0].dataOrigin.type}`,
-  subTitle: (d) => `${d[0].dataOrigin.count}`
+  startAngle: 180,
+  endAngle: 360
 })
 
-arcPie.style('arc', { lineCap: 'round' })
-arcPie.style('title', { fontSize: 24 })
+const legend = new Legend()
 
-const legend = new Legend({
-  orient: 'vertical',
-  align: ['right', 'center'],
-  formatter: (_, da, i) => {
-    let d = da[0]
-    return (
-      `${d.type}` +
-      Array(8 - d.type.length)
-        .fill(`   `)
-        .join('') +
-      `${d.count}`
-    )
-  }
-})
-legend.style('icon', (attrs, d, i) => ({
-  marginTop: i > 0 ? 10 : 0
-}))
-legend.style('text', (attrs, d, i) => ({
-  marginTop: i > 0 ? 10 : 0
-}))
-
-chart.append([arcPie, legend])
+chart.append([pie, legend])
 ```
 
 :::

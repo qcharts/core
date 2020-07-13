@@ -11,11 +11,11 @@ export default [
     component: () => import('./pie.md')
   },
 
-  {
-    title: '嵌套饼图',
-    path: 'nest',
-    component: () => import('./nest.md')
-  },
+  // {
+  //   title: '嵌套饼图',
+  //   path: 'nest',
+  //   component: () => import('./nest.md')
+  // },
 
   {
     title: '环图',

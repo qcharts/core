@@ -1,6 +1,6 @@
 import Base from '../../base/BaseVisual'
 import { Group, Polyline, Node } from 'spritejs'
-import { deepObjectMerge } from '@qcharts/utils'
+import { getStyle } from '@/utils/getStyle'
 import layout from './layout'
 class Line extends Base {
   constructor(attrs) {
@@ -129,29 +129,23 @@ class Line extends Base {
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove} size={[clientRect.width, clientRect.height]}>
         <Group class="lines-group">
           {lines.map((line, ind) => {
-            let mergeStyle = deepObjectMerge({ strokeColor: colors[ind], smooth }, styles.line)
-            let style = this.style('line')(mergeStyle, this.dataset.rows[ind], ind)
-            let renderStyle = deepObjectMerge(mergeStyle, style)
-            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...renderStyle} animation={{ from: line.from, to: line.to }} />
+            let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind], ind])
+            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...style} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
         <Group class="areas-group">
           {this.type !== 'area'
             ? null
             : lines.map((line, ind) => {
-                let mergeStyle = deepObjectMerge({ fillColor: colors[ind], smooth }, styles.area)
-                let style = this.style('area')(mergeStyle, this.dataset.rows[ind], ind)
-                let renderStyle = deepObjectMerge(mergeStyle, style)
-                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...renderStyle} animation={{ from: line.areaFrom, to: line.areaTo }} />
+                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
+                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
         </Group>
         <Group class="guide-line-group">
           {guidePoints.length ? (
             (_ => {
-              let mergeStyle = deepObjectMerge({}, styles.guideline)
-              let style = this.style('area')(mergeStyle)
-              let renderStyle = deepObjectMerge(mergeStyle, style)
-              return <Polyline points={guidePoints} {...renderStyle} />
+              let style = getStyle(this, 'guideline', styles.guideline)
+              return style === false ? <Node /> : <Polyline points={guidePoints} {...style} />
             })()
           ) : (
             <Node />

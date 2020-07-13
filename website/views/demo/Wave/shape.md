@@ -14,6 +14,7 @@ const wave = new Wave({
   percent: 0.65,
   shape: shape
 })
+// 不显示文本
 wave.style('text', false)
 chart.append(wave)
 setTimeout(_ => {

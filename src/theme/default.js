@@ -24,7 +24,9 @@ theme.visuals = {
   },
   Pie: {
     colors: theme.colors,
-    styles: {},
+    styles: {
+      sector: { lineWidth: 1, strokeColor: '#fff' }
+    },
     attrs: {}
   },
   Area: {
@@ -74,7 +76,7 @@ theme.visuals = {
     colors: theme.colors,
     styles: {
       wave: { fillColor: '#37c', strokeColor: '#37c', lineWidth: 0 },
-      text: { color: '#333', fontSize: 24 },
+      text: { fillColor: '#333', fontSize: 24 },
       shape: { fillColor: '#e6f3ff', lineWidth: 3, strokeColor: '#156cbd' }
     },
     attrs: {}
