@@ -53,7 +53,7 @@ class Gauge extends BaseVisual {
       max: 100,
       lineCap: 'round',
       lineWidth: 10,
-      startAngle: 140,// arc 角度顺时针增加，0度为屏幕X轴方向
+      startAngle: 140, // arc 角度顺时针增加，0度为屏幕X轴方向
       endAngle: 400,
       strokeBgcolor: '#dde3ea',
       hoverBg: '#f8f8f8',
@@ -61,7 +61,7 @@ class Gauge extends BaseVisual {
       subTitle: (d) => d,
 
       tickStep: 10, // tick 步进，生成 tick 的数量为 (max - min) / tickStep
-      tickLength: 5, // 刻度长度，为负值时向外绘制
+      tickLength: 10, // 刻度长度，为负值时向外绘制
       labelOffset: 5,
       tickFormatter: (d) => d, // 刻度文本格式化
       ...attrs,
@@ -112,7 +112,7 @@ class Gauge extends BaseVisual {
     const isInner = tickLength > 0
     const perAngle = total / count
     const ticks = []
-    let radius = isInner ? this.radius - lineWidth : this.radius
+    let radius = isInner ? this.radius - lineWidth / 2 : this.radius + lineWidth / 2
     let angle = 0
     let i = -1
 
@@ -225,7 +225,7 @@ class Gauge extends BaseVisual {
     const { tickLength, labelOffset, lineWidth } = this.renderAttrs
     const pointerWidth = this.pointerWidth
     // 指针顶部离仪表盘的距离
-    let pointerTopOffset = tickLength + lineWidth + labelOffset + maxTickTextFontSize + 10
+    let pointerTopOffset = tickLength + lineWidth + labelOffset + maxTickTextFontSize 
     if (tickLength < 0) {
       pointerTopOffset = pointerTopOffset - tickLength - labelOffset
     }
@@ -280,8 +280,7 @@ class Gauge extends BaseVisual {
   render(data = []) {
     const { title, subTitle, startAngle, endAngle, lineWidth, lineCap, strokeBgcolor, clientRect } = this.renderAttrs
     const center = this.center
-    const radius = this.radius
-    const labelCenter = [center[0], center[1] * 1.3]
+    const labelCenter = [center[0], center[1] * 1.25]
     const ticks = this.ticks
     const tickLine = this.isStyleExist('tickLine')
     const tickText = this.isStyleExist('tickText')
@@ -365,16 +364,17 @@ class Gauge extends BaseVisual {
                 <Label
                   text={jsType(subTitle) === 'function' ? subTitle(d.dataOrigin) : subTitle}
                   pos={labelCenter}
+                  textAlign="center"
                   zIndex={10}
-                  fillColor={strokeBgcolor}
                   anchor={[0.5, 0]}
-                  // {...this.style('subTitle')(d, d.dataOrigin, i)}
+                  fillColor={strokeBgcolor}
+                  {...this.style('subTitle')(d, d.dataOrigin, i)}
                 />
               ) : null}
 
               {tickLine !== false || tickText !== false
                 ? ticks.map((tick, j) => (
-                    <Group pos={center} anchor={[0, 0]}  zIndex={1010}>
+                    <Group pos={center} anchor={[0, 0]} zIndex={1010}>
                       {tickLine !== false ? (
                         <Polyline
                           points={tick.points}
