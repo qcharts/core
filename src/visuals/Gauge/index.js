@@ -2,8 +2,17 @@ import { Group, Polyline, Label, Arc, Gradient } from 'spritejs'
 import { jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 
+// 数据拷贝
 const flattern = (arr) => [].concat.apply([], arr)
 
+/**
+ * 根据给定参数，生成仪表盘刻度的坐标以及刻度文字标注的坐标
+ * @param {Number} radius 仪表盘半径
+ * @param {Number} angle 刻度的角度 单位度
+ * @param {Number} tickLength 刻度的长度
+ * @param {Number} labelOffset 刻度文字的偏移值
+ * @param {Boolean} isInner 刻度是否在仪表盘内部
+ */
 function tickLine(radius, angle, tickLength, labelOffset, isInner) {
   const radian = (angle * Math.PI) / 180
   const cos = Math.cos(radian)
@@ -48,15 +57,34 @@ class Gauge extends BaseVisual {
 
   get renderAttrs() {
     const attrs = super.renderAttrs
+
+    // 仪表盘半径
+    const { clientRect, lineWidth: lw = 10 } = attrs
+    const { height, width } = clientRect
+    const size = [width, height]
+    const len = this.dataset.length
+    const radius = ~~(
+      (Math.min.apply(
+        size,
+        size.map((v) => v / 2)
+      ) -
+        lw * (len - 1) * 2) /
+      len
+    )
+    // 指针宽度
+    const pointerWidth = radius / 10
+    // 绘图中心
+    const center = [width / 2, height / 2]
+
     return {
       min: 0,
       max: 100,
       lineCap: 'round',
-      lineWidth: 10,
-      startAngle: 140, // arc 角度顺时针增加，0度为屏幕X轴方向
-      endAngle: 400,
-      strokeBgcolor: '#dde3ea',
-      hoverBg: '#f8f8f8',
+      _useBuiltInColors:false,// 默认颜色不使用渐变色
+      lineWidth: 10, // 仪表盘圆弧宽度
+      startAngle: 140, // 仪表盘弧度起始角度，arc 角度顺时针增加，0度为屏幕X轴方向
+      endAngle: 400, // 仪表盘弧度终止角度
+      strokeBgcolor: '#dde3ea', // 仪表盘弧度的背景色
       title: (d) => d,
       subTitle: (d) => d,
 
@@ -65,38 +93,17 @@ class Gauge extends BaseVisual {
       labelOffset: 5,
       tickFormatter: (d) => d, // 刻度文本格式化
       ...attrs,
+      radius,
+      pointerWidth,
+      center,
     }
-  }
-
-  get radius() {
-    const { clientRect, lineWidth: lw } = this.renderAttrs
-    const { height, width } = clientRect
-    const size = [width, height]
-    // const len = this.getData().length
-    const len = 1
-    return ~~(
-      (Math.min.apply(
-        size,
-        size.map((v) => v / 2)
-      ) -
-        lw * (len - 1) * 2) /
-      len
-    )
-  }
-
-  get pointerWidth() {
-    return this.radius / 10
-  }
-
-  get center() {
-    const { clientRect } = this.renderAttrs
-    return [clientRect.width / 2, clientRect.height / 2]
   }
 
   get ticks() {
     let {
       min,
       max,
+      radius,
       startAngle,
       endAngle,
       lineWidth,
@@ -112,13 +119,13 @@ class Gauge extends BaseVisual {
     const isInner = tickLength > 0
     const perAngle = total / count
     const ticks = []
-    let radius = isInner ? this.radius - lineWidth / 2 : this.radius + lineWidth / 2
+    let tickRadius = isInner ? radius - lineWidth / 2 : radius + lineWidth / 2
     let angle = 0
     let i = -1
 
     while (++i <= count) {
       angle = i * perAngle + startAngle
-      const ret = tickLine(radius, angle, Math.abs(tickLength), Math.abs(labelOffset), isInner)
+      const ret = tickLine(tickRadius, angle, Math.abs(tickLength), Math.abs(labelOffset), isInner)
       ticks.push({
         points: ret.points,
         label: {
@@ -137,9 +144,8 @@ class Gauge extends BaseVisual {
   }
 
   transform(data) {
-    const { startAngle, endAngle, min, max } = this.renderAttrs
+    const { radius, startAngle, endAngle, min, max } = this.renderAttrs
     const total = Math.abs(max - min)
-    const radius = this.radius
 
     return data.reduce((a, d, i) => {
       const value = d.value
@@ -191,16 +197,7 @@ class Gauge extends BaseVisual {
   }
 
   color(i) {
-    if (i && typeof i !== 'number') {
-      this._useBuiltInColors = false
-    }
-
     return this.theme.colors[i]
-  }
-
-  // 将 arc 弧度转为 transform 的 rotate角度，同时加上两者起始位置的偏差度
-  transformArcAngle2Rotate(angel) {
-    return angel
   }
 
   /**
@@ -214,18 +211,17 @@ class Gauge extends BaseVisual {
     }
     // 动画
     let { from, to } = this.gaugeAnimations[i]
-    const fromRotate = this.transformArcAngle2Rotate(from.startAngle) + 90
-    const toRotate = this.transformArcAngle2Rotate(to.endAngle) + 90
+    // rotate角度起始位置为屏幕Y轴方向，arc角度为X轴方向
+    const fromRotate = from.endAngle + 90
+    const toRotate = to.endAngle + 90
     const pointerAnimation = {
       from: { rotate: fromRotate },
       to: { rotate: toRotate },
     }
     // 半径
-    const radius = this.radius
-    const { tickLength, labelOffset, lineWidth } = this.renderAttrs
-    const pointerWidth = this.pointerWidth
+    const { radius, pointerWidth, center, tickLength, labelOffset, lineWidth } = this.renderAttrs
     // 指针顶部离仪表盘的距离
-    let pointerTopOffset = tickLength + lineWidth + labelOffset + maxTickTextFontSize 
+    let pointerTopOffset = tickLength + lineWidth + labelOffset + maxTickTextFontSize
     if (tickLength < 0) {
       pointerTopOffset = pointerTopOffset - tickLength - labelOffset
     }
@@ -239,16 +235,14 @@ class Gauge extends BaseVisual {
       pWidth = i < pointerWidth.length ? pointerWidth[i] : pointerWidth[pointerWidth.length - 1]
     }
 
-    // 指针角度
-    const pointerAngle = this.transformArcAngle2Rotate(d.startAngle) + 90
     // 指针颜色
     const color = this.color(i)
 
-    const [x, y] = this.center
+    const [x, y] = center
     const attr = {
       fillColor: color,
-      rotate: pointerAngle,
-      transformOrigin: this.center,
+      rotate: fromRotate,
+      transformOrigin: center,
       zIndex: 11,
       points: [
         [x, y],
@@ -259,7 +253,6 @@ class Gauge extends BaseVisual {
       ],
       close: true,
     }
-    console.log(attr)
     return (
       <Polyline
         {...attr}
@@ -278,8 +271,7 @@ class Gauge extends BaseVisual {
   }
 
   render(data = []) {
-    const { title, subTitle, startAngle, endAngle, lineWidth, lineCap, strokeBgcolor, clientRect } = this.renderAttrs
-    const center = this.center
+    const {_useBuiltInColors, title, subTitle,center,radius, startAngle, endAngle, lineWidth, lineCap, strokeBgcolor, clientRect } = this.renderAttrs
     const labelCenter = [center[0], center[1] * 1.25]
     const ticks = this.ticks
     const tickLine = this.isStyleExist('tickLine')
@@ -287,7 +279,7 @@ class Gauge extends BaseVisual {
 
     let gradientColor = null // 默认使用内置的渐变配色方案
 
-    if (this._useBuiltInColors !== false) {
+    if (_useBuiltInColors !== false) {
       const colors = this.theme.colors.reverse()
       const gradientOpt = {
         vector: [0, 0, center[0] * 2, center[1] * 2],
@@ -333,7 +325,7 @@ class Gauge extends BaseVisual {
                 startAngle={startAngle}
                 endAngle={endAngle}
                 strokeColor={strokeBgcolor}
-                radius={this.radius}
+                radius={radius}
                 zIndex={10}
               />
               <Arc
