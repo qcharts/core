@@ -83,9 +83,10 @@ theme.visuals = {
   },
   Gauge: {
     colors: theme.colors,
-    styles: {
-      area: { opacity: 0.5 }
-    },
+    attrs: {}
+  },
+  RadialBar: {
+    colors: theme.colors,
     attrs: {}
   }
 }
