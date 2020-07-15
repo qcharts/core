@@ -14,14 +14,13 @@ export default function layout(arr, attrs) {
   const padAngle = attrs.padAngle;
   // 输出
   const barData = [];
-  const groupData = [];
 
   const bgPillarAttr = { opacity: 0.01, fillColor: "#FF0000" };
 
   // const valueAxis = getAxis(stack, data)
   const valueAxis = axis({ dataSet: data, stack, splitNumber });
   if (!valueAxis || !valueAxis.length) {
-    return { barData, groupData };
+    return { barData };
   }
 
   const tableSize = Math.min(barSize[0], barSize[1]);
@@ -92,22 +91,6 @@ export default function layout(arr, attrs) {
         }
         barData.push(rect);
       }
-      // 柱子整体属性
-      gpData = Object.assign(gpData, {
-        innerRadius: barInnerRadius * 0.5 * tableSize,
-        outerRadius: (barInnerRadius + radius) * 0.5 * tableSize,
-        startAngle:
-          (((groupGap + groupAngle) * i - Math.PI * 0.5) * 180) / Math.PI,
-        endAngle:
-          (((groupGap + groupAngle) * i + groupAngle - Math.PI * 0.5) * 180) /
-          Math.PI,
-        ...bgPillarAttr,
-      });
-      if (GROUP_NUM < 2) {
-        delete gpData.startAngle;
-        delete gpData.endAngle;
-      }
-      groupData.push(gpData);
     }
   } else {
     // 堆叠柱状图
@@ -159,22 +142,10 @@ export default function layout(arr, attrs) {
         }
         barData.push(rect);
       }
-      // 柱子整体属性
-      gpData = Object.assign(gpData, {
-        innerRadius: barInnerRadius * 0.5 * tableSize,
-        outerRadius: (barInnerRadius + radius) * 0.5 * tableSize,
-        startAngle:
-          (((groupGap + groupAngle) * i - Math.PI * 0.5) * 180) / Math.PI,
-        endAngle:
-          (((groupGap + groupAngle) * i + groupAngle - Math.PI * 0.5) * 180) /
-          Math.PI,
-        ...bgPillarAttr,
-      });
-      groupData.push(gpData);
     }
   }
   // attachPadAngleOfArr(barData, padAngle)
-  return { barData, groupData };
+  return { barData };
 }
 
 function computerLegend(data) {
@@ -191,25 +162,4 @@ function computerLegend(data) {
 }
 export function transRadius(angle) {
   return (angle / 180) * Math.PI;
-}
-function attachPadAngleOfArr(arr, padAngle = 0) {
-  // 设置 padAngle
-  const maxPadAngle = Math.min.apply(
-    null,
-    arr.filter((d) => !d.disabled).map((a) => a.endAngle - a.startAngle)
-  );
-
-  if (padAngle >= 0) {
-    padAngle = padAngle > maxPadAngle ? maxPadAngle / 2 : padAngle;
-
-    arr
-      .filter((d) => !d.disabled)
-      .forEach((a) => {
-        if (a.endAngle - a.startAngle > padAngle * 2) {
-          a.padAngle = padAngle;
-          a.startAngle += padAngle;
-          a.endAngle -= padAngle;
-        }
-      });
-  }
 }
