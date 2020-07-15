@@ -8,11 +8,9 @@ class PolarBar extends Base {
   constructor(attrs) {
     super(attrs);
     this.type = "polarbar";
-    this.groups = [];
     this.pillars = [];
-    this.$pillars = [];
     this.hoverIndex = -1;
-    this.activeIndex = -1;
+    this.timer = null;
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -22,28 +20,19 @@ class PolarBar extends Base {
     return attrs;
   }
 
-  // get pos() {
-  //   let { height, width, top, left } = this.renderAttrs.clientRect;
-  //   let [x, y] = [left + width / 2, top + height / 2];
-  //   return [x, y];
-  // }
-
   beforeRender() {
-    //渲染前的处理函数，返回lines,继承base
+    //渲染前的处理函数，返回rings,继承base
     let { arrLayout } = this.getRenderData();
     this.pillars = arrLayout.barData;
-    this.groups = arrLayout.groupData;
     let barData = arrLayout.barData.map((item) => {
       return {
-        // attrs: item,
         from: {
           endAngle: item.startAngle,
         },
         to: item,
       };
     });
-    let groupData = this.groups;
-    return { barData, groupData };
+    return { barData };
   }
   beforeUpdate() {
     const pillars = this.pillars;
@@ -54,24 +43,20 @@ class PolarBar extends Base {
         pos[0] + nextPillar.offsetPos[0],
         pos[1] + nextPillar.offsetPos[1],
       ];
-      let prev = pillars[i] ? pillars[i] : arrLayout.barData[i - 1];
-      if (!prev) {
-        prev = {};
-      }
+      nextPillar.pos = curPos;
       return {
-        from: { ...prev },
-        to: { ...nextPillar, pos: curPos },
+        from: { ...pillars[i] },
+        to: { ...nextPillar },
       };
     });
     this.pillars = arrLayout.barData;
-    this.groups = arrLayout.groupData;
-    return { barData, groupData: arrLayout.groupData };
+    return { barData };
   }
   getRenderData() {
     let renderAttrs = this.renderAttrs;
     let renderData = this.dataset[renderAttrs.layoutBy];
     if (!renderData || renderData.length === 0) {
-      return { barData: [], groupData: [] };
+      return { barData: [] };
     }
     const dataLength =
       renderData.length > 1 ? renderData.length : renderData[0].length;
@@ -81,9 +66,6 @@ class PolarBar extends Base {
     let arrLayout = layout(renderData, renderAttrs);
     let colors = this.theme.colors;
     let styles = this.renderStyles;
-    arrLayout.groupData.forEach((bar, i) => {
-      bar.pos = renderAttrs.pos;
-    });
     arrLayout.barData.forEach((bar, i) => {
       let style = this.style("pillar")(bar.attrs, this.dataset.rows[i], i);
       bar.fillColor = bar.fillColor || colors[i % dataLength];
@@ -123,31 +105,27 @@ class PolarBar extends Base {
   }
 
   mouseleave() {
-    this.dataset.resetState();
-    // this.dataset.forEach((row) => {
-    //   if (row.state === "hover") {
-    //     row.state = "default";
-    //   }
-    // });
-    this.hoverIndex = -1;
+    this.timer = setTimeout(() => {
+      this.dataset.resetState();
+      this.hoverIndex = -1;
+    }, 100);
   }
 
   mousemove(e, el) {
+    clearTimeout(this.timer);
+    // let fun = throttle(function(e, el) {
     let renderData = this.renderData();
     let ind = el.attr("_index");
-    if (ind !== this.hoverIndex) {
+    let groupInd = Math.floor(ind / renderData.length);
+    if (groupInd !== this.hoverIndex) {
       this.dataset.resetState();
-      this.dataset.cols[Math.floor(ind / this.dataset.rows.length)].state =
-        "hover";
-      // let curData = this.dataset[ind];
-      // renderData.forEach((row) => {
-      //   if (row.state === "hover") {
-      //     row.state = "default";
-      //   }
-      // });
-      // curData.state = "hover";
-      this.hoverIndex = ind;
+      this.dataset[this.renderAttrs.layoutBy === "rows" ? "cols" : "rows"][
+        groupInd
+      ].state = "hover";
+      this.hoverIndex = groupInd;
     }
+    // }, 30).bind(this);
+    // fun(e, el);
   }
   groupMousemove(e, el) {
     console.log(el);
@@ -162,7 +140,7 @@ class PolarBar extends Base {
     let styles = this.renderStyles;
     return (
       <Group class="container" ref="wrap">
-        <Group class="rings-group">
+        <Group class="rings-group" onMouseleave={this.mouseleave}>
           {data.barData.map((ring, ind) => {
             let style = getStyle(
               this,
@@ -179,29 +157,13 @@ class PolarBar extends Base {
               <Node />
             ) : (
               <Ring
-                onMouseleave={this.mouseleave}
                 onMousemove={this.mousemove}
                 {...style}
                 animation={{ from: ring.from, to: ring.to }}
               />
             );
-            // return (
-            //   <Ring
-            //     ref={"pillar" + i}
-            //     {...pillar.attrs}
-            //     onMousemove={this.onMousemove}
-            //     onClick={(e, el) => {
-            //       this.onClick(e, el, i, pillar.attrs);
-            //     }}
-            //   />
-            // );
           })}
         </Group>
-        {/* <Group>
-          {data.groupData.map((pillar, i) => {
-            return <Ring {...pillar} onMousemove={this.groupMousemove} />;
-          })}
-        </Group> */}
       </Group>
     );
   }
