@@ -136,9 +136,9 @@ class Base extends Node {
       //动画类型
       animation: {
         use: true,
-        duration: 300,
+        duration: 700,
         useTween: true,
-        easing: 'linear'
+        easing: 'bounceOut'
       },
       //位置布局信息
       clientRect: {
