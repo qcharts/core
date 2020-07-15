@@ -27,7 +27,7 @@ class Chart extends Base {
       })
     }, 300)
     this.checkRender = throttle(_ => {
-      let children = [].concat(this.visuals).concat(this.plugins)
+      let children = [].concat(this.plugins).concat(this.visuals)
       children.forEach(child => {
         child.created()
         this.dataset.addDep(child)
