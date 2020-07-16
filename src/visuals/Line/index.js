@@ -73,6 +73,10 @@ class Line extends Base {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
       guidePoints: [],
+      animation: {
+        duration: 2000,
+        easing: 'linear'
+      },
       layer: 'line'
     }
   }

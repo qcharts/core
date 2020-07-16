@@ -58,7 +58,11 @@ chart.source(data, {
   text: 'date'
 })
 
-const line = new Line()
+const line = new Line({
+  animation: {
+    duration: 2000
+  }
+})
 line.style('point', { strokeColor: '#fff' })
 
 const axisBottom = new Axis().style('grid', false)

@@ -15,20 +15,19 @@ class Chart extends Base {
     this.$el = container
     this.visuals = []
     this.plugins = []
+    this.children = []
     this.scene = new Scene({ container, displayRatio: platform.devicePixelRatio })
     this.scene.addEventListener('resize', _ => {
       //舞台变化的时候
       this.checkUpdate()
     })
     this.checkUpdate = throttle(_ => {
-      let nodes = [].concat(this.plugins).concat(this.visuals)
-      nodes.forEach(node => {
+      this.children.forEach(node => {
         node.update()
       })
     }, 300)
     this.checkRender = throttle(_ => {
-      let children = [].concat(this.plugins).concat(this.visuals)
-      children.forEach(child => {
+      this.children.forEach(child => {
         child.created()
         this.dataset.addDep(child)
       })
@@ -58,11 +57,14 @@ class Chart extends Base {
     } else if (node instanceof BasePlugin) {
       this.plugins.push(node)
     }
+    this.children.push(node)
     node.chart = this
     node.scene = this.scene
     this.checkRender()
   }
-  renderChild() {}
+  getDataURL() {
+    return this.scene.snapshot().toDataURL()
+  }
 }
 
 export default Chart
