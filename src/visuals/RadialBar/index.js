@@ -1,5 +1,5 @@
 import { Group, Arc } from 'spritejs'
-import { jsType, deepObjectMerge } from '@qcharts/utils'
+import { deepObjectMerge } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 
 // 数据拷贝
@@ -70,7 +70,7 @@ class RadialBar extends BaseVisual {
     if (!isNaN(max) && !isNaN(min)) {
       total = max - min
     } else {
-      let cloneData = clone(data)
+      let cloneData = deepObjectMerge(data)
       cloneData.sort((a, b) => b.value - a.value)
       total = cloneData[0].value * 1.3
     }
@@ -90,7 +90,7 @@ class RadialBar extends BaseVisual {
       d.anchor = [0.5, 0.5]
       d.lineWidth = lineWidth
       d.startAngle = startAngle
-      d.endAngle = d.disabled ? startAngle : startAngle + (angle * value) / total
+      d.endAngle = d.state === 'disabled' ? startAngle : startAngle + (angle * value) / total
       d.innerRadius = innerRadius + i * (1 + arcOffset) * perRadius
       d.radius = d.innerRadius + 1 * perRadius
       d.strokeColor = colors[i]
@@ -98,7 +98,6 @@ class RadialBar extends BaseVisual {
       const normalStyle = this.style('arc')(d, d.dataOrigin, d.index)
 
       Object.assign(d, normalStyle)
-      d.lineCap = !d.disabled ? d.lineCap : 'butt' // round 会导致禁用后显示成一个原点
     })
     return data
   }
