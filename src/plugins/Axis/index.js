@@ -41,6 +41,7 @@ class Axis extends Base {
   defaultAttrs() {
     return {
       layer: 'axis',
+      zIndex: -1,
       formatter: e => e
     }
   }
