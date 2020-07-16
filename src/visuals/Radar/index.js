@@ -1,5 +1,5 @@
 import { Group, Polyline, Label, Arc } from 'spritejs'
-import { deepObjectMerge, throttle } from '@qcharts/utils'
+import { deepObjectMerge, throttle, jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
 
@@ -38,14 +38,14 @@ class Radar extends BaseVisual {
     let preData = this.sectionData[index]
     const zeroPoints = new Array(toPoints.length).fill([0, 0])
 
-    // disabled的时候缩回原点
+    // disabled的时候缩回原点并透明
     if (state === 'disabled') {
       return {
-        from: { points: preData.animation.to.points },
-        to: { points: zeroPoints },
+        from: { points: preData.animation.to.points, opacity: 1 },
+        to: { points: zeroPoints, opacity: 0 },
       }
     }
-    if (!preData || preData.state === 'disabled') {
+    if (!preData) {
       preData = {
         animation: {
           to: {
@@ -87,11 +87,13 @@ class Radar extends BaseVisual {
       }
 
       let animation = this.getPolylineAnimation(points, state, i)
+      const opacity = jsType(style.opacity) === 'number' ? style.opacity : 1
       if (state === 'disabled') {
-        animation.from.opacity = style.opacity || 1
-        animation.to.opacity = 0
+        animation.from.opacity = opacity
+      } else {
+        animation.to.opacity = opacity
       }
-      return deepObjectMerge(otherAttrs, { animation }, style, stateStyle)
+      return deepObjectMerge(otherAttrs,{state}, { animation }, style, stateStyle)
     })
     return { ...otherData, sectionAttrs: processSectionAttrs }
   }
@@ -260,8 +262,9 @@ class Radar extends BaseVisual {
   }
 
   renderPoints(sectionAttrs) {
+    console.log(sectionAttrs)
     const allPoints = sectionAttrs.map((attrs, index) => {
-      const { animation: secAnimation, dataOrigin, strokeColor, state } = attrs
+      const { animation: secAnimation, dataOrigin, strokeColor } = attrs
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
       const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
       return toPoints.map((point, i) => {
@@ -275,22 +278,22 @@ class Radar extends BaseVisual {
           anchor: [0.5, 0.5],
         }
         let animation = {
-          from: { pos: [0, 0] },
-          to: { pos: point },
+          from: { pos: [0, 0], opacity: secAnimation.from.opacity },
+          to: { pos: point, opacity: secAnimation.to.opacity },
         }
 
         if (prePoints && prePoints[i]) {
           if (!this.isSamePoints(prePoints[i], point)) {
             animation.from.pos = prePoints[i]
-            attr.pos = prePoints[i]
           } else {
-            animation = {}
+            animation.from.pos = []
           }
         }
-        const style = state !== 'disabled' ? this.style('point')(attr, { ...attr.dataOrigin }, i) : {}
+        const style = this.style('point')(attr, { ...attr.dataOrigin }, i)
         if (style === false) {
           return
         }
+
         return <Arc {...attr} {...style} animation={animation} />
       })
     })
@@ -300,12 +303,12 @@ class Radar extends BaseVisual {
 
   renderSection(sectionAttrs) {
     return sectionAttrs.map((attr, i) => {
-      const { animation, state, ...otherAttr } = attr
+      const { animation, ...otherAttr } = attr
       return (
         <Polyline
           zIndex={9 + i}
-          animation={animation}
           {...otherAttr}
+          animation={animation}
           onMouseenter={this.onMouseenter}
           onMouseleave={this.onMouseleave}
         />
