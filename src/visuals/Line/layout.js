@@ -3,7 +3,7 @@ import { axis } from '../../utils/axis'
 export default function layout(arr, attrs) {
   let type = this.type
   let lines = []
-  const { stack, splitNumber, clientRect } = attrs
+  const { stack, splitNumber, clientRect, axisGap } = attrs
   const { width, height } = clientRect
   let scales = axis({ dataSet: arr, stack, splitNumber })
   let maxVal = Math.max.apply(this, scales)
@@ -13,17 +13,21 @@ export default function layout(arr, attrs) {
     .range([0, height])
   let prevRow = null
   arr.forEach(row => {
-    //if (row.state === 'disabled') return
     let line = { points: [], areaPoints: [], smoothRange: [], state: row.state }
     row.forEach((cell, i) => {
       let val = cell.value
       if (cell.value !== undefined) {
         //如果为undefined 不渲染
         let dx = width / (row.length - 1)
-        let curPos = [dx * i, height - scaleFY(val)]
+        let offsetX = 0
+        if (axisGap) {
+          dx = width / row.length
+          offsetX = dx / 2
+        }
+        let curPos = [dx * i + offsetX, height - scaleFY(val)]
         if (stack && prevRow) {
           //如果是堆叠并且前一个row存在，则叠加
-          curPos = [dx * i, height - scaleFY(val + prevRow[i].value)]
+          curPos = [dx * i + offsetX, height - scaleFY(val + prevRow[i].value)]
         }
         line.points.push(curPos)
       }
