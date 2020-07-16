@@ -74,7 +74,7 @@ class Line extends Base {
     return {
       guidePoints: [],
       animation: {
-        duration: 2000,
+        duration: 700,
         easing: 'linear'
       },
       layer: 'line'
