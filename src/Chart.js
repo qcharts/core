@@ -62,7 +62,9 @@ class Chart extends Base {
     node.scene = this.scene
     this.checkRender()
   }
-  renderChild() {}
+  getDataURL() {
+    return this.scene.snapshot().toDataURL()
+  }
 }
 
 export default Chart
