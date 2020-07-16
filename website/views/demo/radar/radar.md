@@ -19,7 +19,7 @@ const data = [
   { label: '分类六', category: '类别二', value: 52 },
 ]
 
-const { Chart, Radar, Tooltip } = qcharts
+const { Chart, Radar,Legend, Tooltip } = qcharts
 
 const chart = new Chart({
   container: '#app',
@@ -33,7 +33,9 @@ const radar = new Radar()
 radar.style('section', (d) => ({ opacity: 0.3 }))
 .style('section:hover',d=>({opacity: 0.8,lineWidth:2,strokeColor:'red'}))
 
-chart.append([radar, new Tooltip()])
+const legend = new Legend({ align: ['center', 'bottom'] })
+
+chart.append([radar,legend, new Tooltip()])
 ```
 
 :::
