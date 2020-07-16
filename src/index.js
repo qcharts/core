@@ -1,23 +1,22 @@
-import { h, easing } from "@qcharts/vnode";
-import Dataset from "@qcharts/dataset";
-import Line from "./visuals/Line/index";
-import Pie from "./visuals/Pie/index";
-import Area from "./visuals/Area/index";
-import Radar from "./visuals/Radar/index";
-import Bar from "./visuals/Bar/index";
-import PolarBar from "./visuals/PolarBar/index";
-import Funnel from "./visuals/Funnel/index";
-import Scatter from "./visuals/Scatter/index";
-import Wave from "./visuals/Wave/index";
-import Axis from "./plugins/Axis/index";
-import Legend from "./plugins/Legend/index";
-import Tooltip from "./plugins/Tooltip/index";
-import platform from "./base/platform";
-import Chart from "./Chart";
-import theme from "./theme/default";
-const version = require("../package.json").version;
+import { h, easing } from '@qcharts/vnode'
+import Dataset from '@qcharts/dataset'
+import Line from './visuals/Line/index'
+import Pie from './visuals/Pie/index'
+import Area from './visuals/Area/index'
+import Radar from './visuals/Radar/index'
+import Bar from './visuals/Bar/index'
+import PolarBar from './visuals/PolarBar/index'
+import Funnel from './visuals/Funnel/index'
+import Scatter from './visuals/Scatter/index'
+import Wave from './visuals/Wave/index'
+import Axis from './plugins/Axis/index'
+import Legend from './plugins/Legend/index'
+import Tooltip from './plugins/Tooltip/index'
+import platform from './base/platform'
+import Chart from './Chart'
+import theme from './theme/default'
 const qcharts = {
-  version,
+  version: '1.0.0',
   Line,
   Pie,
   Area,
@@ -33,31 +32,12 @@ const qcharts = {
   h,
   theme,
   Chart,
-  easing,
-};
-if (process.env.NODE_ENV === "development") {
-  platform.qcharts = qcharts;
+  easing
+}
+if (process.env.NODE_ENV === 'development') {
+  platform.qcharts = qcharts
 }
 
-export {
-  version,
-  Dataset,
-  Line,
-  Pie,
-  Area,
-  Wave,
-  Radar,
-  Tooltip,
-  Bar,
-  PolarBar,
-  Funnel,
-  Scatter,
-  Axis,
-  Legend,
-  Chart,
-  h,
-  theme,
-  easing,
-};
+export { Dataset, Line, Pie, Area, Wave, Radar, Tooltip, Bar, PolarBar, Funnel, Scatter, Axis, Legend, Chart, h, theme, easing }
 
-export default qcharts;
+export default qcharts

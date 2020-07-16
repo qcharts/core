@@ -85,7 +85,7 @@ class Axis extends Base {
                 return <Node />
               }
             }
-            return style === false ? <Node /> : <Polyline {...style} animation={ani} />
+            return style === false ? <Node /> : <Polyline {...style} points={ani.from.points} animation={ani} />
           })}
           {axis.scales.map((scale, ind) => {
             let fromPos = (oldAxis.scales && oldAxis.scales[ind] && oldAxis.scales[ind].pos) || scale.pos
