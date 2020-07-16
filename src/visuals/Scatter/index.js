@@ -15,11 +15,12 @@ class Scatter extends BaseVisual {
 
   defaultAttrs() {
     return {
+      layer:'scatter',
       labelField: null,
       areaField: null,
       areaRange: null,
       showGuideLine: false,
-      layoutWay: null,
+      layoutWay: null
     }
   }
 
@@ -28,7 +29,7 @@ class Scatter extends BaseVisual {
     return { ...attrs }
   }
 
-  _processData() {
+  processData() {
     const dataSet = this.dataset
     const { layoutWay, clientRect } = this.renderAttrs
     const { data, layoutWay: newLayoutWay } = layout(dataSet, [clientRect.width, clientRect.height], layoutWay)
@@ -48,7 +49,7 @@ class Scatter extends BaseVisual {
 
   beforeUpdate() {
     super.beforeUpdate()
-    const updateData = this._processData()
+    const updateData = this.processData()
     const temp = updateData.map((row) => deepObjectMerge({}, row))
     updateData.forEach((row, ind) => {
       const oldRow = this.scatterData[ind]
@@ -83,7 +84,7 @@ class Scatter extends BaseVisual {
 
   beforeRender() {
     super.beforeRender()
-    const renderData = this._processData()
+    const renderData = this.processData()
     this.scatterData = renderData.map((row) => deepObjectMerge({}, row))
     renderData.forEach((row) => {
       row.attrs.forEach((cell) => {

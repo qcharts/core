@@ -26,6 +26,7 @@ class Radar extends BaseVisual {
   // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
   defaultAttrs() {
     return {
+      layer: 'radar',
       gridType: 'polygon', // 网格类型,polygon,circle
       splitNumber: 4, // 网格层次
       startAngle: 270, // 起始角度
@@ -93,7 +94,7 @@ class Radar extends BaseVisual {
       } else {
         animation.to.opacity = opacity
       }
-      return deepObjectMerge(otherAttrs,{state}, { animation }, style, stateStyle)
+      return deepObjectMerge(otherAttrs, { state }, { animation }, style, stateStyle)
     })
     return { ...otherData, sectionAttrs: processSectionAttrs }
   }
@@ -262,7 +263,6 @@ class Radar extends BaseVisual {
   }
 
   renderPoints(sectionAttrs) {
-    console.log(sectionAttrs)
     const allPoints = sectionAttrs.map((attrs, index) => {
       const { animation: secAnimation, dataOrigin, strokeColor } = attrs
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points

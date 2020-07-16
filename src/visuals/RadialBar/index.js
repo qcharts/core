@@ -12,17 +12,23 @@ class RadialBar extends BaseVisual {
     this.animators = []
   }
 
-  get renderAttrs() {
-    const attrs = super.renderAttrs
-    const { clientRect } = attrs
-    const size = [clientRect.width, clientRect.height]
+  defaultAttrs() {
     return {
+      layer: 'radialBar',
       radius: 0.8,
       innerRadius: 0,
       startAngle: -90,
       endAngle: 270,
       lineWidth: 5,
-      strokeBgcolor: '#f5f5f5',
+      strokeBgcolor: '#f5f5f5'
+    }
+  }
+
+  get renderAttrs() {
+    const attrs = super.renderAttrs
+    const { clientRect } = attrs
+    const size = [clientRect.width, clientRect.height]
+    return {
       ...attrs,
       size,
     }

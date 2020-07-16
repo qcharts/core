@@ -55,13 +55,34 @@ class Gauge extends BaseVisual {
     this.style('tickLine', true)
   }
 
+  defaultAttrs() {
+    return {
+      layer: 'gauge',
+      min: 0,
+      max: 100,
+      lineCap: 'round',
+      _useBuiltInColors: false, // 默认颜色不使用渐变色
+      lineWidth: 10, // 仪表盘圆弧宽度
+      startAngle: 140, // 仪表盘弧度起始角度，arc 角度顺时针增加，0度为屏幕X轴方向
+      endAngle: 400, // 仪表盘弧度终止角度
+      strokeBgcolor: '#dde3ea', // 仪表盘弧度的背景色
+      title: (d) => d,
+      subTitle: (d) => d,
+
+      tickStep: 10, // tick 步进，生成 tick 的数量为 (max - min) / tickStep
+      tickLength: 10, // 刻度长度，为负值时向外绘制
+      labelOffset: 5,
+      tickFormatter: (d) => d, // 刻度文本格式化
+    }
+  }
+
   get renderAttrs() {
     const attrs = super.renderAttrs
-
     // 仪表盘半径
     const { clientRect, lineWidth: lw = 10 } = attrs
     const { height, width } = clientRect
     const size = [width, height]
+
     const len = this.dataset.length
     const radius = ~~(
       (Math.min.apply(
@@ -77,21 +98,6 @@ class Gauge extends BaseVisual {
     const center = [width / 2, height / 2]
 
     return {
-      min: 0,
-      max: 100,
-      lineCap: 'round',
-      _useBuiltInColors:false,// 默认颜色不使用渐变色
-      lineWidth: 10, // 仪表盘圆弧宽度
-      startAngle: 140, // 仪表盘弧度起始角度，arc 角度顺时针增加，0度为屏幕X轴方向
-      endAngle: 400, // 仪表盘弧度终止角度
-      strokeBgcolor: '#dde3ea', // 仪表盘弧度的背景色
-      title: (d) => d,
-      subTitle: (d) => d,
-
-      tickStep: 10, // tick 步进，生成 tick 的数量为 (max - min) / tickStep
-      tickLength: 10, // 刻度长度，为负值时向外绘制
-      labelOffset: 5,
-      tickFormatter: (d) => d, // 刻度文本格式化
       ...attrs,
       radius,
       pointerWidth,
@@ -271,7 +277,19 @@ class Gauge extends BaseVisual {
   }
 
   render(data = []) {
-    const {_useBuiltInColors, title, subTitle,center,radius, startAngle, endAngle, lineWidth, lineCap, strokeBgcolor, clientRect } = this.renderAttrs
+    const {
+      _useBuiltInColors,
+      title,
+      subTitle,
+      center,
+      radius,
+      startAngle,
+      endAngle,
+      lineWidth,
+      lineCap,
+      strokeBgcolor,
+      clientRect,
+    } = this.renderAttrs
     const labelCenter = [center[0], center[1] * 1.25]
     const ticks = this.ticks
     const tickLine = this.isStyleExist('tickLine')
