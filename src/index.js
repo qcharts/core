@@ -42,6 +42,6 @@ if (process.env.NODE_ENV === 'development') {
   platform.qcharts = qcharts
 }
 
-export { version, Dataset, Line, Pie, Area, Wave, Radar, Tooltip, Bar, PolarBar, Funnel, Scatter,Gauge, RadialBar,Axis, Legend, Chart, h, theme, easing }
+export { Dataset, Line, Pie, Area, Wave, Radar, Tooltip, Bar, PolarBar, Funnel, Scatter, Gauge, RadialBar, Axis, Legend, Chart, h, theme, easing }
 
 export default qcharts
