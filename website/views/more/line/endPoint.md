@@ -40,7 +40,7 @@ const tooltip = new Tooltip({
   }
 })
 
-const axisBottom = new Axis().style('grid', { lineDash: [6, 6] })
+const axisBottom = new Axis().style('grid', { lineDash: [0, 0] })
 
 const axisLeft = new Axis({ orient: 'left' }).style('scale', false).style('grid', false)
 

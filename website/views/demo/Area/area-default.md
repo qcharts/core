@@ -28,7 +28,7 @@ chart.source(data, {
 
 const area = new Area().style('point', { fillColor: 'transparent', strokeColor: 'transparent' }).style('point:hover', { strokeColor: '#fff' })
 
-const axisBottom = new Axis().style('grid', false)
+const axisBottom = new Axis()
 const tooltip = new Tooltip()
 const legend = new Legend()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)

@@ -97,11 +97,10 @@ chart.source(data, {
 const bar = new Bar({
   stack: true
 })
-const legend = new Legend()
 const tooltip = new Tooltip()
-const axisBottom = new Axis().style('grid', false)
+const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
-chart.append([bar, tooltip, axisBottom, axisLeft, legend])
+chart.append([bar, tooltip, axisBottom, axisLeft])
 ```
 
 :::

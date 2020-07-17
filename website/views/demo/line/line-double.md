@@ -40,7 +40,7 @@ chart.source(data, {
 const line = new Line()
 //line.style('point', { strokeColor: '#fff' })
 
-const axisBottom = new Axis().style('grid', false)
+const axisBottom = new Axis()
 const tooltip = new Tooltip()
 const legend = new Legend()
 

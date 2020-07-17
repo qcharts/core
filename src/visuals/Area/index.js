@@ -8,10 +8,6 @@ class Area extends Line {
   defaultAttrs() {
     return deepObjectMerge({}, super.defaultAttrs(), {
       stack: true,
-      animation: {
-        duration: 700,
-        easing: 'bounceOut'
-      },
       layer: 'area'
     })
   }

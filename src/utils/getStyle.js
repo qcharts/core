@@ -16,7 +16,7 @@ export function getStyle(chart, key, defaultStyle, args) {
   if (jsType(args) !== 'array') {
     oArgs = [args]
   }
-  let cusStyle = chart.style(key)(oStyle, ...oArgs)
+  let cusStyle = chart.style(key)(oStyle, [...oArgs])
   if (cusStyle === false) {
     return false
   }

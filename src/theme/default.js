@@ -63,15 +63,6 @@ theme.visuals = {
       statck: false
     }
   },
-  Funnel: {
-    colors: theme.colors,
-    styles: {
-      funnel: {}
-    },
-    attrs: {
-      statck: false
-    }
-  },
   Scatter: {
     colors: theme.colors,
     styles: {
@@ -88,6 +79,14 @@ theme.visuals = {
       text: { fillColor: '#333', fontSize: 24 },
       shape: { fillColor: '#e6f3ff', lineWidth: 3, strokeColor: '#156cbd' }
     },
+    attrs: {}
+  },
+  Gauge: {
+    colors: theme.colors,
+    attrs: {}
+  },
+  RadialBar: {
+    colors: theme.colors,
     attrs: {}
   }
 }
@@ -115,9 +114,6 @@ theme.plugins = {
       label: {
         fontSize: 12,
         fillColor: '#666'
-      },
-      grid: {
-        strokeColor: '#eee'
       }
     },
     attrs: {

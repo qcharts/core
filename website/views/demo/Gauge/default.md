@@ -31,6 +31,15 @@ const gauge = new Gauge({
 gauge.style('title', { fontSize: 36 })
 
 chart.append(gauge)
+
+setTimeout(() => {
+  chart.source([
+    {
+      text: '信用分',
+      value: 65
+    }
+  ])
+}, 3000)
 ```
 
 :::

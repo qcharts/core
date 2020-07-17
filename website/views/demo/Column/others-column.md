@@ -82,14 +82,10 @@ const bar = new Bar({
   barWidth: 20
 })
 const tooltip = new Tooltip()
-const legend = new Legend()
-const axisBottom = new Axis().style('grid', false)
-const axisLeft = new Axis({ orient: 'left' }).style('grid', function(attrs, ind) {
-  if (ind === 3) {
-    return { strokeColor: '#999' }
-  }
-})
-chart.append([bar, tooltip, axisBottom, axisLeft, legend])
+// const legend = new Legend({ align: ['center', 'bottom'] })
+const axisBottom = new Axis()
+const axisLeft = new Axis({ orient: 'left' })
+chart.append([bar, tooltip, axisBottom, axisLeft])
 ```
 
 :::
@@ -237,10 +233,10 @@ chart.source(data, {
 })
 const bar = new Bar()
 const tooltip = new Tooltip()
-const legend = new Legend()
+// const legend = new Legend({ align: ['center', 'bottom'] })
 const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
-chart.append([bar, tooltip, axisBottom, axisLeft, legend])
+chart.append([bar, tooltip, axisBottom, axisLeft])
 
 setTimeout(changeData, 3000)
 function changeData() {
@@ -295,7 +291,10 @@ chart.source(data, {
 const bar = new Bar({}).style('pillar', { bgcolor: '#47A1FF' })
 const tooltip = new Tooltip()
 
-const axisBottom = new Axis().style('grid', false)
+// const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
+//   text: '图例一'
+// })
+const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 chart.append([bar, tooltip, axisBottom, axisLeft])
 ```

@@ -40,7 +40,7 @@ bar.style('pillar', { bgcolor: '#47A1FF' })
 //   text: '图例一'
 // })
 const tooltip = new Tooltip()
-const axisBottom = new Axis().style('scale', false)
+const axisBottom = new Axis().style('scale', false).style('grid', true)
 const axisLeft = new Axis({
   orient: 'left'
 }).style('grid', false)
