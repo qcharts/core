@@ -1,4 +1,4 @@
-## Group PolarBar Chart 基础柱状图
+## Nightingale Group Chart 分组图
 
 :::demo
 

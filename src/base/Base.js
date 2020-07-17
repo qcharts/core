@@ -26,8 +26,8 @@ class Base extends Node {
     return this['__store']
   }
   get layer() {
-    let layerName = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr()).layer
-    return this.scene.layer(layerName)
+    let { layer: layerName, zIndex = 0 } = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr())
+    return this.scene.layer(layerName).attr({ zIndex })
   }
   get $refs() {
     return this['__store'].__refs

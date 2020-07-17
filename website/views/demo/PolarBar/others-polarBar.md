@@ -1,4 +1,4 @@
-## Negative PolarBar Chart 负值柱状图
+## Nightingale Negative Chart 负值图
 
 :::demo
 
