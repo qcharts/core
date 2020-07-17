@@ -15,12 +15,12 @@ class Scatter extends BaseVisual {
 
   defaultAttrs() {
     return {
-      layer:'scatter',
+      layer: 'scatter',
       labelField: null,
       areaField: null,
       areaRange: null,
       showGuideLine: false,
-      layoutWay: null
+      layoutWay: null,
     }
   }
 
@@ -33,7 +33,6 @@ class Scatter extends BaseVisual {
     const dataSet = this.dataset
     const { layoutWay, clientRect } = this.renderAttrs
     const { data, layoutWay: newLayoutWay } = layout(dataSet, [clientRect.width, clientRect.height], layoutWay)
-
     deepObjectMerge(this.renderAttrs.layoutWay || {}, newLayoutWay)
 
     data.forEach((item, i) => {
@@ -54,26 +53,38 @@ class Scatter extends BaseVisual {
     updateData.forEach((row, ind) => {
       const oldRow = this.scatterData[ind]
       row.attrs.forEach((cell, cInd) => {
+        const radius = this.getRealRadius({ ...cell })
+        cell.radius = cell.state === 'disabled' ? 0 : radius
         if (oldRow && oldRow.attrs[cInd]) {
-          const curCell = oldRow.attrs[cInd]
+          const oldCell = oldRow.attrs[cInd]
           const toPos = [...cell.pos]
           const fromPos =
-            curCell.animation.to && curCell.animation.to.pos ? [...curCell.animation.to.pos] : [...curCell.pos]
-          cell.scale = 1
+            oldCell.animation.to && oldCell.animation.to.pos ? [...oldCell.animation.to.pos] : [...oldCell.pos]
+          // 位置相同
           if (toPos.toString() === fromPos.toString()) {
-            cell.animation = {}
+            let fromRadius = cell.radius
+            let toRadius = cell.radius
+            // disabled -> default
+            if (cell.state === 'disabled') {
+              fromRadius = radius
+              // default -> disabled
+            } else if (oldCell.animation.to.radius == 0) {
+              fromRadius = 0
+            }
+            cell.animation = {
+              from: { radius: fromRadius },
+              to: { radius: toRadius },
+            }
           } else {
-            cell.pos = [...fromPos]
             cell.animation = {
               from: { pos: fromPos },
               to: { pos: toPos },
             }
           }
         } else {
-          cell.scale = 0
           cell.animation = {
-            from: { scale: 0 },
-            to: { scale: 1 },
+            from: { radius: 0 },
+            to: { radius: cell.radius },
           }
         }
       })
@@ -88,10 +99,10 @@ class Scatter extends BaseVisual {
     this.scatterData = renderData.map((row) => deepObjectMerge({}, row))
     renderData.forEach((row) => {
       row.attrs.forEach((cell) => {
-        cell.scale = 0
+        const radius = this.getRealRadius({ ...cell })
         cell.animation = {
-          from: { scale: 0 },
-          to: { scale: 1 },
+          from: { radius: 0 },
+          to: { radius },
         }
       })
     })
@@ -191,12 +202,12 @@ class Scatter extends BaseVisual {
   renderScatter(data) {
     const scatters = data.map((item) => {
       return item.attrs.map((attr, i) => {
-        const radius = this.getRealRadius({ ...attr })
-
         let style = this.style('point')(attr, { ...attr.dataOrigin }, i)
         if (style === false) {
           return
         }
+
+        const { radius } = attr
 
         const hStyle = this.style('point:hover')(attr, attr.dataOrigin, i) || { radius: radius + 1 }
         if (attr.state === 'hover') {
@@ -204,9 +215,8 @@ class Scatter extends BaseVisual {
         } else {
           style = deepObjectMerge(style || {}, { radius })
         }
-
         return (
-          <Group clipOverflow={false}>
+          <Group>
             <Arc {...attr} {...style} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
           </Group>
         )
@@ -220,7 +230,7 @@ class Scatter extends BaseVisual {
   render(data) {
     const { height, width, left, top } = this.renderAttrs.clientRect
     return (
-      <Group size={[width, height]} pos={[left, top]} zIndex={100} clipOverflow={false}>
+      <Group size={[width, height]} pos={[left, top]} zIndex={10}>
         {this.renderScatter(data)}
         {this.renderLabel(data)}
         {this.renderGuideLine()}
