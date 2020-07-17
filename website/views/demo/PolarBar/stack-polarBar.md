@@ -1,4 +1,4 @@
-## Stack PolarBar Chart 基础柱状图
+## Nightingale Stack Chart 堆叠图
 
 :::demo
 

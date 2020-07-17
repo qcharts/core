@@ -1,4 +1,4 @@
-## Basic PolarBar Chart 基础柱状图
+## Nightingale Rose Chart 南丁格尔图
 
 :::demo
 
