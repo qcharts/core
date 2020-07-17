@@ -67,10 +67,10 @@ const tooltip = new Tooltip()
 // const tooltip = new Tooltip({
 //   formatter: d => `${d.product} - ${d.year} - ${d.sales}`
 // })
-// const legend = new Legend({ align: ['center', 'bottom'] })
-const axisBottom = new Axis()
+const legend = new Legend()
+const axisBottom = new Axis().style('grid', false)
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
-chart.append([bar, tooltip, axisBottom, axisLeft])
+chart.append([bar, tooltip, axisBottom, axisLeft, legend])
 ```
 
 :::

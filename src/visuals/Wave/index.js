@@ -1,5 +1,5 @@
 import Base from '../../base/BaseVisual'
-import { Group, Polyline, Path, requestAnimationFrame, cancelAnimationFrame, Label, Node } from 'spritejs'
+import { Group, Polyline, Path, requestAnimationFrame, Label, Node } from 'spritejs'
 import ellipse2path from '../../utils/ellipse2path'
 import { getStyle } from '@/utils/getStyle'
 class Wave extends Base {
