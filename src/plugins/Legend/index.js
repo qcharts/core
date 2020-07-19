@@ -1,86 +1,181 @@
-import Base from '../../base/BasePlugin'
+import Base from "../../base/BasePlugin";
+import { Group, Sprite, Path, Label } from "spritejs";
+import layout from "./layout";
+import { getStyle } from "@/utils/getStyle";
 //import { debounce } from '@qcharts/utils'
 class Legend extends Base {
   constructor(attrs) {
-    super(attrs)
-    this.$el = null
+    super(attrs);
+    this.state = {
+      page: 1,
+      totalPage: 1,
+      perPageWidthOrHeight: 0, // 每页长度（或宽度）
+      paginationSize: [0, 0], // 分页控件大小
+      groupSize: [0, 0], // legends 容器大小 $group.contentSize
+    };
+    this.disableds = {};
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
-    let attrs = super.renderAttrs
-    attrs.clientRect = {
-      bottom: 0,
-      width: '100%',
-      left: 0,
-      right: ''
-    }
-    return attrs
+    let attrs = super.renderAttrs;
+    return attrs;
   }
   defaultAttrs() {
-    return {}
+    return {
+      orient: "horizontal", // 布局方式， vertical | horizontal
+      align: ["center", "bottom"], // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
+      formatter: (d) => d.value || d,
+      iconSize: [10, 12],
+      textSize: [40, 12],
+      gap: 10,
+    };
+  }
+  get pos() {
+    const length = this.dataset[this.renderAttrs.layoutBy].length;
+    const { clientRect, align, iconSize, textSize, gap } = this.renderAttrs;
+    let legendSize = [
+      iconSize[0] + textSize[0],
+      Math.max(iconSize[1], textSize[1]),
+    ];
+    let groupSize = this.isVertical
+      ? [legendSize[0], length * legendSize[1] + gap * (length - 1)]
+      : [length * legendSize[0] + gap * (length - 1), legendSize[1]];
+    let { width, height, top, left, right, bottom } = clientRect;
+    let canvasWidth = width + left + right;
+    let canvasHeight = height + top + bottom;
+    // this.state.groupSize = [width, height] // 保存当前 group 的内容大小
+
+    const isValidLayout = (value, type) => {
+      if (type === "horizontal") {
+        // 水平布局
+        return ["default", "left", "center", "right"].indexOf(value) > -1;
+      } else {
+        // 垂直布局
+        return ["default", "top", "center", "bottom"].indexOf(value) > -1;
+      }
+    };
+
+    const hLocation = {
+      // 水平定位
+      default: 0,
+      left: 0,
+      center: (canvasWidth - groupSize[0]) / 2,
+      right: canvasWidth - groupSize[0],
+      numberOrPercent(num) {
+        // 输入 数字或百分比
+        if (typeof num === "number") {
+          return num;
+        } else {
+          let val = 0;
+
+          try {
+            val = parseFloat(num) / 100;
+          } catch (e) {}
+
+          return (canvasWidth - groupSize[0]) * val;
+        }
+      },
+    };
+
+    const vLocation = {
+      // 垂直定位
+      default: 0,
+      top: 0,
+      center: canvasHeight / 2 - groupSize[1] / 2,
+      bottom: canvasHeight - groupSize[1],
+      numberOrPercent(num) {
+        // 输入 数字或百分比
+        if (typeof num === "number") {
+          return num;
+        } else {
+          let val = 0;
+
+          try {
+            val = parseFloat(num) / 100;
+          } catch (e) {}
+
+          return (canvasHeight - groupSize[1]) * val;
+        }
+      },
+    };
+
+    return {
+      x: isValidLayout(align[0], "horizontal")
+        ? hLocation[align[0]]
+        : hLocation.numberOrPercent(align[0]),
+      y: isValidLayout(align[1], "vertical")
+        ? vLocation[align[1]]
+        : vLocation.numberOrPercent(align[1]),
+    };
+  }
+  get isVertical() {
+    return this.renderAttrs.orient === "vertical";
   }
   beforeRender() {
-    //let dataset = this.dataset
-    return this.dataset.rows
+    let { arrLayout } = this.getRenderData();
+    // let arr = arrLayout.map((item) => {
+    //   return item;
+    // });
+    return arrLayout;
   }
-  itemClick() {
-    console.log(click)
+  getRenderData() {
+    let renderAttrs = this.renderAttrs;
+    let renderData = this.dataset[renderAttrs.layoutBy].map((item) => {
+      return {
+        name: item.name,
+        state: item.state,
+      };
+    });
+    let arrLayout = layout.call(this, renderData, renderAttrs);
+    return { arrLayout };
   }
-  beforeUpdate() {}
+  itemClick(e, el) {
+    const ind = el["_ind"];
+    let state = this.dataset[this.renderAttrs.layoutBy][ind].state;
+    state = state !== "disabled" ? "disabled" : "default";
+    this.dataset[this.renderAttrs.layoutBy][ind].state = state;
+  }
+  beforeUpdate() {
+    return this.beforeRender();
+  }
 
-  rendered() {
-    let clickAble = this.renderAttrs.clickAble
-    if (clickAble !== false) {
-      let items = this.$el.querySelectorAll('.legend-item')
-      items.forEach(item => {
-        item.style.cursor = 'pointer'
-      })
-      let dataset = this.dataset
-      let $el = this.$el
-      $el.addEventListener(
-        'click',
-        e => {
-          let target = e.target
-          let $dom = getParent($el, target, '.legend-item')
-          if ($dom) {
-            let ind = $dom.getAttribute('data-id')
-            let state = dataset.rows[ind].state
-            dataset.rows[ind].state = state === 'disabled' ? 'default' : 'disabled'
-          }
-          this.render(dataset.rows)
-        },
-        false
-      )
-    }
-  }
+  rendered() {}
   render(arr) {
+    //当前主体颜色
+    let colors = this.theme.colors;
+    let pos = this.pos;
+    let { clientRect } = this.renderAttrs;
+    let { left, top } = clientRect;
     if (arr) {
-      let { colors, clientRect } = this.renderAttrs
-      let { left, top, width, height, right, bottom } = clientRect
-      if (!this.$el) {
-        this.$el = document.createElement('div')
-        this.$el.className = 'qcharts-legend'
-        this.$el.style.cssText = `text-align:center;position:absolute;font-size:12px;left:${left};top:${top};width:${width};height:${height};right:${right};bottom:${bottom};z-index:10`
-        this.chart.$el.appendChild(this.$el)
-      }
-      let html = ''
-      arr.forEach((row, ind) => {
-        let state = this.dataset.rows[ind].state
-        let curColor = state !== 'disabled' ? colors[ind] : '#ddd'
-        html += `<div style="display:inline-block;padding:0 4px;cursor:pointer" class="legend-item" data-id="${ind}"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${curColor}"></span><span class="text" style="color:#666">${row.name}</span></div>`
-      })
-      this.$el.innerHTML = html
+      return (
+        <Group pos={[pos.x, pos.y]}>
+          {arr.map((attrs, ind) => {
+            let style = getStyle(
+              this,
+              "legend",
+              [{ bgcolor: colors[ind] }],
+              [this.dataset[this.renderAttrs.layoutBy][ind], ind]
+            );
+            return (
+              <Group onClick={this.itemClick}>
+                <Sprite {...style} {...attrs.iconAttrs} />
+                <Label {...attrs.textAttrs} />
+              </Group>
+            );
+          })}
+        </Group>
+      );
     }
   }
 }
 function getParent(wrap, dom, selector) {
-  let arr = wrap.querySelectorAll(selector)
+  let arr = wrap.querySelectorAll(selector);
   if (dom === wrap) {
-    return
+    return;
   } else if ([].indexOf.call(arr, dom) !== -1) {
-    return dom
+    return dom;
   } else {
-    return getParent(wrap, dom.parentNode, selector)
+    return getParent(wrap, dom.parentNode, selector);
   }
 }
-export default Legend
+export default Legend;
