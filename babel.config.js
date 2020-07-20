@@ -9,6 +9,9 @@ module.exports = {
         pragma: 'qcharts.h'
       }
     ],
-    'inline-package-json'
+    'inline-package-json',
+    [
+      '@babel/plugin-transform-runtime'
+    ]
   ]
 }
