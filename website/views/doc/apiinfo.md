@@ -49,8 +49,8 @@ line.style('point', { pointType: 'star', size: 8 })
 
 | 名称       | 描述                                        | 值                                   |
 | ---------- | ------------------------------------------- | ------------------------------------ |
-| bgColor    | 文本背景色                                  | #f00 , rgba(0,0,0,0.5) , transparent |
-| color      | 文本颜色                                    | #f00 , rgba(0,0,0,0.5) , transparent |
+| bgcolor    | 文本背景色                                  | #f00 , rgba(0,0,0,0.5) , transparent |
+| fillColor  | 文本颜色                                    | #f00 , rgba(0,0,0,0.5) , transparent |
 | fontSize   | 文本大小(px)                                | 12                                   |
 | fontFamily | 字体                                        | 'Arial'                              |
 | fontWeight | 文本加粗                                    | 'bold',800,300                       |
