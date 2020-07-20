@@ -2,7 +2,7 @@ import { axis } from '../../utils/axis'
 import { scaleLinear } from '../../utils/scaleLinear'
 import { jsType } from '@qcharts/utils'
 
-const getDataRange = (data) => {
+const getDataRange = data => {
   if (data.length === 0) {
     return [0, 1]
   }
@@ -11,7 +11,7 @@ const getDataRange = (data) => {
   return [min, max]
 }
 
-const getBigRange = (data) => {
+const getBigRange = data => {
   if (data.length === 0) {
     return [0, 1]
   }
@@ -35,35 +35,35 @@ export default function layout(dataSet, size, layoutWay) {
   const [width, height] = size
 
   const { text: textField, value: valueField } = dataSet.option
-  const allData = [...dataSet].filter((cell) => cell.state !== 'disabled')
+  const allData = [...dataSet].filter(cell => cell.state !== 'disabled')
 
   // 如果X轴是文本框，则进行均分
-  const maxLen = getDataRange(dataSet.rows.map((d) => d.length))[1]
+  const maxLen = getDataRange(dataSet.rows.map(d => d.length))[1]
 
   let xDomain = [0, maxLen - 1]
   let xSection = [0, maxLen - 1]
-  const xIsTextData = allData.some((d) => jsType(d.text) === 'string')
+  const xIsTextData = allData.some(d => jsType(d.text) === 'string')
   if (!xIsTextData) {
-    xSection = getBigRange(allData.map((d) => d.text))
+    xSection = getBigRange(allData.map(d => d.text))
     const xScales = axis({
       dataSet: data,
       stack: false,
       field: textField,
-      section: xSection,
+      section: xSection
     })
     xDomain = getDataRange(xScales)
   }
 
-  const yIsTextData = allData.some((d) => jsType(d.value) === 'string')
+  const yIsTextData = allData.some(d => jsType(d.value) === 'string')
   if (yIsTextData) {
     throw new Error("Scatter's value category data should be Number!")
   }
-  let ySection = getBigRange(allData.map((d) => d.value))
+  let ySection = getBigRange(allData.map(d => d.value))
   const yScales = axis({
     dataSet: data,
     stack: false,
     field: valueField,
-    section: ySection,
+    section: ySection
   })
   const yDomain = getDataRange(yScales)
 
@@ -87,7 +87,7 @@ export default function layout(dataSet, size, layoutWay) {
     .domain(yDomain)
     .range([0, height])
 
-  const resultData = dataSet.rows.map((dArry) => {
+  const resultData = dataSet.rows.map(dArry => {
     const attrs = dArry.map((d, i) => {
       const x = xIsTextData ? i : d.text
       const y = d.value
@@ -100,13 +100,13 @@ export default function layout(dataSet, size, layoutWay) {
         state: d.state,
         name: dArry.name,
         col: d.col,
-        row: d.row,
+        row: d.row
       }
     })
     return {
       name: dArry.name,
       state: dArry.state,
-      attrs,
+      attrs
     }
   })
   return { data: resultData, layoutWay: newLayoutWay }
