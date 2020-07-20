@@ -26,6 +26,5 @@ line.style('point', { pointType: 'star', size: 8 })
 | ----------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
 | guideline   | 线                                                                                                                       | 指导线样式               |
 | line        | 线                                                                                                                       | 线条样式                 |
-| line:hover  | 线                                                                                                                       | 鼠标 hover 时线条样式    |
 | point       | 面，除了基础面的全部属性外，还有(<a style="text-decoration:underline" href="./#/doc/plugin/Symbol">Symbol</a>)的特殊属性 | 线条上标记点样式         |
 | point:hover | 面，除了基础面的全部属性外，还有(<a style="text-decoration:underline" href="./#/doc/plugin/Symbol">Symbol</a>)的特殊属性 | hover 时线条上标记点样式 |

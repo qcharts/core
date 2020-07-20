@@ -896,9 +896,9 @@
   integrity sha1-v8enw219Wn70eZTk+ddPlYnMvFY=
 
 "@qcharts/utils@^0.0.5":
-  version "0.0.4"
-  resolved "https://registry.npm.taobao.org/@qcharts/utils/download/@qcharts/utils-0.0.4.tgz#aae24887674a4dc6f57787ab7f125583ea761d17"
-  integrity sha1-quJIh2dKTcb1d4erfxJVg+p2HRc=
+  version "0.0.5"
+  resolved "https://registry.npm.taobao.org/@qcharts/utils/download/@qcharts/utils-0.0.5.tgz#50d8fd0831c7cff81972578e9f6537b4fdde872e"
+  integrity sha1-UNj9CDHHz/gZcleOn2U3tP3ehy4=
 
 "@qcharts/vnode@0.0.14":
   version "0.0.14"
