@@ -100,12 +100,12 @@ const bar = new Bar({
   barWidth: 20
 })
 const tooltip = new Tooltip()
-// const legend = new Legend({ align: ['center', 'bottom'] })
-const axisBottom = new Axis().style('scale', false).style('grid', true)
+const legend = new Legend()
+const axisBottom = new Axis().style('scale', false)
 const axisLeft = new Axis({
   orient: 'left'
 }).style('grid', false)
-chart.append([bar, tooltip, axisBottom, axisLeft])
+chart.append([bar, tooltip, axisBottom, axisLeft, legend])
 ```
 
 :::

@@ -63,6 +63,15 @@ theme.visuals = {
       statck: false
     }
   },
+  Funnel: {
+    colors: theme.colors,
+    styles: {
+      funnel: {}
+    },
+    attrs: {
+      statck: false
+    }
+  },
   Scatter: {
     colors: theme.colors,
     styles: {
@@ -114,6 +123,9 @@ theme.plugins = {
       label: {
         fontSize: 12,
         fillColor: '#666'
+      },
+      grid: {
+        strokeColor: '#eee'
       }
     },
     attrs: {

@@ -4,48 +4,55 @@
 
 ```javascript
 const data = [
-  { value: 3350, label: '直接访问' },
-  { value: 1648, label: '搜索引擎' },
-  { value: 2440, label: '联盟广告' },
-  { value: 1550, label: '视频广告' },
-  { value: 3000, label: '邮件营销' }
-]
-
-const { Chart, Funnel, Tooltip, Legend } = qcharts
+  { value: 3350, label: "直接访问" },
+  { value: 1648, label: "搜索引擎" },
+  { value: 2440, label: "联盟广告" },
+  { value: 1550, label: "视频广告" },
+  { value: 3000, label: "邮件营销" },
+];
+data.sort((a, b) => {
+  return b.value - a.value;
+});
+const { Chart, Funnel, Tooltip, Legend } = qcharts;
 
 const chart = new Chart({
-  container: '#app'
-})
+  container: "#app",
+});
 
 chart.source(data, {
-  row: 'label',
-  col: 'value',
-  value: 'value',
-  text: 'label',
-  sort: (a, b) => b.value - a.value
-})
-const tooltip = new Tooltip({
-  formatter: (d) => `${d.label}: ${d.value}`
-})
+  row: "label",
+  col: "value",
+  value: "value",
+  text: "label",
+});
+const tooltip = new Tooltip();
 const rightFunnel = new Funnel({
-  size: ['25%', '70%'],
-  pos: ['22%', '20%'],
-  align: 'right',
-  pyramid: true
+  clientRect: {
+    left: "22%",
+    top: "20%",
+    width: "25%",
+    height: "70%",
+  },
+  align: "right",
+  pyramid: true,
 })
-  .style('guideline', true)
-  .style('guideText', true)
+  .style("guideline", true)
+  .style("guideText", true);
 
 const leftFunnel = new Funnel({
-  size: ['25%', '70%'],
-  pos: ['50%', '20%'],
-  align: 'left',
-  pyramid: true
+  clientRect: {
+    left: "50%",
+    top: "20%",
+    width: "25%",
+    height: "70%",
+  },
+  align: "left",
+  pyramid: true,
 })
-  .style('guideline', true)
-  .style('guideText', true)
-const legend = new Legend({ align: ['center', 'bottom'] })
-chart.append([rightFunnel, leftFunnel, tooltip, legend])
+  .style("guideline", true)
+  .style("guideText", true);
+const legend = new Legend({ align: ["center", "bottom"] });
+chart.append([rightFunnel, leftFunnel, tooltip, legend]);
 ```
 
 :::

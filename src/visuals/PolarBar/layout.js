@@ -3,7 +3,7 @@ import { axis } from "../../utils/axis";
 export default function layout(arr, attrs) {
   // 输入
   const data = arr;
-  const { stack, splitNumber, clientRect, groupPadAngle } = attrs;
+  const { stack, splitNumber, clientRect, groupPadAngle, activeOffset } = attrs;
   const { width, height } = clientRect;
   const barSize = [width, height];
   const groupGap = groupPadAngle || 0;
@@ -14,14 +14,13 @@ export default function layout(arr, attrs) {
   const padAngle = attrs.padAngle;
   // 输出
   const barData = [];
-  const groupData = [];
 
   const bgPillarAttr = { opacity: 0.01, fillColor: "#FF0000" };
 
   // const valueAxis = getAxis(stack, data)
   const valueAxis = axis({ dataSet: data, stack, splitNumber });
   if (!valueAxis || !valueAxis.length) {
-    return { barData, groupData };
+    return { barData };
   }
 
   const tableSize = Math.min(barSize[0], barSize[1]);
@@ -42,9 +41,9 @@ export default function layout(arr, attrs) {
       let groupAngle = (Math.PI * 2 - GROUP_NUM * groupGap) / GROUP_NUM;
       // 计算单根柱子
       for (let j = 0, lenj = data.length; j < lenj; j++) {
-        if (data[j][i].disabled !== true) {
-          data[j][i].disabled = false;
-        }
+        // if (data[j][i].disabled !== true) {
+        //   data[j][i].disabled = false;
+        // }
         let barAngle = groupAngle / GROUP_BAR_NUM;
         let startAngle =
           (groupAngle + groupGap) * i + barAngle * (j - flag) - Math.PI * 0.5;
@@ -53,17 +52,31 @@ export default function layout(arr, attrs) {
         let innerRadius =
           BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) +
           barInnerRadius * tableSize * 0.5;
-
+        //默认中心坐标偏移量0
+        let offsetPos = [0, 0];
         let rect = {
           innerRadius: innerRadius,
           outerRadius: innerRadius + barHeight,
           startAngle: (startAngle * 180) / Math.PI,
           endAngle: ((startAngle + barAngle) * 180) / Math.PI,
-          ...data[j][i],
+          value: data[j][i].value,
+          text: data[j][i].text,
+          state: data[j][i].state,
+          data: data[j][i].data,
           id: i * lenj + j,
+          offsetPos: offsetPos,
         };
-
-        if (rect.disabled) {
+        if (rect.state === "hover") {
+          let curAngle = ((rect.startAngle + rect.endAngle) / 2) % 360;
+          rect.bisectorRadian = transRadius(curAngle);
+          //角平分,角度转弧度,默认是顺时针，角度为相反
+          rect.offsetPos = [
+            activeOffset * Math.cos(rect.bisectorRadian),
+            activeOffset * Math.sin(rect.bisectorRadian),
+          ];
+          //选中状态
+        }
+        if (rect.state === "disabled") {
           rect.endAngle = rect.startAngle;
           rect.radius = 0;
           rect.opacity = 0;
@@ -78,22 +91,6 @@ export default function layout(arr, attrs) {
         }
         barData.push(rect);
       }
-      // 柱子整体属性
-      gpData = Object.assign(gpData, {
-        innerRadius: barInnerRadius * 0.5 * tableSize,
-        outerRadius: (barInnerRadius + radius) * 0.5 * tableSize,
-        startAngle:
-          (((groupGap + groupAngle) * i - Math.PI * 0.5) * 180) / Math.PI,
-        endAngle:
-          (((groupGap + groupAngle) * i + groupAngle - Math.PI * 0.5) * 180) /
-          Math.PI,
-        ...bgPillarAttr,
-      });
-      if (GROUP_NUM < 2) {
-        delete gpData.startAngle;
-        delete gpData.endAngle;
-      }
-      groupData.push(gpData);
     }
   } else {
     // 堆叠柱状图
@@ -105,9 +102,9 @@ export default function layout(arr, attrs) {
       let groupAngle = (Math.PI * 2 - GROUP_NUM * groupGap) / GROUP_NUM;
       // 计算单根柱子
       for (let j = 0, lenj = data.length; j < lenj; j++) {
-        if (data[j][i].disabled !== true) {
-          data[j][i].disabled = false;
-        }
+        // if (data[j][i].disabled !== true) {
+        //   data[j][i].disabled = false;
+        // }
         let startAngle = (groupAngle + groupGap) * i - Math.PI * 0.5;
         value = data[j][i].value;
         let barHeight = BAR_HEIGHT_FACTOR * value;
@@ -116,15 +113,25 @@ export default function layout(arr, attrs) {
             ? BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) - heightSumDown
             : BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) + heightSumUp;
         innerRadius = innerRadius + barInnerRadius * tableSize * 0.5;
+        let offsetPos = [0, 0];
         let rect = {
           innerRadius: innerRadius,
           outerRadius: innerRadius + barHeight - stackGap,
           startAngle: (startAngle * 180) / Math.PI,
           endAngle: ((startAngle + groupAngle) * 180) / Math.PI,
-          ...data[j][i],
+          value: data[j][i].value,
+          text: data[j][i].text,
+          state: data[j][i].state,
+          data: data[j][i].data,
+          offsetPos: offsetPos,
         };
 
-        if (rect.disabled) {
+        if (rect.state === "hover") {
+          rect.strokeColor = "#F00";
+        } else {
+          delete rect.strokeColor;
+        }
+        if (rect.state === "disabled") {
           rect.opacity = 0;
         } else {
           rect.opacity = 1;
@@ -135,28 +142,16 @@ export default function layout(arr, attrs) {
         }
         barData.push(rect);
       }
-      // 柱子整体属性
-      gpData = Object.assign(gpData, {
-        innerRadius: barInnerRadius * 0.5 * tableSize,
-        outerRadius: (barInnerRadius + radius) * 0.5 * tableSize,
-        startAngle:
-          (((groupGap + groupAngle) * i - Math.PI * 0.5) * 180) / Math.PI,
-        endAngle:
-          (((groupGap + groupAngle) * i + groupAngle - Math.PI * 0.5) * 180) /
-          Math.PI,
-        ...bgPillarAttr,
-      });
-      groupData.push(gpData);
     }
   }
   // attachPadAngleOfArr(barData, padAngle)
-  return { barData, groupData };
+  return { barData };
 }
 
 function computerLegend(data) {
   let flag = 0;
   for (let i = 0, len = data.length; i < len; i++) {
-    if (data[i][0].disabled !== true) {
+    if (data[i][0].state !== "disabled") {
       flag++;
     }
   }
@@ -165,25 +160,6 @@ function computerLegend(data) {
   }
   return flag || 1;
 }
-
-function attachPadAngleOfArr(arr, padAngle = 0) {
-  // 设置 padAngle
-  const maxPadAngle = Math.min.apply(
-    null,
-    arr.filter((d) => !d.disabled).map((a) => a.endAngle - a.startAngle)
-  );
-
-  if (padAngle >= 0) {
-    padAngle = padAngle > maxPadAngle ? maxPadAngle / 2 : padAngle;
-
-    arr
-      .filter((d) => !d.disabled)
-      .forEach((a) => {
-        if (a.endAngle - a.startAngle > padAngle * 2) {
-          a.padAngle = padAngle;
-          a.startAngle += padAngle;
-          a.endAngle -= padAngle;
-        }
-      });
-  }
+export function transRadius(angle) {
+  return (angle / 180) * Math.PI;
 }
