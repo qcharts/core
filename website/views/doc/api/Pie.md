@@ -26,18 +26,14 @@ pie.style('text', { color: '#fff' }
 
 组件中可以自定义 css 属性的元素如下表：
 
-| 名称            | 基础类型 | 描述                                                                                                        |
-| --------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| sector          | 面       | 扇形样式，支持 animation 属性且默认开启，设置 type 为 `translate` 或 `slide` 更换动画类型,默认为`translate` |
-| sector:hover    | 面       | 鼠标经过时扇形样式                                                                                          |
-| text            | 文本     | 扇形上文字样式                                                                                              |
-| text:hover      | 文本     | 鼠标经过时扇形上文字样式                                                                                    |
-| guideline       | 线       | 指导线样式                                                                                                  |
-| guideline:hover | 线       | 鼠标经过时指导线样式                                                                                        |
-| guideText       | 文本     | 指导文字样式                                                                                                |
-| guideText:hover | 文本     | 鼠标经过时指导文字样式                                                                                      |
-| title           | 文本     | 标题样式，若有数字则附带数字滚动动画，支持 animation 属性设置动画，动画默认开启                             |
-| subtitle        | 文本     | 副标题样式，附带旋转动画，支持 animation 属性设置动画，动画默认开启                                         |
+| 名称      | 基础类型 | 描述                                                                                                        |
+| --------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| sector    | 面       | 扇形样式，支持 animation 属性且默认开启，设置 type 为 `translate` 或 `slide` 更换动画类型,默认为`translate` |
+| text      | 文本     | 扇形上文字样式                                                                                              |
+| guideline | 线       | 指导线样式                                                                                                  |
+| guideText | 文本     | 指导文字样式                                                                                                |
+| title     | 文本     | 标题样式，若有数字则附带数字滚动动画，支持 animation 属性设置动画，动画默认开启                             |
+| subtitle  | 文本     | 副标题样式，附带旋转动画，支持 animation 属性设置动画，动画默认开启                                         |
 
 sector、title 和 subtitle 均支持 animation 属性，设置 Boolean 值来开启关闭动画，优先级高于 attrs 中 animation 属性，若未设置读取 attrs 中 animation 属性。设置 Object 可配置动画参数，可参考 [动态环图 demo](#/examples/pie-donut)
 
