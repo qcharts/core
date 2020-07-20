@@ -12,51 +12,15 @@ qcharts 内置了 `数据集（dataset）` 用于单独管理数据，从而使�
 
 ```javascript
 const data = [
-  {
-    product: '05-08',
-    year: '图例一',
-    sales: 42
-  },
-  {
-    product: '05-08',
-    year: '图例二',
-    sales: 78.2
-  },
-  {
-    product: '05-08',
-    year: '图例三',
-    sales: 62
-  },
-  {
-    product: '05-09',
-    year: '图例一',
-    sales: 80
-  },
-  {
-    product: '05-09',
-    year: '图例二',
-    sales: 108
-  },
-  {
-    product: '05-09',
-    year: '图例三',
-    sales: 64
-  },
-  {
-    product: '05-10',
-    year: '图例一',
-    sales: 36
-  },
-  {
-    product: '05-10',
-    year: '图例二',
-    sales: 91
-  },
-  {
-    product: '05-10',
-    year: '图例三',
-    sales: 56
-  }
+  { product: '05-08', year: '图例一', sales: 42 },
+  { product: '05-08', year: '图例二', sales: 78.2 },
+  { product: '05-08', year: '图例三', sales: 62 },
+  { product: '05-09', year: '图例一', sales: 80 },
+  { product: '05-09', year: '图例二', sales: 108 },
+  { product: '05-09', year: '图例三', sales: 64 },
+  { product: '05-10', year: '图例一', sales: 36 },
+  { product: '05-10', year: '图例二', sales: 91 },
+  { product: '05-10', year: '图例三', sales: 56 }
 ]
 const { Chart, Bar, Axis, Legend } = qcharts
 
@@ -66,7 +30,8 @@ const chart = new Chart({
 
 chart.source(data, {
   row: 'year',
-  value: 'sales'
+  value: 'sales',
+  text: 'product'
 })
 
 const bar = new Bar({})
@@ -102,77 +67,18 @@ chart.append([bar, legend, xAxis, yAxis])
 
 ```javascript
 const data = [
-  {
-    product: '茶叶',
-    year: '2016',
-    sales: 81.2
-  },
-
-  {
-    product: '茶叶',
-    year: '2017',
-    sales: 121.2
-  },
-
-  {
-    product: '茶叶',
-    year: '2018',
-    sales: 41.2
-  },
-
-  {
-    product: '牛奶',
-    year: '2016',
-    sales: 85.2
-  },
-
-  {
-    product: '牛奶',
-    year: '2017',
-    sales: 79.6
-  },
-
-  {
-    product: '牛奶',
-    year: '2018',
-    sales: 81.2
-  },
-
-  {
-    product: '咖啡',
-    year: '2016',
-    sales: 65.2
-  },
-
-  {
-    product: '咖啡',
-    year: '2017',
-    sales: 59.6
-  },
-
-  {
-    product: '咖啡',
-    year: '2018',
-    sales: 61.2
-  },
-
-  {
-    product: '椰汁',
-    year: '2016',
-    sales: 35.2
-  },
-
-  {
-    product: '椰汁',
-    year: '2017',
-    sales: 79.6
-  },
-
-  {
-    product: '椰汁',
-    year: '2018',
-    sales: 21.2
-  }
+  { product: '茶叶', year: '2016', sales: 81.2 },
+  { product: '茶叶', year: '2017', sales: 121.2 },
+  { product: '茶叶', year: '2018', sales: 41.2 },
+  { product: '牛奶', year: '2016', sales: 85.2 },
+  { product: '牛奶', year: '2017', sales: 79.6 },
+  { product: '牛奶', year: '2018', sales: 81.2 },
+  { product: '咖啡', year: '2016', sales: 65.2 },
+  { product: '咖啡', year: '2017', sales: 59.6 },
+  { product: '咖啡', year: '2018', sales: 61.2 },
+  { product: '椰汁', year: '2016', sales: 35.2 },
+  { product: '椰汁', year: '2017', sales: 79.6 },
+  { product: '椰汁', year: '2018', sales: 21.2 }
 ]
 
 const { Chart, Bar, Line, Axis, Legend } = qcharts
@@ -184,30 +90,20 @@ const chart = new Chart({
 chart.source(data, {
   row: 'year',
   col: 'product',
-  value: 'sales'
+  value: 'sales',
+  text: 'product'
 })
-
-{
-  const bar = new Bar({
-    size: ['80%', '30%']
-  })
-  const legend = new Legend({ align: ['center', 'default'] })
-  const xAxis = new Axis({ target: bar })
-  const yAxis = new Axis({ target: bar, orient: 'left' })
-  chart.append([bar, legend, xAxis, yAxis])
+const clientRect = {
+  top: 20,
+  left: 30,
+  right: 30,
+  bottom: 40
 }
-
-{
-  const bar = new Bar({
-    layoutBy: 'col',
-    pos: ['10%', '60%'],
-    size: ['80%', '30%']
-  })
-  const legend = new Legend({ layoutBy: 'col', align: ['center', 'center'] })
-  const xAxis = new Axis({ target: bar, layoutBy: 'col' })
-  const yAxis = new Axis({ target: bar, layoutBy: 'col', orient: 'left' })
-  chart.append([bar, legend, xAxis, yAxis])
-}
+const bar = new Bar({ clientRect })
+const legend = new Legend({ align: ['center', 'default'] })
+const xAxis = new Axis({ clientRect })
+const yAxis = new Axis({ clientRect, orient: 'left' })
+chart.append([bar, legend, xAxis, yAxis])
 ```
 
 :::

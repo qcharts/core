@@ -114,8 +114,23 @@ const data = [
     year: "图例三",
     sales: 10,
   },
+  {
+    product: "05-15",
+    year: "图例一",
+    sales: 25,
+  },
+  {
+    product: "05-15",
+    year: "图例二",
+    sales: 25,
+  },
+  {
+    product: "05-15",
+    year: "图例三",
+    sales: 10,
+  },
 ];
-const { Chart, PolarBar, Tooltip } = qcharts;
+const { Chart, PolarBar, Tooltip, Legend } = qcharts;
 const chart = new Chart({
   container: "#app",
 });
@@ -132,14 +147,10 @@ const bar = new PolarBar({
   strokeColor: "#FFF",
   lineWidth: 1,
 });
-const tooltip = new Tooltip({
-  formatter: (d) => `${d.product}: ${d.sales}`,
-});
-// const legend = new Legend({ align: ['center', 'bottom'] })
+const tooltip = new Tooltip();
+const legend = new Legend();
 
-chart.append([bar, tooltip]);
-
-
+chart.append([bar, tooltip, legend]);
 ```
 
 :::

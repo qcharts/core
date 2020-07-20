@@ -20,7 +20,7 @@ class Scatter extends BaseVisual {
       areaField: null,
       areaRange: null,
       showGuideLine: false,
-      layoutWay: null,
+      layoutWay: null
     }
   }
 
@@ -54,7 +54,6 @@ class Scatter extends BaseVisual {
       const oldRow = this.scatterData[ind]
       row.attrs.forEach((cell, cInd) => {
         const radius = this.getRealRadius({ ...cell })
-        cell.radius = cell.state === 'disabled' ? 0 : radius
         if (oldRow && oldRow.attrs[cInd]) {
           const oldCell = oldRow.attrs[cInd]
           const toPos = [...cell.pos]
@@ -62,29 +61,29 @@ class Scatter extends BaseVisual {
             oldCell.animation.to && oldCell.animation.to.pos ? [...oldCell.animation.to.pos] : [...oldCell.pos]
           // 位置相同
           if (toPos.toString() === fromPos.toString()) {
-            let fromRadius = cell.radius
-            let toRadius = cell.radius
-            // disabled -> default
+            let fromRadius = radius
+            let toRadius = radius
+            //default-> disabled
             if (cell.state === 'disabled') {
-              fromRadius = radius
-              // default -> disabled
-            } else if (oldCell.animation.to.radius == 0) {
+              toRadius = 0
+            }
+            if (oldCell.animation.to.radius == 0) {
               fromRadius = 0
             }
             cell.animation = {
               from: { radius: fromRadius },
-              to: { radius: toRadius },
+              to: { radius: toRadius }
             }
           } else {
             cell.animation = {
               from: { pos: fromPos },
-              to: { pos: toPos },
+              to: { pos: toPos }
             }
           }
         } else {
           cell.animation = {
             from: { radius: 0 },
-            to: { radius: cell.radius },
+            to: { radius: radius }
           }
         }
       })
@@ -102,7 +101,7 @@ class Scatter extends BaseVisual {
         const radius = this.getRealRadius({ ...cell })
         cell.animation = {
           from: { radius: 0 },
-          to: { radius },
+          to: { radius }
         }
       })
     })
@@ -143,12 +142,12 @@ class Scatter extends BaseVisual {
       this.guideLineData = [
         [
           [0, pos[1]],
-          [width, pos[1]],
+          [width, pos[1]]
         ],
         [
           [pos[0], 0],
-          [pos[0], height],
-        ],
+          [pos[0], height]
+        ]
       ]
     }
   }
@@ -185,7 +184,7 @@ class Scatter extends BaseVisual {
                 fillColor: strokeColor,
                 text,
                 anchor: [0.5, 0.5],
-                fontSize: '12px',
+                fontSize: '12px'
               },
               style
             )

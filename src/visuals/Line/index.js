@@ -129,7 +129,7 @@ class Line extends Base {
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove} size={[clientRect.width, clientRect.height]}>
         <Group class="lines-group">
           {lines.map((line, ind) => {
-            let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind].data, ind])
+            let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind], ind])
             return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...style} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
@@ -137,7 +137,7 @@ class Line extends Base {
           {this.type !== 'area'
             ? null
             : lines.map((line, ind) => {
-                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind].data, ind])
+                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
                 return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
         </Group>

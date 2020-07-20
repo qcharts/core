@@ -24,7 +24,7 @@ chart.source(data, {
   text: 'date'
 })
 const line = new Line()
-const axisBottom = new Axis()
+const axisBottom = new Axis().style('grid', false)
 const toolTip = new Tooltip()
 const legend = new Legend()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)

@@ -60,7 +60,7 @@ class Legend extends Base {
       if (!this.$el) {
         this.$el = document.createElement('div')
         this.$el.className = 'qcharts-legend'
-        this.$el.style.cssText = `text-align:center;position:absolute;font-size:12px;left:${left};top:${top};width:${width};height:${height};right:${right};bottom:${bottom}`
+        this.$el.style.cssText = `text-align:center;position:absolute;font-size:12px;left:${left};top:${top};width:${width};height:${height};right:${right};bottom:${bottom};z-index:10`
         this.chart.$el.appendChild(this.$el)
       }
       let html = ''
