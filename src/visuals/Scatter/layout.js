@@ -35,7 +35,7 @@ export default function layout(dataSet, size, layoutWay) {
   const [width, height] = size
 
   const { text: textField, value: valueField } = dataSet.option
-  const allData = [...dataSet].filter(cell => cell.state !== 'disabled')
+  const allData = [...dataSet]
 
   // 如果X轴是文本框，则进行均分
   const maxLen = getDataRange(dataSet.rows.map(d => d.length))[1]

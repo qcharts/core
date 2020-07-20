@@ -51,7 +51,7 @@ line.style('line', function(attrs, data, i) {
   }
 })
 
-const axisBottom = new Axis().style('grid', false)
+const axisBottom = new Axis()
 const tooltip = new Tooltip()
 const legend = new Legend()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)

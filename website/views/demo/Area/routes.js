@@ -14,11 +14,11 @@ export default [
     path: 'stack',
     component: () => import('./area-stack.md')
   },
-  // {
-  //   title: '区间面积图',
-  //   path: 'range',
-  //   component: () => import('./area-range.md')
-  // },
+  {
+    title: '区间面积图',
+    path: 'range',
+    component: () => import('./area-range.md')
+  },
   {
     title: '其它',
     path: 'others',

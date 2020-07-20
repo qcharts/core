@@ -26,8 +26,8 @@ class Base extends Node {
     return this['__store']
   }
   get layer() {
-    let { layer: layerName, zIndex = 0 } = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr())
-    return this.scene.layer(layerName).attr({ zIndex })
+    let layerName = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr()).layer
+    return this.scene.layer(layerName)
   }
   get $refs() {
     return this['__store'].__refs
@@ -136,9 +136,9 @@ class Base extends Node {
       //动画类型
       animation: {
         use: true,
-        duration: 700,
+        duration: 300,
         useTween: true,
-        easing: 'bounceOut'
+        easing: 'linear'
       },
       //位置布局信息
       clientRect: {

@@ -83,7 +83,7 @@ const data = [
     sales: -350,
   },
 ];
-const { Chart, PolarBar, Tooltip, Legend } = qcharts;
+const { Chart, PolarBar, Tooltip } = qcharts;
 const chart = new Chart({
   container: "#app",
 });
@@ -97,10 +97,14 @@ const bar = new PolarBar({
   radius: 0.9,
   groupPadAngle: Math.PI * 0.2,
 });
-const tooltip = new Tooltip();
-const legend = new Legend();
+const tooltip = new Tooltip({
 
-chart.append([bar, tooltip, legend]);
+  formatter: (d) => `${d.product}: ${d.sales}`,
+});
+// const legend = new Legend({ align: ['center', 'bottom'] })
+
+chart.append([bar, tooltip]);
+
 ```
 
 :::

@@ -58,14 +58,10 @@ chart.source(data, {
   text: 'date'
 })
 
-const line = new Line({
-  animation: {
-    duration: 2000
-  }
-})
+const line = new Line()
 line.style('point', { strokeColor: '#fff' })
 
-const axisBottom = new Axis().style('grid', false)
+const axisBottom = new Axis()
 const tooltip = new Tooltip()
 const legend = new Legend()
 

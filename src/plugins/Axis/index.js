@@ -1,6 +1,6 @@
 import Base from '../../base/BasePlugin'
-import { Group, Label, Polyline, Node } from 'spritejs'
-import { emptyObject } from '@qcharts/utils'
+import { Group, Label, Polyline } from 'spritejs'
+import { emptyObject, deepObjectMerge } from '@qcharts/utils'
 import filterClone from 'filter-clone'
 import layout from './layout'
 import { getStyle } from '@/utils/getStyle'
@@ -41,7 +41,6 @@ class Axis extends Base {
   defaultAttrs() {
     return {
       layer: 'axis',
-      zIndex: -1,
       formatter: e => e
     }
   }
@@ -56,37 +55,15 @@ class Axis extends Base {
   render(axis) {
     let oldAxis = this.renderAxis || emptyObject()
     this.renderAxis = axis
-    let { clientRect, formatter, orient } = this.renderAttrs
+    let { clientRect, formatter } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
     let axisStyle = getStyle(this, 'axis', styles.axis)
     //当前主体颜色
-    let arrOrient = this.chart.plugins
-      .map(plugin => {
-        if (plugin.constructor.name === 'Axis') {
-          return plugin.renderAttrs.orient
-        }
-      })
-      .filter(Boolean)
     return (
       <Group ref="wrap" pos={[clientRect.left, clientRect.top]}>
         <Polyline {...axisStyle} animation={{ from: { points: oldAxis.axisPoints }, to: { points: axis.axisPoints } }}></Polyline>
         <Group>
-          {axis.grids.map((grid, ind) => {
-            let fromPoints = (oldAxis.grids && oldAxis.grids[ind] && oldAxis.grids[ind].points) || grid.points
-            let ani = { from: { points: fromPoints }, to: { points: grid.points } }
-            let style = getStyle(this, 'grid', styles.grid, [ind])
-            if (orient === 'left' || orient === 'right') {
-              if ((ind === 0 && arrOrient.includes('bottom')) || (ind = axis.grids.length - 1 && arrOrient.includes('top'))) {
-                return <Node />
-              }
-            } else if (orient === 'top' || orient === 'bottom') {
-              if ((ind === 0 && arrOrient.includes('left')) || (ind = axis.grids.length - 1 && arrOrient.includes('right'))) {
-                return <Node />
-              }
-            }
-            return style === false ? <Node /> : <Polyline {...style} points={ani.from.points} animation={ani} />
-          })}
           {axis.scales.map((scale, ind) => {
             let fromPos = (oldAxis.scales && oldAxis.scales[ind] && oldAxis.scales[ind].pos) || scale.pos
             let ani = { from: { pos: fromPos }, to: { pos: scale.pos } }
