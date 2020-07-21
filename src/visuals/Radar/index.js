@@ -182,8 +182,7 @@ class Radar extends BaseVisual {
     if (style === false) {
       return
     }
-    const axisLabelStyle = deepObjectMerge(attr, style, other)
-    return <Label {...axisLabelStyle} animation={animation} />
+    return <Label {...attr} {...style} {...other}  animation={animation} />
   }
 
   renderAxisScale(attrs, index) {
@@ -251,10 +250,9 @@ class Radar extends BaseVisual {
       if (style === false) {
         return
       }
-      const axisStyle = deepObjectMerge(attr, style, other)
       return (
-        <Group clipOverflow={false} size={[1, 1]}>
-          <Polyline {...axisStyle} animation={animation} />
+        <Group>
+          <Polyline {...attr} {...style} {...other} animation={animation} />
           {this.renderAxisLabel(attr, i)}
           {this.renderAxisScale(attr, i)}
         </Group>

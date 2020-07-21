@@ -88,7 +88,7 @@ class Scatter extends BaseVisual {
         }
       })
     })
-    this.scatterData = temp.map((row) => deepObjectMerge({}, row))
+    this.scatterData = temp
     return updateData
   }
 
