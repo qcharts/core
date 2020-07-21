@@ -1,9 +1,10 @@
-import { Group, Polyline, Arc, Label } from 'spritejs'
+import { Group, Polyline, Label } from 'spritejs'
 import BaseVisual from '../../base/BaseVisual'
 import { scaleLinear } from '../../utils/scaleLinear'
 import { hexToRgba } from '../../utils/color'
-import { deepObjectMerge } from '@qcharts/utils'
+import { deepObjectMerge, throttle } from '@qcharts/utils'
 import layout from './layout'
+import getPointSymbol from '../../utils/getPointSymbol'
 
 class Scatter extends BaseVisual {
   constructor(attrs = {}) {
@@ -131,9 +132,9 @@ class Scatter extends BaseVisual {
 
   onMouseenter(event, el) {
     this.dataset.resetState()
-    const { row, col } = el.attributes
+    const { row: rowInd, col: colInd } = el.attributes
     this.dataset.forEach((cell) => {
-      cell.state = cell.row === row && cell.col === col ? 'hover' : 'default'
+      cell.state = cell.row === rowInd && cell.col === colInd ? 'hover' : 'default'
     })
     const { showGuideLine } = this.renderAttrs
     if (showGuideLine) {
@@ -214,11 +215,8 @@ class Scatter extends BaseVisual {
         } else {
           style = deepObjectMerge(style || {}, { radius })
         }
-        return (
-          <Group>
-            <Arc {...attr} {...style} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
-          </Group>
-        )
+        const TargetName = getPointSymbol(style)
+        return <TargetName {...attr} {...style} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
       })
     })
     return scatters.reduce((pre, cur) => {
