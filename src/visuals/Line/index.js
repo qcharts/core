@@ -87,7 +87,6 @@ class Line extends Base {
     this.dataset.resetState()
   }
   guidelinemove(event, el) {
-    console.log('aaa', this.dataset)
     if (this.renderLines.length) {
       //获取 x轴坐标的刻度
       let arrX = this.renderLines[0].to.points.map(pos => pos[0])
@@ -101,7 +100,6 @@ class Line extends Base {
           break
         }
       }
-      console.log(curInd)
       //重置所有的dateset的状态
       if (this.hoverIndex !== curInd) {
         this.dataset.resetState()
