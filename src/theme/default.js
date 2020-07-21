@@ -126,6 +126,10 @@ theme.plugins = {
       },
       grid: {
         strokeColor: '#eee'
+      },
+      name: {
+        fontSize: 12,
+        fillColor: '#666'
       }
     },
     attrs: {
