@@ -31,8 +31,8 @@ const data = [
   { date: '12月', category: '气温', val: 6.6 }
 ]
 
-const { Chart, Line, Legend, Tooltip, Axis } = qcharts
-
+const { Chart, Line, Legend, Tooltip, Axis, theme } = qcharts
+const colors = theme.colors
 const chart = new Chart({
   container: '#app'
 })
@@ -52,29 +52,32 @@ const line = new Line({
 })
   .source(d1)
   .style('point', { strokeColor: '#fff' })
-
+  .style('line', { strokeColor: colors[0] })
 const axisLeft = new Axis({
   orient: 'left',
   splitNumber: 5,
   name: '降水量（毫升）',
-  formatter: (val) => {
+  formatter: val => {
     return `${val} ml`
   }
 })
   .style('axis', false)
   .style('scale', false)
+  .style('name', { fontSize: 15 })
+  .style('grid', { lineDash: [3, 3] })
   .source(d1)
 
 const d2 = ds.selectRows('气温')
 const line2 = new Line({
   splitNumber: 5
-}).source(d2)
-
+})
+  .source(d2)
+  .style('line', { strokeColor: colors[1] })
 const axisRight = new Axis({
   splitNumber: 5,
   orient: 'right',
   name: '温度（摄氏度）',
-  formatter: (val) => {
+  formatter: val => {
     return `${val} °C`
   }
 })
@@ -88,10 +91,10 @@ const axisBottom = new Axis().style('scale', true)
 const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 
 const tooltip = new Tooltip({
-  title: (t) => t[0].date,
+  title: t => t[0].date,
   formatter: function(d) {
     const date = d.date
-    const curData = data.filter((item) => item.date === date)
+    const curData = data.filter(item => item.date === date)
     return `气温:${curData[1].val}°C  降水:${curData[0].val}ml`
   }
 })
