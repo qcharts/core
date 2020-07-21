@@ -24,6 +24,7 @@ export default function layout(arr, attrs) {
       grid: {
         strokeColor: '#666'
       },
+      name: {},
       type: 'category'
     },
     bottom: {
@@ -40,6 +41,7 @@ export default function layout(arr, attrs) {
       grid: {
         strokeColor: '#666'
       },
+      name: {},
       type: 'category'
     },
     left: {
@@ -56,6 +58,7 @@ export default function layout(arr, attrs) {
       grid: {
         strokeColor: '#666'
       },
+      name: {},
       type: 'value'
     },
     right: {
@@ -71,6 +74,7 @@ export default function layout(arr, attrs) {
       grid: {
         strokeColor: '#666'
       },
+      name: {},
       type: 'value'
     }
   }
@@ -121,18 +125,20 @@ export default function layout(arr, attrs) {
       [dx, height],
       [dx, 0]
     ]
+    res.nameAttr = { pos: [dx, 0], anchor: [0.5, 1], padding: [10] }
   } else if (orient === 'bottom' || orient === 'top') {
     let dy = orient === 'bottom' ? height : 0
     res.axisPoints = [
       [0, dy],
       [width, dy]
     ]
+    res.nameAttr = { pos: [width, dy], anchor: [0, 1] }
   }
   return res
 }
 function getItemAttrs(defaultAttrs, orient, cell, value, scaleF, clientRect, axisGap) {
   let res = emptyObject()
-  let { width, height, left } = clientRect
+  let { width, height, left, top } = clientRect
   let labelPosValue = axisGap ? value + 0.5 : value
   if (orient === 'left' || orient === 'right') {
     let x = orient === 'left' ? 0 : width

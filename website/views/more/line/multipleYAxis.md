@@ -63,6 +63,8 @@ const axisLeft = new Axis({
 })
   .style('axis', false)
   .style('scale', false)
+  .style('name', { fontSize: 15 })
+  .style('grid', { lineDash: [3, 3] })
   .source(d1)
 
 const d2 = ds.selectRows('气温')
