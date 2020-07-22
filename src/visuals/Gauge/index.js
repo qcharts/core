@@ -245,7 +245,6 @@ class Gauge extends BaseVisual {
     const {
       _useBuiltInColors,
       title,
-      subTitle,
       center,
       radius,
       startAngle,
@@ -327,18 +326,6 @@ class Gauge extends BaseVisual {
             {...this.style('title')(data, data.dataOrigin, 0)}
           />
         ) : null}
-        {subTitle ? (
-          <Label
-            text={jsType(subTitle) === 'function' ? subTitle(data.dataOrigin) : subTitle}
-            pos={labelCenter}
-            textAlign="center"
-            zIndex={10}
-            anchor={[0.5, 0]}
-            fillColor={strokeBgcolor}
-            {...this.style('subTitle')(data, data.dataOrigin, 0)}
-          />
-        ) : null}
-
         {tickLine !== false || tickText !== false
           ? ticks.map((tick, j) => (
               <Group pos={center} anchor={[0, 0]} zIndex={1010}>
