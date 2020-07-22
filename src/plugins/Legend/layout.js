@@ -31,7 +31,6 @@ export default function layout(arr, attrs) {
       pos: isVertical
         ? [iconSize[0], i * (gap + legendSize[1])]
         : [iconSize[0] + i * (gap + legendSize[0]), 0],
-      width: textSize[0],
       height: textSize[1],
       font: '10px "宋体"',
       text: arr[i].name,
