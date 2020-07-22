@@ -25,18 +25,12 @@ class Tooltip extends Base {
     1
   )
   rendered() {
-    let targetVisual = this.chart.visuals[0]
     let { colors, sort, formatter } = this.renderAttrs
-    targetVisual.dataset.on('change', data => {
+    this.chart.dataset.on('change', data => {
       let { option } = data
       this.$el.innerHTML = ''
       if (option.value === 'hover') {
-        let arr = []
-        targetVisual.dataset.forEach(item => {
-          if (item.state === 'hover') {
-            arr.push(item)
-          }
-        })
+        let arr = [].concat(this.chart.dataset).filter(item => item.state === 'hover')
         if (sort) {
           arr.sort(sort)
         }
@@ -49,7 +43,7 @@ class Tooltip extends Base {
             if (formatter) {
               text = formatter(item.data) || text
             }
-            let html = `<div class="tooltip-item"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[ind]}"></span><span class="text">${item.text}：${item.value}</span></div>`
+            let html = `<div class="tooltip-item"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[ind]}"></span><span class="text">${text}</span></div>`
             innerHtml += html
           })
           $div.innerHTML = innerHtml

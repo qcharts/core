@@ -89,6 +89,14 @@ theme.visuals = {
       shape: { fillColor: '#e6f3ff', lineWidth: 3, strokeColor: '#156cbd' }
     },
     attrs: {}
+  },
+  Gauge: {
+    colors: theme.colors,
+    attrs: {}
+  },
+  RadialBar: {
+    colors: theme.colors,
+    attrs: {}
   }
 }
 theme.plugins = {
@@ -117,7 +125,12 @@ theme.plugins = {
         fillColor: '#666'
       },
       grid: {
-        strokeColor: '#eee'
+        strokeColor: '#eee',
+        lineDash: [3, 3]
+      },
+      name: {
+        fontSize: 12,
+        fillColor: '#666'
       }
     },
     attrs: {

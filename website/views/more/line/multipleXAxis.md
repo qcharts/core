@@ -51,7 +51,7 @@ const d1 = ds.selectRows('2015年降水量')
 const line = new Line().source(d1)
 
 line.style('line', { strokeColor: '#47A1FF' })
-const axisBottom = new Axis({ orient: 'bottom' }).source(d1)
+const axisBottom = new Axis({ orient: 'bottom' }).source(d1).style('grid', { lineDash: [3, 3] })
 
 const d2 = ds.selectRows('2016年降水量')
 const line2 = new Line().source(d2)
@@ -61,11 +61,7 @@ const axisTop = new Axis({
   orient: 'top'
 }).source(d2)
 
-const axisLeft = new Axis({ orient: 'left' }).style('scale', true).style('grid', function(attr, data, i) {
-  if (i === 6) {
-    return false
-  }
-})
+const axisLeft = new Axis({ orient: 'left' }).style('scale', true)
 
 const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 

@@ -36,9 +36,9 @@ export default [
     component: () => import('./scatter.md')
   },
   {
-    title: 'Progress(进度图)',
-    path: 'progress',
-    component: () => import('./progress.md')
+    title: '水波图',
+    path: 'wave',
+    component: () => import('./wave.md')
   },
   {
     title: 'Funnel(漏斗图)',

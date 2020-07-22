@@ -56,7 +56,7 @@ class Axis extends Base {
   render(axis) {
     let oldAxis = this.renderAxis || emptyObject()
     this.renderAxis = axis
-    let { clientRect, formatter, orient } = this.renderAttrs
+    let { clientRect, formatter, orient, name } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
     let axisStyle = getStyle(this, 'axis', styles.axis)
@@ -68,6 +68,9 @@ class Axis extends Base {
         }
       })
       .filter(Boolean)
+    let nameStyle = getStyle(this, 'name', [styles.name || {}, filterClone(axis.nameAttr, [], ['pos'])])
+    let oldPos = (oldAxis.nameAttr && oldAxis.nameAttr.pos) || axis.nameAttr.pos
+    let nameAni = { from: { pos: oldPos }, to: { pos: axis.nameAttr.pos } }
     return (
       <Group ref="wrap" pos={[clientRect.left, clientRect.top]}>
         <Polyline {...axisStyle} animation={{ from: { points: oldAxis.axisPoints }, to: { points: axis.axisPoints } }}></Polyline>
@@ -85,22 +88,23 @@ class Axis extends Base {
                 return <Node />
               }
             }
-            return style === false ? <Node /> : <Polyline {...style} animation={ani} />
+            return style === false ? <Node /> : <Polyline {...style} points={ani.from.points} animation={ani} />
           })}
           {axis.scales.map((scale, ind) => {
             let fromPos = (oldAxis.scales && oldAxis.scales[ind] && oldAxis.scales[ind].pos) || scale.pos
             let ani = { from: { pos: fromPos }, to: { pos: scale.pos } }
             // 排除pos属性，pos属性用来处理动画，其它属性直接赋值
             let style = getStyle(this, 'scale', styles.scale, [scale, ind])
-            return <Group {...filterClone(scale, [], ['pos'])} {...style} animation={ani}></Group>
+            return style === false ? <Node /> : <Group {...filterClone(scale, [], ['pos'])} {...style} animation={ani}></Group>
           })}
           {axis.labels.map((label, ind) => {
             let fromPos = (oldAxis.labels && oldAxis.labels[ind] && oldAxis.labels[ind].pos) || label.pos
             let style = getStyle(this, 'label', styles.label, [label, ind])
             let ani = { from: { pos: fromPos }, to: { pos: label.pos } }
-            return <Label {...filterClone(label, [], ['pos', 'text'])} {...style} text={formatter(label.text)} animation={ani}></Label>
+            return style === false ? <Node /> : <Label {...filterClone(label, [], ['pos', 'text'])} {...style} text={formatter(label.text)} animation={ani}></Label>
           })}
         </Group>
+        {nameStyle === false || name === undefined || name.length === 0 ? <Node /> : <Label {...nameStyle} text={name} animation={nameAni} />}
       </Group>
     )
   }
