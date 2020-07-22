@@ -59,11 +59,11 @@ const radar = new Radar()
 const pointObj = {
   sprite: {
     pointType: 'sprite',
-    anchor: [0, 0.5],
+    anchor: [0.5, 0.5],
     bgcolor: 'white',
     borderWidth: 1,
     borderRadius: 20,
-    texture: 'https://p5.ssl.qhimg.com/t01f47a319aebf27174.png',
+    texture: 'https://p5.ssl.qhimg.com/t01a2bd87890397464a.png',
     textureRect: [0, 0, 19, 26],
     textureRepeat: true
   },
@@ -77,22 +77,26 @@ const pointObj = {
     scale: 0.05
   },
   ellipse: {
+    normalize: true,
     radiusX: 15,
     radiusY: 10,
     fillColor: 'green'
   },
   rect: {
+    normalize: true,
     pointType: 'rect',
-    ize: [5, 5],
+    size: [15, 15],
     fillColor: 'red'
   },
   triangle: {
+    normalize: true,
     pointType: 'triangle',
     sides: [15, 15],
     angle: 60,
     fillColor: '#7cc'
   },
   parallel: {
+    normalize: true,
     pointType: 'parallel',
     sides: [10, 10],
     angle: 60,
@@ -100,12 +104,14 @@ const pointObj = {
     fillColor: '#c7c'
   },
   regular: {
+    normalize: true,
     pointType: 'regular',
     edges: 7,
     radius: 10,
     fillColor: 'blue'
   },
   star: {
+    normalize: true,
     pointType: 'star',
     angles: 5,
     innerRadius: 5,
@@ -121,6 +127,7 @@ radar.style('point', (d, data, i) => {
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 chart.append([radar, legend])
+
 ```
 
 :::
