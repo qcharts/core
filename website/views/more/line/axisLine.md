@@ -46,14 +46,18 @@ const line = new Line()
 
 const axisLeft = new Axis({
   orient: 'left',
-  formatter: (val) => {
+  formatter: val => {
     return `${val} ml`
   }
 })
   .style('axis', false)
   .style('scale', false)
+  .style('grid', { lineDash: [3, 3] })
 
-const axisBottom = new Axis().style('scale', hideAxis).style('label', hideAxis)
+const axisBottom = new Axis()
+  .style('scale', hideAxis)
+  .style('label', hideAxis)
+  .style('grid', false)
 
 function hideAxis(attrs, data, i) {
   if (i % 2 !== 0) {

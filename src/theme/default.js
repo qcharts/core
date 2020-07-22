@@ -125,7 +125,8 @@ theme.plugins = {
         fillColor: '#666'
       },
       grid: {
-        strokeColor: '#eee'
+        strokeColor: '#eee',
+        lineDash: [3, 3]
       },
       name: {
         fontSize: 12,

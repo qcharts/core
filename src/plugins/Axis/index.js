@@ -95,13 +95,13 @@ class Axis extends Base {
             let ani = { from: { pos: fromPos }, to: { pos: scale.pos } }
             // 排除pos属性，pos属性用来处理动画，其它属性直接赋值
             let style = getStyle(this, 'scale', styles.scale, [scale, ind])
-            return <Group {...filterClone(scale, [], ['pos'])} {...style} animation={ani}></Group>
+            return style === false ? <Node /> : <Group {...filterClone(scale, [], ['pos'])} {...style} animation={ani}></Group>
           })}
           {axis.labels.map((label, ind) => {
             let fromPos = (oldAxis.labels && oldAxis.labels[ind] && oldAxis.labels[ind].pos) || label.pos
             let style = getStyle(this, 'label', styles.label, [label, ind])
             let ani = { from: { pos: fromPos }, to: { pos: label.pos } }
-            return <Label {...filterClone(label, [], ['pos', 'text'])} {...style} text={formatter(label.text)} animation={ani}></Label>
+            return style === false ? <Node /> : <Label {...filterClone(label, [], ['pos', 'text'])} {...style} text={formatter(label.text)} animation={ani}></Label>
           })}
         </Group>
         {nameStyle === false || name === undefined || name.length === 0 ? <Node /> : <Label {...nameStyle} text={name} animation={nameAni} />}
