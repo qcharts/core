@@ -6,7 +6,7 @@
 
 ```javascript
 
-const { Chart, Gauge, Legend, Tooltip } = qcharts
+const { Chart, Gauge} = qcharts
 
 const chart = new Chart({ container: '#app' })
 
@@ -34,28 +34,18 @@ chart.append(gauge)
 :::demo
 
 ```javascript
-const data = [
-  {
-    value: 7.3
-  }
-]
 
-const { Chart, Gauge, Legend, Tooltip } = qcharts
+const { Chart, Gauge } = qcharts
 
 const chart = new Chart({ container: '#app' })
-
-chart.source(data, {
-  value: 'value'
-})
 
 const gauge = new Gauge({
   min: 0,
   max: 10,
+  percent:7.3,
   tickStep: 1,
   tickLength: 10,
   labelOffset: 20,
-  title: (d) => `${d.value}`,
-  subTitle: 'Hello'
 })
 
 gauge.style('title', { fontSize: 36 })

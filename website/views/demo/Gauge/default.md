@@ -4,7 +4,7 @@
 
 ```javascript
 
-const { Chart, Gauge, Legend, Tooltip } = qcharts
+const { Chart, Gauge } = qcharts
 
 const chart = new Chart({ container: '#app' })
 
