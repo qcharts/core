@@ -2,7 +2,7 @@ import { Group, Polyline, Label } from 'spritejs'
 import BaseVisual from '../../base/BaseVisual'
 import { scaleLinear } from '../../utils/scaleLinear'
 import { hexToRgba } from '../../utils/color'
-import { deepObjectMerge, throttle } from '@qcharts/utils'
+import { deepObjectMerge } from '@qcharts/utils'
 import layout from './layout'
 import getPointSymbol from '../../utils/getPointSymbol'
 

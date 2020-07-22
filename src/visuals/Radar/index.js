@@ -1,4 +1,4 @@
-import { Group, Polyline, Label } from 'spritejs'
+import { Group, Polyline, Label, Sprite } from 'spritejs'
 import { deepObjectMerge, throttle, jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
@@ -262,14 +262,14 @@ class Radar extends BaseVisual {
   }
 
   renderPoints(sectionAttrs) {
-    const allPoints = sectionAttrs.map((attrs, index) => {
-      const { animation: secAnimation, dataOrigin, strokeColor } = attrs
+    const allPoints = sectionAttrs.map((attrs) => {
+      const { animation: secAnimation, dataOrigin, strokeColor, state } = attrs
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
       const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
       return toPoints.map((point, i) => {
         let animation = {
-          from: { pos: [0, 0], opacity: secAnimation.from.opacity },
-          to: { pos: point, opacity: secAnimation.to.opacity }
+          from: { pos: [0, 0], opacity: 1 },
+          to: { pos: point, opacity: 1 }
         }
 
         if (prePoints && prePoints[i]) {
@@ -279,6 +279,9 @@ class Radar extends BaseVisual {
             animation.from.pos = point
           }
         }
+        if (state === 'disabled') {
+          animation.to.opacity = 0
+        }
 
         const attr = {
           pos: point,
@@ -286,12 +289,12 @@ class Radar extends BaseVisual {
           radius: 2,
           dataOrigin: dataOrigin[i]
         }
-        const style = this.style('point')(attr, { ...attr.dataOrigin }, i)
+        const { style, hoverStyle } = this.getStyle('point', attr, { ...attr.dataOrigin }, i)
         if (style === false) {
           return
         }
         const TargetName = getPointSymbol(style)
-        return <TargetName {...attr} {...style} animation={animation} />
+        return <TargetName {...attr} {...style} {...hoverStyle} animation={animation} zIndex={99} />
       })
     })
 
