@@ -7,31 +7,19 @@
 :::demo
 
 ```javascript
-const data = [
-  {
-    text: '信用分',
-    value: 45
-  }
-]
 
 const { Chart, Gauge, Legend, Tooltip } = qcharts
 
 const chart = new Chart({ container: '#app' })
 
-chart.source(data, {
-  row: 'text',
-  value: 'value'
-})
-
 const gauge = new Gauge({
   min: 0,
   max: 100,
+  percent:45,
   lineWidth: 20,
   // 修改指针宽度
   pointerWidth: 10,
-  tickStep: 10,
-  title: (d) => `${d.value}`,
-  subTitle: (d) => `${d.text}`
+  tickStep: 10
 })
 
 gauge
@@ -42,12 +30,10 @@ gauge
 chart.append(gauge)
 
 setInterval(() => {
-  chart.source([
-    {
-      text: '信用分',
-      value: (Math.random() * 100).toFixed(0)
-    }
-  ])
+  const val = (Math.random() * 100).toFixed(0)
+  gauge.attr({
+    percent:val
+  })
 }, 3000)
 ```
 

@@ -2,9 +2,6 @@ import { Group, Polyline, Label, Arc, Gradient } from 'spritejs'
 import { jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 
-// 数据拷贝
-const flattern = (arr) => [].concat.apply([], arr)
-
 /**
  * 根据给定参数，生成仪表盘刻度的坐标以及刻度文字标注的坐标
  * @param {Number} radius 仪表盘半径
@@ -245,6 +242,7 @@ class Gauge extends BaseVisual {
     const {
       _useBuiltInColors,
       title,
+      percent,
       center,
       radius,
       startAngle,
@@ -258,6 +256,7 @@ class Gauge extends BaseVisual {
     const ticks = this.ticks
     const tickLine = this.isStyleExist('tickLine')
     const tickText = this.isStyleExist('tickText')
+    const realTitle = title || percent
 
     let gradientColor = null // 默认使用内置的渐变配色方案
 
@@ -316,9 +315,9 @@ class Gauge extends BaseVisual {
           zIndex={11}
         />
         {this.renderPointer(data, maxTickTextFontSize)}
-        {title ? (
+        {realTitle ? (
           <Label
-            text={jsType(title) === 'function' ? title(data.dataOrigin) : title}
+            text={jsType(realTitle) === 'function' ? realTitle(data.dataOrigin) : realTitle}
             pos={labelCenter}
             textAlign="center"
             zIndex={10}

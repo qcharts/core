@@ -13,8 +13,7 @@ const gauge = new Gauge({
   max: 100,
   percent:60,
   lineWidth: 20,
-  tickStep: 10,
-  title: '60',
+  tickStep: 10
 })
 
 gauge.style('title', { fontSize: 36 })
@@ -22,7 +21,7 @@ gauge.style('title', { fontSize: 36 })
 chart.append(gauge)
 
 setTimeout(() => {
-  gauge.attr({percent:45,title:'45'})
+  gauge.attr({percent:45})
 }, 3000)
 ```
 
