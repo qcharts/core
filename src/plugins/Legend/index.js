@@ -240,8 +240,10 @@ class Legend extends Base {
     let colors = this.theme.colors;
     this.posFrom = this.currentPos;
     const { pos, pagePos } = this.pos;
+    this.posFrom = this.twiceRender ? this.posFrom : pos;
     const { page, totalPage } = this.state;
     this.currentPos = pos;
+
     const isVertical = this.isVertical;
     if (arr) {
       return (
