@@ -13,15 +13,6 @@ theme.visuals = {
       statck: false
     }
   },
-  LineTest: {
-    colors: theme.colors,
-    styles: {
-      line: { lineWidth: 1 }
-    },
-    attrs: {
-      statck: false
-    }
-  },
   Pie: {
     colors: theme.colors,
     styles: {
@@ -125,7 +116,7 @@ theme.plugins = {
         fillColor: '#666'
       },
       grid: {
-        strokeColor: '#eee',
+        strokeColor: '#ddd',
         lineDash: [3, 3]
       },
       name: {
