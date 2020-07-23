@@ -23,7 +23,7 @@ export default [
   // // },
 
   {
-    title: '其他',
+    title: '数据更新',
     path: 'other',
     component: () => import('./pointer.md')
   }

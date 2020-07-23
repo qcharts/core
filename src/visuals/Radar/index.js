@@ -1,7 +1,8 @@
-import { Group, Polyline, Label, Arc } from 'spritejs'
+import { Group, Polyline, Label, Sprite } from 'spritejs'
 import { deepObjectMerge, throttle, jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
+import getPointSymbol from '../../utils/getPointSymbol'
 
 class Radar extends BaseVisual {
   constructor(attrs) {
@@ -31,7 +32,7 @@ class Radar extends BaseVisual {
       splitNumber: 4, // 网格层次
       startAngle: 270, // 起始角度
       radius: 0.6, // 雷达图半径
-      labelOffset: 7, // 文字偏移
+      labelOffset: 7 // 文字偏移
     }
   }
 
@@ -43,21 +44,21 @@ class Radar extends BaseVisual {
     if (state === 'disabled') {
       return {
         from: { points: preData.animation.to.points, opacity: 1 },
-        to: { points: zeroPoints, opacity: 0 },
+        to: { points: zeroPoints, opacity: 0 }
       }
     }
     if (!preData) {
       preData = {
         animation: {
           to: {
-            points: zeroPoints,
-          },
-        },
+            points: zeroPoints
+          }
+        }
       }
     }
     return {
       from: { points: preData.animation.to.points },
-      to: { points: toPoints },
+      to: { points: toPoints }
     }
   }
 
@@ -124,14 +125,14 @@ class Radar extends BaseVisual {
   getScaleAnimation(toScale) {
     return {
       from: { scale: 0 },
-      to: { scale: toScale },
+      to: { scale: toScale }
     }
   }
 
   getStyle(type, attr, data, index) {
     return {
       style: this.style(type)(attr, data, index) || {},
-      hoverStyle: this.style(`${type}:hover`)(attr, data, index) || {},
+      hoverStyle: this.style(`${type}:hover`)(attr, data, index) || {}
     }
   }
 
@@ -154,7 +155,7 @@ class Radar extends BaseVisual {
           lineWidth: attr.lineWidth,
           strokeColor: attr.strokeColor,
           radius: attr.radius,
-          scale: attr.scale,
+          scale: attr.scale
         }
       }
       return <GridShape {...gridAttr} {...style} {...other} animation={animation} />
@@ -175,15 +176,14 @@ class Radar extends BaseVisual {
       color: '#67728C',
       radian,
       anchor,
-      fontSize: 12,
+      fontSize: 12
     }
     const animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(1)
     const { style, ...other } = this.getStyle('label', attr, { text: attr.label, radian }, i)
     if (style === false) {
       return
     }
-    const axisLabelStyle = deepObjectMerge(attr, style, other)
-    return <Label {...axisLabelStyle} animation={animation} />
+    return <Label {...attr} {...style} {...other} animation={animation} />
   }
 
   renderAxisScale(attrs, index) {
@@ -200,7 +200,7 @@ class Radar extends BaseVisual {
       fontSize: 12,
       anchor: [1, 0.5],
       translate: [-5, 0],
-      display,
+      display
     }
     for (let i = 0; i < attrs.splitNumber + 1; i++) {
       let point = [perX * i, perY * i]
@@ -209,7 +209,7 @@ class Radar extends BaseVisual {
         text,
         color: '#67728C',
         pos: point,
-        ...common,
+        ...common
       }
       const { style, ...other } = this.getStyle('scale', attr, { text, index }, i)
       if (style === false) {
@@ -228,13 +228,13 @@ class Radar extends BaseVisual {
               formatter: (attr) => {
                 attr.text = attr.text.toFixed(0)
                 return attr
-              },
+              }
             }
           }
         } else {
           animation = {
             from: { pos: [0, 0] },
-            to: { pos: point },
+            to: { pos: point }
           }
         }
         this.scaleEl[i] = { text: Number(text.toFixed(0)) }
@@ -251,10 +251,9 @@ class Radar extends BaseVisual {
       if (style === false) {
         return
       }
-      const axisStyle = deepObjectMerge(attr, style, other)
       return (
-        <Group clipOverflow={false} size={[1, 1]}>
-          <Polyline {...axisStyle} animation={animation} />
+        <Group>
+          <Polyline {...attr} {...style} {...other} animation={animation} />
           {this.renderAxisLabel(attr, i)}
           {this.renderAxisScale(attr, i)}
         </Group>
@@ -263,38 +262,39 @@ class Radar extends BaseVisual {
   }
 
   renderPoints(sectionAttrs) {
-    const allPoints = sectionAttrs.map((attrs, index) => {
-      const { animation: secAnimation, dataOrigin, strokeColor } = attrs
+    const allPoints = sectionAttrs.map((attrs) => {
+      const { animation: secAnimation, dataOrigin, strokeColor, state } = attrs
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
       const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
       return toPoints.map((point, i) => {
-        let attr = {
-          pos: point,
-          fillColor: strokeColor,
-          startAngle: 0,
-          endAngle: 360,
-          radius: 2,
-          dataOrigin: dataOrigin[i],
-          anchor: [0.5, 0.5],
-        }
         let animation = {
-          from: { pos: [0, 0], opacity: secAnimation.from.opacity },
-          to: { pos: point, opacity: secAnimation.to.opacity },
+          from: { pos: [0, 0], opacity: 1 },
+          to: { pos: point, opacity: 1 }
         }
 
         if (prePoints && prePoints[i]) {
           if (!this.isSamePoints(prePoints[i], point)) {
             animation.from.pos = prePoints[i]
           } else {
-            animation.from.pos = []
+            animation.from.pos = point
           }
         }
-        const style = this.style('point')(attr, { ...attr.dataOrigin }, i)
+        if (state === 'disabled') {
+          animation.to.opacity = 0
+        }
+
+        const attr = {
+          pos: point,
+          fillColor: strokeColor,
+          radius: 2,
+          dataOrigin: dataOrigin[i]
+        }
+        const { style, hoverStyle } = this.getStyle('point', attr, { ...attr.dataOrigin }, i)
         if (style === false) {
           return
         }
-
-        return <Arc {...attr} {...style} animation={animation} />
+        const TargetName = getPointSymbol(style)
+        return <TargetName {...attr} {...style} {...hoverStyle} animation={animation} zIndex={99} />
       })
     })
 

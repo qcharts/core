@@ -3,29 +3,17 @@
 :::demo
 
 ```javascript
-const data = [
-  {
-    text: '信用分',
-    value: 45
-  }
-]
 
-const { Chart, Gauge, Legend, Tooltip } = qcharts
+const { Chart, Gauge } = qcharts
 
 const chart = new Chart({ container: '#app' })
-
-chart.source(data, {
-  row: 'text',
-  value: 'value'
-})
 
 const gauge = new Gauge({
   min: 0,
   max: 100,
+  percent:60,
   lineWidth: 20,
-  tickStep: 10,
-  title: (d) => `${d.value}`,
-  subTitle: (d) => `${d.text}`
+  tickStep: 10
 })
 
 gauge.style('title', { fontSize: 36 })
@@ -33,12 +21,7 @@ gauge.style('title', { fontSize: 36 })
 chart.append(gauge)
 
 setTimeout(() => {
-  chart.source([
-    {
-      text: '信用分',
-      value: 65
-    }
-  ])
+  gauge.attr({percent:45})
 }, 3000)
 ```
 
