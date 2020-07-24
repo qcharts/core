@@ -77,7 +77,6 @@ const pointObj = {
     scale: 0.05
   },
   ellipse: {
-    normalize: true,
     radiusX: 15,
     radiusY: 10,
     fillColor: 'green'
