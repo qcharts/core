@@ -2,6 +2,7 @@ import Base from '../../base/BaseVisual'
 import { Group, Polyline, Node } from 'spritejs'
 import { getStyle } from '@/utils/getStyle'
 import layout from './layout'
+import Symbol from '../../utils/Symbol'
 class Line extends Base {
   constructor(attrs) {
     super(attrs)
@@ -127,10 +128,24 @@ class Line extends Base {
     this.renderLines = lines
     return (
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove} size={[clientRect.width, clientRect.height]}>
+        {/* <Symbol {...sStyle} /> */}
         <Group class="lines-group">
           {lines.map((line, ind) => {
             let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind], ind])
             return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...style} animation={{ from: line.from, to: line.to }} />
+          })}
+        </Group>
+        <Group class="line-points">
+          {lines.map((line, ind) => {
+            return (
+              <Group>
+                {line.to.points.map((p, j) => {
+                  const animation = { from: { pos: line.from.points[j] }, to: { pos: p } }
+                  const style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind], ind, j])
+                  return <Symbol {...style} animation={animation} />
+                })}
+              </Group>
+            )
           })}
         </Group>
         <Group class="areas-group">

@@ -7,7 +7,14 @@ theme.visuals = {
     colors: theme.colors,
     styles: {
       line: { lineWidth: 1 },
-      guideline: { strokeColor: '#ddd' }
+      guideline: { strokeColor: '#ddd' },
+      point: {
+        pointType: 'ellipse',
+        radiusX: 4,
+        radiusY: 4,
+        strokeColor: '#fff',
+        borderWidth: 1
+      }
     },
     attrs: {
       statck: false
