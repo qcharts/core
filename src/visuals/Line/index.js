@@ -128,7 +128,6 @@ class Line extends Base {
     this.renderLines = lines
     return (
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove} size={[clientRect.width, clientRect.height]}>
-        {/* <Symbol {...sStyle} /> */}
         <Group class="lines-group">
           {lines.map((line, ind) => {
             let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind], ind])
@@ -137,11 +136,17 @@ class Line extends Base {
         </Group>
         <Group class="line-points">
           {lines.map((line, ind) => {
-            return (
+            return line.state === 'disabled' ? (
+              <Node />
+            ) : (
               <Group>
                 {line.to.points.map((p, j) => {
                   const animation = { from: { pos: line.from.points[j] }, to: { pos: p } }
                   const style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind], ind, j])
+                  const hoverStyle = getStyle(this, 'point:hover', [{ fillColor: colors[ind] }, styles['point:hover']], [this.dataset.rows[ind], ind, j])
+                  if (this.dataset.rows[ind][j].state === 'hover') {
+                    return <Symbol {...style} {...hoverStyle} animation={animation} />
+                  }
                   return <Symbol {...style} animation={animation} />
                 })}
               </Group>
