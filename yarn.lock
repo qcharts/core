@@ -971,7 +971,7 @@
   resolved "https://registry.npm.taobao.org/@qcharts/utils/download/@qcharts/utils-0.0.5.tgz#50d8fd0831c7cff81972578e9f6537b4fdde872e"
   integrity sha1-UNj9CDHHz/gZcleOn2U3tP3ehy4=
 
-"@qcharts/vnode@0.0.14":
+"@qcharts/vnode@0.0.15":
   version "0.0.14"
   resolved "https://registry.npm.taobao.org/@qcharts/vnode/download/@qcharts/vnode-0.0.14.tgz#f152dc4b33bbfd5ce2171681ce65432cf7489a9a"
   integrity sha1-8VLcSzO7/VziFxaBzmVDLPdImpo=

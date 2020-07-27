@@ -48,5 +48,10 @@ export default [
     title: '数据更新',
     path: 'radar_update',
     component: () => import('./radar_update.md')
+  },
+  {
+    title: '点样式',
+    path: 'radar_pointSymbol',
+    component: () => import('./radar_pointSymbol.md')
   }
 ]

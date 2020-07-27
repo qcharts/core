@@ -2,9 +2,6 @@ import { Group, Polyline, Label, Arc, Gradient } from 'spritejs'
 import { jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 
-// 数据拷贝
-const flattern = (arr) => [].concat.apply([], arr)
-
 /**
  * 根据给定参数，生成仪表盘刻度的坐标以及刻度文字标注的坐标
  * @param {Number} radius 仪表盘半径
@@ -39,10 +36,10 @@ function tickLine(radius, angle, tickLength, labelOffset, isInner) {
   return {
     points: [
       [x, y],
-      [cX0, cY0],
+      [cX0, cY0]
     ],
     labelPos,
-    anchor,
+    anchor
   }
 }
 
@@ -58,8 +55,9 @@ class Gauge extends BaseVisual {
   defaultAttrs() {
     return {
       layer: 'gauge',
-      min: 0,
-      max: 100,
+      min: 0, // 刻度最小值
+      max: 100, // 刻度最大值
+      percent: 50, // 指针值
       lineCap: 'round',
       _useBuiltInColors: false, // 默认颜色不使用渐变色
       lineWidth: 10, // 仪表盘圆弧宽度
@@ -67,30 +65,23 @@ class Gauge extends BaseVisual {
       endAngle: 400, // 仪表盘弧度终止角度
       strokeBgcolor: '#dde3ea', // 仪表盘弧度的背景色
       title: (d) => d,
-      subTitle: (d) => d,
-
       tickStep: 10, // tick 步进，生成 tick 的数量为 (max - min) / tickStep
       tickLength: 10, // 刻度长度，为负值时向外绘制
       labelOffset: 5,
-      tickFormatter: (d) => d, // 刻度文本格式化
+      tickFormatter: (d) => d // 刻度文本格式化
     }
   }
 
   get renderAttrs() {
     const attrs = super.renderAttrs
     // 仪表盘半径
-    const { clientRect, lineWidth: lw = 10 } = attrs
+    const { clientRect } = attrs
     const { height, width } = clientRect
     const size = [width, height]
 
-    const len = this.dataset.length
-    const radius = ~~(
-      (Math.min.apply(
-        size,
-        size.map((v) => v / 2)
-      ) -
-        lw * (len - 1) * 2) /
-      len
+    const radius = ~~Math.min.apply(
+      size,
+      size.map((v) => v / 2)
     )
     // 指针宽度
     const pointerWidth = radius / 10
@@ -101,7 +92,7 @@ class Gauge extends BaseVisual {
       ...attrs,
       radius,
       pointerWidth,
-      center,
+      center
     }
   }
 
@@ -116,7 +107,7 @@ class Gauge extends BaseVisual {
       tickStep,
       tickLength,
       labelOffset,
-      tickFormatter,
+      tickFormatter
     } = this.renderAttrs
     const count = Math.abs(max - min) / tickStep
 
@@ -137,8 +128,8 @@ class Gauge extends BaseVisual {
         label: {
           text: tickFormatter(i * tickStep).toFixed(0),
           pos: ret.labelPos,
-          anchor: ret.anchor,
-        },
+          anchor: ret.anchor
+        }
       })
     }
 
@@ -149,57 +140,42 @@ class Gauge extends BaseVisual {
     return ticks
   }
 
-  transform(data) {
-    const { radius, startAngle, endAngle, min, max } = this.renderAttrs
+  transform() {
+    const { radius, startAngle, endAngle, min, max, percent } = this.renderAttrs
     const total = Math.abs(max - min)
 
-    return data.reduce((a, d, i) => {
-      const value = d.value
-      const arc = {
-        dataOrigin: d.data,
-        startAngle,
-        radius,
-        endAngle: d.disabled ? startAngle : ((endAngle - startAngle) * value) / total + startAngle,
-        strokeColor: this.color(i),
-      }
-      a.push(arc)
-      return a
-    }, [])
+    return {
+      dataOrigin: percent,
+      startAngle,
+      radius,
+      endAngle: ((endAngle - startAngle) * percent) / total + startAngle,
+      strokeColor: this.color(0)
+    }
   }
 
   beforeRender() {
     super.beforeRender()
-    const data = flattern(this.dataset)
-    const arcs = this.transform(data)
-    this.gaugeAnimations = arcs.reduce((a, c, i) => {
-      a.push({
-        from: { startAngle: c.startAngle, endAngle: c.startAngle },
-        to: { startAngle: c.startAngle, endAngle: c.endAngle },
-      })
-      return a
-    }, [])
-    return arcs
+    const arc = this.transform()
+    this.gaugeAnimations = {
+      from: { startAngle: arc.startAngle, endAngle: arc.startAngle },
+      to: { startAngle: arc.startAngle, endAngle: arc.endAngle }
+    }
+    return arc
   }
 
   beforeUpdate() {
     super.beforeUpdate()
-    const data = flattern(this.dataset)
-    const arcs = this.transform(data)
-    this.gaugeAnimations = arcs.map((arc, i) => {
-      const animation = this.gaugeAnimations[i]
-      if (animation) {
-        return {
-          from: animation.to,
-          to: { startAngle: arc.startAngle, endAngle: arc.endAngle },
-        }
-      } else {
-        return {
-          from: { startAngle: arc.startAngle, endAngle: arc.startAngle },
-          to: { startAngle: arc.startAngle, endAngle: arc.endAngle },
-        }
-      }
-    })
-    return arcs
+    const arc = this.transform()
+    const animation = {
+      from: { startAngle: arc.startAngle, endAngle: arc.startAngle },
+      to: { startAngle: arc.startAngle, endAngle: arc.endAngle }
+    }
+    if (this.gaugeAnimations) {
+      animation.from = { ...this.gaugeAnimations.to }
+    }
+
+    this.gaugeAnimations = { ...animation }
+    return arc
   }
 
   color(i) {
@@ -210,19 +186,19 @@ class Gauge extends BaseVisual {
    * 渲染指针
    * @param {Number} angle 角度
    */
-  renderPointer(d, i, maxTickTextFontSize) {
-    const style = this.style('pointer')(d, d.dataOrigin, i)
+  renderPointer(d, maxTickTextFontSize) {
+    const style = this.style('pointer')(d, d.dataOrigin, 0)
     if (style === false) {
       return
     }
     // 动画
-    let { from, to } = this.gaugeAnimations[i]
+    let { from, to } = this.gaugeAnimations
     // rotate角度起始位置为屏幕Y轴方向，arc角度为X轴方向
     const fromRotate = from.endAngle + 90
     const toRotate = to.endAngle + 90
     const pointerAnimation = {
       from: { rotate: fromRotate },
-      to: { rotate: toRotate },
+      to: { rotate: toRotate }
     }
     // 半径
     const { radius, pointerWidth, center, tickLength, labelOffset, lineWidth } = this.renderAttrs
@@ -235,14 +211,9 @@ class Gauge extends BaseVisual {
     const pointerLen = radius - pointerTopOffset
     // 指针宽度
     let pWidth = radius / 10
-    if (jsType(pointerWidth) === 'boolean') {
-      pWidth = pointerWidth
-    } else if (jsType(pointerWidth) === 'array') {
-      pWidth = i < pointerWidth.length ? pointerWidth[i] : pointerWidth[pointerWidth.length - 1]
-    }
 
     // 指针颜色
-    const color = this.color(i)
+    const color = this.color(0)
 
     const [x, y] = center
     const attr = {
@@ -255,20 +226,11 @@ class Gauge extends BaseVisual {
         [x - pWidth / 2, y - pointerLen * 0.1],
         [x, y - pointerLen],
         [x + pWidth / 2, y - pointerLen * 0.1],
-        [x, y],
+        [x, y]
       ],
-      close: true,
+      close: true
     }
-    return (
-      <Polyline
-        {...attr}
-        {...style}
-        animation={{
-          ...pointerAnimation,
-          duration: 300,
-        }}
-      />
-    )
+    return <Polyline {...attr} {...style} animation={pointerAnimation} />
   }
 
   isStyleExist(name) {
@@ -276,11 +238,11 @@ class Gauge extends BaseVisual {
     return Boolean(style)
   }
 
-  render(data = []) {
+  render(data = {}) {
     const {
       _useBuiltInColors,
       title,
-      subTitle,
+      percent,
       center,
       radius,
       startAngle,
@@ -288,12 +250,13 @@ class Gauge extends BaseVisual {
       lineWidth,
       lineCap,
       strokeBgcolor,
-      clientRect,
+      clientRect
     } = this.renderAttrs
     const labelCenter = [center[0], center[1] * 1.25]
     const ticks = this.ticks
     const tickLine = this.isStyleExist('tickLine')
     const tickText = this.isStyleExist('tickText')
+    const realTitle = title || percent
 
     let gradientColor = null // 默认使用内置的渐变配色方案
 
@@ -304,103 +267,78 @@ class Gauge extends BaseVisual {
         colors: [
           { color: colors[0], offset: 0 },
           { color: colors[1], offset: 0.3 },
-          { color: colors[2], offset: 1 },
-        ],
+          { color: colors[2], offset: 1 }
+        ]
       }
       gradientColor = new Gradient(gradientOpt)
     }
 
     let maxTickTextFontSize = 16
     if (tickText !== false) {
-      data.map((d, i) => {
-        ticks.map((tick, j) => {
-          const style = this.style('tickText')(d, d.dataOrigin, j)
-          if (style && style.fontSize) {
-            if (jsType(style.fontSize) === 'number' && maxTickTextFontSize < style.fontSize) {
-              maxTickTextFontSize = style.fontSize
-            }
-            if (jsType(style.fontSize) === 'string') {
-              const realSize = Number(style.fontSize.replace('px', ''))
-              if (jsType(realSize) === 'number' && maxTickTextFontSize < realSize) {
-                maxTickTextFontSize = realSize
-              }
+      ticks.map((tick, j) => {
+        const style = this.style('tickText')(data, data.dataOrigin, j)
+        if (style && style.fontSize) {
+          if (jsType(style.fontSize) === 'number' && maxTickTextFontSize < style.fontSize) {
+            maxTickTextFontSize = style.fontSize
+          }
+          if (jsType(style.fontSize) === 'string') {
+            const realSize = Number(style.fontSize.replace('px', ''))
+            if (jsType(realSize) === 'number' && maxTickTextFontSize < realSize) {
+              maxTickTextFontSize = realSize
             }
           }
-        })
+        }
       })
     }
     const gPos = [clientRect.left, clientRect.top]
     const gSize = [clientRect.width, clientRect.height]
     return (
       <Group pos={gPos} size={gSize}>
-        {data.map((d, i) => {
-          return (
-            <Group bgcolor="transparent">
-              <Arc
-                pos={center}
-                lineWidth={lineWidth}
-                lineCap={lineCap}
-                startAngle={startAngle}
-                endAngle={endAngle}
-                strokeColor={strokeBgcolor}
-                radius={radius}
-                zIndex={10}
-              />
-              <Arc
-                pos={center}
-                lineCap={lineCap}
-                lineWidth={lineWidth}
-                {...d}
-                animation={{
-                  ...this.gaugeAnimations[i],
-                  duration: 300,
-                }}
-                {...(gradientColor ? { strokeColor: gradientColor } : { strokeColor: this.color(i) })}
-                {...this.style('arc')(d, d.dataOrigin, i)}
-                zIndex={11}
-              />
-              {this.renderPointer(d, i, maxTickTextFontSize)}
-              {title ? (
-                <Label
-                  text={jsType(title) === 'function' ? title(d.dataOrigin) : title}
-                  pos={labelCenter}
-                  textAlign="center"
-                  zIndex={10}
-                  anchor={[0.5, 1]}
-                  {...this.style('title')(d, d.dataOrigin, i)}
-                />
-              ) : null}
-              {subTitle ? (
-                <Label
-                  text={jsType(subTitle) === 'function' ? subTitle(d.dataOrigin) : subTitle}
-                  pos={labelCenter}
-                  textAlign="center"
-                  zIndex={10}
-                  anchor={[0.5, 0]}
-                  fillColor={strokeBgcolor}
-                  {...this.style('subTitle')(d, d.dataOrigin, i)}
-                />
-              ) : null}
-
-              {tickLine !== false || tickText !== false
-                ? ticks.map((tick, j) => (
-                    <Group pos={center} anchor={[0, 0]} zIndex={1010}>
-                      {tickLine !== false ? (
-                        <Polyline
-                          points={tick.points}
-                          strokeColor={strokeBgcolor}
-                          {...this.style('tickLine')(d, d.dataOrigin, j)}
-                        />
-                      ) : null}
-                      {tickText !== false ? (
-                        <Label {...tick.label} {...this.style('tickText')(d, d.dataOrigin, j)} />
-                      ) : null}
-                    </Group>
-                  ))
-                : null}
-            </Group>
-          )
-        })}
+        <Arc
+          pos={center}
+          lineWidth={lineWidth}
+          lineCap={lineCap}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          strokeColor={strokeBgcolor}
+          radius={radius}
+          zIndex={10}
+        />
+        <Arc
+          pos={center}
+          lineCap={lineCap}
+          lineWidth={lineWidth}
+          {...data}
+          animation={this.gaugeAnimations}
+          {...(gradientColor ? { strokeColor: gradientColor } : { strokeColor: this.color(0) })}
+          {...this.style('arc')(data, data.dataOrigin, 0)}
+          zIndex={11}
+        />
+        {this.renderPointer(data, maxTickTextFontSize)}
+        {realTitle ? (
+          <Label
+            text={jsType(realTitle) === 'function' ? realTitle(data.dataOrigin) : realTitle}
+            pos={labelCenter}
+            textAlign="center"
+            zIndex={10}
+            anchor={[0.5, 1]}
+            {...this.style('title')(data, data.dataOrigin, 0)}
+          />
+        ) : null}
+        {tickLine !== false || tickText !== false
+          ? ticks.map((tick, j) => (
+              <Group pos={center} anchor={[0, 0]} zIndex={1010}>
+                {tickLine !== false ? (
+                  <Polyline
+                    points={tick.points}
+                    strokeColor={strokeBgcolor}
+                    {...this.style('tickLine')(data, data.dataOrigin, j)}
+                  />
+                ) : null}
+                {tickText !== false ? <Label {...tick.label} {...this.style('tickText')(data, data.dataOrigin, j)} /> : null}
+              </Group>
+            ))
+          : null}
       </Group>
     )
   }

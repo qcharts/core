@@ -1,34 +1,4 @@
-### Symbol 介绍
-
-Symbol(符号)，qcharts 中的**点**属性配置，如折线图和雷达图中的点属性。
-
-配置方式为 ：
-
-```js
-// visual为图表实例
-visual.style('point', { 
-    pointType: 'ellipse ' , // 默认值为“ellipse ”
-})
-```
-
-qcharts 中 point 使用面绘制，因此，point 可配置属性除 [api 简介](#/doc/apiinfo) 中基本的面属性外，还有自己独有的可配置属性：`pointType`以及各个类型对应的属性。
-
-#### pointType
-
-`pointType` 为`String`类型，用于设置点的样式，可选项为[SpriteJS]( https://spritejs.org/#/ )中的8种基本元素：
-
-| 可选项   | 描述                                                         |
-| -------- | ------------------------------------------------------------ |
-| sprite   | 精灵元素，可设置`texture`属性使用图片                        |
-| path     | path是最基础的路径元素，它可以通过设置`d`属性来绘制SVG Path  |
-| ellipse  | 椭圆形(默认值)，可以通过设置radius，或者radiusX和radiusY属性 |
-| rect     | 矩形，可以直接设置`width、height`属性（或`size`属性）        |
-| triangle | 三角形，只需要设置`sides`和`angle`属性                       |
-| parallel | 平行四边形，只需要设置`sides`和`angle`属性                   |
-| regular  | 正多边形，edges 表示边数，radius 表示半径，offsetAngle 表示旋转角度 |
-| star     | 多角星，angles 表示角数，innerRadius 表示内半径，outerRadius 表示外半径，offsetAngle 表示旋转角度 |
-
-### 示例
+## 雷达图点样式
 
 :::demo point
 
@@ -127,7 +97,6 @@ radar.style('point', (d, data, i) => {
 
 const legend = new Legend({ align: ['center', 'bottom'] })
 chart.append([radar, legend])
-
 ```
 
 :::

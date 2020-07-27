@@ -4,7 +4,7 @@ import platform from './base/platform'
 import BaseVisual from './base/BaseVisual'
 import BasePlugin from './base/BasePlugin'
 import { Scene } from 'spritejs'
-import { Wave } from './index'
+import { Wave, Gauge } from './index'
 class Chart extends Base {
   constructor(attr) {
     super()
@@ -17,17 +17,17 @@ class Chart extends Base {
     this.plugins = []
     this.children = []
     this.scene = new Scene({ container, displayRatio: platform.devicePixelRatio })
-    this.scene.addEventListener('resize', _ => {
+    this.scene.addEventListener('resize', (_) => {
       //舞台变化的时候
       this.checkUpdate()
     })
-    this.checkUpdate = throttle(_ => {
-      this.children.forEach(node => {
+    this.checkUpdate = throttle((_) => {
+      this.children.forEach((node) => {
         node.update()
       })
     }, 300)
-    this.checkRender = throttle(_ => {
-      this.children.forEach(child => {
+    this.checkRender = throttle((_) => {
+      this.children.forEach((child) => {
         child.created()
         this.dataset.addDep(child)
       })
@@ -40,7 +40,8 @@ class Chart extends Base {
     this.checkUpdate()
   }
   append(node) {
-    if (node instanceof Wave) {
+    const notNeedDataSetList = [Wave, Gauge]
+    if (notNeedDataSetList.some((Target) => node instanceof Target)) {
       //补齐dataset，wave中不用dataset
       this.source([], {})
     } else if (!this.dataset) {
@@ -48,7 +49,7 @@ class Chart extends Base {
       return
     }
     if (jsType(node) === 'array') {
-      node.forEach(item => {
+      node.forEach((item) => {
         this.append(item)
       })
       return
