@@ -163,8 +163,6 @@ class Bar extends Base {
     let { clientRect, bgpillarState, states } = this.renderAttrs;
     return (
       <Group
-        class="container"
-        ref="wrap"
         pos={[clientRect.left, clientRect.top]}
         size={[clientRect.width, clientRect.height]}
         onMouseleave={this.onMouseleave}
