@@ -2,6 +2,8 @@ import Base from "../../base/BasePlugin";
 import { Group, Sprite, Path, Label } from "spritejs";
 import layout from "./layout";
 import { getStyle } from "@/utils/getStyle";
+import Symbol from "../../utils/Symbol";
+import filterClone from "filter-clone";
 //import { debounce } from '@qcharts/utils'
 class Legend extends Base {
   constructor(attrs) {
@@ -19,6 +21,9 @@ class Legend extends Base {
     this.twiceRender = false;
     this.posFrom = [0, 0];
     this.currentPos = [0, 0];
+    this.oldDataset = null;
+    this.lastState = "default";
+    this.legendStateArray = [];
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
@@ -30,7 +35,7 @@ class Legend extends Base {
       orient: "horizontal", // 布局方式， vertical | horizontal
       align: ["center", "bottom"], // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
       formatter: (d) => d.value || d,
-      iconSize: [10, 12],
+      iconSize: [12, 12],
       textSize: [40, 12],
       gap: 10,
     };
@@ -56,9 +61,9 @@ class Legend extends Base {
     const hLocation = {
       // 水平定位
       default: 0,
-      left: 0,
+      left: 2,
       center: (canvasWidth - groupSize[0]) / 2,
-      right: canvasWidth - groupSize[0],
+      right: canvasWidth - groupSize[0] - 2,
       numberOrPercent(num) {
         // 输入 数字或百分比
         if (typeof num === "number") {
@@ -78,9 +83,9 @@ class Legend extends Base {
     const vLocation = {
       // 垂直定位
       default: 0,
-      top: 0,
+      top: 2,
       center: canvasHeight / 2 - groupSize[1] / 2,
-      bottom: canvasHeight - groupSize[1],
+      bottom: canvasHeight - groupSize[1] - 2,
       numberOrPercent(num) {
         // 输入 数字或百分比
         if (typeof num === "number") {
@@ -145,20 +150,18 @@ class Legend extends Base {
     return this.renderAttrs.orient === "vertical";
   }
   beforeRender() {
-    // 可能有问题。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
-    // this.renderedCounter = 0;
     if (this.twiceRender) {
       this.reset();
     } else {
       this.arrLayout = this.getRenderData().arrLayout;
     }
-
     return this.arrLayout;
   }
 
   getRenderData() {
     let renderAttrs = this.renderAttrs;
     let renderData = this.dataset[renderAttrs.layoutBy].map((item, index) => {
+      this.legendStateArray.push(item.state);
       return {
         name: item.name,
         state: item.state,
@@ -166,6 +169,11 @@ class Legend extends Base {
     });
     this.legendNum = renderData.length;
     let arrLayout = layout.call(this, renderData, renderAttrs);
+    let colors = this.theme.colors;
+    arrLayout.map((item, ind) => {
+      item.iconAttrs.bgcolor = colors[ind];
+      return item;
+    });
     this.arrLayout = arrLayout;
     return { arrLayout };
   }
@@ -175,8 +183,33 @@ class Legend extends Base {
     state = state !== "disabled" ? "disabled" : "default";
     this.dataset[this.renderAttrs.layoutBy][ind].state = state;
   }
-  beforeUpdate() {
-    return this.beforeRender();
+  itemLeave(e, el) {
+    const ind = el.attr("_index");
+    console.log("itemLeave");
+    console.log(this.lastState);
+    // this.dataset[this.renderAttrs.layoutBy][ind].state = "default";
+    this.legendStateArray[ind] = "default";
+    this.update();
+  }
+  itemMove(e, el) {
+    const ind = el.attr("_index");
+    // this.lastState = this.dataset[this.renderAttrs.layoutBy][ind].state;
+    // console.log(this.lastState);
+    // this.dataset[this.renderAttrs.layoutBy][ind].state = "hover";
+    if (this.legendStateArray[ind] === "default") {
+      this.legendStateArray[ind] = "hover";
+      this.update();
+    }
+  }
+  beforeUpdate(params) {
+    if (params && params.type === "source") {
+      this.twiceRender = false;
+      this.renderedCounter = 0;
+      return this.beforeRender();
+    } else {
+      // this.reset();
+      return this.arrLayout;
+    }
   }
 
   rendered() {
@@ -199,16 +232,21 @@ class Legend extends Base {
     let { gap, iconSize, textSize } = this.renderAttrs;
     let maxTextWidth = 0;
     this.arrLayout = this.arrLayout.map((item, index) => {
+      let iconEl = this.$refs["icon" + index];
+      let iconRect = iconEl.getBoundingClientRect();
       let textEl = this.$refs["text" + index];
       let textRect = textEl.getBoundingClientRect();
       let iconAttrs = {
+        ...item.iconAttrs,
         size: iconSize,
         pos: this.isVertical ? [0, legendsSize[1]] : [legendsSize[0], 0],
       };
       if (this.dataset[this.renderAttrs.layoutBy][index].state === "disabled") {
         iconAttrs.bgcolor = "#ccc";
+        iconAttrs.fillColor = "#ccc";
       }
       let textAttrs = {
+        ...item.textAttrs,
         pos: this.isVertical
           ? [iconSize[0], legendsSize[1]]
           : [iconSize[0] + legendsSize[0], 0],
@@ -243,29 +281,59 @@ class Legend extends Base {
     this.posFrom = this.twiceRender ? this.posFrom : pos;
     const { page, totalPage } = this.state;
     this.currentPos = pos;
-
+    let styles = this.renderStyles;
     const isVertical = this.isVertical;
     if (arr) {
       return (
         <Group>
-          <Group animation={{ from: { pos: this.posFrom }, to: { pos: pos } }}>
+          <Group
+            animation={{
+              from: { pos: this.posFrom },
+              to: { pos: pos },
+              duration: this.twiceRender ? 300 : 0,
+            }}
+          >
             {arr.map((attrs, ind) => {
+              let cell = this.dataset[this.renderAttrs.layoutBy][ind];
+              let hover = this.legendStateArray[ind] === "hover";
+              let disabled = cell.state === "disabled";
               let style = getStyle(
                 this,
                 "legend",
-                [{ bgcolor: colors[ind] }],
-                [this.dataset[this.renderAttrs.layoutBy][ind], ind]
+                [{}, styles.icon],
+                [cell, ind]
               );
+
+              let hoverStyle = hover
+                ? getStyle(this, "legend:hover", [{}], [cell, ind])
+                : {};
+              if (disabled && attrs.iconAttrs.bgcolor) {
+                hoverStyle.bgcolor = "#ccc";
+                hoverStyle.fillColor = "#ccc";
+              }
+              let textStyle = getStyle(this, "legendText", [{}], [cell, ind]);
+              let textHoverStyle = hover
+                ? getStyle(this, "legendText:hover", [{}], [cell, ind])
+                : {};
               return (
-                <Group onClick={this.itemClick} {...{ _index: ind }}>
-                  <Sprite
+                <Group
+                  onClick={this.itemClick}
+                  onMouseleave={this.itemLeave}
+                  onMouseenter={this.itemMove}
+                  onMousemove={this.itemMove}
+                  {...{ _index: ind }}
+                >
+                  <Symbol
                     {...{ ref: "icon" + ind }}
-                    {...style}
                     {...attrs.iconAttrs}
+                    {...style}
+                    {...hoverStyle}
                   />
                   <Label
                     {...{ ref: "text" + ind }}
                     {...attrs.textAttrs}
+                    {...textStyle}
+                    {...textHoverStyle}
                     onAfterrender={this.afterrender}
                   />
                 </Group>

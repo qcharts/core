@@ -22,7 +22,7 @@ export default function layout(arr, attrs) {
       pos: isVertical
         ? [0, i * (gap + legendSize[1])]
         : [i * (gap + legendSize[0]), 0],
-      size: iconSize,
+      // size: iconSize,
     };
     if (arr[i].state === "disabled") {
       iconAttrs.bgcolor = "#ccc";
