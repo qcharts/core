@@ -16,9 +16,9 @@ class Base extends Node {
     store.__refs = emptyObject()
     store.dataset = null
     this.attr(attrs)
-    this.__update = throttle(_ => {
+    this.__update = throttle(args => {
       if (store.__isCreated__) {
-        this.update()
+        this.update(args)
       }
     })
   }
@@ -83,7 +83,7 @@ class Base extends Node {
     }
     if (store.dataset && store.__isCreated__) {
       //如果以前存在，则更新
-      this.__update()
+      this.__update({ type: 'source' })
     }
     return this
   }
@@ -91,14 +91,16 @@ class Base extends Node {
     //初始化创建的时候执行
     let store = this['__store']
     this.dispatchEvent(lifeCycle.created)
-    store.__vnode__ = this.render(this.beforeRender())
+    store.__vnode__ = this.render(this.beforeRender({ type: 'create' }))
     const patches = diff(null, store.__vnode__)
     this.dispatchEvent(lifeCycle.beforeRender)
     patch.bind(this)(this.$el || this.layer, patches, 1)
     this.dispatchEvent(lifeCycle.rendered)
     this.rendered()
     store.__isCreated__ = true
-    this.dataset.on('change', this.__update)
+    this.dataset.on('change', _ => {
+      this.__update({ type: 'state' })
+    })
   }
   beforeRender() {
     //图表初始化准备数据
@@ -110,11 +112,11 @@ class Base extends Node {
   beforeUpdate() {
     return this.renderAttrs
   }
-  update() {
+  update(params) {
     //图表更新准备数据
     let store = this['__store']
     this.dispatchEvent(lifeCycle.beforeUpdate)
-    let vnode = this.render(this.beforeUpdate())
+    let vnode = this.render(this.beforeUpdate(params))
     const patches = diff(store.__vnode__, vnode)
     patch.bind(this)(this.$el || this.layer, patches)
     store.__vnode__ = vnode
@@ -177,7 +179,7 @@ class Base extends Node {
       return store.__attrs[name]
     } else if (name !== undefined) {
       store.__attrs[name] = val
-      store.__isCreated__ && this.__update()
+      store.__isCreated__ && this.__update({ type: 'attr' })
     }
   }
   addRef(ref, el) {
