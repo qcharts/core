@@ -9,6 +9,7 @@ const wave = new Wave({
   animation: {
     duration: 500
   },
+  radius: 200,
   percent: 0.65,
   // 格式化文本
   formatter: per => {
