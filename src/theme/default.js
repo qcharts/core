@@ -7,16 +7,14 @@ theme.visuals = {
     colors: theme.colors,
     styles: {
       line: { lineWidth: 1 },
-      guideline: { strokeColor: '#ddd' }
-    },
-    attrs: {
-      statck: false
-    }
-  },
-  LineTest: {
-    colors: theme.colors,
-    styles: {
-      line: { lineWidth: 1 }
+      guideline: { strokeColor: '#ddd' },
+      point: {
+        pointType: 'ellipse',
+        radiusX: 4,
+        radiusY: 4,
+        strokeColor: '#fff',
+        borderWidth: 1
+      }
     },
     attrs: {
       statck: false
@@ -125,7 +123,7 @@ theme.plugins = {
         fillColor: '#666'
       },
       grid: {
-        strokeColor: '#eee',
+        strokeColor: '#ddd',
         lineDash: [3, 3]
       },
       name: {
