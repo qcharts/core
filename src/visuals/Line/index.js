@@ -134,6 +134,14 @@ class Line extends Base {
             return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...style} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
+        <Group class="areas-group">
+          {this.type !== 'area'
+            ? null
+            : lines.map((line, ind) => {
+                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
+                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
+              })}
+        </Group>
         <Group class="line-points">
           {lines.map((line, ind) => {
             return line.state === 'disabled' ? (
@@ -152,14 +160,6 @@ class Line extends Base {
               </Group>
             )
           })}
-        </Group>
-        <Group class="areas-group">
-          {this.type !== 'area'
-            ? null
-            : lines.map((line, ind) => {
-                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
-                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
-              })}
         </Group>
         <Group class="guide-line-group">
           {guidePoints.length ? (

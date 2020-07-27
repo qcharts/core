@@ -52,7 +52,14 @@ theme.visuals = {
     colors: theme.colors,
     styles: {
       area: { opacity: 0.5 },
-      guideline: { strokeColor: "#ddd" },
+      guideline: { strokeColor: '#ddd' },
+      point: {
+        pointType: 'ellipse',
+        radiusX: 4,
+        radiusY: 4,
+        strokeColor: '#fff',
+        borderWidth: 1
+      }
     },
     attrs: {},
   },

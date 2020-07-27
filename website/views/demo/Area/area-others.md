@@ -44,7 +44,7 @@ chart.source(data, {
   value: 'sales',
   text: 'product'
 })
-const area = new Area({ smooth: true }).style('point', { fillColor: 'transparent', strokeColor: 'transparent' }).style('point:hover', { strokeColor: '#fff' })
+const area = new Area({ smooth: true })
 const axisBottom = new Axis().style('grid', false)
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 chart.append([area, axisBottom, axisLeft])
