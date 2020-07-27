@@ -30,7 +30,7 @@ class RadialBar extends BaseVisual {
     const size = [clientRect.width, clientRect.height]
     return {
       ...attrs,
-      size,
+      size
     }
   }
 
@@ -116,12 +116,12 @@ class RadialBar extends BaseVisual {
     this.animators = data.map((d) => ({
       from: {
         startAngle,
-        endAngle: startAngle,
+        endAngle: startAngle
       },
       to: {
         startAngle,
-        endAngle: d.endAngle,
-      },
+        endAngle: d.endAngle
+      }
     }))
     return data
   }
@@ -140,42 +140,57 @@ class RadialBar extends BaseVisual {
         if (!prev) {
           prev = {
             startAngle: startAngle,
-            endAngle: startAngle,
+            endAngle: startAngle
           }
         }
 
         return {
           from: {
             startAngle: prev.startAngle,
-            endAngle: prev.endAngle,
+            endAngle: prev.endAngle
           },
           to: {
             startAngle: d.startAngle,
-            endAngle: d.endAngle,
-          },
+            endAngle: d.endAngle
+          }
         }
       }
     })
     return data
   }
 
+  onMouseenter(event, el) {
+    this.dataset.resetState()
+    const { col, row } = el.attributes
+    this.dataset.forEach((item) => {
+      item.state = item.col === col && item.row === row ? 'hover' : 'default'
+    })
+  }
+
+  onMouseleave() {
+    this.dataset.resetState()
+  }
+
   render(data = []) {
     const { strokeBgcolor } = this.renderAttrs
-
     return (
       <Group>
         {data.map((d, i) => {
+          const { col, row, data } = d
           return (
             <Group pos={this.center} size={[this.maxOuterRadius * 2, this.maxOuterRadius * 2]}>
               <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
               <Arc
-                {...d}
+                {...{ ...d, col, row }}
                 animation={{
                   ...this.animators[i],
                   duration: 300,
-                  delay: 0,
+                  delay: 0
                 }}
-                {...this.style('arc:hover')(d, d.dataOrigin, d.index)}
+                zIndex={i}
+                {...this.style('arc:hover')(d, data, d.index)}
+                onMouseenter={this.onMouseenter}
+                onMouseleave={this.onMouseleave}
               />
             </Group>
           )

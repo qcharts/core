@@ -1,9 +1,8 @@
-import { Group, Polyline, Label } from 'spritejs'
+import { Group, Polyline, Arc, Label } from 'spritejs'
 import { deepObjectMerge, throttle, jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
 import Symbol from '../../utils/Symbol'
-import getPointSymbol from '../../utils/getPointSymbol'
 
 class Radar extends BaseVisual {
   constructor(attrs) {
@@ -84,10 +83,7 @@ class Radar extends BaseVisual {
     const processSectionAttrs = sectionAttrs.map((attr, i) => {
       const { points, state, ...otherAttrs } = attr
       const { style, hoverStyle } = this.getStyle('section', attr, { ...attr.dataOrigin }, i)
-      let stateStyle = { lineWidth: attr.lineWidth }
-      if (state === 'hover') {
-        stateStyle = { ...hoverStyle, lineWidth: attr.lineWidth + 1 }
-      }
+      let stateStyle = state === 'hover' ? hoverStyle : {}
 
       let animation = this.getPolylineAnimation(points, state, i)
       const opacity = jsType(style.opacity) === 'number' ? style.opacity : 1
@@ -96,6 +92,7 @@ class Radar extends BaseVisual {
       } else {
         animation.to.opacity = opacity
       }
+
       return deepObjectMerge(otherAttrs, { state }, { animation }, style, stateStyle)
     })
     return { ...otherData, sectionAttrs: processSectionAttrs }
@@ -146,20 +143,11 @@ class Radar extends BaseVisual {
     const GridShape = gridType === 'circle' ? Arc : Polyline
     return gridAttrs.map((attr, i) => {
       const animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(attr.scale)
-      const { style, ...other } = this.getStyle('grid', attr, null, i)
+      const { style } = this.getStyle('grid', attr, null, i)
       if (style === false) {
         return
       }
-      let gridAttr = { ...attr }
-      if (gridType === 'circle') {
-        gridAttr = {
-          lineWidth: attr.lineWidth,
-          strokeColor: attr.strokeColor,
-          radius: attr.radius,
-          scale: attr.scale
-        }
-      }
-      return <GridShape {...gridAttr} {...style} {...other} animation={animation} />
+      return <GridShape {...attr} {...style} animation={animation} />
     })
   }
 
@@ -180,11 +168,11 @@ class Radar extends BaseVisual {
       fontSize: 12
     }
     const animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(1)
-    const { style, ...other } = this.getStyle('label', attr, { text: attr.label, radian }, i)
+    const { style } = this.getStyle('label', attr, { text: attr.label, radian }, i)
     if (style === false) {
       return
     }
-    return <Label {...attr} {...style} {...other} animation={animation} />
+    return <Label {...attr} {...style} animation={animation} />
   }
 
   renderAxisScale(attrs, index) {
@@ -212,7 +200,7 @@ class Radar extends BaseVisual {
         pos: point,
         ...common
       }
-      const { style, ...other } = this.getStyle('scale', attr, { text, index }, i)
+      const { style } = this.getStyle('scale', attr, { text, index }, i)
       if (style === false) {
         return
       }
@@ -239,7 +227,7 @@ class Radar extends BaseVisual {
           }
         }
         this.scaleEl[i] = { text: Number(text.toFixed(0)) }
-        labels.push(<Label {...attr} {...style} {...other} animation={animation} />)
+        labels.push(<Label {...attr} {...style} animation={animation} />)
       }
     }
     return labels
@@ -248,13 +236,13 @@ class Radar extends BaseVisual {
   renderAxis(axisAttrs) {
     const animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(1)
     return axisAttrs.map((attr, i) => {
-      const { style, ...other } = this.getStyle('axis', attr, { text: attr.label }, i)
+      const { style } = this.getStyle('axis', attr, { text: attr.label }, i)
       if (style === false) {
         return
       }
       return (
         <Group>
-          <Polyline {...attr} {...style} {...other} animation={animation} />
+          <Polyline {...attr} {...style} animation={animation} />
           {this.renderAxisLabel(attr, i)}
           {this.renderAxisScale(attr, i)}
         </Group>
@@ -294,10 +282,8 @@ class Radar extends BaseVisual {
         if (style === false) {
           return
         }
-        if (state === 'hover') {
-          return <Symbol {...attr} {...style} {...hoverStyle} animation={animation} zIndex={99} />
-        }
-        return <Symbol {...attr} {...style} animation={animation} zIndex={99} />
+        const stateStyle = state === 'hover' ? hoverStyle : {}
+        return <Symbol {...attr} {...style} {...stateStyle} animation={animation} zIndex={99} />
       })
     })
 
