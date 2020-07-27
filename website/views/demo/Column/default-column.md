@@ -4,169 +4,43 @@
 
 ```javascript
 const data = [
-  {
-    product: "茶叶",
-    year: "2016",
-    sales: 81.2,
-  },
-  {
-    product: "茶叶",
-    year: "2017",
-    sales: 121.2,
-  },
-  {
-    product: "茶叶",
-    year: "2018",
-    sales: 41.2,
-  },
-  {
-    product: "牛奶",
-    year: "2016",
-    sales: 85.2,
-  },
-  {
-    product: "牛奶",
-    year: "2017",
-    sales: 79.6,
-  },
-  {
-    product: "牛奶",
-    year: "2018",
-    sales: 81.2,
-  },
-  {
-    product: "咖啡",
-    year: "2016",
-    sales: 65.2,
-  },
-  {
-    product: "咖啡",
-    year: "2017",
-    sales: 59.6,
-  },
-  {
-    product: "咖啡",
-    year: "2018",
-    sales: 61.2,
-  },
-  {
-    product: "椰汁",
-    year: "2016",
-    sales: 35.2,
-  },
-  {
-    product: "椰汁",
-    year: "2017",
-    sales: 79.6,
-  },
-  {
-    product: "椰汁",
-    year: "2018",
-    sales: 21.2,
-  },
+  { value: 22, label: "05-01" },
+  { value: 60, label: "05-02" },
+  { value: 56, label: "05-03" },
+  { value: 85, label: "05-04" },
+  { value: 136, label: "05-05" },
+  { value: 108, label: "05-06" },
+  { value: 64, label: "05-07" },
+  { value: 35, label: "05-08" },
 ];
-const dataNew = [
-  {
-    product: "茶叶",
-    year: "2016",
-    sales: 81.2,
-  },
-  {
-    product: "茶叶",
-    year: "2017",
-    sales: 121.2,
-  },
-  {
-    product: "茶叶",
-    year: "2018",
-    sales: 41.2,
-  },
-  {
-    product: "茶叶",
-    year: "2019",
-    sales: 61.2,
-  },
-  {
-    product: "牛奶",
-    year: "2016",
-    sales: 85.2,
-  },
-  {
-    product: "牛奶",
-    year: "2017",
-    sales: 79.6,
-  },
-  {
-    product: "牛奶",
-    year: "2018",
-    sales: 81.2,
-  },
-  {
-    product: "牛奶",
-    year: "2019",
-    sales: 111.2,
-  },
-  {
-    product: "咖啡",
-    year: "2016",
-    sales: 65.2,
-  },
-  {
-    product: "咖啡",
-    year: "2017",
-    sales: 59.6,
-  },
-  {
-    product: "咖啡",
-    year: "2018",
-    sales: 61.2,
-  },
-  {
-    product: "咖啡",
-    year: "2019",
-    sales: 161.2,
-  },
-];
-
-let bool = true;
 const { Chart, Bar, Tooltip, Axis, Legend } = qcharts;
 const chart = new Chart({
   container: "#app",
 });
 chart.source(data, {
-  row: "year",
-  col: "product",
-  value: "sales",
-  text: "product",
+  row: "*",
+  value: "value",
+  text: "label",
 });
-const bar = new Bar();
+const bar = new Bar({
+  animation: {
+    duration: 1000,
+    easing: "elasticOut",
+  },
+});
+bar.style("pillar", { bgcolor: "#47A1FF" });
+// const tooltip = new Tooltip({
+//   formatter: d => `${d.label}: ${d.value}`
+// }).style('icon', { fillColor: '#47A1FF' })
+// const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
+//   text: '图例二'
+// })
 const tooltip = new Tooltip();
-const legend = new Legend();
-const axisBottom = new Axis();
-const axisLeft = new Axis({ orient: "left" });
-chart.append([bar, tooltip, axisBottom, axisLeft, legend]);
-
-setTimeout(changeData, 3000);
-function changeData() {
-  if (bool) {
-    chart.source(dataNew, {
-      row: "year",
-      col: "product",
-      value: "sales",
-      text: "product",
-    });
-    bool = false;
-  } else {
-    chart.source(data, {
-      row: "year",
-      col: "product",
-      value: "sales",
-      text: "product",
-    });
-    bool = true;
-  }
-  setTimeout(changeData, 5000);
-}
+const axisBottom = new Axis().style("grid", false);
+const axisLeft = new Axis({ orient: "left" })
+  .style("axis", false)
+  .style("scale", false);
+chart.append([bar, tooltip, axisBottom, axisLeft]);
 ```
 
 :::
