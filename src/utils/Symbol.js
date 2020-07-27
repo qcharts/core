@@ -24,7 +24,7 @@ class Symbol extends Group {
     this.$sprite = new this.TagName(renderAttr)
     this.append(this.$sprite)
     if (attrs.pos && attrs.pos.length) {
-      this.attr('pos', pos)
+      this.attr('pos', attrs.pos)
     }
   }
   attr(name, val) {

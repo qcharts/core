@@ -29,7 +29,7 @@ class Line extends Base {
     })
     return lines
   }
-  beforeUpdate(params) {
+  beforeUpdate() {
     //更新前的处理函数，返回lines,继承base
     let { arrLayout, maxLen } = this.getRenderData()
     let renderLines = this.renderLines
