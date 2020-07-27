@@ -34,16 +34,13 @@ chart.source(data, {
   text: 'date'
 })
 
-const area = new Area({ smooth: true })
-  .style('area', function(attrs, data, i) {
-    if (i === 0) {
-      return { fillColor: 'transparent', strokeColor: 'transparent' }
-    } else if (i === 1) {
-      return { fillColor: '#eee' }
-    }
-  })
-  .style('point', { fillColor: 'transparent', strokeColor: 'transparent' })
-  .style('point:hover', { strokeColor: '#fff' })
+const area = new Area({ smooth: true }).style('area', function(attrs, data, i) {
+  if (i === 0) {
+    return { fillColor: 'transparent', strokeColor: 'transparent' }
+  } else if (i === 1) {
+    return { fillColor: '#eee' }
+  }
+})
 
 const axisBottom = new Axis()
 const tooltip = new Tooltip()

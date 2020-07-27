@@ -134,6 +134,14 @@ class Line extends Base {
             return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...style} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
+        <Group class="areas-group">
+          {this.type !== 'area'
+            ? null
+            : lines.map((line, ind) => {
+                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
+                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
+              })}
+        </Group>
         <Group class="line-points">
           {lines.map((line, ind) => {
             return line.state === 'disabled' ? (
@@ -141,6 +149,7 @@ class Line extends Base {
             ) : (
               <Group>
                 {line.to.points.map((p, j) => {
+                  console.log(line)
                   const animation = { from: { pos: line.from.points[j] }, to: { pos: p } }
                   const style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind], ind, j])
                   const hoverStyle = getStyle(this, 'point:hover', [{ fillColor: colors[ind] }, styles['point:hover']], [this.dataset.rows[ind], ind, j])
@@ -152,14 +161,6 @@ class Line extends Base {
               </Group>
             )
           })}
-        </Group>
-        <Group class="areas-group">
-          {this.type !== 'area'
-            ? null
-            : lines.map((line, ind) => {
-                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
-                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
-              })}
         </Group>
         <Group class="guide-line-group">
           {guidePoints.length ? (

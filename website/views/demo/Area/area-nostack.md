@@ -36,7 +36,7 @@ const tooltip = new Tooltip({
   }
 })
 
-const axisBottom = new Axis().style('point', { fillColor: 'transparent' }).style('point:hover', { color: '#fff' })
+const axisBottom = new Axis()
 
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 
