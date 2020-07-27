@@ -1,7 +1,8 @@
-import { Group, Polyline, Label, Sprite } from 'spritejs'
+import { Group, Polyline, Label } from 'spritejs'
 import { deepObjectMerge, throttle, jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
+import Symbol from '../../utils/Symbol'
 import getPointSymbol from '../../utils/getPointSymbol'
 
 class Radar extends BaseVisual {
@@ -293,8 +294,10 @@ class Radar extends BaseVisual {
         if (style === false) {
           return
         }
-        const TargetName = getPointSymbol(style)
-        return <TargetName {...attr} {...style} {...hoverStyle} animation={animation} zIndex={99} />
+        if (state === 'hover') {
+          return <Symbol {...attr} {...style} {...hoverStyle} animation={animation} zIndex={99} />
+        }
+        return <Symbol {...attr} {...style} animation={animation} zIndex={99} />
       })
     })
 
