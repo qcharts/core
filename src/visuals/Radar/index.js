@@ -18,8 +18,7 @@ class Radar extends BaseVisual {
     const { height, width } = attrs.clientRect
     const center = [width / 2, height / 2]
 
-    const { radius } = attrs
-    const len = Math.min(...center) * radius
+    const len = Math.min(...center) * attrs.radius
 
     return { ...attrs, center, len }
   }
@@ -37,43 +36,33 @@ class Radar extends BaseVisual {
   }
 
   getPolylineAnimation(toPoints, state, index) {
-    let preData = this.sectionData[index]
     const zeroPoints = new Array(toPoints.length).fill([0, 0])
-
-    // disabled的时候缩回原点并透明
-    if (state === 'disabled') {
-      return {
-        from: { points: preData.animation.to.points, opacity: 1 },
-        to: { points: zeroPoints, opacity: 0 }
-      }
-    }
-    if (!preData) {
-      preData = {
-        animation: {
-          to: {
-            points: zeroPoints
-          }
-        }
-      }
-    }
-    return {
+    const preData = this.sectionData[index] || { animation: { to: { points: zeroPoints } } }
+    const animation = {
       from: { points: preData.animation.to.points },
       to: { points: toPoints }
     }
+    // disabled的时候缩回原点并透明
+    if (state === 'disabled') {
+      animation.to.points = zeroPoints
+    }
+    return animation
   }
 
   getRenderData() {
     const dataSet = this.dataset
     // // FIXME 数据筛选之前先按照label进行排序?是否需要？
     const { len, splitNumber, startAngle, labelOffset } = this.renderAttrs
-    const { sectionAttrs, axisAttrs, gridAttrs } = layout([...dataSet.rows], len, splitNumber, startAngle, labelOffset)
-
     const colors = this.theme.colors
 
-    sectionAttrs.forEach((s, i) => {
-      s.strokeColor = colors[i]
-      s.fillColor = colors[i]
-    })
+    const { sectionAttrs, axisAttrs, gridAttrs } = layout(
+      [...dataSet.rows],
+      len,
+      splitNumber,
+      startAngle,
+      labelOffset,
+      colors
+    )
 
     return { sectionAttrs, axisAttrs, gridAttrs }
   }
@@ -84,15 +73,7 @@ class Radar extends BaseVisual {
       const { points, state, ...otherAttrs } = attr
       const { style, hoverStyle } = this.getStyle('section', attr, { ...attr.dataOrigin }, i)
       let stateStyle = state === 'hover' ? hoverStyle : {}
-
-      let animation = this.getPolylineAnimation(points, state, i)
-      const opacity = jsType(style.opacity) === 'number' ? style.opacity : 1
-      if (state === 'disabled') {
-        animation.from.opacity = opacity
-      } else {
-        animation.to.opacity = opacity
-      }
-
+      const animation = this.getPolylineAnimation(points, state, i)
       return deepObjectMerge(otherAttrs, { state }, { animation }, style, stateStyle)
     })
     return { ...otherData, sectionAttrs: processSectionAttrs }
@@ -209,10 +190,9 @@ class Radar extends BaseVisual {
         const elIndex = index * attrs.splitNumber + i
         const preEl = this.scaleEl[elIndex]
         if (preEl) {
-          const { text: preText } = preEl
-          if (preText !== text) {
+          if (preEl.text !== text) {
             animation = {
-              from: { text: preText },
+              from: { text: preEl.text },
               to: { text },
               formatter: (attr) => {
                 attr.text = attr.text.toFixed(0)
