@@ -98,6 +98,13 @@ class Radar extends BaseVisual {
     return { ...otherData, sectionAttrs: processSectionAttrs }
   }
 
+  beforeRender() {
+    super.beforeRender()
+    const renderData = this.processData()
+    this.sectionData = [...renderData.sectionAttrs]
+    return renderData
+  }
+
   beforeUpdate() {
     super.beforeUpdate()
     const updateData = this.processData()
@@ -109,13 +116,6 @@ class Radar extends BaseVisual {
     }
     this.sectionData = [...updateData.sectionAttrs]
     return updateData
-  }
-
-  beforeRender() {
-    super.beforeRender()
-    const renderData = this.processData()
-    this.sectionData = [...renderData.sectionAttrs]
-    return renderData
   }
 
   rendered() {}
@@ -256,6 +256,17 @@ class Radar extends BaseVisual {
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
       const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
       return toPoints.map((point, i) => {
+        const attr = {
+          pos: point,
+          fillColor: strokeColor,
+          radius: 2,
+          dataOrigin: dataOrigin[i]
+        }
+        const { style, hoverStyle } = this.getStyle('point', attr, { ...attr.dataOrigin }, i)
+        if (style === false) {
+          return
+        }
+
         let animation = {
           from: { pos: [0, 0], opacity: 1 },
           to: { pos: point, opacity: 1 }
@@ -270,17 +281,6 @@ class Radar extends BaseVisual {
         }
         if (state === 'disabled') {
           animation.to.opacity = 0
-        }
-
-        const attr = {
-          pos: point,
-          fillColor: strokeColor,
-          radius: 2,
-          dataOrigin: dataOrigin[i]
-        }
-        const { style, hoverStyle } = this.getStyle('point', attr, { ...attr.dataOrigin }, i)
-        if (style === false) {
-          return
         }
         const stateStyle = state === 'hover' ? hoverStyle : {}
         return <Symbol {...attr} {...style} {...stateStyle} animation={animation} zIndex={99} />
