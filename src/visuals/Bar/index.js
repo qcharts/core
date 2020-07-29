@@ -182,7 +182,10 @@ class Bar extends Base {
             const style = getStyle(
               this,
               "pillar",
-              [{ bgcolor: colors[ind % dataLength] }, styles.bar],
+              [
+                { bgcolor: colors[ind % dataLength], ...pillar.attrs },
+                styles.bar,
+              ],
               [this.dataset.rows[ind], ind]
             );
             return (
