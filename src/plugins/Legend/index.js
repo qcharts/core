@@ -290,7 +290,9 @@ class Legend extends Base {
             animation={{
               from: { pos: this.posFrom },
               to: { pos: pos },
-              duration: this.twiceRender ? 300 : 0,
+              duration: this.twiceRender
+                ? this.renderAttrs.animation.duration
+                : 0,
             }}
           >
             {arr.map((attrs, ind) => {
@@ -299,21 +301,21 @@ class Legend extends Base {
               let disabled = cell.state === "disabled";
               let style = getStyle(
                 this,
-                "legend",
+                "point",
                 [{}, styles.icon],
                 [cell, ind]
               );
 
               let hoverStyle = hover
-                ? getStyle(this, "legend:hover", [{}], [cell, ind])
+                ? getStyle(this, "point:hover", [{}], [cell, ind])
                 : {};
               if (disabled && attrs.iconAttrs.bgcolor) {
                 hoverStyle.bgcolor = "#ccc";
                 hoverStyle.fillColor = "#ccc";
               }
-              let textStyle = getStyle(this, "legendText", [{}], [cell, ind]);
+              let textStyle = getStyle(this, "text", [{}], [cell, ind]);
               let textHoverStyle = hover
-                ? getStyle(this, "legendText:hover", [{}], [cell, ind])
+                ? getStyle(this, "text:hover", [{}], [cell, ind])
                 : {};
               return (
                 <Group

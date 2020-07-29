@@ -69,7 +69,7 @@ const tooltip = new Tooltip();
 // })
 const colors = ["#F00", "#FF0", "#0FF"];
 // const legend = new Legend()
-//   .style("legend:hover", {
+//   .style("point:hover", {
 //     pointType: "star",
 //     angles: 5,
 //     innerRadius: 3,
@@ -77,10 +77,10 @@ const colors = ["#F00", "#FF0", "#0FF"];
 //     fillColor: "red",
 //     translate:[5,5]
 //   })
-//   .style("legend", (i, j, k) => {
+//   .style("point", (i, j, k) => {
 //     return { translate:[0,0],bgcolor: colors[k] };
 //   });
-const legend = new Legend().style("legend", (i, j, k) => {
+const legend = new Legend().style("point", (i, j, k) => {
   return {
     pointType: "star",
     angles: 5,
