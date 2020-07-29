@@ -155,7 +155,7 @@ class Line extends Base {
                     styleStr = 'point:hover'
                   }
                   let style = getStyle(this, styleStr, [{ fillColor: colors[ind] }, styles[styleStr]], [this.dataset.rows[ind], ind, j])
-                  return <Symbol {...style} animation={animation} />
+                  return <Point {...style} animation={animation} />
                 })}
               </Group>
             )

@@ -45,6 +45,9 @@ class Axis extends Base {
       formatter: e => e
     }
   }
+  afterrender() {
+    console.log('render---')
+  }
   //defaultStyles() {}
   getRenderData() {
     //根据axis的特性返回需要数据
@@ -72,7 +75,7 @@ class Axis extends Base {
     let oldPos = (oldAxis.nameAttr && oldAxis.nameAttr.pos) || axis.nameAttr.pos
     let nameAni = { from: { pos: oldPos }, to: { pos: axis.nameAttr.pos } }
     return (
-      <Group ref="wrap" pos={[clientRect.left, clientRect.top]}>
+      <Group ref="wrap" onAfterrender={this.afterrender} size={[100, 100]}>
         <Polyline {...axisStyle} animation={{ from: { points: oldAxis.axisPoints }, to: { points: axis.axisPoints } }}></Polyline>
         <Group>
           {axis.grids.map((grid, ind) => {
