@@ -72,7 +72,7 @@ class Axis extends Base {
     let oldPos = (oldAxis.nameAttr && oldAxis.nameAttr.pos) || axis.nameAttr.pos
     let nameAni = { from: { pos: oldPos }, to: { pos: axis.nameAttr.pos } }
     return (
-      <Group ref="wrap" pos={[clientRect.left, clientRect.top]}>
+      <Group ref="wrap">
         <Polyline {...axisStyle} animation={{ from: { points: oldAxis.axisPoints }, to: { points: axis.axisPoints } }}></Polyline>
         <Group>
           {axis.grids.map((grid, ind) => {
