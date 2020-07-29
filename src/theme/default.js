@@ -127,8 +127,13 @@ theme.plugins = {
   Legend: {
     colors: theme.colors,
     styles: {
-      icon: {
+      point: {
         pointType: "sprite",
+        iconSize: [12, 12],
+      },
+      text: {
+        fontSize: "12px",
+        fillColor: "#666",
       },
     },
     attrs: {},

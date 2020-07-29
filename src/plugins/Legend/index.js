@@ -1,10 +1,7 @@
 import Base from "../../base/BasePlugin";
-import { Group, Sprite, Path, Label } from "spritejs";
-import layout from "./layout";
+import { Group, Path, Label } from "spritejs";
 import { getStyle } from "@/utils/getStyle";
 import Symbol from "../../utils/Symbol";
-import filterClone from "filter-clone";
-//import { debounce } from '@qcharts/utils'
 class Legend extends Base {
   constructor(attrs) {
     super(attrs);
@@ -14,15 +11,11 @@ class Legend extends Base {
       totalPage: 1,
       perPageWidthOrHeight: 0, // 每页长度（或宽度）
       paginationSize: [0, 0], // 分页控件大小
-      groupSize: [0, 0], // legends 容器大小 $group.contentSize
+      groupSize: [0, 0], // legends 容器大小
     };
-    this.legendNum = 1;
-    this.renderedCounter = 0;
     this.twiceRender = false;
     this.posFrom = [0, 0];
     this.currentPos = [0, 0];
-    this.oldDataset = null;
-    this.lastState = "default";
     this.legendStateArray = [];
   }
   get renderAttrs() {
@@ -37,7 +30,8 @@ class Legend extends Base {
       formatter: (d) => d.value || d,
       iconSize: [12, 12],
       textSize: [40, 12],
-      gap: 10,
+      outGap: 10,
+      innerGap: 4,
     };
   }
   get pos() {
@@ -47,7 +41,6 @@ class Legend extends Base {
     let canvasWidth = width + left + right;
     let canvasHeight = height + top + bottom;
     this.state.paginationSize = this.isVertical ? [30, 60] : [70, 25];
-
     const isValidLayout = (value, type) => {
       if (type === "horizontal") {
         // 水平布局
@@ -57,7 +50,6 @@ class Legend extends Base {
         return ["default", "top", "center", "bottom"].indexOf(value) > -1;
       }
     };
-
     const hLocation = {
       // 水平定位
       default: 0,
@@ -70,16 +62,13 @@ class Legend extends Base {
           return num;
         } else {
           let val = 0;
-
           try {
             val = parseFloat(num) / 100;
           } catch (e) {}
-
           return (canvasWidth - groupSize[0]) * val;
         }
       },
     };
-
     const vLocation = {
       // 垂直定位
       default: 0,
@@ -92,11 +81,9 @@ class Legend extends Base {
           return num;
         } else {
           let val = 0;
-
           try {
             val = parseFloat(num) / 100;
           } catch (e) {}
-
           return (canvasHeight - groupSize[1]) * val;
         }
       },
@@ -167,12 +154,12 @@ class Legend extends Base {
         state: item.state,
       };
     });
-    this.legendNum = renderData.length;
-    let arrLayout = layout.call(this, renderData, renderAttrs);
-    let colors = this.theme.colors;
-    arrLayout.map((item, ind) => {
-      item.iconAttrs.bgcolor = colors[ind];
-      return item;
+    let arrLayout = renderData.map((item) => {
+      return {
+        textAttrs: {
+          text: item.name,
+        },
+      };
     });
     this.arrLayout = arrLayout;
     return { arrLayout };
@@ -185,17 +172,11 @@ class Legend extends Base {
   }
   itemLeave(e, el) {
     const ind = el.attr("_index");
-    console.log("itemLeave");
-    console.log(this.lastState);
-    // this.dataset[this.renderAttrs.layoutBy][ind].state = "default";
     this.legendStateArray[ind] = "default";
     this.update();
   }
   itemMove(e, el) {
     const ind = el.attr("_index");
-    // this.lastState = this.dataset[this.renderAttrs.layoutBy][ind].state;
-    // console.log(this.lastState);
-    // this.dataset[this.renderAttrs.layoutBy][ind].state = "hover";
     if (this.legendStateArray[ind] === "default") {
       this.legendStateArray[ind] = "hover";
       this.update();
@@ -204,10 +185,8 @@ class Legend extends Base {
   beforeUpdate(params) {
     if (params && params.type === "source") {
       this.twiceRender = false;
-      this.renderedCounter = 0;
       return this.beforeRender();
     } else {
-      // this.reset();
       return this.arrLayout;
     }
   }
@@ -220,26 +199,27 @@ class Legend extends Base {
     if (this.twiceRender) {
       return;
     }
-    this.renderedCounter++;
-    if (this.legendNum === this.renderedCounter) {
-      this.twiceRender = true;
-      this.reset();
-      this.update();
-    }
+    this.twiceRender = true;
+    this.reset();
+    this.update();
   }
   reset() {
     let legendsSize = [0, 0];
-    let { gap, iconSize, textSize } = this.renderAttrs;
+    let { outGap, innerGap, iconSize, textSize } = this.renderAttrs;
     let maxTextWidth = 0;
+    let colors = this.theme.colors;
     this.arrLayout = this.arrLayout.map((item, index) => {
+      item.iconAttrs = {};
       let iconEl = this.$refs["icon" + index];
       let iconRect = iconEl.getBoundingClientRect();
       let textEl = this.$refs["text" + index];
       let textRect = textEl.getBoundingClientRect();
       let iconAttrs = {
-        ...item.iconAttrs,
+        bgcolor: colors[index],
         size: iconSize,
-        pos: this.isVertical ? [0, legendsSize[1]] : [legendsSize[0], 0],
+        pos: this.isVertical
+          ? [0, legendsSize[1] + (textRect.height - iconSize[1]) / 2]
+          : [legendsSize[0], (textRect.height - iconSize[1]) / 2],
       };
       if (this.dataset[this.renderAttrs.layoutBy][index].state === "disabled") {
         iconAttrs.bgcolor = "#ccc";
@@ -248,19 +228,17 @@ class Legend extends Base {
       let textAttrs = {
         ...item.textAttrs,
         pos: this.isVertical
-          ? [iconSize[0], legendsSize[1]]
-          : [iconSize[0] + legendsSize[0], 0],
-        font: '10px "宋体"',
+          ? [iconSize[0] + innerGap, legendsSize[1]]
+          : [iconSize[0] + legendsSize[0] + innerGap, 0],
         text: item.textAttrs.text,
-        lineHeight: textSize[1],
       };
-      let size = [iconSize[0] + textRect.width, iconSize[1]];
-      if (size[0] + gap > maxTextWidth) {
-        maxTextWidth = size[0] + gap;
+      let size = [iconSize[0] + textRect.width + innerGap, iconSize[1]];
+      if (size[0] + outGap + innerGap > maxTextWidth) {
+        maxTextWidth = size[0] + outGap + innerGap;
       }
       legendsSize = this.isVertical
-        ? [maxTextWidth, legendsSize[1] + iconSize[1] + gap]
-        : [legendsSize[0] + size[0] + gap, iconSize[1]];
+        ? [maxTextWidth, legendsSize[1] + textRect.height + outGap]
+        : [legendsSize[0] + size[0] + outGap, textRect.height];
       return { iconAttrs, textAttrs };
     });
     this.state.groupSize = legendsSize;
@@ -275,13 +253,12 @@ class Legend extends Base {
     }
   }
   render(arr) {
-    let colors = this.theme.colors;
     this.posFrom = this.currentPos;
     const { pos, pagePos } = this.pos;
     this.posFrom = this.twiceRender ? this.posFrom : pos;
     const { page, totalPage } = this.state;
     this.currentPos = pos;
-    let styles = this.renderStyles;
+    const styles = this.renderStyles;
     const isVertical = this.isVertical;
     if (arr) {
       return (
@@ -294,6 +271,7 @@ class Legend extends Base {
                 ? this.renderAttrs.animation.duration
                 : 0,
             }}
+            // pos={pos}
           >
             {arr.map((attrs, ind) => {
               let cell = this.dataset[this.renderAttrs.layoutBy][ind];
@@ -302,7 +280,7 @@ class Legend extends Base {
               let style = getStyle(
                 this,
                 "point",
-                [{}, styles.icon],
+                [{}, styles.point],
                 [cell, ind]
               );
 
@@ -313,7 +291,12 @@ class Legend extends Base {
                 hoverStyle.bgcolor = "#ccc";
                 hoverStyle.fillColor = "#ccc";
               }
-              let textStyle = getStyle(this, "text", [{}], [cell, ind]);
+              let textStyle = getStyle(
+                this,
+                "text",
+                [{}, styles.text],
+                [cell, ind]
+              );
               let textHoverStyle = hover
                 ? getStyle(this, "text:hover", [{}], [cell, ind])
                 : {};
@@ -324,6 +307,8 @@ class Legend extends Base {
                   onMouseenter={this.itemMove}
                   onMousemove={this.itemMove}
                   {...{ _index: ind }}
+                  size={[1, 1]}
+                  onAfterrender={this.afterrender}
                 >
                   <Symbol
                     {...{ ref: "icon" + ind }}
@@ -336,7 +321,6 @@ class Legend extends Base {
                     {...attrs.textAttrs}
                     {...textStyle}
                     {...textHoverStyle}
-                    onAfterrender={this.afterrender}
                   />
                 </Group>
               );
@@ -361,7 +345,7 @@ class Legend extends Base {
               <Label
                 pos={pagePos.pageText}
                 ref="paginationText"
-                font="14px '宋体'"
+                fontSize="14px"
                 text={page + "/" + totalPage + ""}
                 lineBreak="normal"
                 padding={isVertical ? [0, 2] : [0, 2]}
