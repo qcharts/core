@@ -55,7 +55,6 @@ const radialBar = new RadialBar({
   lineWidth: 10
 })
 
-// radialBar.color(['rgba(195,51,51,1)', 'rgba(147,8,207,1)', 'rgba(79,24,217,1)', 'rgba(0,95,239,1)', 'rgba(26,216,210,1)', 'rgba(0,38,202,1)',])
 
 radialBar.style('arc', { lineCap: 'round' })
 
@@ -80,7 +79,7 @@ legend.style('text', (attrs, d, i) => ({
   marginTop: i > 0 ? 10 : 0
 }))
 
-chart.append([radialBar, legend])
+chart.append([radialBar, legend,new Tooltip()])
 ```
 
 :::

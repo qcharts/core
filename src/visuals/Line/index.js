@@ -2,7 +2,7 @@ import Base from '../../base/BaseVisual'
 import { Group, Polyline, Node } from 'spritejs'
 import { getStyle } from '@/utils/getStyle'
 import layout from './layout'
-import Symbol from '../../utils/Symbol'
+import Point from '../../utils/Point'
 class Line extends Base {
   constructor(attrs) {
     super(attrs)
