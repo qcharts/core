@@ -26,7 +26,7 @@ chart.source(data, {
   text: 'date'
 })
 
-const area = new Area().style('point', { fillColor: 'transparent', strokeColor: 'transparent' }).style('point:hover', { strokeColor: '#fff' })
+const area = new Area()
 
 const axisBottom = new Axis().style('grid', false)
 const tooltip = new Tooltip()

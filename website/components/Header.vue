@@ -83,7 +83,11 @@ header {
     flex-wrap: nowrap;
 
     a {
+      line-height: 64px;
       color: #444;
+      img{
+        vertical-align: middle;
+      }
     }
 
     button {

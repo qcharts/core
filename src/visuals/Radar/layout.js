@@ -32,9 +32,10 @@ const getMax = (data, splitNumber) => {
  * @param {Number} splitNumber  雷达图背景层级
  * @param {Number} startAngle 雷达图起始轴角度
  * @param {Number} labelOffset 雷达图文字偏移值
+ * @param {Array} colors 雷达图主题颜色
  * @returns {Object} { sectionAttrs, borderAttrs, axisAttrs, gridAttrs }
  */
-export default function layout(data, radius, splitNumber, startAngle, labelOffset) {
+export default function layout(data, radius, splitNumber, startAngle, labelOffset, colors) {
   let bgPoints = [] // 最外层背景多边形
   let gridAttrs = [] // 蜘蛛网图背景
   let axisAttrs = [] // 坐标轴
@@ -62,7 +63,7 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
 
     bgPoints.push({
       point,
-      radian: currentRadian,
+      radian: currentRadian
     })
 
     // 类别指示坐标
@@ -78,7 +79,7 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
       labelPos,
       radian: currentRadian,
       maxScale: max,
-      splitNumber: splitNumber,
+      splitNumber: splitNumber
     })
   }
 
@@ -97,6 +98,8 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
       points: categoryPoints,
       state: row.state,
       close: true,
+      strokeColor: colors[index],
+      fillColor: colors[index]
     })
   })
 
@@ -112,7 +115,7 @@ export default function layout(data, radius, splitNumber, startAngle, labelOffse
       close: true,
       lineWidth: 1,
       strokeColor: '#DDE0E5',
-      anchor: [0.5, 0.5],
+      anchor: [0.5, 0.5]
     })
   }
 
