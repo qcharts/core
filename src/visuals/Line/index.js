@@ -150,12 +150,12 @@ class Line extends Base {
               <Group>
                 {line.to.points.map((p, j) => {
                   const animation = { from: { pos: line.from.points[j] }, to: { pos: p } }
-                  const style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind], ind, j])
-                  const hoverStyle = getStyle(this, 'point:hover', [{ fillColor: colors[ind] }, styles['point:hover']], [this.dataset.rows[ind], ind, j])
+                  let styleStr = 'point'
                   if (this.dataset.rows[ind][j].state === 'hover') {
-                    return <Point {...style} {...hoverStyle} animation={animation} />
+                    styleStr = 'point:hover'
                   }
-                  return <Point {...style} animation={animation} />
+                  let style = getStyle(this, styleStr, [{ fillColor: colors[ind] }, styles[styleStr]], [this.dataset.rows[ind], ind, j])
+                  return <Symbol {...style} animation={animation} />
                 })}
               </Group>
             )
