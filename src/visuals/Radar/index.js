@@ -1,9 +1,8 @@
-import { Group, Polyline, Label } from 'spritejs'
+import { Group, Polyline, Arc, Label } from 'spritejs'
 import { deepObjectMerge, throttle, jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
 import Symbol from '../../utils/Symbol'
-//import getPointSymbol from '../../utils/getPointSymbol'
 
 class Radar extends BaseVisual {
   constructor(attrs) {
@@ -19,8 +18,7 @@ class Radar extends BaseVisual {
     const { height, width } = attrs.clientRect
     const center = [width / 2, height / 2]
 
-    const { radius } = attrs
-    const len = Math.min(...center) * radius
+    const len = Math.min(...center) * attrs.radius
 
     return { ...attrs, center, len }
   }
@@ -38,43 +36,33 @@ class Radar extends BaseVisual {
   }
 
   getPolylineAnimation(toPoints, state, index) {
-    let preData = this.sectionData[index]
     const zeroPoints = new Array(toPoints.length).fill([0, 0])
-
-    // disabled的时候缩回原点并透明
-    if (state === 'disabled') {
-      return {
-        from: { points: preData.animation.to.points, opacity: 1 },
-        to: { points: zeroPoints, opacity: 0 }
-      }
-    }
-    if (!preData) {
-      preData = {
-        animation: {
-          to: {
-            points: zeroPoints
-          }
-        }
-      }
-    }
-    return {
+    const preData = this.sectionData[index] || { animation: { to: { points: zeroPoints } } }
+    const animation = {
       from: { points: preData.animation.to.points },
       to: { points: toPoints }
     }
+    // disabled的时候缩回原点并透明
+    if (state === 'disabled') {
+      animation.to.points = zeroPoints
+    }
+    return animation
   }
 
   getRenderData() {
     const dataSet = this.dataset
     // // FIXME 数据筛选之前先按照label进行排序?是否需要？
     const { len, splitNumber, startAngle, labelOffset } = this.renderAttrs
-    const { sectionAttrs, axisAttrs, gridAttrs } = layout([...dataSet.rows], len, splitNumber, startAngle, labelOffset)
-
     const colors = this.theme.colors
 
-    sectionAttrs.forEach((s, i) => {
-      s.strokeColor = colors[i]
-      s.fillColor = colors[i]
-    })
+    const { sectionAttrs, axisAttrs, gridAttrs } = layout(
+      [...dataSet.rows],
+      len,
+      splitNumber,
+      startAngle,
+      labelOffset,
+      colors
+    )
 
     return { sectionAttrs, axisAttrs, gridAttrs }
   }
@@ -84,21 +72,18 @@ class Radar extends BaseVisual {
     const processSectionAttrs = sectionAttrs.map((attr, i) => {
       const { points, state, ...otherAttrs } = attr
       const { style, hoverStyle } = this.getStyle('section', attr, { ...attr.dataOrigin }, i)
-      let stateStyle = { lineWidth: attr.lineWidth }
-      if (state === 'hover') {
-        stateStyle = { ...hoverStyle, lineWidth: attr.lineWidth + 1 }
-      }
-
-      let animation = this.getPolylineAnimation(points, state, i)
-      const opacity = jsType(style.opacity) === 'number' ? style.opacity : 1
-      if (state === 'disabled') {
-        animation.from.opacity = opacity
-      } else {
-        animation.to.opacity = opacity
-      }
+      let stateStyle = state === 'hover' ? hoverStyle : {}
+      const animation = this.getPolylineAnimation(points, state, i)
       return deepObjectMerge(otherAttrs, { state }, { animation }, style, stateStyle)
     })
     return { ...otherData, sectionAttrs: processSectionAttrs }
+  }
+
+  beforeRender() {
+    super.beforeRender()
+    const renderData = this.processData()
+    this.sectionData = [...renderData.sectionAttrs]
+    return renderData
   }
 
   beforeUpdate() {
@@ -112,13 +97,6 @@ class Radar extends BaseVisual {
     }
     this.sectionData = [...updateData.sectionAttrs]
     return updateData
-  }
-
-  beforeRender() {
-    super.beforeRender()
-    const renderData = this.processData()
-    this.sectionData = [...renderData.sectionAttrs]
-    return renderData
   }
 
   rendered() {}
@@ -146,20 +124,11 @@ class Radar extends BaseVisual {
     const GridShape = gridType === 'circle' ? Arc : Polyline
     return gridAttrs.map((attr, i) => {
       const animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(attr.scale)
-      const { style, ...other } = this.getStyle('grid', attr, null, i)
+      const { style } = this.getStyle('grid', attr, null, i)
       if (style === false) {
         return
       }
-      let gridAttr = { ...attr }
-      if (gridType === 'circle') {
-        gridAttr = {
-          lineWidth: attr.lineWidth,
-          strokeColor: attr.strokeColor,
-          radius: attr.radius,
-          scale: attr.scale
-        }
-      }
-      return <GridShape {...gridAttr} {...style} {...other} animation={animation} />
+      return <GridShape {...attr} {...style} animation={animation} />
     })
   }
 
@@ -180,11 +149,11 @@ class Radar extends BaseVisual {
       fontSize: 12
     }
     const animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(1)
-    const { style, ...other } = this.getStyle('label', attr, { text: attr.label, radian }, i)
+    const { style } = this.getStyle('label', attr, { text: attr.label, radian }, i)
     if (style === false) {
       return
     }
-    return <Label {...attr} {...style} {...other} animation={animation} />
+    return <Label {...attr} {...style} animation={animation} />
   }
 
   renderAxisScale(attrs, index) {
@@ -212,7 +181,7 @@ class Radar extends BaseVisual {
         pos: point,
         ...common
       }
-      const { style, ...other } = this.getStyle('scale', attr, { text, index }, i)
+      const { style } = this.getStyle('scale', attr, { text, index }, i)
       if (style === false) {
         return
       }
@@ -221,10 +190,9 @@ class Radar extends BaseVisual {
         const elIndex = index * attrs.splitNumber + i
         const preEl = this.scaleEl[elIndex]
         if (preEl) {
-          const { text: preText } = preEl
-          if (preText !== text) {
+          if (preEl.text !== text) {
             animation = {
-              from: { text: preText },
+              from: { text: preEl.text },
               to: { text },
               formatter: attr => {
                 attr.text = attr.text.toFixed(0)
@@ -239,7 +207,7 @@ class Radar extends BaseVisual {
           }
         }
         this.scaleEl[i] = { text: Number(text.toFixed(0)) }
-        labels.push(<Label {...attr} {...style} {...other} animation={animation} />)
+        labels.push(<Label {...attr} {...style} animation={animation} />)
       }
     }
     return labels
@@ -248,13 +216,13 @@ class Radar extends BaseVisual {
   renderAxis(axisAttrs) {
     const animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(1)
     return axisAttrs.map((attr, i) => {
-      const { style, ...other } = this.getStyle('axis', attr, { text: attr.label }, i)
+      const { style } = this.getStyle('axis', attr, { text: attr.label }, i)
       if (style === false) {
         return
       }
       return (
         <Group>
-          <Polyline {...attr} {...style} {...other} animation={animation} />
+          <Polyline {...attr} {...style} animation={animation} />
           {this.renderAxisLabel(attr, i)}
           {this.renderAxisScale(attr, i)}
         </Group>
@@ -268,6 +236,17 @@ class Radar extends BaseVisual {
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
       const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
       return toPoints.map((point, i) => {
+        const attr = {
+          pos: point,
+          fillColor: strokeColor,
+          radius: 2,
+          dataOrigin: dataOrigin[i]
+        }
+        const { style, hoverStyle } = this.getStyle('point', attr, { ...attr.dataOrigin }, i)
+        if (style === false) {
+          return
+        }
+
         let animation = {
           from: { pos: [0, 0], opacity: 1 },
           to: { pos: point, opacity: 1 }
@@ -283,21 +262,8 @@ class Radar extends BaseVisual {
         if (state === 'disabled') {
           animation.to.opacity = 0
         }
-
-        const attr = {
-          pos: point,
-          fillColor: strokeColor,
-          radius: 2,
-          dataOrigin: dataOrigin[i]
-        }
-        const { style, hoverStyle } = this.getStyle('point', attr, { ...attr.dataOrigin }, i)
-        if (style === false) {
-          return
-        }
-        if (state === 'hover') {
-          return <Symbol {...attr} {...style} {...hoverStyle} animation={animation} zIndex={99} />
-        }
-        return <Symbol {...attr} {...style} animation={animation} zIndex={99} />
+        const stateStyle = state === 'hover' ? hoverStyle : {}
+        return <Symbol {...attr} {...style} {...stateStyle} animation={animation} zIndex={99} />
       })
     })
 

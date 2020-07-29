@@ -30,11 +30,16 @@ class Symbol extends Group {
     const { pointType, pos, ...renderAttr } = attrs
 
     if (pointType && pointType !== this.pointType) {
+      if (!Object.keys(allSymbol).includes(pointType)) {
+        throw new Error(
+          `pointType should be one of 'sprite','path','ellipse','rect','triangle','parallel','regular','star' but it is ${pointType}`
+        )
+      }
       this.$sprite && this.$sprite.remove()
       this.$sprite = new allSymbol[pointType](renderAttr)
       this.append(this.$sprite)
     } else {
-       this.$sprite.attr(renderAttr)
+      this.$sprite.attr(renderAttr)
     }
     if (pos && pos.length) {
       super.attr('pos', pos)
