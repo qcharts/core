@@ -2,7 +2,7 @@ import { Group, Polyline, Arc, Label } from 'spritejs'
 import { deepObjectMerge, throttle, jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
-import Symbol from '../../utils/Symbol'
+import Point from '../../utils/Point'
 
 class Radar extends BaseVisual {
   constructor(attrs) {
@@ -263,7 +263,7 @@ class Radar extends BaseVisual {
           animation.to.opacity = 0
         }
         const stateStyle = state === 'hover' ? hoverStyle : {}
-        return <Symbol {...attr} {...style} {...stateStyle} animation={animation} zIndex={99} />
+        return <Point {...attr} {...style} {...stateStyle} animation={animation} zIndex={99} />
       })
     })
 

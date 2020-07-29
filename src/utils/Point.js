@@ -1,7 +1,7 @@
 import { Sprite, Path, Ellipse, Rect, Triangle, Parallel, Regular, Star, Group } from 'spritejs'
 import { jsType } from '@qcharts/utils'
 
-const allSymbol = {
+const allPoint = {
   sprite: Sprite,
   path: Path,
   ellipse: Ellipse,
@@ -11,7 +11,7 @@ const allSymbol = {
   regular: Regular,
   star: Star
 }
-class Symbol extends Group {
+class Point extends Group {
   constructor(attrs = {}) {
     super()
     this.pointType = null
@@ -30,13 +30,13 @@ class Symbol extends Group {
     const { pointType, pos, ...renderAttr } = attrs
 
     if (pointType && pointType !== this.pointType) {
-      if (!Object.keys(allSymbol).includes(pointType)) {
+      if (!Object.keys(allPoint).includes(pointType)) {
         throw new Error(
           `pointType should be one of 'sprite','path','ellipse','rect','triangle','parallel','regular','star' but it is ${pointType}`
         )
       }
       this.$sprite && this.$sprite.remove()
-      this.$sprite = new allSymbol[pointType](renderAttr)
+      this.$sprite = new allPoint[pointType](renderAttr)
       this.append(this.$sprite)
     } else {
       this.$sprite.attr(renderAttr)
@@ -48,4 +48,4 @@ class Symbol extends Group {
     this.pointType = pointType
   }
 }
-export default Symbol
+export default Point
