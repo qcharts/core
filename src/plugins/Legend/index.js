@@ -262,10 +262,10 @@ class Legend extends Base {
     const isVertical = this.isVertical;
     if (arr) {
       return (
-        <Group>
+        <Group size={[1, 1]} onAfterrender={this.afterrender}>
           <Group
             animation={{
-              from: { pos: this.posFrom },
+              from: { pos: pos },
               to: { pos: pos },
               duration: this.twiceRender
                 ? this.renderAttrs.animation.duration
@@ -307,8 +307,6 @@ class Legend extends Base {
                   onMouseenter={this.itemMove}
                   onMousemove={this.itemMove}
                   {...{ _index: ind }}
-                  size={[1, 1]}
-                  onAfterrender={this.afterrender}
                 >
                   <Symbol
                     {...{ ref: "icon" + ind }}
