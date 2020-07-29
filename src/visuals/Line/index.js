@@ -2,7 +2,7 @@ import Base from '../../base/BaseVisual'
 import { Group, Polyline, Node } from 'spritejs'
 import { getStyle } from '@/utils/getStyle'
 import layout from './layout'
-import Symbol from '../../utils/Symbol'
+import Point from '../../utils/Point'
 class Line extends Base {
   constructor(attrs) {
     super(attrs)
@@ -134,6 +134,14 @@ class Line extends Base {
             return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...style} animation={{ from: line.from, to: line.to }} />
           })}
         </Group>
+        <Group class="areas-group">
+          {this.type !== 'area'
+            ? null
+            : lines.map((line, ind) => {
+                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
+                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
+              })}
+        </Group>
         <Group class="line-points">
           {lines.map((line, ind) => {
             return line.state === 'disabled' ? (
@@ -142,24 +150,16 @@ class Line extends Base {
               <Group>
                 {line.to.points.map((p, j) => {
                   const animation = { from: { pos: line.from.points[j] }, to: { pos: p } }
-                  const style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind], ind, j])
-                  const hoverStyle = getStyle(this, 'point:hover', [{ fillColor: colors[ind] }, styles['point:hover']], [this.dataset.rows[ind], ind, j])
+                  let styleStr = 'point'
                   if (this.dataset.rows[ind][j].state === 'hover') {
-                    return <Symbol {...style} {...hoverStyle} animation={animation} />
+                    styleStr = 'point:hover'
                   }
-                  return <Symbol {...style} animation={animation} />
+                  let style = getStyle(this, styleStr, [{ fillColor: colors[ind] }, styles[styleStr]], [this.dataset.rows[ind], ind, j])
+                  return <Point {...style} animation={animation} />
                 })}
               </Group>
             )
           })}
-        </Group>
-        <Group class="areas-group">
-          {this.type !== 'area'
-            ? null
-            : lines.map((line, ind) => {
-                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
-                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
-              })}
         </Group>
         <Group class="guide-line-group">
           {guidePoints.length ? (

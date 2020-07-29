@@ -86,7 +86,7 @@ const legend = new Legend()
 const axisBottom = new Axis().style('grid', false)
 const axisLeft = new Axis({ orient: 'left' }).style('grid', function(attrs, ind) {
   if (ind === 3) {
-    return { strokeColor: '#999' }
+    return { strokeColor: '#999', lineDash: '' }
   }
 })
 chart.append([bar, tooltip, axisBottom, axisLeft, legend])

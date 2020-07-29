@@ -59,13 +59,9 @@ const radar = new Radar()
 const pointObj = {
   sprite: {
     pointType: 'sprite',
+    size:[17,26],
     anchor: [0.5, 0.5],
-    bgcolor: 'white',
-    borderWidth: 1,
-    borderRadius: 20,
-    texture: 'https://p5.ssl.qhimg.com/t01a2bd87890397464a.png',
-    textureRect: [0, 0, 19, 26],
-    textureRepeat: true
+    texture: 'https://p5.ssl.qhimg.com/t01a2bd87890397464a.png'
   },
   path: {
     pointType: 'path',
@@ -77,7 +73,6 @@ const pointObj = {
     scale: 0.05
   },
   ellipse: {
-    normalize: true,
     radiusX: 15,
     radiusY: 10,
     fillColor: 'green'

@@ -4,8 +4,8 @@ import { getStyle } from "@/utils/getStyle";
 import Symbol from "../../utils/Symbol";
 class Legend extends Base {
   constructor(attrs) {
-    super(attrs);
-    this.arrLayout = null;
+    super(attrs)
+    this.arrLayout = null
     this.state = {
       page: 1,
       totalPage: 1,
@@ -20,14 +20,14 @@ class Legend extends Base {
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
-    let attrs = super.renderAttrs;
-    return attrs;
+    let attrs = super.renderAttrs
+    return attrs
   }
   defaultAttrs() {
     return {
-      orient: "horizontal", // 布局方式， vertical | horizontal
-      align: ["center", "bottom"], // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
-      formatter: (d) => d.value || d,
+      orient: 'horizontal', // 布局方式， vertical | horizontal
+      align: ['center', 'bottom'], // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
+      formatter: d => d.value || d,
       iconSize: [12, 12],
       textSize: [40, 12],
       outGap: 10,
@@ -41,15 +41,17 @@ class Legend extends Base {
     let canvasWidth = width + left + right;
     let canvasHeight = height + top + bottom;
     this.state.paginationSize = this.isVertical ? [30, 60] : [70, 25];
+
     const isValidLayout = (value, type) => {
-      if (type === "horizontal") {
+      if (type === 'horizontal') {
         // 水平布局
-        return ["default", "left", "center", "right"].indexOf(value) > -1;
+        return ['default', 'left', 'center', 'right'].indexOf(value) > -1
       } else {
         // 垂直布局
-        return ["default", "top", "center", "bottom"].indexOf(value) > -1;
+        return ['default', 'top', 'center', 'bottom'].indexOf(value) > -1
       }
     };
+
     const hLocation = {
       // 水平定位
       default: 0,
@@ -58,17 +60,18 @@ class Legend extends Base {
       right: canvasWidth - groupSize[0] - 2,
       numberOrPercent(num) {
         // 输入 数字或百分比
-        if (typeof num === "number") {
-          return num;
+        if (typeof num === 'number') {
+          return num
         } else {
           let val = 0;
           try {
-            val = parseFloat(num) / 100;
+            val = parseFloat(num) / 100
           } catch (e) {}
           return (canvasWidth - groupSize[0]) * val;
         }
       },
     };
+
     const vLocation = {
       // 垂直定位
       default: 0,
@@ -77,78 +80,66 @@ class Legend extends Base {
       bottom: canvasHeight - groupSize[1] - 2,
       numberOrPercent(num) {
         // 输入 数字或百分比
-        if (typeof num === "number") {
-          return num;
+        if (typeof num === 'number') {
+          return num
         } else {
           let val = 0;
+
           try {
-            val = parseFloat(num) / 100;
+            val = parseFloat(num) / 100
           } catch (e) {}
           return (canvasHeight - groupSize[1]) * val;
         }
-      },
-    };
-    let pos = [
-      isValidLayout(align[0], "horizontal")
-        ? hLocation[align[0]]
-        : hLocation.numberOrPercent(align[0]),
-      isValidLayout(align[1], "vertical")
-        ? vLocation[align[1]]
-        : vLocation.numberOrPercent(align[1]),
-    ];
-    let pagePos;
-    let totalPageX = Math.ceil(this.state.groupSize[0] / canvasWidth);
-    let totalPageY = Math.ceil(this.state.groupSize[1] / canvasHeight);
-    let paginationSize = this.state.paginationSize;
-    let pagePrev, pageText, pageNext;
+      }
+    }
+    let pos = [isValidLayout(align[0], 'horizontal') ? hLocation[align[0]] : hLocation.numberOrPercent(align[0]), isValidLayout(align[1], 'vertical') ? vLocation[align[1]] : vLocation.numberOrPercent(align[1])]
+    let pagePos
+    let totalPageX = Math.ceil(this.state.groupSize[0] / canvasWidth)
+    let totalPageY = Math.ceil(this.state.groupSize[1] / canvasHeight)
+    let paginationSize = this.state.paginationSize
+    let pagePrev, pageText, pageNext
     if (totalPageX > 1) {
-      this.state.totalPage = totalPageX;
-      let pagePosY =
-        pos[1] + groupSize[1] + paginationSize[1] > canvasHeight
-          ? pos[1] - paginationSize[1]
-          : pos[1] + groupSize[1];
-      pagePos = [canvasWidth - paginationSize[0], pagePosY];
-      pagePrev = [0, 0];
-      pageText = [15, 0];
-      pageNext = [45, 0];
-      pos[0] = -(this.state.page - 1) * canvasWidth;
+      this.state.totalPage = totalPageX
+      let pagePosY = pos[1] + groupSize[1] + paginationSize[1] > canvasHeight ? pos[1] - paginationSize[1] : pos[1] + groupSize[1]
+      pagePos = [canvasWidth - paginationSize[0], pagePosY]
+      pagePrev = [0, 0]
+      pageText = [15, 0]
+      pageNext = [45, 0]
+      pos[0] = -(this.state.page - 1) * canvasWidth
     } else if (totalPageY > 1) {
-      this.state.totalPage = totalPageY;
-      let pagePosX =
-        pos[0] + groupSize[0] + paginationSize[0] > canvasWidth
-          ? pos[0] - paginationSize[0]
-          : pos[0] + groupSize[0];
-      pagePos = [pagePosX, canvasHeight - paginationSize[1]];
-      pagePrev = [5, 0];
-      pageText = [0, 20];
-      pageNext = [5, 40];
-      pos[1] = -(this.state.page - 1) * canvasHeight;
+      this.state.totalPage = totalPageY
+      let pagePosX = pos[0] + groupSize[0] + paginationSize[0] > canvasWidth ? pos[0] - paginationSize[0] : pos[0] + groupSize[0]
+      pagePos = [pagePosX, canvasHeight - paginationSize[1]]
+      pagePrev = [5, 0]
+      pageText = [0, 20]
+      pageNext = [5, 40]
+      pos[1] = -(this.state.page - 1) * canvasHeight
     } else {
-      this.state.page = 1;
-      this.state.totalPage = 1;
+      this.state.page = 1
+      this.state.totalPage = 1
     }
     return {
       pos: pos,
-      pagePos: { pos: pagePos, pagePrev, pageText, pageNext },
-    };
+      pagePos: { pos: pagePos, pagePrev, pageText, pageNext }
+    }
   }
 
   get isVertical() {
-    return this.renderAttrs.orient === "vertical";
+    return this.renderAttrs.orient === 'vertical'
   }
   beforeRender() {
     if (this.twiceRender) {
-      this.reset();
+      this.reset()
     } else {
-      this.arrLayout = this.getRenderData().arrLayout;
+      this.arrLayout = this.getRenderData().arrLayout
     }
-    return this.arrLayout;
+    return this.arrLayout
   }
 
   getRenderData() {
-    let renderAttrs = this.renderAttrs;
+    let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy].map((item, index) => {
-      this.legendStateArray.push(item.state);
+      this.legendStateArray.push(item.state)
       return {
         name: item.name,
         state: item.state,
@@ -163,12 +154,13 @@ class Legend extends Base {
     });
     this.arrLayout = arrLayout;
     return { arrLayout };
+
   }
   itemClick(e, el) {
-    const ind = el.attr("_index");
-    let state = this.dataset[this.renderAttrs.layoutBy][ind].state;
-    state = state !== "disabled" ? "disabled" : "default";
-    this.dataset[this.renderAttrs.layoutBy][ind].state = state;
+    const ind = el.attr('_index')
+    let state = this.dataset[this.renderAttrs.layoutBy][ind].state
+    state = state !== 'disabled' ? 'disabled' : 'default'
+    this.dataset[this.renderAttrs.layoutBy][ind].state = state
   }
   itemLeave(e, el) {
     const ind = el.attr("_index");
@@ -197,7 +189,7 @@ class Legend extends Base {
 
   afterrender(e, el) {
     if (this.twiceRender) {
-      return;
+      return
     }
     this.twiceRender = true;
     this.reset();
@@ -244,12 +236,12 @@ class Legend extends Base {
     this.state.groupSize = legendsSize;
   }
   changePage(e, el) {
-    if (el.name === "prev" && this.state.page > 1) {
-      this.state.page--;
-      this.update();
-    } else if (el.name === "next" && this.state.page < this.state.totalPage) {
-      this.state.page++;
-      this.update();
+    if (el.name === 'prev' && this.state.page > 1) {
+      this.state.page--
+      this.update()
+    } else if (el.name === 'next' && this.state.page < this.state.totalPage) {
+      this.state.page++
+      this.update()
     }
   }
   render(arr) {
@@ -270,6 +262,7 @@ class Legend extends Base {
               duration: this.twiceRender
                 ? this.renderAttrs.animation.duration
                 : 0,
+
             }}
             // pos={pos}
           >
@@ -287,9 +280,10 @@ class Legend extends Base {
               let hoverStyle = hover
                 ? getStyle(this, "point:hover", [{}], [cell, ind])
                 : {};
+
               if (disabled && attrs.iconAttrs.bgcolor) {
-                hoverStyle.bgcolor = "#ccc";
-                hoverStyle.fillColor = "#ccc";
+                hoverStyle.bgcolor = '#ccc'
+                hoverStyle.fillColor = '#ccc'
               }
               let textStyle = getStyle(
                 this,
@@ -321,7 +315,7 @@ class Legend extends Base {
                     {...textHoverStyle}
                   />
                 </Group>
-              );
+              )
             })}
           </Group>
 
@@ -349,25 +343,14 @@ class Legend extends Base {
                 padding={isVertical ? [0, 2] : [0, 2]}
               />
 
-              <Path
-                pos={pagePos.pageNext}
-                {...(isVertical ? { marginLeft: 5 } : {})}
-                name={"next"}
-                padding={[isVertical ? 2 : 1, 0, 0, 0]}
-                d={
-                  isVertical
-                    ? "M 0 0 L 15 0 L7.5 13 Z"
-                    : "M 13 7.5 L 0 0 L0 15 Z"
-                }
-                fillColor={page >= totalPage ? "#ccc" : "#324556"}
-                onClick={this.changePage}
-              />
+
+              <Path pos={pagePos.pageNext} {...(isVertical ? { marginLeft: 5 } : {})} name={'next'} padding={[isVertical ? 2 : 1, 0, 0, 0]} d={isVertical ? 'M 0 0 L 15 0 L7.5 13 Z' : 'M 13 7.5 L 0 0 L0 15 Z'} fillColor={page >= totalPage ? '#ccc' : '#324556'} onClick={this.changePage} />
             </Group>
           )}
         </Group>
-      );
+      )
     }
   }
 }
 
-export default Legend;
+export default Legend

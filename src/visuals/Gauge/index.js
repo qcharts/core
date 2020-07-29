@@ -126,7 +126,7 @@ class Gauge extends BaseVisual {
       ticks.push({
         points: ret.points,
         label: {
-          text: tickFormatter(i * tickStep).toFixed(0),
+          text: tickFormatter(i * tickStep + min).toFixed(0),
           pos: ret.labelPos,
           anchor: ret.anchor
         }
@@ -148,7 +148,7 @@ class Gauge extends BaseVisual {
       dataOrigin: percent,
       startAngle,
       radius,
-      endAngle: ((endAngle - startAngle) * percent) / total + startAngle,
+      endAngle: ((endAngle - startAngle) * (percent - min)) / total + startAngle,
       strokeColor: this.color(0)
     }
   }
@@ -335,7 +335,9 @@ class Gauge extends BaseVisual {
                     {...this.style('tickLine')(data, data.dataOrigin, j)}
                   />
                 ) : null}
-                {tickText !== false ? <Label {...tick.label} {...this.style('tickText')(data, data.dataOrigin, j)} /> : null}
+                {tickText !== false ? (
+                  <Label {...tick.label} {...this.style('tickText')(data, data.dataOrigin, j)} />
+                ) : null}
               </Group>
             ))
           : null}
