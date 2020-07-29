@@ -133,7 +133,7 @@ class Radar extends BaseVisual {
   }
 
   renderAxisLabel(attrs, i) {
-    const calcAnchor = (radian) => {
+    const calcAnchor = radian => {
       const x = 0.5 - Math.cos(radian)
       const y = 0.5 - Math.sin(radian)
       return [x, y]
@@ -157,7 +157,7 @@ class Radar extends BaseVisual {
   }
 
   renderAxisScale(attrs, index) {
-    const getPt = (attrs) => {
+    const getPt = attrs => {
       const { points, splitNumber, maxScale } = attrs
       const [x, y] = points[1]
       const perNum = maxScale / splitNumber
@@ -194,7 +194,7 @@ class Radar extends BaseVisual {
             animation = {
               from: { text: preEl.text },
               to: { text },
-              formatter: (attr) => {
+              formatter: attr => {
                 attr.text = attr.text.toFixed(0)
                 return attr
               }
@@ -231,7 +231,7 @@ class Radar extends BaseVisual {
   }
 
   renderPoints(sectionAttrs) {
-    const allPoints = sectionAttrs.map((attrs) => {
+    const allPoints = sectionAttrs.map(attrs => {
       const { animation: secAnimation, dataOrigin, strokeColor, state } = attrs
       const prePoints = secAnimation && secAnimation.from && secAnimation.from.points
       const toPoints = secAnimation && secAnimation.to && secAnimation.to.points
@@ -273,15 +273,7 @@ class Radar extends BaseVisual {
   renderSection(sectionAttrs) {
     return sectionAttrs.map((attr, i) => {
       const { animation, ...otherAttr } = attr
-      return (
-        <Polyline
-          zIndex={9 + i}
-          {...otherAttr}
-          animation={animation}
-          onMouseenter={this.onMouseenter}
-          onMouseleave={this.onMouseleave}
-        />
-      )
+      return <Polyline zIndex={9 + i} {...otherAttr} animation={animation} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
     })
   }
 
@@ -290,8 +282,8 @@ class Radar extends BaseVisual {
       this.dataset.resetState()
       const name = el.attributes.name
       this.dataset.rows
-        .filter((row) => row.state !== 'disabled')
-        .forEach((row) => {
+        .filter(row => row.state !== 'disabled')
+        .forEach(row => {
           row.state = row.name === name ? 'hover' : 'default'
         })
     },
@@ -300,7 +292,7 @@ class Radar extends BaseVisual {
   )
   onMouseleave() {
     this.dataset.resetState()
-    this.dataset.rows.filter((row) => row.state !== 'disabled').forEach((row) => row.state === 'default')
+    this.dataset.rows.filter(row => row.state !== 'disabled').forEach(row => row.state === 'default')
   }
 
   render({ sectionAttrs, axisAttrs, gridAttrs }) {

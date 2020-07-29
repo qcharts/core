@@ -111,9 +111,7 @@ class Pie extends Base {
       endAngle: 360,
       lineWidth: 1,
       //选中偏移量基数
-      activeOffset: 10,
-      //饼图上文字偏移量
-      labelOffset: 20
+      activeOffset: 10
     }
   }
   defaultStyles() {
