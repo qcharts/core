@@ -1,5 +1,6 @@
 import Base from "../../base/BaseVisual";
 import { Group, Sprite } from "spritejs";
+import { getStyle } from "@/utils/getStyle";
 import { deepObjectMerge, throttle } from "@qcharts/utils";
 import layout from "./layout";
 class Bar extends Base {
@@ -77,13 +78,13 @@ class Bar extends Base {
     let colors = this.theme.colors;
     let styles = this.renderStyles;
     arrLayout.barData = arrLayout.barData.map((bar, i) => {
-      let style = this.style("pillar")(bar.attrs, this.dataset.rows[i], i);
-      let barStyle = deepObjectMerge(
-        { bgcolor: bar.bgcolor || colors[i % dataLength] },
-        styles.bar,
-        style
-      );
-      bar = deepObjectMerge(bar, barStyle);
+      // let style = this.style("pillar")(bar.attrs, this.dataset.rows[i], i);
+      // let barStyle = deepObjectMerge(
+      //   { bgcolor: bar.bgcolor || colors[i % dataLength] },
+      //   styles.bar,
+      //   style
+      // );
+      // bar = deepObjectMerge(bar, barStyle);
       return bar;
     });
     return { arrLayout };
@@ -161,6 +162,11 @@ class Bar extends Base {
 
   render(data) {
     let { clientRect, bgpillarState, states } = this.renderAttrs;
+    const styles = this.renderStyles;
+    let renderData = this.dataset[this.renderAttrs.layoutBy];
+    const dataLength =
+      renderData.length > 1 ? renderData.length : renderData[0].length;
+    let colors = this.theme.colors;
     return (
       <Group
         pos={[clientRect.left, clientRect.top]}
@@ -173,10 +179,17 @@ class Bar extends Base {
       >
         <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
+            const style = getStyle(
+              this,
+              "pillar",
+              [{ bgcolor: colors[ind % dataLength] }, styles.bar],
+              [this.dataset.rows[ind], ind]
+            );
             return (
               <Sprite
                 {...pillar.attrs}
                 {...pillar.from}
+                {...style}
                 animation={{ from: pillar.from, to: pillar.to }}
               />
             );
