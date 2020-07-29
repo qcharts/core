@@ -2,7 +2,7 @@ import Base from '../../base/BaseVisual'
 import { Group, Polyline, Node } from 'spritejs'
 import { getStyle } from '@/utils/getStyle'
 import layout from './layout'
-import Symbol from '../../utils/Symbol'
+import Point from '../../utils/Point'
 class Line extends Base {
   constructor(attrs) {
     super(attrs)
@@ -153,9 +153,9 @@ class Line extends Base {
                   const style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind], ind, j])
                   const hoverStyle = getStyle(this, 'point:hover', [{ fillColor: colors[ind] }, styles['point:hover']], [this.dataset.rows[ind], ind, j])
                   if (this.dataset.rows[ind][j].state === 'hover') {
-                    return <Symbol {...style} {...hoverStyle} animation={animation} />
+                    return <Point {...style} {...hoverStyle} animation={animation} />
                   }
-                  return <Symbol {...style} animation={animation} />
+                  return <Point {...style} animation={animation} />
                 })}
               </Group>
             )

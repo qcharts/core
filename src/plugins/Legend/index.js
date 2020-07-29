@@ -2,7 +2,7 @@ import Base from '../../base/BasePlugin'
 import { Group, Sprite, Path, Label } from 'spritejs'
 import layout from './layout'
 import { getStyle } from '@/utils/getStyle'
-import Symbol from '../../utils/Symbol'
+import Point from '../../utils/Point'
 import filterClone from 'filter-clone'
 //import { debounce } from '@qcharts/utils'
 class Legend extends Base {
@@ -291,7 +291,7 @@ class Legend extends Base {
               let textHoverStyle = hover ? getStyle(this, 'legendText:hover', [{}], [cell, ind]) : {}
               return (
                 <Group onClick={this.itemClick} onMouseleave={this.itemLeave} onMouseenter={this.itemMove} onMousemove={this.itemMove} {...{ _index: ind }}>
-                  <Symbol {...{ ref: 'icon' + ind }} {...attrs.iconAttrs} {...style} {...hoverStyle} />
+                  <Point {...{ ref: 'icon' + ind }} {...attrs.iconAttrs} {...style} {...hoverStyle} />
                   <Label {...{ ref: 'text' + ind }} {...attrs.textAttrs} {...textStyle} {...textHoverStyle} onAfterrender={this.afterrender} />
                 </Group>
               )
