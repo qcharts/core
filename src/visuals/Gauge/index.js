@@ -48,6 +48,7 @@ class Gauge extends BaseVisual {
     super(attrs)
     this.gaugeAnimations = []
     this.type = 'Gauge'
+    this.oldPos = null
     this.style('tickText', true)
     this.style('tickLine', true)
   }
@@ -292,8 +293,14 @@ class Gauge extends BaseVisual {
     }
     const gPos = [clientRect.left, clientRect.top]
     const gSize = [clientRect.width, clientRect.height]
+
+    const gAnimation = {
+      from: { pos: this.oldPos ? this.oldPos : gPos },
+      to: { pos: gPos }
+    }
+    this.oldPos = gPos
     return (
-      <Group pos={gPos} size={gSize}>
+      <Group pos={gPos} size={gSize} animation={gAnimation}>
         <Arc
           pos={center}
           lineWidth={lineWidth}

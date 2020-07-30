@@ -55,7 +55,7 @@ const data = [
   }
 ]
 
-const { Chart, Axis, Scatter, Legend, Tooltip } = qcharts
+const { Chart, Scatter, Legend, Tooltip } = qcharts
 
 const chart = new Chart({
   container: '#app'
@@ -70,7 +70,6 @@ const scatter = new Scatter({
   areaField: 'z',
   labelField: 'name',
   areaRange: [20, 45],
-  showGuideLine: true,
   layoutWay: {
     x: { min: 0, max: 80 },
     y: { min: 0, max: 25 }
@@ -95,27 +94,23 @@ scatter
     return { fillColor, strokeColor: 'transparent' }
   })
   .style('label', (attr, data, i) => {
-    let color = '#fff'
+    let fillColor = '#fff'
     let fontSize = 10
     const { name, x } = data
     if (name === '云门' && x !== 65) {
-      color = '#757474'
+      fillColor = '#757474'
     } else if (name === '大石') {
-      color = '#adabab'
+      fillColor = '#adabab'
     } else if (x === 65) {
-      color = '#a0a0a0'
+      fillColor = '#a0a0a0'
     }
     if (name === '盐井' || name === '草街') {
       fontSize = 14
     } else if (name === '合阳城') {
       fontSize = 18
     }
-    return { color, fontSize }
+    return { fillColor, fontSize }
   })
-
-const axisBottom = new Axis()
-
-const axisLeft = new Axis({ orient: 'left' })
 
 const tooltip = new Tooltip({
   formatter: (data) => {
@@ -123,7 +118,7 @@ const tooltip = new Tooltip({
   }
 })
 
-chart.append([scatter, axisBottom, axisLeft, tooltip])
+chart.append([scatter, tooltip])
 ```
 
 :::

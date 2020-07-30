@@ -110,38 +110,34 @@ const data = [
     country: 'New Zealand'
   }
 ]
-const render = (data) => {
-  data.sort((a, b) => a.height - b.height)
-  const { Chart, Axis, Scatter, Legend, Tooltip } = qcharts
+data.sort((a, b) => a.height - b.height)
+const { Chart, Axis, Scatter, Legend, Tooltip } = qcharts
 
-  const chart = new Chart({
-    container: '#app'
-  })
+const chart = new Chart({
+  container: '#app'
+})
 
-  chart.source(data, {
-    row: '*',
-    text: 'x',
-    value: 'y'
-  })
-  const scatter = new Scatter({
-    areaField: 'z',
-    labelField: 'name',
-    layoutWay: {
-      x: { min: 60, max: 96 },
-      y: { min: 0, max: 165 }
-    }
-  })
+chart.source(data, {
+  row: '*',
+  text: 'x',
+  value: 'y'
+})
+const scatter = new Scatter({
+  areaField: 'z',
+  labelField: 'name',
+  layoutWay: {
+    x: { min: 60, max: 96 },
+    y: { min: 0, max: 165 }
+  }
+})
 
-  const axisBottom = new Axis()
+const axisBottom = new Axis()
 
-  const axisLeft = new Axis({ orient: 'left' })
+const axisLeft = new Axis({ orient: 'left' })
 
-  const tooltip = new Tooltip()
+const tooltip = new Tooltip()
 
-  chart.append([scatter,tooltip, axisBottom, axisLeft])
-}
-
-render(data)
+chart.append([scatter, tooltip, axisBottom, axisLeft])
 ```
 
 :::

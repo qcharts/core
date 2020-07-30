@@ -17,8 +17,8 @@ class Scatter extends BaseVisual {
     return {
       layer: 'scatter',
       labelField: null,
-      areaField: null,
-      areaRange: null,
+      areaField: null, //气泡大小字段值，不设置此值则为散点图
+      areaRange: null, // 面积映射
       showGuideLine: false,
       layoutWay: null
     }

@@ -10,6 +10,7 @@ class RadialBar extends BaseVisual {
     super(attrs)
     this.type = 'RadialBar'
     this.animators = []
+    this.oldPos = null
   }
 
   defaultAttrs() {
@@ -173,6 +174,11 @@ class RadialBar extends BaseVisual {
 
   render(data = []) {
     const { strokeBgcolor } = this.renderAttrs
+    const gAnimation = {
+      from: { pos: this.oldPos ? this.oldPos : this.center },
+      to: { pos: this.center }
+    }
+    this.oldPos = this.center
     return (
       <Group>
         {data
@@ -181,6 +187,7 @@ class RadialBar extends BaseVisual {
             return (
               <Group
                 pos={this.center}
+                animation={gAnimation}
                 onMouseenter={this.onMouseenter}
                 onMousemove={this.onMouseenter}
                 onMouseleave={this.onMouseleave}
