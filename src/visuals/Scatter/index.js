@@ -133,7 +133,7 @@ class Scatter extends BaseVisual {
 
   onMouseenter(event, el) {
     const arc = el.children[0]
-    const { row: rowInd, col: colInd } = arc.attributes
+    const { row: rowInd, col: colInd, pos } = arc.attributes
     this.dataset.forEach((cell) => {
       if (cell.row === rowInd && cell.col === colInd) {
         cell.state = 'hover'
@@ -141,7 +141,6 @@ class Scatter extends BaseVisual {
     })
     const { showGuideLine } = this.renderAttrs
     if (showGuideLine) {
-      const pos = el.attr('pos')
       const { height, width } = this.renderAttrs.clientRect
       this.guideLineData = [
         [
@@ -172,9 +171,9 @@ class Scatter extends BaseVisual {
   renderScatter(data) {
     const { labelField } = this.renderAttrs
 
-    const scatters = data.map((item) => {
-      return item.attrs.map((attr, i) => {
-        let style = this.style('point')(attr, { ...attr.dataOrigin }, i)
+    const scatters = data.map((item, di) => {
+      return item.attrs.map((attr, ci) => {
+        let style = this.style('point')(attr, { ...attr.dataOrigin }, ci)
         if (style === false) {
           return
         }
@@ -182,7 +181,7 @@ class Scatter extends BaseVisual {
         let labelAttr = null
 
         if (labelField) {
-          const style = this.style('label')(attr, { ...attr.dataOrigin }, i)
+          const style = this.style('label')(attr, { ...attr.dataOrigin }, ci)
           if (style !== false) {
             if (attr.dataOrigin.hasOwnProperty(labelField)) {
               const { strokeColor, ...other } = attr
@@ -194,7 +193,7 @@ class Scatter extends BaseVisual {
                   text,
                   anchor: [0.5, 0.5],
                   fontSize: '12px',
-                  zIndex: 10
+                  zIndex: 10 + di + ci
                 },
                 style
               )
@@ -202,12 +201,12 @@ class Scatter extends BaseVisual {
           }
         }
 
-        const hStyle = this.style('point:hover')(attr, attr.dataOrigin, i) || {}
+        const hStyle = this.style('point:hover')(attr, attr.dataOrigin, ci) || {}
         const stateStyle = attr.state === 'hover' ? hStyle : {}
 
         return (
           <Group onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave}>
-            <Arc {...attr} {...style} {...stateStyle} zIndex={9} />
+            <Arc {...attr} {...style} {...stateStyle} zIndex={9 + di + ci} />
             {labelAttr ? <Label {...labelAttr} /> : null}
           </Group>
         )

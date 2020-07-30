@@ -43,6 +43,7 @@ const chart = new Chart({
 
 chart.source(data, {
   row: 'type',
+  text: 'type',
   value: 'count'
 })
 
@@ -54,7 +55,6 @@ const radialBar = new RadialBar({
   innerRadius: 0.1,
   lineWidth: 10
 })
-
 
 radialBar.style('arc', { lineCap: 'round' })
 
@@ -79,7 +79,7 @@ legend.style('text', (attrs, d, i) => ({
   marginTop: i > 0 ? 10 : 0
 }))
 
-chart.append([radialBar, legend,new Tooltip()])
+chart.append([radialBar, legend, new Tooltip()])
 ```
 
 :::
