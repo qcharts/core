@@ -118,9 +118,14 @@ theme.plugins = {
   Legend: {
     colors: theme.colors,
     styles: {
-      icon: {
-        pointType: 'sprite'
-      }
+      point: {
+        pointType: "sprite",
+        iconSize: [12, 12],
+      },
+      text: {
+        fontSize: "12px",
+        fillColor: "#666",
+      },
     },
     attrs: {}
   },

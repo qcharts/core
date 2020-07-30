@@ -54,6 +54,7 @@ class Scatter extends BaseVisual {
       const oldRow = this.scatterData[ind]
       row.attrs.forEach((cell, cInd) => {
         const radius = this.getRealRadius({ ...cell })
+        cell.radius = radius
         if (oldRow && oldRow.attrs[cInd]) {
           const oldCell = oldRow.attrs[cInd]
           const toPos = [...cell.pos]
@@ -67,6 +68,7 @@ class Scatter extends BaseVisual {
             if (cell.state === 'disabled') {
               toRadius = 0
             }
+            // old is disabled
             if (oldCell.animation.to.radius == 0) {
               fromRadius = 0
             }
@@ -130,10 +132,12 @@ class Scatter extends BaseVisual {
   }
 
   onMouseenter(event, el) {
-    this.dataset.resetState()
-    const { row: rowInd, col: colInd } = el.attributes
+    const arc = el.children[0]
+    const { row: rowInd, col: colInd } = arc.attributes
     this.dataset.forEach((cell) => {
-      cell.state = cell.row === rowInd && cell.col === colInd ? 'hover' : 'default'
+      if (cell.row === rowInd && cell.col === colInd) {
+        cell.state = 'hover'
+      }
     })
     const { showGuideLine } = this.renderAttrs
     if (showGuideLine) {
@@ -165,51 +169,48 @@ class Scatter extends BaseVisual {
     return
   }
 
-  renderLabel(data) {
-    const { labelField } = this.renderAttrs
-    if (labelField) {
-      const labels = data.map((item) => {
-        return item.attrs.map((attr, i) => {
-          const style = this.style('label')(attr, { ...attr.dataOrigin }, i)
-          if (style === false) {
-            return
-          }
-          const dataOrigin = attr.dataOrigin
-          if (dataOrigin.hasOwnProperty(labelField)) {
-            const { strokeColor, ...other } = attr
-            const text = dataOrigin[labelField]
-            const labelAttr = deepObjectMerge(
-              other,
-              {
-                fillColor: strokeColor,
-                text,
-                anchor: [0.5, 0.5],
-                fontSize: '12px'
-              },
-              style
-            )
-            return <Label {...labelAttr} />
-          }
-        })
-      })
-      return labels.reduce((pre, cur) => {
-        return pre.concat(cur)
-      }, [])
-    }
-  }
-
   renderScatter(data) {
+    const { labelField } = this.renderAttrs
+
     const scatters = data.map((item) => {
       return item.attrs.map((attr, i) => {
         let style = this.style('point')(attr, { ...attr.dataOrigin }, i)
         if (style === false) {
           return
         }
-        
+
+        let labelAttr = null
+
+        if (labelField) {
+          const style = this.style('label')(attr, { ...attr.dataOrigin }, i)
+          if (style !== false) {
+            if (attr.dataOrigin.hasOwnProperty(labelField)) {
+              const { strokeColor, ...other } = attr
+              const text = attr.dataOrigin[labelField]
+              labelAttr = deepObjectMerge(
+                other,
+                {
+                  fillColor: strokeColor,
+                  text,
+                  anchor: [0.5, 0.5],
+                  fontSize: '12px',
+                  zIndex: 10
+                },
+                style
+              )
+            }
+          }
+        }
+
         const hStyle = this.style('point:hover')(attr, attr.dataOrigin, i) || {}
         const stateStyle = attr.state === 'hover' ? hStyle : {}
-  
-        return <Arc {...attr} {...style} {...stateStyle} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
+
+        return (
+          <Group onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave}>
+            <Arc {...attr} {...style} {...stateStyle} zIndex={9} />
+            {labelAttr ? <Label {...labelAttr} /> : null}
+          </Group>
+        )
       })
     })
     return scatters.reduce((pre, cur) => {
@@ -222,7 +223,6 @@ class Scatter extends BaseVisual {
     return (
       <Group size={[width, height]} pos={[left, top]} zIndex={10}>
         {this.renderScatter(data)}
-        {this.renderLabel(data)}
         {this.renderGuideLine()}
       </Group>
     )
