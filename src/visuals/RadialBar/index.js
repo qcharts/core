@@ -177,7 +177,6 @@ class RadialBar extends BaseVisual {
       <Group>
         {data
           .map((d, i) => {
-            console.log(d.radius)
             const { col, row, data } = d
             return (
               <Group
@@ -190,12 +189,8 @@ class RadialBar extends BaseVisual {
                 <Arc
                   pos={this.center}
                   {...{ ...d, col, row }}
-                  animation={{
-                    ...this.animators[i],
-                    duration: 300,
-                    delay: 0
-                  }}
-                  {...this.style('arc:hover')(d, data, d.index)}
+                  animation={this.animators[i]}
+                  {...this.style('arc:hover')(d, data, i)}
                 />
               </Group>
             )

@@ -25,8 +25,7 @@ class Scatter extends BaseVisual {
   }
 
   get renderAttrs() {
-    const attrs = super.renderAttrs
-    return { ...attrs }
+    return { ...super.renderAttrs }
   }
 
   processData() {
@@ -110,8 +109,6 @@ class Scatter extends BaseVisual {
     return renderData
   }
 
-  rendered() {}
-
   getRealRadius(attr) {
     const { areaRange, areaField } = this.renderAttrs
     const { radius, dataOrigin } = attr
@@ -123,7 +120,7 @@ class Scatter extends BaseVisual {
     if (!areaRange) {
       return dataOrigin[areaField]
     }
-    const allData = [...this.dataset].filter((cell) => cell.state !== 'disabled').sort((a, b) => a - b)
+    const allData = [...this.dataset].map((d) => d.data[areaField]).sort((a, b) => a - b)
     const linear = scaleLinear()
       .domain([allData[0], allData[allData.length - 1]])
       .range(areaRange)
@@ -226,6 +223,8 @@ class Scatter extends BaseVisual {
       </Group>
     )
   }
+
+  rendered() {}
 }
 
 export default Scatter
