@@ -55,7 +55,7 @@ const axisBottom = new Axis()
   .style("label", function(attrs, data, i) {
     return {
       rotate: 45,
-      translate: [-30, -5],
+      translate: [-10, 0],
       anchor: [0, 0],
     };
   });
