@@ -14,6 +14,7 @@ class Legend extends Base {
       groupSize: [0, 0], // legends 容器大小
     };
     this.twiceRender = false;
+    this.isDatasetChange = false;
     this.posFrom = [0, 0];
     this.currentPos = [0, 0];
     this.legendStateArray = [];
@@ -188,6 +189,7 @@ class Legend extends Base {
   }
   beforeUpdate(params) {
     if (params && params.type === "source") {
+      this.isDatasetChange = true;
       this.twiceRender = false;
       return this.beforeRender();
     } else {
@@ -201,6 +203,7 @@ class Legend extends Base {
 
   afterrender(e, el) {
     if (this.twiceRender) {
+      this.isDatasetChange = false;
       return;
     }
     this.twiceRender = true;
@@ -259,21 +262,26 @@ class Legend extends Base {
   render(arr) {
     this.posFrom = this.currentPos;
     const { pos, pagePos } = this.pos;
-    this.posFrom = this.twiceRender ? this.posFrom : pos;
+    this.posFrom =
+      this.twiceRender && this.isDatasetChange ? this.posFrom : pos;
     const { page, totalPage } = this.state;
     this.currentPos = pos;
     const styles = this.renderStyles;
     const isVertical = this.isVertical;
+    if (this.twiceRender) {
+      pos[0] = pos[0] - 1;
+    }
     if (arr) {
       return (
         <Group size={[1, 1]} onAfterrender={this.afterrender}>
           <Group
             animation={{
-              from: { pos: pos },
+              from: { pos: this.posFrom },
               to: { pos: pos },
-              duration: this.twiceRender
-                ? this.renderAttrs.animation.duration
-                : 0,
+              duration:
+                this.twiceRender && this.isDatasetChange
+                  ? this.renderAttrs.animation.duration
+                  : 0,
             }}
             // pos={pos}
           >

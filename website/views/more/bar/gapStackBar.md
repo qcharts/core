@@ -124,7 +124,7 @@ const bar = new Bar({
 const tooltip = new Tooltip({
   formatter: (d) => ` ${d.type}: ${d.value}`,
 });
-const legend = new Legend({ align: ["center", "top"] }).style(
+const legend = new Legend({ align: ["left", "top"] }).style(
   "point",
   (attr, data, i) => {
     return {
