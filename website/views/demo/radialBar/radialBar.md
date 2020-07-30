@@ -48,7 +48,6 @@ chart.source(data, {
 })
 
 const radialBar = new RadialBar({
-  pos: ['-10%', '10%'],
   min: 0,
   max: 10000,
   radius: 0.6,
@@ -61,23 +60,7 @@ radialBar.style('arc', { lineCap: 'round' })
 const legend = new Legend({
   orient: 'vertical',
   align: ['right', 'center'],
-  formatter: (name, da, i) => {
-    let d = da[0] // 也可以根据 name 查找 legend 与哪些源数据对应
-    return (
-      `${d.type}` +
-      Array(8 - d.type.length)
-        .fill(`   `)
-        .join('') +
-      `${d.count}`
-    )
-  }
 })
-legend.style('icon', (attrs, d, i) => ({
-  marginTop: i > 0 ? 10 : 0
-}))
-legend.style('text', (attrs, d, i) => ({
-  marginTop: i > 0 ? 10 : 0
-}))
 
 chart.append([radialBar, legend, new Tooltip()])
 ```
