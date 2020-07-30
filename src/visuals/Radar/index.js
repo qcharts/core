@@ -10,6 +10,7 @@ class Radar extends BaseVisual {
     this.type = 'radar'
     this.sectionData = []
     this.scaleEl = []
+    this.oldPos = null
   }
 
   //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -297,9 +298,14 @@ class Radar extends BaseVisual {
 
   render({ sectionAttrs, axisAttrs, gridAttrs }) {
     const { center, clientRect } = this.renderAttrs
+    const gAnimation = {
+      from: { pos: this.oldPos ? this.oldPos : center },
+      to: { pos: center }
+    }
+    this.oldPos = center
     return (
       <Group pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
-        <Group pos={center}>
+        <Group pos={center} animation={gAnimation}>
           {this.renderGrid(gridAttrs)}
           {this.renderAxis(axisAttrs)}
           {this.renderSection(sectionAttrs)}
