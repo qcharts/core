@@ -17,16 +17,15 @@ class Scatter extends BaseVisual {
     return {
       layer: "scatter",
       labelField: null,
-      areaField: null,
-      areaRange: null,
+      areaField: null, //气泡大小字段值，不设置此值则为散点图
+      areaRange: null, // 面积映射
       showGuideLine: false,
       layoutWay: null,
     };
   }
 
   get renderAttrs() {
-    const attrs = super.renderAttrs;
-    return { ...attrs };
+    return { ...super.renderAttrs }
   }
 
   processData() {
@@ -117,8 +116,6 @@ class Scatter extends BaseVisual {
     return renderData;
   }
 
-  rendered() {}
-
   getRealRadius(attr) {
     const { areaRange, areaField } = this.renderAttrs;
     const { radius, dataOrigin } = attr;
@@ -130,9 +127,8 @@ class Scatter extends BaseVisual {
     if (!areaRange) {
       return dataOrigin[areaField];
     }
-    const allData = [...this.dataset]
-      .filter((cell) => cell.state !== "disabled")
-      .sort((a, b) => a - b);
+
+    const allData = [...this.dataset].map((d) => d.data[areaField]).sort((a, b) => a - b)
     const linear = scaleLinear()
       .domain([allData[0], allData[allData.length - 1]])
       .range(areaRange);
@@ -141,8 +137,9 @@ class Scatter extends BaseVisual {
   }
 
   onMouseenter(event, el) {
-    const arc = el.children[0];
-    const { row: rowInd, col: colInd } = arc.attributes;
+
+    const arc = el.children[0]
+    const { row: rowInd, col: colInd, pos } = arc.attributes
     this.dataset.forEach((cell) => {
       if (cell.row === rowInd && cell.col === colInd) {
         cell.state = "hover";
@@ -150,8 +147,8 @@ class Scatter extends BaseVisual {
     });
     const { showGuideLine } = this.renderAttrs;
     if (showGuideLine) {
-      const pos = el.attr("pos");
-      const { height, width } = this.renderAttrs.clientRect;
+
+      const { height, width } = this.renderAttrs.clientRect
       this.guideLineData = [
         [
           [0, pos[1]],
@@ -187,10 +184,9 @@ class Scatter extends BaseVisual {
 
   renderScatter(data) {
     const { labelField } = this.renderAttrs;
-
-    const scatters = data.map((item) => {
-      return item.attrs.map((attr, i) => {
-        let style = this.style("point")(attr, { ...attr.dataOrigin }, i);
+    const scatters = data.map((item, di) => {
+      return item.attrs.map((attr, ci) => {
+        let style = this.style('point')(attr, { ...attr.dataOrigin }, ci)
         if (style === false) {
           return;
         }
@@ -198,7 +194,7 @@ class Scatter extends BaseVisual {
         let labelAttr = null;
 
         if (labelField) {
-          const style = this.style("label")(attr, { ...attr.dataOrigin }, i);
+          const style = this.style('label')(attr, { ...attr.dataOrigin }, ci)
           if (style !== false) {
             if (attr.dataOrigin.hasOwnProperty(labelField)) {
               const { strokeColor, ...other } = attr;
@@ -209,25 +205,21 @@ class Scatter extends BaseVisual {
                   fillColor: strokeColor,
                   text,
                   anchor: [0.5, 0.5],
-                  fontSize: "12px",
-                  zIndex: 10,
+                  fontSize: '12px',
+                  zIndex: 10 + di + ci
+
                 },
                 style
               );
             }
           }
         }
-
-        const hStyle =
-          this.style("point:hover")(attr, attr.dataOrigin, i) || {};
-        const stateStyle = attr.state === "hover" ? hStyle : {};
+        const hStyle = this.style('point:hover')(attr, attr.dataOrigin, ci) || {}
+        const stateStyle = attr.state === 'hover' ? hStyle : {}
 
         return (
-          <Group
-            onMouseenter={this.onMouseenter}
-            onMouseleave={this.onMouseleave}
-          >
-            <Arc {...attr} {...style} {...stateStyle} zIndex={9} />
+          <Group onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave}>
+            <Arc {...attr} {...style} {...stateStyle} zIndex={9 + di + ci} />
             {labelAttr ? <Label {...labelAttr} /> : null}
           </Group>
         );
@@ -247,6 +239,8 @@ class Scatter extends BaseVisual {
       </Group>
     );
   }
+
+  rendered() {}
 }
 
 export default Scatter;
