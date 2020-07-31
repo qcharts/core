@@ -949,10 +949,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@qcharts/dataset@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.npm.taobao.org/@qcharts/dataset/download/@qcharts/dataset-0.0.6.tgz?cache=0&sync_timestamp=1595329933489&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40qcharts%2Fdataset%2Fdownload%2F%40qcharts%2Fdataset-0.0.6.tgz#5df29afc03c41863da197682c51b035624179657"
-  integrity sha1-XfKa/APEGGPaGXaCxRsDViQXllc=
+"@qcharts/dataset@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.npm.taobao.org/@qcharts/dataset/download/@qcharts/dataset-0.0.8.tgz#0971662b66525199d1f92daf2da4e1ab42d8e7ce"
+  integrity sha1-CXFmK2ZSUZnR+S2vLaThq0LY584=
   dependencies:
     "@qcharts/utils" "^0.0.3"
 
