@@ -14,7 +14,7 @@ class Legend extends Base {
       groupSize: [0, 0], // legends 容器大小
     };
     this.twiceRender = false;
-    this.isDatasetChange = false;
+    this.animationSwitch = false;
     this.posFrom = [0, 0];
     this.currentPos = [0, 0];
     this.legendStateArray = [];
@@ -189,10 +189,13 @@ class Legend extends Base {
   }
   beforeUpdate(params) {
     if (params && params.type === "source") {
-      this.isDatasetChange = true;
+      this.animationSwitch = true;
       this.twiceRender = false;
       return this.beforeRender();
     } else {
+      if (params && params.type === "resize") {
+        this.animationSwitch = true;
+      }
       return this.arrLayout;
     }
   }
@@ -203,7 +206,7 @@ class Legend extends Base {
 
   afterrender(e, el) {
     if (this.twiceRender) {
-      this.isDatasetChange = false;
+      this.animationSwitch = false;
       return;
     }
     this.twiceRender = true;
@@ -263,7 +266,7 @@ class Legend extends Base {
     this.posFrom = this.currentPos;
     const { pos, pagePos } = this.pos;
     this.posFrom =
-      this.twiceRender && this.isDatasetChange ? this.posFrom : pos;
+      this.twiceRender && this.animationSwitch ? this.posFrom : pos;
     const { page, totalPage } = this.state;
     this.currentPos = pos;
     const styles = this.renderStyles;
@@ -279,7 +282,7 @@ class Legend extends Base {
               from: { pos: this.posFrom },
               to: { pos: pos },
               duration:
-                this.twiceRender && this.isDatasetChange
+                this.twiceRender && this.animationSwitch
                   ? this.renderAttrs.animation.duration
                   : 0,
             }}

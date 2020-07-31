@@ -1,9 +1,9 @@
-import Base from '../../base/BaseVisual'
-import { Group, Ring } from 'spritejs'
-import { deepObjectMerge } from '@qcharts/utils'
-import layout from './layout'
-import { getStyle } from '@/utils/getStyle'
-import filterClone from 'filter-clone'
+import Base from "../../base/BaseVisual";
+import { Group, Ring } from "spritejs";
+import { deepObjectMerge } from "@qcharts/utils";
+import layout from "./layout";
+import { getStyle } from "@/utils/getStyle";
+import filterClone from "filter-clone";
 class PolarBar extends Base {
   constructor(attrs) {
     super(attrs);
@@ -14,21 +14,20 @@ class PolarBar extends Base {
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
-    let attrs = super.renderAttrs
-    let { height, width, top, left } = attrs.clientRect
-    attrs.pos = [left + width / 2, top + height / 2]
-    return attrs
+    let attrs = super.renderAttrs;
+    let { height, width, top, left } = attrs.clientRect;
+    attrs.pos = [left + width / 2, top + height / 2];
+    return attrs;
   }
 
   beforeRender() {
-
     //渲染前的处理函数，返回rings,继承base
     let { arrLayout } = this.getRenderData();
     this.pillars = arrLayout.barData;
     let barData = arrLayout.barData.map((item) => {
       return {
         from: {
-          endAngle: item.startAngle
+          endAngle: item.startAngle,
         },
         to: item,
       };
@@ -36,9 +35,9 @@ class PolarBar extends Base {
     return { barData };
   }
   beforeUpdate() {
-    const pillars = this.pillars
-    let { pos } = this.renderAttrs
-    let { arrLayout } = this.getRenderData()
+    const pillars = this.pillars;
+    let { pos } = this.renderAttrs;
+    let { arrLayout } = this.getRenderData();
     let barData = arrLayout.barData.map((nextPillar, i) => {
       let curPos = [
         pos[0] + nextPillar.offsetPos[0],
@@ -54,33 +53,41 @@ class PolarBar extends Base {
     return { barData };
   }
   getRenderData() {
-    let renderAttrs = this.renderAttrs
-    let renderData = this.dataset[renderAttrs.layoutBy]
+    let renderAttrs = this.renderAttrs;
+    let renderData = this.dataset[renderAttrs.layoutBy];
     if (!renderData || renderData.length === 0) {
       return { barData: [] };
     }
-    const dataLength = renderData.length > 1 ? renderData.length : renderData[0].length
+    const dataLength =
+      renderData.length > 1 ? renderData.length : renderData[0].length;
     this.legendArr = Array.from({ length: renderData.length }, () => {
       return 1;
     });
-    let arrLayout = layout(renderData, renderAttrs);
+    let arrLayout = layout.call(this, renderData, renderAttrs);
     let colors = this.theme.colors;
     let styles = this.renderStyles;
 
     arrLayout.barData.forEach((bar, i) => {
-      let style = this.style('pillar')(bar.attrs, this.dataset.rows[i], i)
-      bar.fillColor = bar.fillColor || colors[i % dataLength]
-      bar.strokeColor = renderAttrs.strokeColor || '#FFF'
-      bar.pos = renderAttrs.pos
-      if (!bar.hasOwnProperty('startAngle') || !bar.hasOwnProperty('endAngle')) {
-        bar.lineWidth = 0
+      let style = this.style("pillar")(bar.attrs, this.dataset.rows[i], i);
+      bar.fillColor = bar.fillColor || colors[i % dataLength];
+      bar.strokeColor = renderAttrs.strokeColor || "#FFF";
+      bar.pos = renderAttrs.pos;
+      if (
+        !bar.hasOwnProperty("startAngle") ||
+        !bar.hasOwnProperty("endAngle")
+      ) {
+        bar.lineWidth = 0;
       } else {
-        bar.lineWidth = 1
+        bar.lineWidth = 1;
       }
-      let barStyle = deepObjectMerge({ bgcolor: bar.bgcolor || colors[i % dataLength] }, styles.bar, style)
-      bar = deepObjectMerge(bar, barStyle)
-    })
-    return { arrLayout }
+      let barStyle = deepObjectMerge(
+        { bgcolor: bar.bgcolor || colors[i % dataLength] },
+        styles.bar,
+        style
+      );
+      bar = deepObjectMerge(bar, barStyle);
+    });
+    return { arrLayout };
   }
   rendered() {
     //console.log(this.$refs['wrap'])
@@ -88,14 +95,14 @@ class PolarBar extends Base {
   defaultAttrs() {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
-      layer: 'bar',
+      layer: "bar",
       //选中偏移量基数
-      activeOffset: 10
-    }
+      activeOffset: 10,
+    };
   }
   defaultStyles() {
     // 默认的样式,继承base
-    return {}
+    return {};
   }
 
   mouseleave() {
@@ -122,28 +129,28 @@ class PolarBar extends Base {
     // fun(e, el);
   }
   groupMousemove(e, el) {
-    console.log(el)
+    console.log(el);
   }
   renderData() {
-    let renderAttrs = this.renderAttrs
-    return this.dataset[renderAttrs.layoutBy]
+    let renderAttrs = this.renderAttrs;
+    return this.dataset[renderAttrs.layoutBy];
   }
   render(data) {
-    let { clientRect, innerRadiusPx, radiusPx } = this.renderAttrs
-    let colors = this.theme.colors
-    let styles = this.renderStyles
+    let { clientRect, innerRadiusPx, radiusPx } = this.renderAttrs;
+    let colors = this.theme.colors;
+    let styles = this.renderStyles;
     return (
       <Group class="container" ref="wrap">
         <Group class="rings-group" onMouseleave={this.mouseleave}>
           {data.barData.map((ring, ind) => {
             let style = getStyle(
               this,
-              'sector',
+              "sector",
               [
                 {
-                  _index: ind
+                  _index: ind,
                 },
-                styles.sector
+                styles.sector,
               ],
               [this.dataset.rows[ind], ind]
             );
@@ -159,7 +166,7 @@ class PolarBar extends Base {
           })}
         </Group>
       </Group>
-    )
+    );
   }
 }
-export default PolarBar
+export default PolarBar;

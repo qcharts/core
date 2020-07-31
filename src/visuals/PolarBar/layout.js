@@ -18,7 +18,7 @@ export default function layout(arr, attrs) {
   const bgPillarAttr = { opacity: 0.01, fillColor: "#FF0000" };
 
   // const valueAxis = getAxis(stack, data)
-  const valueAxis = axis({ dataSet: data, stack, splitNumber });
+  const valueAxis = axis.call(this, { dataSet: data, stack, splitNumber });
   if (!valueAxis || !valueAxis.length) {
     return { barData };
   }
@@ -47,7 +47,7 @@ export default function layout(arr, attrs) {
         let barAngle = groupAngle / GROUP_BAR_NUM;
         let startAngle =
           (groupAngle + groupGap) * i + barAngle * (j - flag) - Math.PI * 0.5;
-        value = data[j][i].value;
+        value = data[j][i].layoutScaleValue;
         let barHeight = BAR_HEIGHT_FACTOR * value;
         let innerRadius =
           BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) +
