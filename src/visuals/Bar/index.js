@@ -74,7 +74,7 @@ class Bar extends Base {
     let renderData = this.dataset[renderAttrs.layoutBy];
     const dataLength =
       renderData.length > 1 ? renderData.length : renderData[0].length;
-    let arrLayout = layout(renderData, renderAttrs);
+    let arrLayout = layout.call(this, renderData, renderAttrs);
     let colors = this.theme.colors;
     let styles = this.renderStyles;
     arrLayout.barData = arrLayout.barData.map((bar, i) => {

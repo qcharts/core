@@ -15,7 +15,7 @@ export default function layout(arr, attrs) {
 
   const bgPillarAttr = { opacity: 0, bgcolor: "#000" };
 
-  const valueAxis = axis({ dataSet: data, stack, splitNumber });
+  const valueAxis = axis.call(this, { dataSet: data, stack, splitNumber });
   if (!valueAxis || !valueAxis.length) {
     return { barData, groupData };
   }
@@ -58,7 +58,7 @@ export default function layout(arr, attrs) {
         //   data[j][i].state = "default";
         // }
 
-        value = data[j][i].value;
+        value = data[j][i].layoutScaleValue;
         let barHeight = BAR_HEIGHT_FACTOR * Math.abs(value);
         let rect = {
           anchor: [
@@ -173,7 +173,7 @@ export default function layout(arr, attrs) {
         // if (data[j][i].state !== "disabled") {
         //   data[j][i].state = "default";
         // }
-        value = data[j][i].value;
+        value = data[j][i].layoutScaleValue;
         let barHeight = BAR_HEIGHT_FACTOR * Math.abs(value);
         if (barHeight === 0) {
           stackGapTemp = 0;
