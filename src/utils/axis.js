@@ -129,7 +129,7 @@ function dataHandle(attr) {
       let sum = 0;
       let sumDown = 0;
       for (let j = 0, leng = data.length; j < leng; j++) {
-        let val = data[j][i].value;
+        let val = data[j][i].layoutScaleValue;
         if (data[j][i].disabled === true || val === undefined) {
           continue;
         }
