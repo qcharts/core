@@ -60,20 +60,13 @@ chart.source(data, {
 const pie = new Pie({
   innerRadius: 0.4,
   radius: 0.7,
-  pos: [0, 0],
-  size: ['80%', '100%']
+  clientRect: { top: '10%', left: '10%', right: '10%', bottom: '10%' }
 })
 pie.style('sector', { lineWidth: 1, strokeColor: '#fff' })
 pie.style('guideline', true)
 pie.style('guideText', { fontSize: '12px' })
 
 const legend = new Legend({ orient: 'vertical', align: ['right', 'center'] })
-legend.style('icon', (attrs, d, i) => ({
-  marginTop: i > 0 ? 10 : 0
-}))
-legend.style('text', (attrs, d, i) => ({
-  marginTop: i > 0 ? 10 : 0
-}))
 
 chart.append([pie, legend])
 ```

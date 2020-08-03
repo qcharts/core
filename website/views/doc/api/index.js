@@ -36,7 +36,7 @@ export default [
     component: () => import('./scatter.md')
   },
   {
-    title: '水波图',
+    title: 'Wave(水波图)',
     path: 'wave',
     component: () => import('./wave.md')
   },
