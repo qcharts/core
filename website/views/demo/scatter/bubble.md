@@ -118,7 +118,6 @@ const chart = new Chart({
 })
 
 chart.source(data, {
-  row: '*',
   text: 'x',
   value: 'y'
 })
