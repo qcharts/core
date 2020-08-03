@@ -236,41 +236,37 @@ const data = [
   }
 ]
 
-const render = (data) => {
-  const { Chart, Axis, Scatter, Legend, Tooltip } = qcharts
+const { Chart, Axis, Scatter, Legend, Tooltip } = qcharts
 
-  const chart = new Chart({
-    container: '#app'
+const chart = new Chart({
+  container: '#app'
+})
+chart.source(data, {
+  row: 'gender',
+  text: 'height',
+  value: 'weight'
+})
+const scatter = new Scatter({
+  showGuideLine: true
+})
+
+const axisBottom = new Axis()
+
+const axisLeft = new Axis({ orient: 'left' })
+
+const legend = new Legend({ align: ['center', 'bottom'] })
+
+chart.append(
+  new Tooltip({
+    title: (data) => data[0].gender,
+    formatter: (data) => {
+      console.log(data)
+      return `身高：${data.height}CM  体重：${data.weight}KG `
+    }
   })
-  chart.source(data, {
-    row: 'gender',
-    text: 'height',
-    value: 'weight'
-  })
-  const scatter = new Scatter({
-    showGuideLine: true
-  })
+)
 
-  const axisBottom = new Axis()
-
-  const axisLeft = new Axis({ orient: 'left' })
-
-  const legend = new Legend({ align: ['center', 'bottom'] })
-
-  chart.append(
-    new Tooltip({
-      title: (data) => data[0].gender,
-      formatter: (data) => {
-        console.log(data)
-        return `身高：${data.height}CM  体重：${data.weight}KG `
-      }
-    })
-  )
-
-  chart.append([scatter, legend, axisBottom, axisLeft])
-}
-
-render(data)
+chart.append([scatter, legend, axisBottom, axisLeft])
 ```
 
 :::

@@ -10,6 +10,7 @@ class RadialBar extends BaseVisual {
     super(attrs)
     this.type = 'RadialBar'
     this.animators = []
+    this.oldPos = null
   }
 
   defaultAttrs() {
@@ -105,7 +106,8 @@ class RadialBar extends BaseVisual {
 
       Object.assign(d, normalStyle)
     })
-    return data
+    // 半径大的在底，小的在上，这样事件触发才正常
+    return data.sort((a, b) => b.radius - a.radius)
   }
 
   beforeRender() {
@@ -160,8 +162,7 @@ class RadialBar extends BaseVisual {
   }
 
   onMouseenter(event, el) {
-    this.dataset.resetState()
-    const { col, row } = el.attributes
+    const { col, row } = el.children[1].attributes
     this.dataset.forEach((item) => {
       item.state = item.col === col && item.row === row ? 'hover' : 'default'
     })
@@ -173,28 +174,34 @@ class RadialBar extends BaseVisual {
 
   render(data = []) {
     const { strokeBgcolor } = this.renderAttrs
+    const gAnimation = {
+      from: { pos: this.oldPos ? this.oldPos : this.center },
+      to: { pos: this.center }
+    }
+    this.oldPos = this.center
     return (
       <Group>
-        {data.map((d, i) => {
-          const { col, row, data } = d
-          return (
-            <Group pos={this.center} size={[this.maxOuterRadius * 2, this.maxOuterRadius * 2]}>
-              <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
-              <Arc
-                {...{ ...d, col, row }}
-                animation={{
-                  ...this.animators[i],
-                  duration: 300,
-                  delay: 0
-                }}
-                zIndex={i}
-                {...this.style('arc:hover')(d, data, d.index)}
+        {data
+          .map((d, i) => {
+            const { col, row, data } = d
+            return (
+              <Group
+                pos={this.center}
+                animation={gAnimation}
                 onMouseenter={this.onMouseenter}
+                onMousemove={this.onMouseenter}
                 onMouseleave={this.onMouseleave}
-              />
-            </Group>
-          )
-        })}
+              >
+                <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
+                <Arc
+                  pos={this.center}
+                  {...{ ...d, col, row }}
+                  animation={this.animators[i]}
+                  {...this.style('arc:hover')(d, data, i)}
+                />
+              </Group>
+            )
+          })}
       </Group>
     )
   }
