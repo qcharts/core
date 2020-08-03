@@ -42,9 +42,12 @@ const area = new Area({ smooth: true }).style('area', function(attrs, data, i) {
   }
 })
 
-const axisBottom = new Axis()
+const axisBottom = new Axis().style('grid', false)
 const tooltip = new Tooltip()
-const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
+const axisLeft = new Axis({ orient: 'left' })
+  .style('axis', false)
+  .style('scale', false)
+  .style('grid', false)
 
 chart.append([area, axisBottom, axisLeft, tooltip])
 ```
