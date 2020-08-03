@@ -15,7 +15,6 @@ const chart = new Chart({
   container: "#app",
 });
 chart.source(data, {
-  row: "*",
   value: "value",
   text: "label",
 });
@@ -29,7 +28,7 @@ const bar = new Bar({
 const texture1 = "https://p3.ssl.qhimg.com/t01128a717c0ff244f1.png";
 const texture2 = "https://p5.ssl.qhimg.com/t01c5d76eabda023606.png";
 bar
-  .style("pillar", (attrs, data, i) => {
+  .style("pillar", (attrs, data, i, j) => {
     if (i === 0) {
       return {
         texture: texture1,
@@ -42,10 +41,9 @@ bar
       };
     }
   })
-  .style("text", (attrs, data, i) => {
-    let anchor = attrs.anchor || [0, 0];
-    let size = attrs.size;
-    let pos = attrs.pos;
+  .style("text", (attrs, data, i, j) => {
+    let size = attrs.barAttrs.size;
+    let pos = attrs.barAttrs.pos;
     return {
       color: "#1DCE91",
       rotate: 0,
