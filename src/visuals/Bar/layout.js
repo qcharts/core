@@ -12,12 +12,12 @@ export default function layout(arr, attrs) {
   // 输出
   const barData = [];
   const groupData = [];
-
+  const textData = [];
   const bgPillarAttr = { opacity: 0, bgcolor: "#000" };
 
   const valueAxis = axis.call(this, { dataSet: data, stack, splitNumber });
   if (!valueAxis || !valueAxis.length) {
-    return { barData, groupData };
+    return { barData, groupData, textData };
   }
   const tableSize = transpose
     ? { label: barSize[1], value: barSize[0] }
@@ -51,13 +51,14 @@ export default function layout(arr, attrs) {
     for (let i = 0, len = GROUP_NUM; i < len; i++) {
       let flag = 0; // 计算当前柱子前面有几根被隐藏
       let value = 0;
+      let rawValue = 0;
       let gpData = { rects: [] };
       // 计算单根柱子
       for (let j = 0, lenj = data.length; j < lenj; j++) {
         // if (data[j][i].state !== "disabled") {
         //   data[j][i].state = "default";
         // }
-
+        rawValue = data[j][i].value;
         value = data[j][i].layoutScaleValue;
         let barHeight = BAR_HEIGHT_FACTOR * Math.abs(value);
         let rect = {
@@ -87,47 +88,42 @@ export default function layout(arr, attrs) {
                     i,
                 tableSize.value * POSITIVE_RATIO,
               ],
-
-          labelAttrs: {
-            opacity: data[j][i].state !== "disabled" ? 1 : 0,
-            text: value,
-            anchor: [transpose && value < 0 ? 1 : 0, 0.5],
-            pos: transpose
-              ? [
-                  tableSize.value * (1 - POSITIVE_RATIO),
-                  gap / 2 +
-                    (barWidth + groupGap) * (j - flag) +
-                    (barWidth * GROUP_BAR_NUM +
-                      groupGap * (GROUP_BAR_NUM - 1) +
-                      gap) *
-                      i +
-                    barWidth * 0.5,
-                ]
-              : [
-                  gap / 2 +
-                    (barWidth + groupGap) * (j - flag) +
-                    (barWidth * GROUP_BAR_NUM +
-                      groupGap * (GROUP_BAR_NUM - 1) +
-                      gap) *
-                      i +
-                    barWidth * 0.5,
-                  tableSize.value * POSITIVE_RATIO,
-                ],
-            rotate: transpose ? 0 : value < 0 ? 90 : 270,
-          },
-
-          value: data[j][i].value,
-          text: data[j][i].text,
-          state: data[j][i].state,
-          data: data[j][i].data,
         };
-        if (rect.state === "disabled") {
+        if (data[j][i].state === "disabled") {
           rect.size = transpose ? [0, rect.size[1]] : [rect.size[0], 0];
           flag++;
         } else {
           gpData.rects.push(rect);
         }
+        let label = {
+          opacity: data[j][i].state !== "disabled" ? 1 : 0,
+          text: rawValue.toString(),
+          anchor: [transpose && value < 0 ? 1 : 0, 0.5],
+          pos: transpose
+            ? [
+                tableSize.value * (1 - POSITIVE_RATIO),
+                gap / 2 +
+                  (barWidth + groupGap) * (j - flag) +
+                  (barWidth * GROUP_BAR_NUM +
+                    groupGap * (GROUP_BAR_NUM - 1) +
+                    gap) *
+                    i +
+                  barWidth * 0.5,
+              ]
+            : [
+                gap / 2 +
+                  (barWidth + groupGap) * (j - flag) +
+                  (barWidth * GROUP_BAR_NUM +
+                    groupGap * (GROUP_BAR_NUM - 1) +
+                    gap) *
+                    i +
+                  barWidth * 0.5,
+                tableSize.value * POSITIVE_RATIO,
+              ],
+          rotate: transpose ? 0 : value < 0 ? 90 : 270,
+        };
         barData.push(rect);
+        textData.push(label);
       }
       // 柱子整体属性
       gpData = Object.assign(gpData, {
@@ -202,20 +198,16 @@ export default function layout(arr, attrs) {
             ? [posX, gap / 2 + (barWidth + gap) * i]
             : [gap / 2 + (barWidth + gap) * i, posY],
           index: j,
-          labelAttrs: {
-            opacity: data[j][i].state !== "disabled" ? 1 : 0,
-            text: value,
-            anchor: transpose ? (value < 0 ? [1, 0.5] : [0, 0.5]) : [0.5, 1],
-            pos: transpose
-              ? [posX, +(gap + barWidth) / 2 + (barWidth + gap) * i]
-              : [(gap + barWidth) / 2 + (barWidth + gap) * i, posLabelY],
-          },
-          value: data[j][i].value,
-          text: data[j][i].text,
-          state: data[j][i].state,
-          data: data[j][i].data,
         };
-        if (rect.state === "disabled") {
+        let label = {
+          opacity: data[j][i].state !== "disabled" ? 1 : 0,
+          text: value.toString(),
+          anchor: transpose ? (value < 0 ? [1, 0.5] : [0, 0.5]) : [0.5, 1],
+          pos: transpose
+            ? [posX, +(gap + barWidth) / 2 + (barWidth + gap) * i]
+            : [(gap + barWidth) / 2 + (barWidth + gap) * i, posLabelY],
+        };
+        if (data[j][i].state === "disabled") {
           rect.size = transpose ? [0, rect.size[1]] : [rect.size[0], 0];
         } else {
           value < 0
@@ -223,6 +215,7 @@ export default function layout(arr, attrs) {
             : (heightSumUp = heightSumUp + barHeight);
           gpData.rects.push(rect);
         }
+        textData.push(label);
         barData.push(rect);
       }
       // 柱子整体属性
@@ -237,7 +230,7 @@ export default function layout(arr, attrs) {
     }
   }
 
-  return { barData, groupData };
+  return { textData, barData, groupData };
 }
 
 function computerLegend(data) {

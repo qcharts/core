@@ -103,20 +103,19 @@ const bar = new Bar({
   stackGap: 5,
   size: ["60%", "80%"],
 })
-  .style("pillar", (attr, data, i) => {
-    return { bgcolor: colors[i % 4] };
+  .style("pillar", (attr, data, i, j) => {
+    return { bgcolor: colors[j] };
   })
-  .style("text", (attrs, data, i) => {
-    if ((i + 1) % 4 !== 0) {
+  .style("text", (attrs, data, i, j) => {
+    if ((j + 1) % 4 !== 0) {
       return false;
     }
-    let anchor = attrs.anchor || [0, 0];
-    let size = attrs.size;
-    let pos = attrs.pos;
+    let size = attrs.barAttrs.size;
+    let pos = attrs.barAttrs.pos;
     return {
-      color: "#1DCE91",
+      fillColor: "#1DCE91",
       rotate: 0,
-      text: texts[Math.floor(i / 4)],
+      text: texts[i],
       anchor: [0, 0.5],
       pos: [pos[0] + size[0] + 5, pos[1] + size[1] / 2],
     };

@@ -18,7 +18,6 @@ const chart = new Chart({
   container: "#app",
 });
 chart.source(data, {
-  row: "*",
   value: "value",
   text: "label",
 });
@@ -35,12 +34,13 @@ bar.style("pillar", { bgcolor: "#47A1FF" });
 // const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
 //   text: '图例二'
 // })
+const legend = new Legend();
 const tooltip = new Tooltip();
 const axisBottom = new Axis().style("grid", false);
 const axisLeft = new Axis({ orient: "left" })
   .style("axis", false)
   .style("scale", false);
-chart.append([bar, tooltip, axisBottom, axisLeft]);
+chart.append([bar, tooltip, axisBottom, axisLeft, legend]);
 ```
 
 :::
