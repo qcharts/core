@@ -197,7 +197,7 @@ class RadialBar extends BaseVisual {
                   pos={this.center}
                   {...{ ...d, col, row }}
                   animation={this.animators[i]}
-                  {...this.style('arc:hover')(d, data, i)}
+                  {...this.style('arc')(d, data, i)}
                 />
               </Group>
             )

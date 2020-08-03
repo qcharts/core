@@ -72,7 +72,7 @@ class Radar extends BaseVisual {
     const { sectionAttrs, ...otherData } = this.getRenderData()
     const processSectionAttrs = sectionAttrs.map((attr, i) => {
       const { points, state, ...otherAttrs } = attr
-      const { style, hoverStyle } = this.getStyle('section', attr, { ...attr.dataOrigin }, i)
+      const { style, hoverStyle } = this.getStyle('section', attr, [...attr.dataOrigin], i)
       let stateStyle = state === 'hover' ? hoverStyle : {}
       const animation = this.getPolylineAnimation(points, state, i)
       return deepObjectMerge(otherAttrs, { state }, { animation }, style, stateStyle)
