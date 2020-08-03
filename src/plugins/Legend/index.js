@@ -257,9 +257,11 @@ class Legend extends Base {
   changePage(e, el) {
     if (el.name === "prev" && this.state.page > 1) {
       this.state.page--;
+      this.animationSwitch = true;
       this.update();
     } else if (el.name === "next" && this.state.page < this.state.totalPage) {
       this.state.page++;
+      this.animationSwitch = true;
       this.update();
     }
   }
