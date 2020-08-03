@@ -21,8 +21,8 @@ export default [
     component: () => import('./Tooltip.md')
   },
   {
-    title: 'Symbol',
-    path: 'Symbol',
-    component: () => import('./Symbol.md')
+    title: 'Point',
+    path: 'Point',
+    component: () => import('./Point.md')
   }
 ]
