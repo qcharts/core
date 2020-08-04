@@ -11,14 +11,14 @@ const { Chart, Wave } = qcharts
 const chart = new Chart({ container: '#app' })
 
 const wave = new Wave({
-  percent: 0.65,
+  percent: 65,
   shape: shape
 })
 // 不显示文本
 wave.style('text', false)
 chart.append(wave)
 setTimeout(_ => {
-  wave.attr({ percent: 0.8 })
+  wave.attr({ percent: 80 })
 }, 2000)
 ```
 

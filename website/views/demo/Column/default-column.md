@@ -18,7 +18,6 @@ const chart = new Chart({
   container: "#app",
 });
 chart.source(data, {
-  row: "*",
   value: "value",
   text: "label",
 });

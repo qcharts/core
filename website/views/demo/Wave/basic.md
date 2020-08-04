@@ -10,10 +10,10 @@ const wave = new Wave({
     duration: 500
   },
   radius: 200,
-  percent: 0.65,
+  percent: 65,
   // 格式化文本
   formatter: per => {
-    return '总占比：' + per * 100 + '%'
+    return '总占比：' + per + '%'
   }
 })
 // 波浪颜色

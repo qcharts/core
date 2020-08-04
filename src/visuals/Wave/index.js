@@ -34,9 +34,9 @@ class Wave extends Base {
       amplitude: 8, //振幅
       wavelength: 300, //波长`
       radius: 150,
-      percent: 0.65,
+      percent: 65,
       formatter: per => {
-        return per * 100 + '%'
+        return per + '%'
       }
     }
   }
@@ -50,7 +50,7 @@ class Wave extends Base {
     let perR = 24 / animation.duration
     let currentX = 0 - clientRect.left
     //以路径的top为起点，计算百分比
-    let startY = pathHeight * (1 - percent) + clipPath.originalContentRect[1]
+    let startY = pathHeight * (100 - percent) / 100 + clipPath.originalContentRect[1]
     this.tickId = requestAnimationFrame(_ => {
       this.offsetR += perR
       let points = [[currentX, startY + pathHeight]]

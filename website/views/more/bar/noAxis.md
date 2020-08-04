@@ -18,17 +18,15 @@ const chart = new Chart({
   container: "#app",
 });
 chart.source(data, {
-  row: "*",
   value: "value",
   text: "label",
 });
 let bool = true;
 const bar = new Bar({})
   .style("pillar", { bgcolor: "#47A1FF" })
-  .style("text", (attrs, data, i) => {
-    let anchor = attrs.anchor || [0, 0];
-    let size = attrs.size;
-    let pos = attrs.pos;
+  .style("text", (attrs, data, i, j) => {
+    let size = attrs.barAttrs.size;
+    let pos = attrs.barAttrs.pos;
     let str = data.value + "";
 
     let result = str
@@ -38,7 +36,7 @@ const bar = new Bar({})
         return (index % 3 ? next : next + ",") + prev;
       });
     return {
-      color: "#2AAAFF",
+      fillColor: "#2AAAFF",
       rotate: 0,
       text: result,
       anchor: [0.5, 1],

@@ -32,7 +32,7 @@ class Legend extends Base {
       iconSize: [12, 12],
       textSize: [40, 12],
       outGap: 10,
-      innerGap: 4,
+      innerGap: 2,
     };
   }
   get pos() {
@@ -151,8 +151,8 @@ class Legend extends Base {
   }
 
   getRenderData() {
-    let renderAttrs = this.renderAttrs;
-    let renderData = this.dataset[renderAttrs.layoutBy].map((item, index) => {
+    let { layoutBy, innerGap } = this.renderAttrs;
+    let renderData = this.dataset[layoutBy].map((item, index) => {
       this.legendStateArray.push(item.state);
       return {
         name: item.name,
@@ -163,6 +163,7 @@ class Legend extends Base {
       return {
         textAttrs: {
           text: item.name,
+          paddingLeft: innerGap,
         },
       };
     });
@@ -256,9 +257,11 @@ class Legend extends Base {
   changePage(e, el) {
     if (el.name === "prev" && this.state.page > 1) {
       this.state.page--;
+      this.animationSwitch = true;
       this.update();
     } else if (el.name === "next" && this.state.page < this.state.totalPage) {
       this.state.page++;
+      this.animationSwitch = true;
       this.update();
     }
   }
