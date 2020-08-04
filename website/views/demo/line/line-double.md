@@ -24,9 +24,6 @@ const data = [
 
 const { Chart, Line, Axis, Tooltip, Legend, theme } = qcharts
 
-theme.set({
-  colors: ['#71dac7', '#d57a77']
-})
 const chart = new Chart({
   container: '#app'
 })
@@ -38,8 +35,6 @@ chart.source(data, {
 })
 
 const line = new Line()
-line.style('point', { pointType: 'star', angles: 5, innerRadius: 5, outerRadius: 10, strokeColor: '#fff' })
-line.style('point:hover', { strokeColor: '#f0f' })
 const axisBottom = new Axis().style('grid', false)
 const tooltip = new Tooltip()
 const legend = new Legend()

@@ -3,6 +3,7 @@ import { Group, Polyline, Node } from 'spritejs'
 import { getStyle } from '@/utils/getStyle'
 import layout from './layout'
 import Point from '../../utils/Point'
+import { deepObjectMerge } from '@qcharts/utils'
 class Line extends Base {
   constructor(attrs) {
     super(attrs)
@@ -150,11 +151,11 @@ class Line extends Base {
               <Group>
                 {line.to.points.map((p, j) => {
                   const animation = { from: { pos: line.from.points[j] }, to: { pos: p } }
-                  let styleStr = 'point'
+                  let style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind], ind, j])
+                  let styleHover = getStyle(this, 'point:hover', [style, styles['point:hover']], [this.dataset.rows[ind], ind, j])
                   if (this.dataset.rows[ind][j].state === 'hover') {
-                    styleStr = 'point:hover'
+                    deepObjectMerge(style, styleHover)
                   }
-                  let style = getStyle(this, styleStr, [{ fillColor: colors[ind] }, styles[styleStr]], [this.dataset.rows[ind], ind, j])
                   return <Point {...style} animation={animation} />
                 })}
               </Group>
