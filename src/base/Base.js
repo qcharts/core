@@ -82,6 +82,9 @@ class Base extends Node {
       store.dataset = data
     }
     if (store.dataset && store.__isCreated__) {
+      store.dataset.on("change", (_) => {
+        this.__update({ type: "state" });
+      });
       //如果以前存在，则更新
       this.__update({ type: 'source' })
     }
