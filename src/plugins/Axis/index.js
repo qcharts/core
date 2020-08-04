@@ -90,7 +90,6 @@ class Axis extends Base {
             let style = getStyle(this, 'grid', styles.grid, [ind])
             if (orient === 'left' || orient === 'right') {
               if ((ind === 0 && arrOrient.includes('bottom')) || (ind === axis.grids.length - 1 && arrOrient.includes('top'))) {
-                console.log(orient, ind)
                 return <Node />
               }
             } else if (orient === 'top' || orient === 'bottom') {
