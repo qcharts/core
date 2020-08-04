@@ -11,7 +11,7 @@ let line = new Line({ smooth: true })
 如上代码：在初始化折线图的时候，`{smooth:true}` 就是属性 `attr`。
 
 ```javascript
-//point是一个比较特殊的样式，它除了面的基本属性外，它还有pointType和size属性，point是由Symbol插件来完成渲染的,详情查看 Plugin → Symbol
+//point是一个比较特殊的样式，它除了面的基本属性外，它还有pointType和size属性，point是由Point插件来完成渲染的,详情查看 Plugin → Point
 line.style('point', { pointType: 'star', size: 8 })
 ```
 

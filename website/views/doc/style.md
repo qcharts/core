@@ -98,8 +98,8 @@ line
 line:hover
 guideline
 guideline:hover
-symbol
-symbol:hover
+point
+point:hover
 area
 area:hover
 ```

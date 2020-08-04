@@ -88,7 +88,7 @@ const axisRight = new Axis({
   .style('name', { fontSize: 12, translate: [10, 0] })
   .source(d2)
 
-const axisBottom = new Axis().style('scale', true)
+const axisBottom = new Axis().style('scale', true).style('grid', false)
 
 const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 
