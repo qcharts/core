@@ -84,28 +84,28 @@ const data = [
     type: "图例二",
     value: 20.2,
   },
-];
-const { Chart, Bar, Tooltip, Axis, Legend } = qcharts;
+]
+const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
-});
+})
 chart.source(data, {
   row: "type",
   value: "value",
   text: "data",
-});
+})
 const bar = new Bar({
   stack: true,
   transpose: true,
   barWidth: 20,
 }).style("text", (attrs, data, i, j) => {
-  let size = attrs.barAttrs.size;
-  let pos = attrs.barAttrs.pos;
-  let anchor = [0, 0.5];
-  let newPos = [pos[0] + size[0], pos[1] + size[1] / 2];
+  let size = attrs.barAttrs.size
+  let pos = attrs.barAttrs.pos
+  let anchor = [0, 0.5]
+  let newPos = [pos[0] + size[0], pos[1] + size[1] / 2]
   if (j % 2 === 0) {
-    anchor = [1, 0.5];
-    newPos = [pos[0] - size[0], pos[1] + size[1] / 2];
+    anchor = [1, 0.5]
+    newPos = [pos[0] - size[0], pos[1] + size[1] / 2]
   }
   return {
     fillColor: "#333",
@@ -115,24 +115,24 @@ const bar = new Bar({
     anchor: anchor,
     padding: [4, 4],
     pos: newPos,
-  };
-});
+  }
+})
 const tooltip = new Tooltip({
   formatter: (d) => ` ${d.type}: ${d.value}`,
-});
-const legend = new Legend({ align: ["center", "bottom"] });
-const axisBottom = new Axis().style("scale", false).style("grid", false);
+})
+const legend = new Legend({ align: ["center", "bottom"] })
+const axisBottom = new Axis().style("scale", false).style("grid", false)
 const axisLeft = new Axis({
   orient: "left",
   formatter: (a, b) => {
-    console.log(a, b);
-    return ` ${a}`;
+    console.log(a, b)
+    return ` ${a}`
   },
 })
   .style("grid", false)
   .style("scale", false)
-  .style("label", true);
-chart.append([bar, tooltip, legend, axisBottom, axisLeft]);
+  .style("label", true)
+chart.append([bar, tooltip, legend, axisBottom, axisLeft])
 ```
 
 :::

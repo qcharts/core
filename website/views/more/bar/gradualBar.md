@@ -8,23 +8,23 @@ const data = [
   { value: 1548, label: "较大" },
   { value: 2340, label: "重大" },
   { value: 3000, label: "特大" },
-];
+]
 
-const { Chart, Bar, Tooltip, Axis } = qcharts;
+const { Chart, Bar, Tooltip, Axis } = qcharts
 
-const { Gradient } = spritejs;
+const { Gradient } = spritejs
 const chart = new Chart({
   container: "#app",
-});
+})
 
 chart.source(data, {
   value: "value",
   text: "label",
-});
+})
 
 const bar = new Bar({ barWidth: 12 })
   .style("pillar", (attrs, d, i) => {
-    let size = attrs.size;
+    let size = attrs.size
     if (i === 0) {
       return {
         bgcolor: new Gradient({
@@ -34,7 +34,7 @@ const bar = new Bar({ barWidth: 12 })
             { color: "#0046DF", offset: 1 },
           ],
         }),
-      };
+      }
     } else if (i === 1) {
       return {
         bgcolor: new Gradient({
@@ -44,7 +44,7 @@ const bar = new Bar({ barWidth: 12 })
             { color: "#D58B00", offset: 1 },
           ],
         }),
-      };
+      }
     } else if (i === 2) {
       return {
         bgcolor: new Gradient({
@@ -54,7 +54,7 @@ const bar = new Bar({ barWidth: 12 })
             { color: "#DF4900", offset: 1 },
           ],
         }),
-      };
+      }
     } else if (i === 3) {
       return {
         bgcolor: new Gradient({
@@ -64,30 +64,31 @@ const bar = new Bar({ barWidth: 12 })
             { color: "#9A0000", offset: 1 },
           ],
         }),
-      };
+      }
     }
   })
   .style("text", (attrs, data, i) => {
-    let size = attrs.barAttrs.size;
-    let pos = attrs.barAttrs.pos;
+    let size = attrs.barAttrs.size
+    let pos = attrs.barAttrs.pos
     return {
+      padding: 0,
       rotate: 0,
       text: "158",
       anchor: [0.5, 1],
       pos: [pos[0] + size[0] / 2, pos[1] - size[1] - 10],
-    };
-  });
+    }
+  })
 
 const tooltip = new Tooltip({
   formatter: (d) => `${d.label}: ${d.value}`,
-});
+})
 
 const axisBottom = new Axis()
   .style("scale", false)
   .style("axis", false)
-  .style("label", { padding: [20, 5] });
+  .style("label", { padding: [20, 5] })
 
-chart.append([bar, tooltip, axisBottom]);
+chart.append([bar, tooltip, axisBottom])
 ```
 
 :::
