@@ -73,6 +73,8 @@ const line2 = new Line({
 })
   .source(d2)
   .style('line', { strokeColor: colors[1] })
+  .style('point', { fillColor: colors[1] })
+
 const axisRight = new Axis({
   splitNumber: 5,
   orient: 'right',
