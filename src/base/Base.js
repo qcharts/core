@@ -99,10 +99,10 @@ class Base extends Node {
     } else {
       store.dataset = data;
     }
-    store.dataset.on("change", (_) => {
-      this.__update({ type: "state" });
-    });
     if (store.dataset && store.__isCreated__) {
+      store.dataset.on("change", (_) => {
+        this.__update({ type: "state" });
+      });
       //如果以前存在，则更新
       this.__update({ type: "source" });
     }
