@@ -49,37 +49,22 @@ const data = [
     year: "图例三",
     sales: 56,
   },
-];
-const { Chart, Bar, Tooltip, Axis, Legend } = qcharts;
+]
+const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
-});
+})
 chart.source(data, {
   row: "year",
   value: "sales",
   text: "product",
-});
+})
 const bar = new Bar({
   transpose: false,
   barWidth: 20,
-});
-const tooltip = new Tooltip();
-// const tooltip = new Tooltip({
-//   formatter: d => `${d.product} - ${d.year} - ${d.sales}`
-// })
-const colors = ["#F00", "#FF0", "#0FF"];
-// const legend = new Legend()
-//   .style("point:hover", {
-//     pointType: "star",
-//     angles: 5,
-//     innerRadius: 3,
-//     outerRadius: 6,
-//     fillColor: "red",
-//     translate:[5,5]
-//   })
-//   .style("point", (i, j, k) => {
-//     return { translate:[0,0],bgcolor: colors[k] };
-//   });
+})
+const tooltip = new Tooltip()
+const colors = ["#F00", "#FF0", "#0FF"]
 const legend = new Legend().style("point", (i, j, k) => {
   return {
     pointType: "star",
@@ -88,13 +73,13 @@ const legend = new Legend().style("point", (i, j, k) => {
     outerRadius: 8,
     fillColor: colors[k],
     translate: [2, 5],
-  };
-});
-const axisBottom = new Axis().style("grid", false);
+  }
+})
+const axisBottom = new Axis().style("grid", false)
 const axisLeft = new Axis({ orient: "left" })
   .style("axis", false)
-  .style("scale", false);
-chart.append([bar, tooltip, axisBottom, axisLeft, legend]);
+  .style("scale", false)
+chart.append([bar, tooltip, axisBottom, axisLeft, legend])
 ```
 
 :::

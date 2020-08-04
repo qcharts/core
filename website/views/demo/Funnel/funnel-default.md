@@ -11,21 +11,20 @@ const data = [
   { value: 1782, label: "完成订单" },
   { value: 1503, label: "完成交易" },
   { value: 1204, label: "未完成交易" },
-];
+]
 
-const { Chart, Funnel, Tooltip, Legend } = qcharts;
+const { Chart, Funnel, Tooltip, Legend } = qcharts
 
 const chart = new Chart({
   container: "#app",
-});
+})
 
 chart.source(data, {
   row: "label",
-  col: "value",
   value: "value",
   text: "label",
-});
-const tooltip = new Tooltip();
+})
+const tooltip = new Tooltip()
 const funnel = new Funnel({
   clientRect: {
     left: "25%",
@@ -39,10 +38,10 @@ const funnel = new Funnel({
   .style("guideline", true)
   .style("guideText", true)
   .style("polygon:hover", (polygon, dataOrigin, index) => {
-    return { opacity: 0.5 };
-  });
-const legend = new Legend();
-chart.append([funnel, tooltip, legend]);
+    return { opacity: 0.5 }
+  })
+const legend = new Legend()
+chart.append([funnel, tooltip, legend])
 ```
 
 :::

@@ -1,4 +1,4 @@
-import { deepObjectMerge } from "@qcharts/utils";
+import { deepObjectMerge } from "@qcharts/utils"
 const colors = [
   "#47A1FF",
   "#6CD3FF",
@@ -20,16 +20,16 @@ const colors = [
   "#6367EC",
   "#5982F6",
   "#659AEC",
-];
+]
 for (let i = 0; i < 1004; i++) {
   //生成1024种颜色
   colors.push(
     "#" + ("00000" + ((Math.random() * 0x1000000) << 0).toString(16)).substr(-6)
-  );
+  )
 }
 const theme = {
   colors,
-};
+}
 theme.visuals = {
   Line: {
     colors: theme.colors,
@@ -82,7 +82,7 @@ theme.visuals = {
     styles: {
       bar: { textureRepeat: true },
       groupBar: { opacity: 0.1 },
-      text: { fontSize: 12 },
+      text: { fontSize: 12, fillColor: "#666" },
     },
     attrs: {
       statck: false,
@@ -132,7 +132,7 @@ theme.visuals = {
     colors: theme.colors,
     attrs: {},
   },
-};
+}
 theme.plugins = {
   Tooltip: {
     colors: theme.colors,
@@ -180,9 +180,9 @@ theme.plugins = {
       orient: "bottom",
     },
   },
-};
+}
 theme.set = function(obj) {
   //合并样式
-  deepObjectMerge(theme, obj);
-};
-export default theme;
+  deepObjectMerge(theme, obj)
+}
+export default theme

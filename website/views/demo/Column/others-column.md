@@ -66,33 +66,32 @@ const data = [
     year: "2018",
     sales: 21.2,
   },
-];
-const { Chart, Bar, Tooltip, Axis, Legend } = qcharts;
+]
+const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
-});
+})
 chart.source(data, {
   row: "year",
-  col: "product",
   value: "sales",
   text: "product",
-});
+})
 const bar = new Bar({
   transpose: false,
   barWidth: 20,
-});
-const tooltip = new Tooltip();
-const legend = new Legend();
-const axisBottom = new Axis().style("grid", false);
+})
+const tooltip = new Tooltip()
+const legend = new Legend()
+const axisBottom = new Axis().style("grid", false)
 const axisLeft = new Axis({ orient: "left" }).style("grid", function(
   attrs,
   ind
 ) {
   if (ind === 3) {
-    return { strokeColor: "#999", lineDash: "" };
+    return { strokeColor: "#999", lineDash: "" }
   }
-});
-chart.append([bar, tooltip, axisBottom, axisLeft, legend]);
+})
+chart.append([bar, tooltip, axisBottom, axisLeft, legend])
 ```
 
 :::
@@ -163,7 +162,7 @@ const data = [
     year: "2018",
     sales: 21.2,
   },
-];
+]
 const dataNew = [
   {
     product: "茶叶",
@@ -225,46 +224,43 @@ const dataNew = [
     year: "2019",
     sales: 161.2,
   },
-];
+]
 
-let bool = true;
-const { Chart, Bar, Tooltip, Axis, Legend } = qcharts;
+let bool = true
+const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
-});
+})
 chart.source(data, {
   row: "year",
-  col: "product",
   value: "sales",
   text: "product",
-});
-const bar = new Bar();
-const tooltip = new Tooltip();
-const legend = new Legend();
-const axisBottom = new Axis();
-const axisLeft = new Axis({ orient: "left" });
-chart.append([bar, tooltip, axisBottom, axisLeft, legend]);
+})
+const bar = new Bar()
+const tooltip = new Tooltip()
+const legend = new Legend()
+const axisBottom = new Axis()
+const axisLeft = new Axis({ orient: "left" })
+chart.append([bar, tooltip, axisBottom, axisLeft, legend])
 
-setTimeout(changeData, 3000);
+setTimeout(changeData, 3000)
 function changeData() {
   if (bool) {
     chart.source(dataNew, {
       row: "year",
-      col: "product",
       value: "sales",
       text: "product",
-    });
-    bool = false;
+    })
+    bool = false
   } else {
     chart.source(data, {
       row: "year",
-      col: "product",
       value: "sales",
       text: "product",
-    });
-    bool = true;
+    })
+    bool = true
   }
-  setTimeout(changeData, 5000);
+  setTimeout(changeData, 5000)
 }
 ```
 
@@ -284,24 +280,24 @@ const data = [
   { abc: 100, label: "05-06" },
   { abc: 400, label: "05-07" },
   { abc: 900, label: "05-08" },
-];
-const { Chart, Bar, Tooltip, Axis, Legend } = qcharts;
+]
+const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
-});
+})
 chart.source(data, {
   value: "abc",
   text: "label",
   layoutScale: "sqrt",
-});
-const bar = new Bar({}).style("pillar", { bgcolor: "#47A1FF" });
-const tooltip = new Tooltip();
+})
+const bar = new Bar({}).style("pillar", { bgcolor: "#47A1FF" })
+const tooltip = new Tooltip()
 
-const axisBottom = new Axis().style("grid", false);
+const axisBottom = new Axis().style("grid", false)
 const axisLeft = new Axis({ orient: "left" })
   .style("axis", false)
-  .style("scale", false);
-chart.append([bar, tooltip, axisBottom, axisLeft]);
+  .style("scale", false)
+chart.append([bar, tooltip, axisBottom, axisLeft])
 ```
 
 :::

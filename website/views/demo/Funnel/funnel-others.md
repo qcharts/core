@@ -9,23 +9,22 @@ const data = [
   { value: 2440, label: "联盟广告" },
   { value: 1550, label: "视频广告" },
   { value: 3000, label: "邮件营销" },
-];
+]
 data.sort((a, b) => {
-  return b.value - a.value;
-});
-const { Chart, Funnel, Tooltip, Legend } = qcharts;
+  return b.value - a.value
+})
+const { Chart, Funnel, Tooltip, Legend } = qcharts
 
 const chart = new Chart({
   container: "#app",
-});
+})
 
 chart.source(data, {
   row: "label",
-  col: "value",
   value: "value",
   text: "label",
-});
-const tooltip = new Tooltip();
+})
+const tooltip = new Tooltip()
 const rightFunnel = new Funnel({
   clientRect: {
     left: "22%",
@@ -37,7 +36,7 @@ const rightFunnel = new Funnel({
   pyramid: true,
 })
   .style("guideline", true)
-  .style("guideText", true);
+  .style("guideText", true)
 
 const leftFunnel = new Funnel({
   clientRect: {
@@ -50,9 +49,9 @@ const leftFunnel = new Funnel({
   pyramid: true,
 })
   .style("guideline", true)
-  .style("guideText", true);
-const legend = new Legend({ align: ["center", "bottom"] });
-chart.append([rightFunnel, leftFunnel, tooltip, legend]);
+  .style("guideText", true)
+const legend = new Legend({ align: ["center", "bottom"] })
+chart.append([rightFunnel, leftFunnel, tooltip, legend])
 ```
 
 :::
