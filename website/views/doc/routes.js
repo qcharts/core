@@ -19,6 +19,11 @@ export default [
     component: () => import('./dataset.md')
   },
   {
+    title: 'Theme主题',
+    path: 'theme',
+    component: () => import('./theme.md')
+  },
+  {
     title: 'API简述',
     path: 'apiinfo',
     component: () => import('./apiinfo.md')
