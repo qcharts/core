@@ -1,13 +1,15 @@
 import Base from "../../base/BaseVisual";
-import { Group, Sprite } from "spritejs";
+import { Group, Sprite, Label } from "spritejs";
 import { getStyle } from "@/utils/getStyle";
 import { deepObjectMerge, throttle } from "@qcharts/utils";
 import layout from "./layout";
+import filterClone from "filter-clone";
 class Bar extends Base {
   constructor(attrs) {
     super(attrs);
     this.type = "bar";
     this.pillars = null;
+    this.texts = null;
     this.groups = null;
     this.fromTos = null;
     this.hoverIndex = -1;
@@ -33,12 +35,25 @@ class Bar extends Base {
         },
       };
     });
+    let textData = arrLayout.textData.map((item) => {
+      return {
+        attrs: item,
+        from: {
+          pos: item.pos,
+        },
+        to: {
+          pos: item.pos,
+        },
+      };
+    });
     this.pillars = barData;
     this.groups = arrLayout.groupData;
-    return { barData, groupData: arrLayout.groupData };
+    this.texts = textData;
+    return { barData, textData, groupData: arrLayout.groupData };
   }
   beforeUpdate() {
     const pillars = this.pillars;
+    const texts = this.texts;
     let { arrLayout } = this.getRenderData();
     let barData = arrLayout.barData.map((nextPillar, i) => {
       let prev = pillars[i] ? pillars[i] : arrLayout.barData[i - 1];
@@ -65,9 +80,27 @@ class Bar extends Base {
         },
       };
     });
+    let textData = arrLayout.textData.map((nextText, i) => {
+      let prev = texts[i] ? texts[i] : arrLayout.textData[i - 1];
+      if (!prev) {
+        prev = {
+          pos: nextPillar.pos,
+        };
+      }
+      return {
+        attrs: nextText,
+        from: {
+          pos: prev.attrs.pos,
+        },
+        to: {
+          pos: nextText.pos,
+        },
+      };
+    });
     this.pillars = barData;
     this.groups = arrLayout.groupData;
-    return { barData, groupData: arrLayout.groupData };
+    this.texts = textData;
+    return { barData, textData, groupData: arrLayout.groupData };
   }
   getRenderData() {
     let renderAttrs = this.renderAttrs;
@@ -186,14 +219,55 @@ class Bar extends Base {
                 { bgcolor: colors[ind % dataLength], ...pillar.attrs },
                 styles.bar,
               ],
-              [this.dataset.rows[ind], ind]
+              [
+                this.dataset.rows[ind % renderData.length][
+                  Math.floor(ind / renderData.length)
+                ].data,
+                Math.floor(ind / renderData.length),
+                ind % renderData.length,
+              ]
             );
+
             return (
               <Sprite
                 {...pillar.attrs}
                 {...pillar.from}
                 {...style}
                 animation={{ from: pillar.from, to: pillar.to }}
+              />
+            );
+          })}
+          {data.textData.map((text, ind) => {
+            let barAttrs = filterClone(data.barData[ind].attrs, [
+              "pos",
+              "size",
+            ]);
+            let textStyle = getStyle(
+              this,
+              "text",
+              [{ barAttrs: barAttrs }, styles.text],
+              [
+                this.dataset.rows[ind % renderData.length][
+                  Math.floor(ind / renderData.length)
+                ].data,
+                Math.floor(ind / renderData.length),
+                ind % renderData.length,
+              ]
+            );
+            textStyle = filterClone(textStyle, [], ["barAttrs"]);
+            if (textStyle.pos) {
+              this.texts[ind].attrs.pos = textStyle.pos;
+              text.to.pos = textStyle.pos;
+            }
+
+            return textStyle === false ? null : (
+              <Label
+                {...text.attrs}
+                {...textStyle}
+                animation={{
+                  from: text.from,
+                  to: text.to,
+                }}
               />
             );
           })}

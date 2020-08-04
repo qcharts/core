@@ -18,7 +18,6 @@ const chart = new Chart({
 });
 
 chart.source(data, {
-  row: "*",
   value: "value",
   text: "label",
 });
@@ -69,9 +68,8 @@ const bar = new Bar({ barWidth: 12 })
     }
   })
   .style("text", (attrs, data, i) => {
-    let anchor = attrs.anchor || [0, 0];
-    let size = attrs.size;
-    let pos = attrs.pos;
+    let size = attrs.barAttrs.size;
+    let pos = attrs.barAttrs.pos;
     return {
       rotate: 0,
       text: "158",
