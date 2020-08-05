@@ -307,7 +307,7 @@ class Legend extends Base {
                 ? getStyle(this, "point:hover", [{}], [cell, ind])
                 : {}
 
-              if (disabled && attrs.iconAttrs.bgcolor) {
+              if (disabled && attrs.iconAttrs && attrs.iconAttrs.bgcolor) {
                 hoverStyle.bgcolor = "#ccc"
                 hoverStyle.fillColor = "#ccc"
               }
