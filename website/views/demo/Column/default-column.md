@@ -12,34 +12,28 @@ const data = [
   { value: 108, label: "05-06" },
   { value: 64, label: "05-07" },
   { value: 35, label: "05-08" },
-];
-const { Chart, Bar, Tooltip, Axis, Legend } = qcharts;
+]
+const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
-});
+})
 chart.source(data, {
   value: "value",
   text: "label",
-});
+})
 const bar = new Bar({
   animation: {
     duration: 1000,
     easing: "elasticOut",
   },
-});
-bar.style("pillar", { bgcolor: "#47A1FF" });
-// const tooltip = new Tooltip({
-//   formatter: d => `${d.label}: ${d.value}`
-// }).style('icon', { fillColor: '#47A1FF' })
-// const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
-//   text: '图例二'
-// })
-const tooltip = new Tooltip();
-const axisBottom = new Axis().style("grid", false);
+})
+bar.style("pillar", { bgcolor: "#47A1FF" })
+const tooltip = new Tooltip()
+const axisBottom = new Axis().style("grid", false)
 const axisLeft = new Axis({ orient: "left" })
   .style("axis", false)
-  .style("scale", false);
-chart.append([bar, tooltip, axisBottom, axisLeft]);
+  .style("scale", false)
+chart.append([bar, tooltip, axisBottom, axisLeft])
 ```
 
 :::

@@ -116,6 +116,7 @@ class Pie extends Base {
   }
   defaultStyles() {
     // 默认的样式,继承base
+    return {}
   }
   mousemove(event, el) {
     let renderData = this.renderData()

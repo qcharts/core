@@ -59,7 +59,7 @@ theme.visuals = {
     styles: {
       bar: { textureRepeat: true },
       groupBar: { opacity: 0.1 },
-      text: { fontSize: 12 }
+      text: false
     },
     attrs: {
       statck: false

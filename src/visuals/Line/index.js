@@ -81,7 +81,7 @@ class Line extends Base {
   defaultStyles() {
     // 默认的样式,继承base
     return {
-      smooth: false
+      //smooth: false,
     }
   }
   guidelineleave(event, el) {

@@ -12,15 +12,15 @@ const data = [
   { value: 2000, label: "TOP6" },
   { value: 1300, label: "TOP7" },
   { value: 400, label: "TOP8" },
-];
-const { Chart, Bar, Tooltip, Axis, Legend } = qcharts;
+]
+const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
-});
+})
 chart.source(data, {
   value: "value",
   text: "label",
-});
+})
 const bar = new Bar({
   pos: ["20%", "10%"],
   size: ["70%", "80%"],
@@ -30,20 +30,14 @@ const bar = new Bar({
     duration: 1000,
     easing: "elasticOut",
   },
-});
-bar.style("pillar", { bgcolor: "#47A1FF" });
-// const tooltip = new Tooltip({
-//   formatter: d => `${d.label}: ${d.value}`
-// }).style('icon', { fillColor: '#47A1FF' })
-// const legend = new Legend({ align: ['center', 'bottom'] }).style('text', {
-//   text: '图例一'
-// })
-const tooltip = new Tooltip();
-const axisBottom = new Axis().style("scale", false);
+})
+bar.style("pillar", { bgcolor: "#47A1FF" })
+const tooltip = new Tooltip()
+const axisBottom = new Axis().style("scale", false)
 const axisLeft = new Axis({
   orient: "left",
-}).style("grid", false);
-chart.append([bar, tooltip, axisBottom, axisLeft]);
+}).style("grid", false)
+chart.append([bar, tooltip, axisBottom, axisLeft])
 ```
 
 :::

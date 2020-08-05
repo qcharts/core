@@ -95,8 +95,8 @@
           </a>
         </li>
         <li>
-          <a href="./#/demo/pie/nest">
-            <img src="https://p4.ssl.qhimg.com/d/inn/717a6a22789a/nested-pie.png" alt="嵌套饼图 " />
+          <a href="./#/demo/pie/arcPie">
+            <img src="https://p5.ssl.qhimg.com/t01f7d072b3c5a144d3.png" alt="弧饼图" />
           </a>
         </li>
         <li>
