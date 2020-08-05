@@ -9,9 +9,12 @@ import { deepObjectMerge, jsType } from '@qcharts/utils'
 export function getStyle(chart, key, defaultStyle, args) {
   //合并样式
   let oStyle = defaultStyle
+  let arrStyle = defaultStyle
   let oArgs = args
   if (jsType(defaultStyle) === 'array') {
     oStyle = deepObjectMerge.apply(this, defaultStyle)
+  } else {
+    arrStyle = [defaultStyle]
   }
   if (jsType(args) !== 'array') {
     oArgs = [args]
@@ -19,6 +22,17 @@ export function getStyle(chart, key, defaultStyle, args) {
   let cusStyle = chart.style(key)(oStyle, ...oArgs)
   if (cusStyle === false) {
     return false
+  } else if (arrStyle.includes(false) && cusStyle === undefined) {
+    return false
+  } else if (cusStyle !== undefined) {
+    //如果返回的cusStyle不是false或者undefined，需要把default样式进行重写叠加
+    let curStyle = defaultStyle
+    if (jsType(defaultStyle) !== 'array') {
+      curStyle = [defaultStyle]
+    }
+    //获取default样式
+    let oDefaultStyle = chart.defaultStyles()[key]
+    oStyle = deepObjectMerge({}, oDefaultStyle, curStyle.filter(Boolean), oStyle)
   }
   return deepObjectMerge({}, oStyle, cusStyle)
 }

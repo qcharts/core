@@ -59,7 +59,7 @@ theme.visuals = {
     styles: {
       bar: { textureRepeat: true },
       groupBar: { opacity: 0.1 },
-      text: { fontSize: 12, fillColor: "#666" }
+      text: false
     },
     attrs: {
       statck: false
@@ -107,8 +107,8 @@ theme.visuals = {
   },
   RadialBar: {
     colors: theme.colors,
-    attrs: {},
-  },
+    attrs: {}
+  }
 }
 theme.plugins = {
   Tooltip: {
@@ -154,8 +154,8 @@ theme.plugins = {
       }
     },
     attrs: {
-      orient: "bottom",
-    },
+      orient: 'bottom'
+    }
   }
 }
 theme.set = function(obj) {

@@ -1,13 +1,13 @@
-import Base from "../../base/BaseVisual"
-import { Group, Sprite, Label } from "spritejs"
-import { getStyle } from "@/utils/getStyle"
-import { deepObjectMerge, throttle } from "@qcharts/utils"
-import layout from "./layout"
-import filterClone from "filter-clone"
+import Base from '../../base/BaseVisual'
+import { Group, Sprite, Label } from 'spritejs'
+import { getStyle } from '@/utils/getStyle'
+import { deepObjectMerge, throttle } from '@qcharts/utils'
+import layout from './layout'
+import filterClone from 'filter-clone'
 class Bar extends Base {
   constructor(attrs) {
     super(attrs)
-    this.type = "bar"
+    this.type = 'bar'
     this.pillars = null
     this.texts = null
     this.groups = null
@@ -22,28 +22,26 @@ class Bar extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base---------before
     let { arrLayout } = this.getRenderData()
-    let barData = arrLayout.barData.map((item) => {
+    let barData = arrLayout.barData.map(item => {
       return {
         attrs: item,
         from: {
-          size: this.renderAttrs.transpose
-            ? [0, item.size[1]]
-            : [item.size[0], 0],
+          size: this.renderAttrs.transpose ? [0, item.size[1]] : [item.size[0], 0]
         },
         to: {
-          size: item.size,
-        },
+          size: item.size
+        }
       }
     })
-    let textData = arrLayout.textData.map((item) => {
+    let textData = arrLayout.textData.map(item => {
       return {
         attrs: item,
         from: {
-          pos: item.pos,
+          pos: item.pos
         },
         to: {
-          pos: item.pos,
-        },
+          pos: item.pos
+        }
       }
     })
     this.pillars = barData
@@ -61,40 +59,36 @@ class Bar extends Base {
         prev = {
           size: [0, 0],
           pos: nextPillar.pos,
-          labelAttrs: null,
+          labelAttrs: null
         }
       }
       return {
         attrs: nextPillar,
         from: {
-          size: prev.attrs.disable
-            ? this.attr("transpose")
-              ? [0, prev.attrs.size[1]]
-              : [prev.attrs.size[0], 0]
-            : prev.attrs.size,
-          pos: prev.attrs.pos,
+          size: prev.attrs.disable ? (this.attr('transpose') ? [0, prev.attrs.size[1]] : [prev.attrs.size[0], 0]) : prev.attrs.size,
+          pos: prev.attrs.pos
         },
         to: {
           size: nextPillar.size,
-          pos: nextPillar.pos,
-        },
+          pos: nextPillar.pos
+        }
       }
     })
     let textData = arrLayout.textData.map((nextText, i) => {
       let prev = texts[i] ? texts[i] : arrLayout.textData[i - 1]
       if (!prev) {
         prev = {
-          pos: nextPillar.pos,
+          pos: nextPillar.pos
         }
       }
       return {
         attrs: nextText,
         from: {
-          pos: prev.attrs.pos,
+          pos: prev.attrs.pos
         },
         to: {
-          pos: nextText.pos,
-        },
+          pos: nextText.pos
+        }
       }
     })
     this.pillars = barData
@@ -105,8 +99,7 @@ class Bar extends Base {
   getRenderData() {
     let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy]
-    const dataLength =
-      renderData.length > 1 ? renderData.length : renderData[0].length
+    const dataLength = renderData.length > 1 ? renderData.length : renderData[0].length
     let arrLayout = layout.call(this, renderData, renderAttrs)
     let colors = this.theme.colors
     let styles = this.renderStyles
@@ -126,27 +119,26 @@ class Bar extends Base {
     //console.log(this.$refs['wrap'])
   }
   defaultAttrs() {
-    let renderData = this.dataset["rows"]
-    let stateArray = Array.from(
-      { length: renderData[0].length },
-      () => "defalut"
-    )
+    let renderData = this.dataset['rows']
+    let stateArray = Array.from({ length: renderData[0].length }, () => 'defalut')
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
-      layer: "bar",
+      layer: 'bar',
       bgpillarState: stateArray,
       states: {
         bgpillar: {
           animation: { duration: 20 },
           default: { opacity: 0.01 },
-          hover: { opacity: 0.1 },
-        },
-      },
+          hover: { opacity: 0.1 }
+        }
+      }
     }
   }
   defaultStyles() {
     // 默认的样式,继承base
-    return {}
+    return {
+      text: { fontSize: 12, fillColor: '#666' }
+    }
   }
   onMousemove = throttle(
     (event, el) => {
@@ -170,11 +162,11 @@ class Bar extends Base {
         }
         if (this.hoverIndex !== curInd) {
           let { bgpillarState } = this.renderAttrs
-          bgpillarState[curInd] = "hover"
-          bgpillarState[this.hoverIndex] = "defualt"
-          this.attr("bgpillarState", bgpillarState)
+          bgpillarState[curInd] = 'hover'
+          bgpillarState[this.hoverIndex] = 'defualt'
+          this.attr('bgpillarState', bgpillarState)
           this.dataset.resetState()
-          this.dataset.cols[curInd].state = "hover"
+          this.dataset.cols[curInd].state = 'hover'
           this.hoverIndex = curInd
         }
       }
@@ -185,20 +177,19 @@ class Bar extends Base {
   onMouseleave(e, el) {
     this.dataset.resetState()
     let { bgpillarState } = this.renderAttrs
-    bgpillarState[this.hoverIndex] = "defualt"
-    this.attr("bgpillarState", bgpillarState)
+    bgpillarState[this.hoverIndex] = 'defualt'
+    this.attr('bgpillarState', bgpillarState)
     this.hoverIndex = -1
   }
   myClick = function() {
-    console.log("myclick")
+    console.log('myclick')
   }
 
   render(data) {
     let { clientRect, bgpillarState, states } = this.renderAttrs
     const styles = this.renderStyles
     let renderData = this.dataset[this.renderAttrs.layoutBy]
-    const dataLength =
-      renderData.length > 1 ? renderData.length : renderData[0].length
+    const dataLength = renderData.length > 1 ? renderData.length : renderData[0].length
     let colors = this.theme.colors
     return (
       <Group
@@ -212,59 +203,19 @@ class Bar extends Base {
       >
         <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
-            let cell = this.dataset.rows[ind % renderData.length][
-              Math.floor(ind / renderData.length)
-            ]
-            const style = getStyle(
-              this,
-              "pillar",
-              [
-                { bgcolor: colors[ind % dataLength], ...pillar.attrs },
-                styles.bar,
-              ],
-              [
-                cell.data,
-                Math.floor(ind / renderData.length),
-                ind % renderData.length,
-              ]
-            )
-            const hoverStyle = getStyle(
-              this,
-              "pillar:hover",
-              [],
-              [
-                cell.data,
-                Math.floor(ind / renderData.length),
-                ind % renderData.length,
-              ]
-            )
-            if (cell.state === "hover") {
+            let cell = this.dataset.rows[ind % renderData.length][Math.floor(ind / renderData.length)]
+            const style = getStyle(this, 'pillar', [{ bgcolor: colors[ind % dataLength], ...pillar.attrs }, styles.bar], [cell.data, Math.floor(ind / renderData.length), ind % renderData.length])
+            const hoverStyle = getStyle(this, 'pillar:hover', [], [cell.data, Math.floor(ind / renderData.length), ind % renderData.length])
+            if (cell.state === 'hover') {
               deepObjectMerge(style, hoverStyle)
             }
-            return (
-              <Sprite
-                {...pillar.attrs}
-                {...pillar.from}
-                {...style}
-                animation={{ from: pillar.from, to: pillar.to }}
-              />
-            )
+            return <Sprite {...pillar.attrs} {...pillar.from} {...style} animation={{ from: pillar.from, to: pillar.to }} />
           })}
           {data.textData.map((text, ind) => {
-            let barAttrs = filterClone(data.barData[ind].attrs, ["pos", "size"])
-            let textStyle = getStyle(
-              this,
-              "text",
-              [{ barAttrs: barAttrs }, styles.text],
-              [
-                this.dataset.rows[ind % renderData.length][
-                  Math.floor(ind / renderData.length)
-                ].data,
-                Math.floor(ind / renderData.length),
-                ind % renderData.length,
-              ]
-            )
-            textStyle = filterClone(textStyle, [], ["barAttrs"])
+            let barAttrs = filterClone(data.barData[ind].attrs, ['pos', 'size'])
+            let textStyle = getStyle(this, 'text', [{ barAttrs: barAttrs }, styles.text], [this.dataset.rows[ind % renderData.length][Math.floor(ind / renderData.length)].data, Math.floor(ind / renderData.length), ind % renderData.length])
+            //console.log('aaa', textStyle, styles.text)
+            textStyle = filterClone(textStyle, [], ['barAttrs'])
             if (textStyle.pos) {
               this.texts[ind].attrs.pos = textStyle.pos
               text.to.pos = textStyle.pos
@@ -276,7 +227,7 @@ class Bar extends Base {
                 {...textStyle}
                 animation={{
                   from: text.from,
-                  to: text.to,
+                  to: text.to
                 }}
               />
             )
@@ -284,23 +235,8 @@ class Bar extends Base {
         </Group>
         <Group ref="bgpillar" class="bgpillars-group">
           {data.groupData.map((pillar, ind) => {
-            let style = getStyle(
-              this,
-              "backgroundpillar",
-              [],
-              [
-                this.dataset.rows[ind % renderData.length],
-                Math.floor(ind / renderData.length),
-              ]
-            )
-            return style === false ? null : (
-              <Sprite
-                state={bgpillarState[ind]}
-                states={states.bgpillar}
-                {...pillar}
-                {...style}
-              />
-            )
+            let style = getStyle(this, 'backgroundpillar', [], [this.dataset.rows[ind % renderData.length], Math.floor(ind / renderData.length)])
+            return style === false ? null : <Sprite state={bgpillarState[ind]} states={states.bgpillar} {...pillar} {...style} />
           })}
         </Group>
       </Group>
