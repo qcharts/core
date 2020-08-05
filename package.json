@@ -1,17 +1,16 @@
 {
   "name": "@qcharts/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "QCharts 是一个基于 spritejs 封装的图表库，可以让用户以组件的形式组合出各种图表",
   "main": "lib/index.js",
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --config ./build/webpack.conf.dev.js",
     "build": "npm run build:docs && npm run build:chart && echo 'Build successfully!'",
-    "babel": "rimraf lib && cross-env NODE_ENV=babel babel src --out-dir lib",
     "build:chart": "rimraf dist && webpack --config ./build/webpack.conf.prod.chart.js",
     "build:wxapp": "webpack --config ./build/webpack.conf.prod.chart.wxapp.js",
     "build:docs": "rimraf docs && webpack --config ./build/webpack.conf.prod.docs.js",
-    "prepublishOnly": "npm run babel && npm run build:chart"
+    "prepublishOnly": "npm run build:chart"
   },
   "dependencies": {
     "@qcharts/dataset": "0.0.11",
