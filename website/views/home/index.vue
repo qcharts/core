@@ -3,9 +3,11 @@
     <div class="desr">
       QCharts 是一个基于
       <a href="https://www.spritejs.com/">spritejs</a>
-      封装的图表库，可以让用户以组件的形式组合出各种图表。如果你使用Vue或者React，可以使用
-      <a href="https://www.spritejs.com/cat-charts-vue/">CatCharts-Vue</a> 或
-      <a href="https://www.spritejs.com/cat-charts-react/">CatCharts-React</a>
+      封装的图表库，可以让用户以组件的形式组合出各种图表，
+      <a target="_blank" href="https://github.com/qcharts/quickstart">→Quickstart</a>。
+      如果你使用Vue或者React，可以使用
+      <a href="https://github.com/qcharts/qcharts-vue">qcharts-vue</a> 或
+      <a href="https://github.com/qcharts/qcharts-react">qcharts-react</a>
       <!-- ，使用微信小程序
       <a href="https://github.com/spritejs/qcharts-wxapp-demo">QChart小程序版</a> -->
     </div>

@@ -35,7 +35,7 @@ const newData = [
   { product: '椰汁', year: '2018', sales: 31.2 }
 ]
 
-const { Chart, Area, Axis } = qcharts
+const { Chart, Area, Axis, Legend } = qcharts
 const chart = new Chart({
   container: '#app'
 })
@@ -47,7 +47,8 @@ chart.source(data, {
 const area = new Area({ smooth: true })
 const axisBottom = new Axis().style('grid', false)
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
-chart.append([area, axisBottom, axisLeft])
+const legend = new Legend()
+chart.append([area, axisBottom, axisLeft, legend])
 
 setTimeout(() => {
   chart.source(newData, {
