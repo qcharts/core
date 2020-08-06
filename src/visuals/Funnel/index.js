@@ -4,12 +4,12 @@ import { deepObjectMerge, throttle } from "@qcharts/utils"
 import layout from "./layout"
 import { withGuide } from "./guide"
 import { getStyle } from "@/utils/getStyle"
+import filterClone from "filter-clone"
 class Funnel extends Base {
   constructor(attrs) {
     super(attrs)
     this.type = "funnel"
     this.polygons = null
-
     this.hoverIndex = -1
   }
   get renderAttrs() {
@@ -22,6 +22,7 @@ class Funnel extends Base {
     let { polygons } = this.getRenderData()
     polygons = polygons.map((plg) => {
       return {
+        attrs: { ...plg },
         from: {
           points:
             plg.points.length === 8
@@ -45,8 +46,8 @@ class Funnel extends Base {
                 ],
         },
         to: {
-          pos: [0, 0],
-          ...plg,
+          // pos: [0, 0],
+          points: plg.points,
         },
       }
     })
@@ -58,11 +59,12 @@ class Funnel extends Base {
     let { polygons } = this.getRenderData()
     polygons = polygons.map((polygon, i) => {
       return {
+        attrs: { ...polygon },
         from: {
           points: oldPolygons[i].to.points,
         },
         to: {
-          ...polygon,
+          points: polygon.points,
         },
       }
     })
@@ -76,13 +78,13 @@ class Funnel extends Base {
     let colors = this.theme.colors
     let styles = this.renderStyles
     polygons = polygons.map((plg, i) => {
-      let style = this.style("polygon")(plg.attrs, this.dataset.rows[i], i)
-      let plgStyle = deepObjectMerge(
-        { fillColor: plg.bgcolor || colors[i] },
-        styles.funnel,
-        style
-      )
-      plg = deepObjectMerge(plg, plgStyle)
+      // let style = this.style("polygon")(plg.attrs, this.dataset.rows[i], i)
+      // let plgStyle = deepObjectMerge(
+      //   { fillColor: plg.bgcolor || colors[i] },
+      //   styles.funnel,
+      //   style
+      // )
+      // plg = deepObjectMerge(plg, plgStyle)
       return plg
     })
     return { polygons }
@@ -114,46 +116,14 @@ class Funnel extends Base {
     // 默认的样式,继承base
     return {}
   }
-  onMousemove = throttle(
-    (event, el) => {
-      if (this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
-        let curInd = 0
-        let [x, y] = el.getOffsetPosition(event.x, event.y)
-        if (!this.renderAttrs.transpose) {
-          //获取 x轴坐标的刻度
-          let width = this.groups[0].size[0]
-          //转换canvas坐标到当前group的相对坐标
-          curInd = Math.floor(x / width)
-        } else {
-          let width = this.groups[0].size[1]
-          //转换canvas坐标到当前group的相对坐标
-          curInd = Math.floor(y / width)
-        }
-        if (curInd < 1) {
-          curInd = 0
-        } else if (curInd > this.groups.length - 1) {
-          curInd = this.groups.length - 1
-        }
-        if (this.hoverIndex !== curInd) {
-          let { bgpillarState } = this.renderAttrs
-          bgpillarState[curInd] = "hover"
-          bgpillarState[this.hoverIndex] = "defualt"
-          this.attr("bgpillarState", bgpillarState)
-          this.dataset.resetState()
-          this.dataset.cols[curInd].state = "hover"
-          this.hoverIndex = curInd
-        }
-      }
-    },
-    16,
-    true
-  )
+  onMousemove(event, el) {
+    let ind = el.attr("_ind")
+    this.dataset.resetState()
+    this.dataset[this.renderAttrs.layoutBy][ind][0].state = "hover"
+  }
+  1
   onMouseleave(e, el) {
     this.dataset.resetState()
-    let { bgpillarState } = this.renderAttrs
-    bgpillarState[this.hoverIndex] = "defualt"
-    this.attr("bgpillarState", bgpillarState)
-    this.hoverIndex = -1
   }
   myClick = function() {
     console.log("myclick")
@@ -174,7 +144,8 @@ class Funnel extends Base {
 
   render(data) {
     let { clientRect, bgpillarState, states } = this.renderAttrs
-
+    const styles = this.renderStyles
+    const colors = this.theme.colors
     return (
       <Group
         class="container"
@@ -182,21 +153,42 @@ class Funnel extends Base {
         pos={[clientRect.left, clientRect.top]}
         size={[clientRect.width, clientRect.height]}
       >
-        <Group ref="pillars" class="pillars-group" bgcolor={"#FF0"}>
+        <Group ref="pillars" class="pillars-group">
           {data.polygons.map((pillar, ind) => {
+            const cell = this.dataset[this.renderAttrs.layoutBy][ind][0]
+            let style = getStyle(
+              this,
+              "polygon",
+              [{ _ind: ind, fillColor: colors[ind] }, styles.polygon],
+              [cell, ind]
+            )
+            let styleHover = getStyle(
+              this,
+              "polygon:hover",
+              [{ _ind: ind, opacity: 0.8 }, styles.polygon],
+              [cell, ind]
+            )
+            if (cell.state === "hover") {
+              deepObjectMerge(style, styleHover)
+            }
             return (
               <Group>
                 <Polyline
+                  onMousemove={this.onMousemove}
+                  onMouseleave={this.onMouseleave}
+                  {...pillar.attrs}
                   {...pillar.from}
+                  {...style}
                   animation={{ from: pillar.from, to: pillar.to }}
                 />
                 {this.withText(
-                  pillar.to,
-                  this.dataset[this.renderAttrs.layoutBy][ind][0]
+                  pillar.attrs,
+                  this.dataset[this.renderAttrs.layoutBy][ind][0],
+                  ind
                 )}
                 {withGuide(
                   this,
-                  pillar.to,
+                  pillar.attrs,
                   this.dataset[this.renderAttrs.layoutBy][ind][0],
                   this.renderAttrs.formatter
                 )}

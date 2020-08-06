@@ -321,7 +321,7 @@ class Legend extends Base {
                 ? getStyle(this, "text:hover", [{}], [cell, ind])
                 : {}
 
-              attrs.textAttrs.text = formatter(cell.name, cell.data, ind)
+              attrs.textAttrs.text = formatter(cell.name || "", cell.data, ind)
               return (
                 <Group
                   onClick={this.itemClick}
