@@ -12,7 +12,7 @@ export default function layout(arr, attrs) {
     .domain([minVal, maxVal])
     .range([0, height])
   //存储stack数据
-  let prevLines = []
+  let prevScaleValues = []
   arr.forEach(row => {
     let line = {
       points: [],
@@ -31,9 +31,9 @@ export default function layout(arr, attrs) {
           offsetX = dx / 2
         }
         let curPos = [dx * i + offsetX, height - scaleFY(val)]
-        if (stack && prevLines.length) {
+        if (stack && prevScaleValues.length) {
           //如果是堆叠并且前一个row存在，则叠加
-          curPos = [dx * i + offsetX, height - scaleFY(val + prevLines[i])]
+          curPos = [dx * i + offsetX, height - scaleFY(val + prevScaleValues[i])]
         }
         line.points.push(curPos)
       }
@@ -43,10 +43,10 @@ export default function layout(arr, attrs) {
       [line.points[line.points.length - 1][0], height - scaleFY(0)]
     ]
     if (stack && row.state !== 'disabled') {
-      if (!prevLines.length) {
-        prevLines = row.map(cell => cell.layoutScaleValue)
+      if (!prevScaleValues.length) {
+        prevScaleValues = row.map(cell => cell.layoutScaleValue)
       } else {
-        prevLines = row.map((cell, ind) => cell.layoutScaleValue + prevLines[ind])
+        prevScaleValues = row.map((cell, ind) => cell.layoutScaleValue + prevScaleValues[ind])
       }
     }
     lines.push(line)
