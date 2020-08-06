@@ -18,7 +18,7 @@ module.exports = {
             }
           }
         ],
-        include: [path.resolve(__dirname, '../website/'), path.resolve(__dirname, '../src/')],
+        include: [path.resolve(__dirname, '../website/'), path.resolve(__dirname, '../src/'), path.resolve('node_modules/@qcharts/')],
         exclude: [/node_modules/]
       },
       {

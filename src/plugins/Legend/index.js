@@ -307,7 +307,7 @@ class Legend extends Base {
                 ? getStyle(this, "point:hover", [{}], [cell, ind])
                 : {}
 
-              if (disabled && attrs.iconAttrs.bgcolor) {
+              if (disabled && attrs.iconAttrs && attrs.iconAttrs.bgcolor) {
                 hoverStyle.bgcolor = "#ccc"
                 hoverStyle.fillColor = "#ccc"
               }
@@ -321,7 +321,7 @@ class Legend extends Base {
                 ? getStyle(this, "text:hover", [{}], [cell, ind])
                 : {}
 
-              attrs.textAttrs.text = formatter(cell.name, cell.data, ind)
+              attrs.textAttrs.text = formatter(cell.name || "", cell.data, ind)
               return (
                 <Group
                   onClick={this.itemClick}

@@ -2,7 +2,7 @@
 
 ### 特点
 
-QCharts 是一个基于 <a target="_blank" href="https://www.spritejs.com">spritejs</a> 封装的图表库，它以数据驱动，将图表以最小组件进行拆分，具有高度全面灵活的属性配置方法，可对图表绘制过程中所有的点、线、面的大小、位置、填充颜色、描边颜色、描边线型、透明度等属性进行配置，配置方法简单易懂，语义清晰，无论如何复杂的图表，qcharts 都能轻松胜任。 <a target="_blank" href="https://www.qcharts.cn">→ 详细文档</a>，Demo：<a target="_blank" href="https://github.com/yaotaiyang/q-charts-demo">Quickstart</a>
+QCharts 是一个基于 <a target="_blank" href="https://www.spritejs.com">spritejs</a> 封装的图表库，它以数据驱动，将图表以最小组件进行拆分，具有高度全面灵活的属性配置方法，可对图表绘制过程中所有的点、线、面的大小、位置、填充颜色、描边颜色、描边线型、透明度等属性进行配置，配置方法简单易懂，语义清晰，无论如何复杂的图表，qcharts 都能轻松胜任。 <a target="_blank" href="https://www.qcharts.cn">→ 详细文档</a>，Demo：<a target="_blank" href="https://github.com/qcharts/quickstart">Quickstart</a>
 
 ### 安装
 
@@ -20,8 +20,8 @@ import { Chart, Pie, Tooltip, Legend } from '@qcharts/core'
 2.既可以下载脚本到本地，也可以通过 cdn 获取 QCharts；QCharts 依赖于 spritejs，需要先引入 spritejs。
 
 ```html
-<script src="https://unpkg.com/spritejs/dist/spritejs.min.js"></script>
-<script src="https://unpkg.com/@qcharts/core/dist/index.js"></script>
+<script src="https://unpkg.com/spritejs@3/dist/spritejs.min.js"></script>
+<script src="https://unpkg.com/@qcharts/core@1/dist/index.js"></script>
 ```
 
 ### 开始使用
