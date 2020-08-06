@@ -18,8 +18,12 @@ module.exports = {
             }
           }
         ],
-        include: [path.resolve(__dirname, '../website/'), path.resolve(__dirname, '../src/')],
-        exclude: [/node_modules/]
+        include: [
+          path.resolve(__dirname, '../website/'), 
+          path.resolve(__dirname, '../src/'),
+          path.resolve('node_modules/@qcharts/')
+        ],
+        // exclude: [/node_modules/]
       },
       {
         test: /\.vue$/,

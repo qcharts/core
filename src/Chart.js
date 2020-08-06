@@ -1,6 +1,6 @@
 import Base from './base/Base'
 import { jsType, emptyObject, throttle } from '@qcharts/utils'
-import { platform, isWeiXin } from './base/platform'
+import { getGlobal, isWeiXin } from './base/platform'
 import BaseVisual from './base/BaseVisual'
 import BasePlugin from './base/BasePlugin'
 import { Scene } from 'spritejs'
@@ -17,7 +17,7 @@ class Chart extends Base {
     this.plugins = []
     this.children = []
     if (isWeiXin()) {
-      const { pixelUnit, size, contextType } = attr
+      const { pixelUnit='rpx', size, contextType } = attr
       let displayRatio = 1
       if (pixelUnit === 'rpx') {
         const { windowWidth } = wx.getSystemInfoSync()
@@ -31,7 +31,7 @@ class Chart extends Base {
         displayRatio
       })
     } else {
-      this.scene = new Scene({ container, displayRatio: platform.devicePixelRatio })
+      this.scene = new Scene({ container, displayRatio: getGlobal().devicePixelRatio })
     }
     this.scene.addEventListener('resize', (_) => {
       //舞台变化的时候
