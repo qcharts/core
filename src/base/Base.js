@@ -3,6 +3,7 @@ import { lifeCycle, mixin } from './mixin'
 import { emptyObject, deepObjectMerge, jsType, getDistancePx, throttle } from '@qcharts/utils'
 import { patch, diff } from '@qcharts/vnode'
 import Dataset from '@qcharts/dataset'
+import { isWeiXin } from './platform'
 class Base extends Node {
   constructor(attrs) {
     super()
@@ -15,8 +16,10 @@ class Base extends Node {
     store.__isCreated__ = false
     store.__refs = emptyObject()
     store.dataset = null
-    this.attr(attrs)
-    this.__update = throttle(args => {
+    // 微信中不支持多图层
+    const layerSetting = isWeiXin() ? { layer: 'default' } : {}
+    this.attr({ ...attrs, ...layerSetting })
+    this.__update = throttle((args) => {
       if (store.__isCreated__) {
         this.update(args)
       }
@@ -26,7 +29,16 @@ class Base extends Node {
     return this['__store']
   }
   get layer() {
-    let { layer: layerName, zIndex = 0 } = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr())
+    let { layer: layerName, zIndex = 0 } = deepObjectMerge(
+      {},
+      this.baseAttrs(),
+      this.defaultAttrs(),
+      this.theme.attrs,
+      this.attr()
+    )
+    if (isWeiXin()) {
+      return this.scene.layer(layerName)
+    }
     return this.scene.layer(layerName).attr({ zIndex })
   }
   get $refs() {
@@ -45,7 +57,9 @@ class Base extends Node {
       animation = { use: animation ? true : false }
     }
     //处理layer支持多layer
-    let { width, height } = this.layer.canvas.getBoundingClientRect()
+    const rect = isWeiXin() ? this.layer.canvas : this.layer.canvas.getBoundingClientRect()
+    const { width, height } = rect
+
     //计算布局数据
     for (let key in clientRect) {
       if (['left', 'right', 'width'].indexOf(key) !== -1) {
@@ -82,9 +96,9 @@ class Base extends Node {
       store.dataset = data
     }
     if (store.dataset && store.__isCreated__) {
-      store.dataset.on("change", (_) => {
-        this.__update({ type: "state" });
-      });
+      store.dataset.on('change', (_) => {
+        this.__update({ type: 'state' })
+      })
       //如果以前存在，则更新
       this.__update({ type: 'source' })
     }
@@ -101,7 +115,7 @@ class Base extends Node {
     this.dispatchEvent(lifeCycle.rendered)
     this.rendered()
     store.__isCreated__ = true
-    this.dataset.on('change', _ => {
+    this.dataset.on('change', (_) => {
       this.__update({ type: 'state' })
     })
   }

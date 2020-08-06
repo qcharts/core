@@ -14,7 +14,7 @@ import RadialBar from './visuals/RadialBar'
 import Axis from './plugins/Axis/index'
 import Legend from './plugins/Legend/index'
 import Tooltip from './plugins/Tooltip/index'
-import platform from './base/platform'
+import {getGlobal} from './base/platform'
 import Chart from './Chart'
 import theme from './theme/default'
 const qcharts = {
@@ -38,9 +38,9 @@ const qcharts = {
   Chart,
   easing
 }
-if (process.env.NODE_ENV === 'development') {
-  platform.qcharts = qcharts
-}
+
+const global = getGlobal()
+global.qcharts = qcharts
 
 export { Dataset, Line, Pie, Area, Wave, Radar, Tooltip, Bar, PolarBar, Funnel, Scatter, Gauge, RadialBar, Axis, Legend, Chart, h, theme, easing }
 
