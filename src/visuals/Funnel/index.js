@@ -2,14 +2,13 @@ import Base from "../../base/BaseVisual"
 import { Group, Polyline, Label } from "spritejs"
 import { deepObjectMerge, throttle } from "@qcharts/utils"
 import layout from "./layout"
-import { withGuide } from "./guide"
 import { getStyle } from "@/utils/getStyle"
-import filterClone from "filter-clone"
 class Funnel extends Base {
   constructor(attrs) {
     super(attrs)
     this.type = "funnel"
     this.polygons = null
+    this.labels = null
     this.hoverIndex = -1
   }
   get renderAttrs() {
@@ -19,7 +18,7 @@ class Funnel extends Base {
   }
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base---------before
-    let { polygons } = this.getRenderData()
+    let { polygons, labels, guideLines, guideTexts } = this.getRenderData()
     polygons = polygons.map((plg) => {
       return {
         attrs: { ...plg },
@@ -51,12 +50,33 @@ class Funnel extends Base {
         },
       }
     })
+    labels = labels.map((item) => {
+      return {
+        attrs: { ...item },
+      }
+    })
+    guideLines = guideLines.map((item) => {
+      return {
+        attrs: { ...item },
+      }
+    })
+    guideTexts = guideTexts.map((item) => {
+      return {
+        attrs: { ...item },
+      }
+    })
     this.polygons = polygons
-    return { polygons }
+    this.labels = labels
+    this.guideLines = guideLines
+    this.guideTexts = guideTexts
+    return { polygons, labels, guideTexts, guideLines }
   }
   beforeUpdate() {
     let oldPolygons = this.polygons
-    let { polygons } = this.getRenderData()
+    let oldLabels = this.labels
+    let oldTexts = this.guideTexts
+    let oldLines = this.guideLines
+    let { polygons, labels, guideLines, guideTexts } = this.getRenderData()
     polygons = polygons.map((polygon, i) => {
       return {
         attrs: { ...polygon },
@@ -68,48 +88,62 @@ class Funnel extends Base {
         },
       }
     })
+    labels = labels.map((label, i) => {
+      return {
+        attrs: { ...label },
+        from: {
+          pos: oldLabels[i].attrs.pos,
+        },
+        to: {
+          pos: label.pos,
+        },
+      }
+    })
+    guideTexts = guideTexts.map((item, i) => {
+      return {
+        attrs: { ...item },
+        from: {
+          pos: oldTexts[i].attrs.pos,
+        },
+        to: {
+          pos: item.pos,
+        },
+      }
+    })
+    guideLines = guideLines.map((item, i) => {
+      return {
+        attrs: { ...item },
+        from: {
+          points: oldLines[i].attrs.points,
+        },
+        to: {
+          points: item.points,
+        },
+      }
+    })
     this.polygons = polygons
-    return { polygons }
+    this.labels = labels
+    this.guideLines = guideLines
+    this.guideTexts = guideTexts
+    return { polygons, labels, guideTexts, guideLines }
   }
   getRenderData() {
     let renderAttrs = this.renderAttrs
     let renderData = this.dataset[renderAttrs.layoutBy]
-    let polygons = layout(renderData, renderAttrs)
-    let colors = this.theme.colors
-    let styles = this.renderStyles
-    polygons = polygons.map((plg, i) => {
-      // let style = this.style("polygon")(plg.attrs, this.dataset.rows[i], i)
-      // let plgStyle = deepObjectMerge(
-      //   { fillColor: plg.bgcolor || colors[i] },
-      //   styles.funnel,
-      //   style
-      // )
-      // plg = deepObjectMerge(plg, plgStyle)
-      return plg
-    })
-    return { polygons }
+    let { polygons, labels, guideLines, guideTexts } = layout(
+      renderData,
+      renderAttrs
+    )
+    return { polygons, labels, guideLines, guideTexts }
   }
   rendered() {
     //console.log(this.$refs['wrap'])
   }
   defaultAttrs() {
-    let renderData = this.dataset["rows"]
-    let stateArray = Array.from(
-      { length: renderData[0].length },
-      () => "defalut"
-    )
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
-      layer: "bar",
+      layer: "funnel",
       formatter: (d) => (d.value ? d.value : d),
-      bgpillarState: stateArray,
-      states: {
-        bgpillar: {
-          animation: { duration: 20 },
-          default: { opacity: 0.01 },
-          hover: { opacity: 0.1 },
-        },
-      },
     }
   }
   defaultStyles() {
@@ -121,7 +155,7 @@ class Funnel extends Base {
     this.dataset.resetState()
     this.dataset[this.renderAttrs.layoutBy][ind][0].state = "hover"
   }
-  1
+
   onMouseleave(e, el) {
     this.dataset.resetState()
   }
@@ -144,6 +178,7 @@ class Funnel extends Base {
 
   render(data) {
     let { clientRect, bgpillarState, states } = this.renderAttrs
+    let { polygons, labels, guideLines, guideTexts } = data
     const styles = this.renderStyles
     const colors = this.theme.colors
     return (
@@ -154,7 +189,7 @@ class Funnel extends Base {
         size={[clientRect.width, clientRect.height]}
       >
         <Group ref="pillars" class="pillars-group">
-          {data.polygons.map((pillar, ind) => {
+          {polygons.map((pillar, ind) => {
             const cell = this.dataset[this.renderAttrs.layoutBy][ind][0]
             let style = getStyle(
               this,
@@ -181,25 +216,91 @@ class Funnel extends Base {
                   {...style}
                   animation={{ from: pillar.from, to: pillar.to }}
                 />
-                {this.withText(
-                  pillar.attrs,
-                  this.dataset[this.renderAttrs.layoutBy][ind][0],
-                  ind
-                )}
-                {withGuide(
+                {/* {withGuide(
                   this,
                   pillar.attrs,
                   this.dataset[this.renderAttrs.layoutBy][ind][0],
                   this.renderAttrs.formatter
-                )}
+                )} */}
               </Group>
             )
           })}
         </Group>
-        {/* <Group class="label-group">
+        <Group ref="guideLine">
+          {guideLines.map((item, ind) => {
+            let cell = this.dataset[this.renderAttrs.layoutBy][ind][0]
+            if (cell.state === "disabled") {
+              return
+            }
+            const lineStyle = getStyle(
+              this,
+              "guideline",
+              [{}],
+              [cell.data, cell.row]
+            )
+            if (lineStyle === false) {
+              return
+            }
+            return (
+              <Polyline
+                {...item.attrs}
+                {...item.from}
+                {...lineStyle}
+                animation={{ from: item.from, to: item.to }}
+              />
+            )
+          })}
         </Group>
-        <Group class="line-group">
-        </Group> */}
+        <Group ref="guideText">
+          {guideTexts.map((item, ind) => {
+            let cell = this.dataset[this.renderAttrs.layoutBy][ind][0]
+            if (cell.state === "disabled") {
+              return
+            }
+            const textStyle = getStyle(
+              this,
+              "guideText",
+              [{}],
+              [cell.data, cell.row]
+            )
+            if (textStyle === false) {
+              return
+            }
+            return (
+              <Label
+                {...item.attrs}
+                {...item.from}
+                {...textStyle}
+                animation={{ from: item.from, to: item.to }}
+              />
+            )
+          })}
+        </Group>
+        <Group ref="label">
+          {labels.map((item, ind) => {
+            let cell = this.dataset[this.renderAttrs.layoutBy][ind][0]
+            if (cell.state === "disabled") {
+              return
+            }
+            const textStyle = getStyle(
+              this,
+              "text",
+              [{}],
+              [cell.data, cell.row]
+            )
+            if (textStyle === false) {
+              return
+            }
+            return (
+              <Label
+                {...item.attrs}
+                {...item.from}
+                {...textStyle}
+                animation={{ from: item.from, to: item.to }}
+              />
+            )
+          })}
+        </Group>
       </Group>
     )
   }

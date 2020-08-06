@@ -145,6 +145,7 @@ theme.plugins = {
       point: {
         pointType: "sprite",
         iconSize: [12, 12],
+        borderRadius: 12,
       },
       text: {
         fontSize: "12px",
