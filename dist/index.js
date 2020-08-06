@@ -1,2 +1,8864 @@
-!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e(require("spritejs/dist/spritejs.min.js")):"function"==typeof define&&define.amd?define(["spritejs"],e):"object"==typeof exports?exports.qcharts=e(require("spritejs/dist/spritejs.min.js")):t.qcharts=e(t.spritejs)}(window,(function(t){return function(t){var e={};function __webpack_require__(a){if(e[a])return e[a].exports;var s=e[a]={i:a,l:!1,exports:{}};return t[a].call(s.exports,s,s.exports,__webpack_require__),s.l=!0,s.exports}return __webpack_require__.m=t,__webpack_require__.c=e,__webpack_require__.d=function(t,e,a){__webpack_require__.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:a})},__webpack_require__.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},__webpack_require__.t=function(t,e){if(1&e&&(t=__webpack_require__(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var a=Object.create(null);if(__webpack_require__.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var s in t)__webpack_require__.d(a,s,function(e){return t[e]}.bind(null,s));return a},__webpack_require__.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return __webpack_require__.d(e,"a",e),e},__webpack_require__.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},__webpack_require__.p="",__webpack_require__(__webpack_require__.s=32)}([function(e,a){e.exports=t},function(t,e){function _getPrototypeOf(e){return t.exports=_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)},_getPrototypeOf(e)}t.exports=_getPrototypeOf},function(t,e){function _extends(){return t.exports=_extends=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var a=arguments[e];for(var s in a)Object.prototype.hasOwnProperty.call(a,s)&&(t[s]=a[s])}return t},_extends.apply(this,arguments)}t.exports=_extends},function(t,e){t.exports=function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}},function(t,e,a){var s=a(13),l=a(9);t.exports=function(t,e){return!e||"object"!==s(e)&&"function"!=typeof e?l(t):e}},function(t,e,a){var s=a(18);t.exports=function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}},function(t,e){function _defineProperties(t,e){for(var a=0;a<e.length;a++){var s=e[a];s.enumerable=s.enumerable||!1,s.configurable=!0,"value"in s&&(s.writable=!0),Object.defineProperty(t,s.key,s)}}t.exports=function(t,e,a){return e&&_defineProperties(t.prototype,e),a&&_defineProperties(t,a),t}},function(t,e){t.exports=function(t,e,a){return e in t?Object.defineProperty(t,e,{value:a,enumerable:!0,configurable:!0,writable:!0}):t[e]=a,t}},function(t,e,a){var s=a(26);function _get(e,a,l){return"undefined"!=typeof Reflect&&Reflect.get?t.exports=_get=Reflect.get:t.exports=_get=function(t,e,a){var l=s(t,e);if(l){var f=Object.getOwnPropertyDescriptor(l,e);return f.get?f.get.call(a):f.value}},_get(e,a,l||e)}t.exports=_get},function(t,e){t.exports=function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}},function(t,e,a){var s=a(27),l=a(28),f=a(29);t.exports=function(t){return s(t)||l(t)||f()}},function(t,e,a){var s=a(23),l=a(24),f=a(25);t.exports=function(t,e){return s(t)||l(t,e)||f()}},function(t,e,a){"use strict";function _typeof(t){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var s=function filterClone(t,e,a){var s=t;if("object"==_typeof(t))if("array"===getType(t)){s=[];for(var l=0,f=t.length;l<f;l++)s.push(filterClone(t[l],e,a))}else if(null!==t)for(var p in s=Object.create(null),t)e&&"array"===getType(e)&&e.length?-1!=e.indexOf(p)&&(s[p]=filterClone(t[p],e,a)):e&&"regexp"===getType(e)?e.test(p)&&(s[p]=filterClone(t[p],e,a)):e&&"function"===getType(e)?e(p,t[p])&&(s[p]=filterClone(t[p],e,a)):a&&"array"===getType(a)&&a.length?-1===a.indexOf(p)&&(s[p]=filterClone(t[p],e,a)):a&&"regexp"===getType(a)?a.test(p)||(s[p]=filterClone(t[p],e,a)):a&&"function"===getType(a)&&a(p,t[p])||(s[p]=filterClone(t[p],e,a));return s;function getType(t){var e=_typeof(t);return"object"===e?null===t?null:Object.prototype.toString.call(t).slice(8,-1).toLowerCase():e}};e.default=s},function(t,e){function _typeof(e){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=_typeof=function(t){return typeof t}:t.exports=_typeof=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},_typeof(e)}t.exports=_typeof},function(t,e,a){"use strict";(function(t){var e,s,l=a(13),f=a.n(l);e=window,s=function(){return function(t){var e={};function n(a){if(e[a])return e[a].exports;var s=e[a]={i:a,l:!1,exports:{}};return t[a].call(s.exports,s,s.exports,n),s.l=!0,s.exports}return n.m=t,n.c=e,n.d=function(t,e,a){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:a})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==f()(t)&&t&&t.__esModule)return t;var a=Object.create(null);if(n.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var s in t)n.d(a,s,function(e){return t[e]}.bind(null,s));return a},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=0)}([function(t,e,a){function r(){var t=arguments.length<=0?void 0:arguments[0];if(arguments.length>1)for(var e=1;e<arguments.length;e++)n(t,e<0||arguments.length<=e?void 0:arguments[e]);return t;function n(t,e){for(var a in e)t[a]=t[a]&&"[object Object]"===t[a].toString()?r(t[a],e[a]):t[a]=e[a];return t}}function o(){return Object.create(null)}function u(t){var e=f()(t);return"object"===e?null===t?null:Object.prototype.toString.call(t).slice(8,-1).toLowerCase():e}function i(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:16,a=arguments.length>2&&void 0!==arguments[2]&&arguments[2],s=null,l=a;return function(){for(var a=this,f=arguments.length,p=new Array(f),d=0;d<f;d++)p[d]=arguments[d];if(l)return t.apply(this,p),l=!1;s||(s=setTimeout((function(){clearTimeout(s),s=null,t.apply(a,p)}),e))}}function c(t,e){return"string"===u(t)&&t.match(/%$/)?Number(t.substring(0,t.indexOf("%")))/100*e:t}a.r(e),a.d(e,"deepObjectMerge",(function(){return r})),a.d(e,"emptyObject",(function(){return o})),a.d(e,"jsType",(function(){return u})),a.d(e,"throttle",(function(){return i})),a.d(e,"getDistancePx",(function(){return c}))}])},"object"==("undefined"==typeof exports?"undefined":f()(exports))&&"object"==f()(t)?t.exports=s():"function"==typeof define&&a(20)?define([],s):"object"==("undefined"==typeof exports?"undefined":f()(exports))?exports.utils=s():e.utils=s()}).call(this,a(19)(t))},function(t,e,a){"use strict";(function(t){a.d(e,"b",(function(){return isWeiXin})),a.d(e,"a",(function(){return getGlobal}));var isWeiXin=function(){return"undefined"!=typeof wx&&"function"==typeof wx.getSystemInfoSync},getGlobal=function(){if(isWeiXin())return getApp();if("undefined"!=typeof self)return self;if("undefined"!=typeof window)return window;if(void 0!==t)return t;throw new Error("unable to locate global object")};getGlobal()}).call(this,a(30))},function(t,e,a){var s=a(31);t.exports=function(t,e){if(null==t)return{};var a,l,f=s(t,e);if(Object.getOwnPropertySymbols){var p=Object.getOwnPropertySymbols(t);for(l=0;l<p.length;l++)a=p[l],e.indexOf(a)>=0||Object.prototype.propertyIsEnumerable.call(t,a)&&(f[a]=t[a])}return f}},function(t,e,a){var s=a(1),l=a(18),f=a(21),p=a(22);function _wrapNativeSuper(e){var a="function"==typeof Map?new Map:void 0;return t.exports=_wrapNativeSuper=function(t){if(null===t||!f(t))return t;if("function"!=typeof t)throw new TypeError("Super expression must either be null or a function");if(void 0!==a){if(a.has(t))return a.get(t);a.set(t,Wrapper)}function Wrapper(){return p(t,arguments,s(this).constructor)}return Wrapper.prototype=Object.create(t.prototype,{constructor:{value:Wrapper,enumerable:!1,writable:!0,configurable:!0}}),l(Wrapper,t)},_wrapNativeSuper(e)}t.exports=_wrapNativeSuper},function(t,e){function _setPrototypeOf(e,a){return t.exports=_setPrototypeOf=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t},_setPrototypeOf(e,a)}t.exports=_setPrototypeOf},function(t,e){t.exports=function(t){if(!t.webpackPolyfill){var e=Object.create(t);e.children||(e.children=[]),Object.defineProperty(e,"loaded",{enumerable:!0,get:function(){return e.l}}),Object.defineProperty(e,"id",{enumerable:!0,get:function(){return e.i}}),Object.defineProperty(e,"exports",{enumerable:!0}),e.webpackPolyfill=1}return e}},function(t,e){(function(e){t.exports=e}).call(this,{})},function(t,e){t.exports=function(t){return-1!==Function.toString.call(t).indexOf("[native code]")}},function(t,e,a){var s=a(18);function isNativeReflectConstruct(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}function _construct(e,a,l){return isNativeReflectConstruct()?t.exports=_construct=Reflect.construct:t.exports=_construct=function(t,e,a){var l=[null];l.push.apply(l,e);var f=new(Function.bind.apply(t,l));return a&&s(f,a.prototype),f},_construct.apply(null,arguments)}t.exports=_construct},function(t,e){t.exports=function(t){if(Array.isArray(t))return t}},function(t,e){t.exports=function(t,e){if(Symbol.iterator in Object(t)||"[object Arguments]"===Object.prototype.toString.call(t)){var a=[],s=!0,l=!1,f=void 0;try{for(var p,d=t[Symbol.iterator]();!(s=(p=d.next()).done)&&(a.push(p.value),!e||a.length!==e);s=!0);}catch(t){l=!0,f=t}finally{try{s||null==d.return||d.return()}finally{if(l)throw f}}return a}}},function(t,e){t.exports=function(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}},function(t,e,a){var s=a(1);t.exports=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=s(t)););return t}},function(t,e){t.exports=function(t){if(Array.isArray(t)){for(var e=0,a=new Array(t.length);e<t.length;e++)a[e]=t[e];return a}}},function(t,e){t.exports=function(t){if(Symbol.iterator in Object(t)||"[object Arguments]"===Object.prototype.toString.call(t))return Array.from(t)}},function(t,e){t.exports=function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}},function(t,e){var a;a=function(){return this}();try{a=a||new Function("return this")()}catch(t){"object"==typeof window&&(a=window)}t.exports=a},function(t,e){t.exports=function(t,e){if(null==t)return{};var a,s,l={},f=Object.keys(t);for(s=0;s<f.length;s++)a=f[s],e.indexOf(a)>=0||(l[a]=t[a]);return l}},function(t,e,a){"use strict";a.r(e),a.d(e,"Dataset",(function(){return N})),a.d(e,"Line",(function(){return yt})),a.d(e,"Pie",(function(){return gt})),a.d(e,"Area",(function(){return vt})),a.d(e,"Wave",(function(){return At})),a.d(e,"Radar",(function(){return bt})),a.d(e,"Tooltip",(function(){return Mt})),a.d(e,"Bar",(function(){return mt})),a.d(e,"PolarBar",(function(){return _t})),a.d(e,"Funnel",(function(){return Ot})),a.d(e,"Scatter",(function(){return wt})),a.d(e,"Gauge",(function(){return jt})),a.d(e,"RadialBar",(function(){return xt})),a.d(e,"Axis",(function(){return St})),a.d(e,"Legend",(function(){return kt})),a.d(e,"Chart",(function(){return Rt})),a.d(e,"h",(function(){return h})),a.d(e,"theme",(function(){return lt})),a.d(e,"easing",(function(){return y}));var VNode=function(){},flattern=function(t){return[].concat.apply([],t)};function h(t,e){var a=new VNode;a.tagName=t,a.attrs=e||{};for(var s=arguments.length,l=new Array(s>2?s-2:0),f=2;f<s;f++)l[f-2]=arguments[f];return a.children=flattern(l).filter(Boolean),a}var s=a(13),l=a.n(s),isNull=function(t){return null==t},diffVNodeChildren=function(t,e){for(var a=[],s=Math.max(t.children.length,e.children.length),l=0;l<s;l++)a[l]=diff(t.children[l],e.children[l]);return a},diffVNodeAttrs=function(t,e){var a=t.attrs,s=e.attrs;return Object.assign({},a,s)};function diff(t,e){return isNull(t)?{type:"CREATE",newVNode:e}:isNull(e)?{type:"REMOVE"}:function(t,e){return"object"!==l()(t)&&t!==e||"object"!==l()(e)&&t!==e||t.tagName!==e.tagName}(t,e)?{type:"REPLACE",newVNode:e}:e.tagName?{type:"UPDATE",children:diffVNodeChildren(t,e),attrs:diffVNodeAttrs(t,e)}:void 0}function createElement(t){if(t){var e=t.tagName,a=t.attrs,s=t.children,l=new e(a);return patchAttrs(this,l,a),l.appendChild&&s.map(createElement.bind(this)).filter(Boolean).forEach(l.appendChild.bind(l)),l}}var f=a(7),p=a.n(f),d={linear:function(t){return t},quadIn:function(t){return t*t},quadOut:function(t){return t*(2-t)},quadInOut:function(t){return((t*=2)<=1?t*t:--t*(2-t)+1)/2},cubicIn:function(t){return t*t*t},cubicOut:function(t){return--t*t*t+1},cubicInOut:function(t){return(t*=2)<1?.5*t*t*t:.5*((t-=2)*t*t+2)},quarticIn:function(t){return t*t*t*t},quarticOut:function(t){return 1- --t*t*t*t},quarticInOut:function(t){return(t*=2)<1?.5*t*t*t*t:-.5*((t-=2)*t*t*t-2)},quinticIn:function(t){return t*t*t*t*t},quinticOut:function(t){return--t*t*t*t*t+1},quinticInOut:function(t){return(t*=2)<1?.5*t*t*t*t*t:.5*((t-=2)*t*t*t*t+2)},sinusoidalIn:function(t){return 1-Math.cos(t*Math.PI/2)},sinusoidalOut:function(t){return Math.sin(t*Math.PI/2)},sinusoidalInOut:function(t){return.5*(1-Math.cos(Math.PI*t))},exponentialIn:function(t){return 0===t?0:Math.pow(1024,t-1)},exponentialOut:function(t){return 1===t?1:1-Math.pow(2,-10*t)},exponentialInOut:function(t){return 0===t?0:1===t?1:(t*=2)<1?.5*Math.pow(1024,t-1):.5*(2-Math.pow(2,-10*(t-1)))},circularIn:function(t){return 1-Math.sqrt(1-t*t)},circularOut:function(t){return Math.sqrt(1- --t*t)},circularInOut:function(t){return(t*=2)<1?-.5*(Math.sqrt(1-t*t)-1):.5*(Math.sqrt(1-(t-=2)*t)+1)},elasticIn:function(t){var e,a=.1;return 0===t?0:1===t?1:(!a||a<1?(a=1,e=.1):e=.4*Math.asin(1/a)/(2*Math.PI),-a*Math.pow(2,10*(t-=1))*Math.sin((t-e)*(2*Math.PI)/.4))},elasticOut:function(t){var e,a=.1;return 0===t?0:1===t?1:(!a||a<1?(a=1,e=.1):e=.4*Math.asin(1/a)/(2*Math.PI),a*Math.pow(2,-10*t)*Math.sin((t-e)*(2*Math.PI)/.4)+1)},elasticInOut:function(t){var e,a=.1;return 0===t?0:1===t?1:(!a||a<1?(a=1,e=.1):e=.4*Math.asin(1/a)/(2*Math.PI),(t*=2)<1?a*Math.pow(2,10*(t-=1))*Math.sin((t-e)*(2*Math.PI)/.4)*-.5:a*Math.pow(2,-10*(t-=1))*Math.sin((t-e)*(2*Math.PI)/.4)*.5+1)},backIn:function(t){var e=1.70158;return t*t*((e+1)*t-e)},backOut:function(t){var e=1.70158;return--t*t*((e+1)*t+e)+1},backInOut:function(t){var e=2.5949095;return(t*=2)<1?t*t*((e+1)*t-e)*.5:.5*((t-=2)*t*((e+1)*t+e)+2)},bounceIn:function(t){return 1-d.bounceOut(1-t)},bounceOut:function(t){return t<1/2.75?7.5625*t*t:t<2/2.75?7.5625*(t-=1.5/2.75)*t+.75:t<2.5/2.75?7.5625*(t-=2.25/2.75)*t+.9375:7.5625*(t-=2.625/2.75)*t+.984375},bounceInOut:function(t){return t<.5?.5*d.bounceIn(2*t):.5*d.bounceOut(2*t-1)+.5}},y=d,g=a(14),number=function(t,e){return function(a){return t+(e-t)*a}},array=function(t,e){var a,s=e?e.length:0,l=t?Math.min(s,t.length):0,f=new Array(l),p=new Array(s);for(a=0;a<l;++a)f[a]=interpolate(t[a],e[a]);for(;a<s;++a)p[a]=e[a];return function(t){for(a=0;a<l;++a)p[a]=f[a](t);return p}},interpolate_object=function(t,e){var a,s={},l={};for(a in t&&"object"!==!Object(g.jsType)(t)||(t={}),e&&"object"!==!Object(g.jsType)(e)||(e={}),e)a in t?s[a]=interpolate(t[a],e[a]):l[a]=e[a];return function(t){for(a in s)l[a]=s[a](t);return l}};function interpolate(t,e){var a,s=l()(e);return null===e||"string"===s||"boolean"===s?(a=e,function(){return a}):("number"===s?number:"array"===Object(g.jsType)(e)?array:interpolate_object)(t,e)}var v,b;function now(){return"undefined"!=typeof performance?performance.now():Date.now()}if("undefined"!=typeof window&&"function"==typeof window.requestAnimationFrame)v=window.requestAnimationFrame,b=window.cancelAnimationFrame;else{var m=now();v=function(t){return setTimeout((function(){t(now()-m)}),16)},b=function(t){return clearTimeout(t)}}function Tween(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"linear";return this._start=null,this._end=null,this._delay=0,this._canceled=!1,this._duration=1,this._easing=y[t]?y[t]:y.linear,this._onUpdate=function(){},this._onStart=function(){},this}Tween.prototype={from:function(t){return this._start=t,this},to:function(t){return this._end=t,this},duration:function(t){if("number"!=typeof t)throw new Error("Duration time must be a number");return this._duration=t,this},delay:function(t){return this._delay=t,this},easing:function(t){if("function"!=typeof t)throw new Error("easing function must be a function");return this._easing=t,this},onStart:function(t){if("function"!=typeof t)throw new Error("start callback must be a function");return this._onStart=t,this},onUpdate:function(t){if("function"!=typeof t)throw new Error("update callback must be a function");return this._onUpdate=t,this},onComplete:function(t){if("function"!=typeof t)throw new Error("complete callback must be a function");return this._onComplete=t,this},start:function(){var t=this,e=this._easing,a=interpolate(this._start,this._end),s=this._onUpdate,l=0,f=this._duration,p=null,d=this._delay,y=0;return new Promise((function(g){var m,_=function step(){l=now()-y;var d=e(Math.min(1,l/f));l>=f?(s(a(1)),g(t),b(p)):(s(a(d)),p=v(step))},start=function(){y=now(),t._onStart(t._start,t._end),p=v(_)};t.cancel=function(){b(p)},d&&d>0?(m=d,new Promise((function(t){return setTimeout((function(){t()}),m)}))).then(start):start()}))}};var _=Tween,O=a(12),w=a.n(O);function ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function addAnimate(t,e,a){if(e&&a.animation){var s=Object(g.deepObjectMerge)(t.renderAttrs.animation,a.animation),l=s.from,f=s.middle,d=s.use,y=s.to,v=s.delay,b=s.duration,m=s.useTween,O=s.easing,A=s.formatter,j=void 0===A?function(t){return t}:A;if(l&&y&&d){l&&e.attr(l);var x=w()(s,null,["from","to","formatter","use"]);!function(){if(m)new _(O).from(l).to(y).delay(v).duration(b).onUpdate((function(t){e.attr(j(t))})).start();else{var t=null;t=f?[l,f,y]:[l,y],e.animate(t,function(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}({fill:"both"},x)).finished.then((function(){delete y.offset,e.attr(y)}))}}()}}}function patchAttrs(t,e,a){e&&Object.keys(a).length&&(!function(t,e,a){var s=a.ref;if(delete a.ref,s&&e)try{t.addRef(s,e)}catch(t){console.error(t)}}(t,e,a),function(t,e){var a=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};Object.keys(a).forEach((function(s){if(/^on/.test(s)){var l=s.split("on")[1].toLowerCase(),f=a[s]||function(){};e.removeAllListeners(l),e.addEventListener(l,(function(a){return f.call(t,a,e)})),delete a[s]}}))}(t,e,a),function(t,e){var a=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{},s=a.states,l=a.state;if(s&&l){var f=e.attr("state");if(l!==f){var p=e.attr("states")||Object(g.emptyObject)(),d=Object(g.deepObjectMerge)(Object(g.emptyObject)(),a,p[f]),y=Object(g.deepObjectMerge)(Object(g.emptyObject)(),a,s[l]);e.attr(d);var v=Object(g.deepObjectMerge)(Object(g.emptyObject)(),t.renderAttrs.animation,s.animation),b=v.duration;e.transition(b/1e3).attr(y)}}else e.attr(a)}(t,e,a),addAnimate(t,e,a))}function patch(t,e){var a=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0,s=this;if(t||e)switch(e.type){case"CREATE":var l=e.newVNode,f=createElement.bind(s)(l);f&&(a&&(s.$el=f),t.appendChild(f));break;case"REPLACE":var p=e.newVNode,d=createElement.bind(s)(p);t.parent.replaceChild(d,t);break;case"REMOVE":t.remove();break;case"UPDATE":var y=e.attrs,g=e.children;if(patchAttrs(s,t,y),t.children&&g.length){t.children.forEach((function(t,e){t._ind=e})),g.forEach((function(t,e){t._ind=e}));for(var v=g.length>t.children.length?g.length:t.children.length,_loop=function(e){var a=t.children.filter((function(t){return t._ind===e}))[0],l=g.filter((function(t){return t._ind===e}))[0];l&&"CREATE"===l.type?patch.bind(s)(t,l):patch.bind(s)(a,l)},b=0;b<v;b++)_loop(b)}}}var A=a(3),j=a.n(A),x=a(6),P=a.n(x),S=a(4),k=a.n(S),M=a(1),R=a.n(M),D=a(9),E=a.n(D),C=a(5),q=a.n(C),L=a(17),B=a.n(L),T={default:"default",hide:"hide",hover:"hover",active:"active",disabled:"disabled",mixed:"mixed"};function mixinEvent(t){if(t.__store){t.__store.events=[];var e=t.__store.events;t.on=function(a,s){return e.push({type:a,cb:s}),t},t.off=function(a,s){for(var l=0;l<e.length;l++)if(void 0===s)e=[];else{var f=e[l];f.type===a&&f.cb===s&&(e.splice(l,1),l--)}return t},t.once=function(e,a){return t.on(e,(function(){for(var s=arguments.length,l=new Array(s),f=0;f<s;f++)l[f]=arguments[f];fn.apply(t,l),self.off(e,a)}))},t.dispatchEvent=function(a,s){return e.forEach((function(e){e.type===a&&e.cb.call(t,{type:a,option:s})})),t}}}var I=function(t){function Cell(t,e,a){var s;return j()(this,Cell),(s=k()(this,R()(Cell).call(this))).__store=Object.create(null),s.__store.state=T.default,s.__store.row=void 0,s.__store.col=void 0,s.__store.option=e,s.__store.data=t,s.__store.datasets=[a],s._layoutScaleFunc=a.layoutScaleFunc,mixinEvent(E()(s)),s}return q()(Cell,t),P()(Cell,[{key:"datasets",get:function(){return this.__store.datasets}},{key:"data",get:function(){return this.__store.data}},{key:"value",get:function(){return this.__store.data[this.__store.option.value]}},{key:"layoutScaleValue",get:function(){return"function"==typeof this._layoutScaleFunc?this._layoutScaleFunc(this.__store.data[this.__store.option.value]):this.__store.data[this.__store.option.value]}},{key:"text",get:function(){return this.__store.data[this.__store.option.text]}},{key:"row",set:function(t){void 0===this.__store.row&&(this.__store.row=t)},get:function(){return this.__store.row}},{key:"col",set:function(t){void 0===this.__store.col&&(this.__store.col=t)},get:function(){return this.__store.col}},{key:"option",get:function(){return this.__store.option}},{key:"state",get:function(){return this.__store.state},set:function(t){var e=this;T[t]&&this.__store.state!==T[t]&&(this.__store.state=T[t],this.dispatchEvent("change",{name:"cell",value:T[t],data:this}),this.datasets.forEach((function(a){a.dispatchEvent("change",{name:"cell",value:T[t],data:e})})))}}]),Cell}(B()(Object)),z=function(t){function List(t,e){var a;return j()(this,List),(a=k()(this,R()(List).call(this))).__store=Object.create(null),a.__store.__name=t,a.__store.__option=e,a.__store.dataset=null,mixinEvent(E()(a)),a}return q()(List,t),P()(List,[{key:"data",get:function(){var t=[];return this.forEach((function(e){t.push(e.data)})),t}},{key:"dataset",set:function(t){this.__store.dataset=t},get:function(){return this.__store.dataset}},{key:"name",get:function(){return this.__store.__name}},{key:"option",get:function(){return this.__store.__option}},{key:"state",get:function(){for(var t=this[0].state,e=1;e<this.length;e++)if(this[e].state!==t){t="mixed";break}return t},set:function(t){if(T[t]&&this.state!==T[t]){this.forEach((function(e){"disabled"===e.state&&"default"!==t||(e.state=T[t])}));var e=null;this instanceof G?e={name:"row",value:T[t],data:this}:this instanceof F&&(e={name:"col",value:T[t],data:this}),this.dispatchEvent("change",e),this.dataset&&this.dataset.dispatchEvent("change",e)}}}]),List}(B()(Array)),G=function(t){function Row(){return j()(this,Row),k()(this,R()(Row).apply(this,arguments))}return q()(Row,t),Row}(z),F=function(t){function Col(){return j()(this,Col),k()(this,R()(Col).apply(this,arguments))}return q()(Col,t),Col}(z);var N=function(t){function Dataset(t,e){var a;j()(this,Dataset),(a=k()(this,R()(Dataset).call(this))).layoutScaleFunc=a.handleLayoutScale(e.layoutScale),t.forEach((function(t,s){var l=t;t instanceof I?l.datasets.push(E()(a)):l=new I(t,e,E()(a)),a[s]=l})),a.__store=Object.create(null);var s=a.__store;return s.__option=e,s.__deps=[],s.__rows=[],s.__rows=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],e=arguments.length>1?arguments[1]:void 0,a=e.row,s=e.sort,l=[];if("*"===a){var f=new G("*",e);t.forEach((function(t){f.push(t)})),s&&f.sort((function(t,e){return s(t.data,e.data)})),l.push(f)}else{var p=Object.create(null);for(var d in t.forEach((function(t){var s=t.__store.data;p[s[a]]||(p[s[a]]=new G(s[a],e)),p[s[a]].push(t)})),p){var y=p[d];s&&y.sort((function(t,e){return s(t.data,e.data)})),l.push(y)}}return l.forEach((function(e,a){e.dataset=t,e.forEach((function(t,e){t.row=a,t.col=e}))})),l}(E()(a),e),mixinEvent(E()(a)),a}return q()(Dataset,t),P()(Dataset,[{key:"resetState",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"default",e=[];this.forEach((function(a){a.state!==t&&"disabled"!==a.state&&(e.push(a),a.state=t)})),this.dispatchEvent("change",{name:"reset",data:e})}},{key:"selectRows",value:function(t){var e=this.option.row,a=[];return this.forEach((function(s){-1!==t.indexOf(s.data[e])&&a.push(s)})),new Dataset(a,this.option)}},{key:"addDep",value:function(t){this.__store.__deps.push(t)}},{key:"handleLayoutScale",value:function(t){if("string"==typeof t){var e=t.replace(/\d+$/,""),a=2;if("sqrt"!==e&&"pow"!==e&&"log"!==e)return console.warn("layoutScale type error"),function(t){return t};var s=t.replace(/^[a-z]+/,"");if(s){if(!/^[-+]?\d*$/.test(s))return console.warn("layoutScale type error"),function(t){return t};a=Number(s)}switch(e){case"sqrt":return this.datasetReverse=function(t){return Math.pow(t,a)},function(t){return Math.pow(t,1/a)};case"pow":return this.datasetReverse=function(t){return Math.pow(t,1/a)},function(t){return Math.pow(t,a)};case"log":return 2!==a&&10!==a?(console.warn("layoutScale type error"),function(t){return t}):(this.datasetReverse=function(t){return Math.pow(a,t)},function(t){return Math["log"+a](t)});default:return console.warn("layoutScale type error"),function(t){return t}}}return t}},{key:"option",get:function(){return this.__store.__option}},{key:"cols",get:function(){var t=this,e=[],a=0;this.__store.__rows.forEach((function(t){t.length>a&&(a=t.length)}));for(var _loop=function(a){var s=new F;s.dataset=t,t.__store.__rows.forEach((function(t){s.push(t[a])})),e.push(s)},s=0;s<a;s++)_loop(s);return e}},{key:"rows",get:function(){return this.__store.__rows}}]),Dataset}(B()(Array)),W=a(2),K=a.n(W),$=a(11),U=a.n($),V=a(8),H=a.n(V),Z=a(0),X="beforeCreate",Y="created",J="beforeRender",Q="rendered",tt="beforeUpdate",et="updated";var rt=a(10),nt=a.n(rt);function deepObjectMerge(){var t=arguments.length<=0?void 0:arguments[0];if(arguments.length>1)for(var e=1;e<arguments.length;e++)objectMerge(t,e<0||arguments.length<=e?void 0:arguments[e]);return t;function objectMerge(t,e){for(var a in e)if(t[a]&&"object"===jsType(t[a])&&"object"===jsType(e[a]))deepObjectMerge(t[a],e[a]);else if(t[a]&&"array"===jsType(t[a])&&"array"===jsType(e[a])){var s;(s=t[a]).splice.apply(s,[0,t[a].length].concat(nt()(e[a])))}else t[a]=e[a];return t}}function emptyObject(){return Object.create(null)}function jsType(t){var e=l()(t);return"object"===e?null===t?null:Object.prototype.toString.call(t).slice(8,-1).toLowerCase():e}function throttle(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:16,a=arguments.length>2&&void 0!==arguments[2]&&arguments[2],s=null,l=a;return function(){for(var a=this,f=arguments.length,p=new Array(f),d=0;d<f;d++)p[d]=arguments[d];if(l)return t.apply(this,p),l=!1;s||(s=setTimeout((function(){clearTimeout(s),s=null,t.apply(a,p)}),e))}}function getDistancePx(t,e){return"string"===jsType(t)&&t.match(/%$/)?Number(t.substring(0,t.indexOf("%")))/100*e:t}var at=a(15);function Base_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}for(var ot=function(t){function Base(t){var e,a;j()(this,Base),(e=k()(this,R()(Base).call(this))).dispatchEvent(X),(a=E()(e)).on=a.addEventListener,a.off=a.removeEventListener,a.once=function(t,e){var a=this;return this.on(t,(function listener(){for(var s=arguments.length,l=new Array(s),f=0;f<s;f++)l[f]=arguments[f];e.apply(a,l),a.off(t,listener)}))},e.__store=emptyObject();var s=e.__store;s.__attrs=emptyObject(),s.__vnode__=null,s.__isCreated__=!1,s.__refs=emptyObject(),s.dataset=null;var l=Object(at.b)()?{layer:"default"}:{};return e.attr(function(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Base_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Base_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}({},t,{},l)),e.__update=throttle((function(t){s.__isCreated__&&e.update(t)})),e}return q()(Base,t),P()(Base,[{key:"source",value:function(t,e){var a=this,s=this.__store;if(t instanceof N)s.dataset=t;else{var l=e;s.dataset&&(l=deepObjectMerge({},s.dataset.option,e)),s.dataset=new N(t,l)}return s.dataset&&s.__isCreated__&&(s.dataset.on("change",(function(t){a.__update({type:"state"})})),this.__update({type:"source"})),this}},{key:"created",value:function(){var t=this,e=this.__store;this.dispatchEvent(Y),e.__vnode__=this.render(this.beforeRender({type:"create"}));var a=diff(null,e.__vnode__);this.dispatchEvent(J),patch.bind(this)(this.$el||this.layer,a,1),this.dispatchEvent(Q),this.rendered(),e.__isCreated__=!0,this.dataset.on("change",(function(e){t.__update({type:"state"})}))}},{key:"beforeRender",value:function(){return this.renderAttrs}},{key:"render",value:function(){console.warn("this function must be rewrited")}},{key:"beforeUpdate",value:function(){return this.renderAttrs}},{key:"update",value:function(t){var e=this.__store;this.dispatchEvent(tt);var a=this.render(this.beforeUpdate(t)),s=diff(e.__vnode__,a);patch.bind(this)(this.$el||this.layer,s),e.__vnode__=a,this.dispatchEvent(et),this.updated()}},{key:"updated",value:function(){}},{key:"dispatchEvent",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:emptyObject();H()(R()(Base.prototype),"dispatchEvent",this).call(this,t,e)}},{key:"defaultAttrs",value:function(){return emptyObject()}},{key:"defaultStyles",value:function(){return emptyObject()}},{key:"baseAttrs",value:function(){return{animation:{use:!0,duration:700,useTween:!0,easing:"bounceOut"},clientRect:{left:"10%",top:"10%",right:"10%",bottom:"10%",width:void 0,height:void 0},opacity:1,layer:"default",layoutBy:"rows"}}},{key:"attr",value:function(t,e){var a=this.__store;if("object"===jsType(t))for(var s in t)this.attr(s,t[s]);else{if(void 0===t){var l=emptyObject();for(var f in a.__attrs)0!==f.indexOf("style@")&&(l[f]=a.__attrs[f]);return l}if(void 0===e)return a.__attrs[t];void 0!==t&&(a.__attrs[t]=e,a.__isCreated__&&this.__update({type:"attr"}))}}},{key:"addRef",value:function(t,e){this.__store.__refs[t]=e}},{key:"style",value:function(t,e){var a=this;if("object"===jsType(t))for(var s in t)this.style(s,t[s]);else{if(void 0!==t&&void 0===e){var l=this.attr("style@"+t);return function(){if("function"===jsType(l)){for(var t=arguments.length,e=new Array(t),s=0;s<t;s++)e[s]=arguments[s];return l.apply(a,e)}return l}}if(void 0!==t&&void 0!==e)return this.attr("style@"+t,e),this;if(void 0===t&&void 0===e){var f=emptyObject(),p=this.__store.__attrs;for(var d in p)if(0===d.indexOf("style@")){var y=d.substr(6);f[y]=this.style(y)}return f}}}},{key:"store",get:function(){return this.__store}},{key:"layer",get:function(){var t=deepObjectMerge({},this.baseAttrs(),this.defaultAttrs(),this.theme.attrs,this.attr()),e=t.layer,a=t.zIndex,s=void 0===a?0:a;return this.scene.layer(e).attr({zIndex:s})}},{key:"$refs",get:function(){return this.__store.__refs}},{key:"renderStyles",get:function(){return deepObjectMerge({},this.defaultStyles(),this.theme.styles)}},{key:"renderAttrs",get:function(){var t=deepObjectMerge({},this.baseAttrs(),this.defaultAttrs(),this.theme.attrs,this.attr()),e=t.animation,a=t.clientRect;"boolean"===jsType(e)&&(e={use:!!e});var s=Object(at.b)()?this.layer.canvas:this.layer.canvas.getBoundingClientRect(),l=s.width,f=s.height;for(var p in a)-1!==["left","right","width"].indexOf(p)?a[p]=getDistancePx(a[p],l):-1!==["top","bottom","height"].indexOf(p)&&(a[p]=getDistancePx(a[p],f));return void 0===a.width?a.width=l-a.left-a.right:a.right=l-a.left-a.width,void 0===a.height?a.height=f-a.top-a.bottom:a.bottom=f-a.top-a.height,t.colors=this.theme.colors,t}},{key:"dataset",get:function(){return this.__store.dataset||this.chart&&this.chart.dataset}}]),Base}(Z.Node),it=["#47A1FF","#59CB74","#FFB952","#FC6980","#6367EC","#DA65CC","#FBD54A","#ADDF84","#6CD3FF","#659AEC","#9F8CF1","#ED8CCE","#A2E5FF","#4DCCCB","#F79452","#84E0BE","#5982F6","#E37474","#3FDDC7","#9861E5"],st=0;st<1004;st++)it.push("#"+("00000"+(16777216*Math.random()<<0).toString(16)).substr(-6));var ut={colors:it};ut.visuals={Line:{colors:ut.colors,styles:{line:{lineWidth:1},guideline:{strokeColor:"#ddd"},point:{pointType:"ellipse",radiusX:4,radiusY:4,strokeColor:"#fff",borderWidth:1}},attrs:{statck:!1}},Pie:{colors:ut.colors,styles:{sector:{lineWidth:1,strokeColor:"#fff"}},attrs:{}},Area:{colors:ut.colors,styles:{area:{opacity:.5},guideline:{strokeColor:"#ddd"},point:{pointType:"ellipse",radiusX:4,radiusY:4,strokeColor:"#fff",borderWidth:1}},attrs:{}},Radar:{colors:ut.colors,styles:{area:{opacity:.5}},attrs:{}},Bar:{colors:ut.colors,styles:{bar:{textureRepeat:!0},groupBar:{opacity:.1},text:!1},attrs:{statck:!1}},PolarBar:{colors:ut.colors,styles:{bar:{}},attrs:{statck:!1}},Funnel:{colors:ut.colors,styles:{funnel:{}},attrs:{statck:!1}},Scatter:{colors:ut.colors,styles:{point:{}},attrs:{showGuideLine:!1}},Wave:{colors:ut.colors,styles:{wave:{fillColor:"#37c",strokeColor:"#37c",lineWidth:0},text:{fillColor:"#333",fontSize:24},shape:{fillColor:"#e6f3ff",lineWidth:3,strokeColor:"#156cbd"}},attrs:{}},Gauge:{colors:ut.colors,attrs:{}},RadialBar:{colors:ut.colors,attrs:{}}},ut.plugins={Tooltip:{colors:ut.colors,styles:{},attrs:{}},Legend:{colors:ut.colors,styles:{point:{pointType:"sprite",iconSize:[12,12]},text:{fontSize:"12px",fillColor:"#666"}},attrs:{}},Axis:{colors:ut.colors,styles:{axis:{strokeColor:"#ccc",lineWidth:1},scale:{bgcolor:"#ccc"},label:{fontSize:12,fillColor:"#666"},grid:{strokeColor:"#ddd",lineDash:[3,3]},name:{fontSize:12,fillColor:"#666"}},attrs:{orient:"bottom"}}},ut.set=function(t){deepObjectMerge(ut,t)};var lt=ut,ct=function(t){function BaseVisual(t){var e;return j()(this,BaseVisual),(e=k()(this,R()(BaseVisual).call(this,t))).theme=lt.visuals[e.constructor.name],e.theme.set=function(t){e.theme===lt.visuals[e.constructor.name]&&(e.theme=w()(e.theme)),e.theme=deepObjectMerge(e.theme,t)},e}return q()(BaseVisual,t),BaseVisual}(ot);function getStyle(t,e,a,s){var l=a,f=a,p=s;"array"===jsType(a)?l=deepObjectMerge.apply(this,a):f=[a],"array"!==jsType(s)&&(p=[s]);var d=t.style(e).apply(void 0,[l].concat(nt()(p)));if(!1===d)return!1;if(f.includes(!1)&&void 0===d)return!1;if(void 0!==d){var y=a;"array"!==jsType(a)&&(y=[a]),l=deepObjectMerge({},t.defaultStyles()[e],y.filter(Boolean),l)}return deepObjectMerge({},l,d)}function scaleLinear(){var t=[0,1],e=[0,1];function scale(a){var s=t[1]-t[0],l=e[1]-e[0],f=(a-t[0])/s||0;return e[0]+l*f}return scale.domain=function(e){return t=e,this},scale.range=function(t){return e=t,this},scale}function axis_axis(t){if(!Array.isArray(t.dataSet)&&!t.hasOwnProperty("section"))return[];if(void 0!==t.section)return function(t){if(t&&Array.isArray(t)){var e=t[1]-t[0],a=[],s=4;a.push(t[0]);for(var l=4;l<8;l++)if(e%l==0){s=l;break}for(var f=1;f<=s;f++)a.push((t[0]+e*f/s).toFixed(2));return a}return[]}(t.section);var e=function(t){var e=t.stack||!1,a=t.dataSet||[],s=[];if(e&&0!==a.length&&a[0].length)for(var l=0,f=a[0].length;l<f;l++){for(var p=0,d=0,y=0,g=a.length;y<g;y++){var v=a[y][l].layoutScaleValue;!0!==a[y][l].disabled&&void 0!==v&&(v<0?d+=v:p+=v)}p&&s.push(p),d&&s.push(d)}else for(var b=0;b<a.length;b++)for(var m=0;m<a[b].length;m++){var _=a[b][m].layoutScaleValue;!0!==a[b][m].disabled&&void 0!==_&&s.push(_)}return s}(t),a=[],s=[],l=!0,f=!1,p=void 0;try{for(var d,y=e[Symbol.iterator]();!(l=(d=y.next()).done);l=!0){var g=d.value;g<0?s.push(Math.abs(g)):a.push(g)}}catch(t){f=!0,p=t}finally{try{l||null==y.return||y.return()}finally{if(f)throw p}}var v=5,b=a.sort((function(t,e){return t-e})),m=s.sort((function(t,e){return t-e})),_=b.length&&Math.ceil(b.pop()/.95),O=m.length&&Math.ceil(m.pop()/.95),w=_-O>=0?_:O,A=4,j=7;O&&_&&(A=3,j=5),t.splitNumber&&(j=(A=t.splitNumber)+1);var x=!1,P=w.toString().length,S=P<3?Math.ceil(w/Math.pow(10,P-1)):Math.ceil(w/Math.pow(10,P-2));do{for(var k=A;k<j;k++)if(S%k==0){v=k,w=P<3?S*Math.pow(10,P-1):S*Math.pow(10,P-2),x=!0;break}S++}while(!x);var M=new Array(v+1);M[0]=0;for(var R=1;R<v+1;R++)M[R]=_>=O?Math.round(w/v*R):-1*Math.round(w/v*R);if(O<=1&&O>0||_<=1&&_>0||0===_&&0===O){(M=new Array(6))[0]=0,w=1;for(var D=1;D<6;D++)M[D]=_>=O?2*w*D/10:-2*w*D/10}if(_<O&&M.reverse(),0===O.length||0===_.length)return M;if(_>=O)for(var E=10*M[1],C=1,q=Math.ceil((M.length-1)*O/_);C<q+1;C++)M.unshift(-1*E*C/10);else for(var L=10*M[M.length-2],B=1,T=Math.ceil((M.length-1)*_/O);B<T+1;B++)M.push(-1*L*B/10);return M}function layout(t,e){var a=this.type,s=[],l=e.stack,f=e.splitNumber,p=e.clientRect,d=e.axisGap,y=p.width,g=p.height,v=axis_axis.call(this,{dataSet:t,stack:l,splitNumber:f}),b=Math.max.apply(this,v),m=Math.min.apply(this,v),_=scaleLinear().domain([m,b]).range([0,g]),O=null;if(t.forEach((function(t){var e={points:[],areaPoints:[],smoothRange:[],state:t.state};t.forEach((function(a,s){var f=a.layoutScaleValue;if(void 0!==a.value){var p=y/(t.length-1),v=0;d&&(v=(p=y/t.length)/2);var b=[p*s+v,g-_(f)];l&&O&&(b=[p*s+v,g-_(f+O[s].layoutScaleValue)]),e.points.push(b)}})),e.axisPoints=[[e.points[0][0],g-_(0)],[e.points[e.points.length-1][0],g-_(0)]],"disabled"!==e.state&&(O=t),s.push(e)})),"area"===a){var w=null;s.forEach((function(t,a){var l=[].concat(t.points).reverse().map((function(t){return[t[0],g]}));w&&e.stack&&(l=[].concat(s[a-1].points).reverse());var f=function(t,e){var a={areaPoints:[],smoothRange:[]};return a.areaPoints=[].concat([t[0]]).concat(t).concat([t[t.length-1]]).concat([e[0]]).concat(e).concat([e[e.length-1]]),a.smoothRange=[1,t.length,t.length+3,t.length+e.length+2],a}(t.points,l);t.areaPoints=f.areaPoints,t.smoothRange=f.smoothRange,"disabled"!==t.state&&(w=t)}))}return s}var ht=a(16),ft=a.n(ht);function Point_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Point_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Point_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Point_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var pt={sprite:Z.Sprite,path:Z.Path,ellipse:Z.Ellipse,rect:Z.Rect,triangle:Z.Triangle,parallel:Z.Parallel,regular:Z.Regular,star:Z.Star},dt=function(t){function Point(){var t,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return j()(this,Point),(t=k()(this,R()(Point).call(this))).pointType=null,t.$sprite=null,t.attr(Point_objectSpread({pointType:"ellipse"},e)),t}return q()(Point,t),P()(Point,[{key:"attr",value:function(t,e){var a=t;"object"!==jsType(t)&&((a={})[t]=e),this.renderSymbol(a)}},{key:"renderSymbol",value:function(t){var e=t.pointType,a=t.pos,s=ft()(t,["pointType","pos"]);if(e&&e!==this.pointType){if(!Object.keys(pt).includes(e))throw new Error("pointType should be one of 'sprite','path','ellipse','rect','triangle','parallel','regular','star' but it is ".concat(e));this.$sprite&&this.$sprite.remove(),this.$sprite=new pt[e](s),this.append(this.$sprite)}else this.$sprite.attr(s);a&&a.length&&H()(R()(Point.prototype),"attr",this).call(this,"pos",a),this.pointType=e}}]),Point}(Z.Group),yt=function(t){function Line(t){var e;return j()(this,Line),(e=k()(this,R()(Line).call(this,t))).renderLines=[],e.type="line",e.hoverIndex=-1,e}return q()(Line,t),P()(Line,[{key:"beforeRender",value:function(){var t=this.getRenderData(),e=t.arrLayout,a=t.maxLen;return e.map((function(t){return{smoothRange:t.smoothRange,areaFrom:{points:t.areaPoints},areaTo:{points:t.areaPoints},from:{points:t.points,lineDash:[1,a]},to:{points:t.points,lineDash:[a,a]}}}))}},{key:"beforeUpdate",value:function(){var t=this.getRenderData(),e=t.arrLayout,a=t.maxLen,s=this.renderLines;return e.map((function(t,e){var l={points:t.points};return s[e]&&(l={points:s[e].to.points}),s[e]&&"disabled"!==s[e].state||(l.lineDash=[4,a]),{state:t.state,smoothRange:t.smoothRange,areaFrom:s[e]&&s[e].areaTo||t.areaPoints,areaTo:{points:t.areaPoints},from:l,to:{points:t.points,lineDash:[a,a]}}}))}},{key:"getRenderData",value:function(){var t=this.renderAttrs,e=this.dataset[t.layoutBy],a=layout.call(this,e,t),s=t.clientRect,l=s.height,f=s.width;return{width:f,height:l,arrLayout:a,maxLen:5*Math.sqrt(Math.pow(l,2),Math.pow(f,2))}}},{key:"rendered",value:function(){}},{key:"defaultAttrs",value:function(){return{guidePoints:[],layer:"line"}}},{key:"defaultStyles",value:function(){return{}}},{key:"guidelineleave",value:function(t,e){this.attr("guidePoints",[]),this.dataset.resetState()}},{key:"guidelinemove",value:function(t,e){if(this.renderLines.length){for(var a=this.renderLines[0].to.points.map((function(t){return t[0]})),s=e.getOffsetPosition(t.x,t.y),l=U()(s,1)[0],f=0,p=0;p<a.length;p++)if(l>a[p]&&l<a[p+1]){f=Math.abs(l-a[p])<Math.abs(l-a[p+1])?p:p+1;break}if(this.hoverIndex!==f){this.dataset.resetState(),this.dataset.cols[f].state="hover";var d=this.renderAttrs.clientRect,y=a[f];this.hoverIndex=f,this.attr({guidePoints:[[y,0],[y,d.height]],lineState:"default"})}}}},{key:"render",value:function(t){var e,a=this,s=this.renderAttrs,l=s.clientRect,f=s.smooth,p=s.guidePoints,d=this.renderStyles,y=this.theme.colors;return this.renderLines=t,qcharts.h(Z.Group,{zIndex:1,class:"container",pos:[l.left,l.top],onMouseleave:this.guidelineleave,onMouseenter:this.guidelinemove,onMousemove:this.guidelinemove,size:[l.width,l.height]},qcharts.h(Z.Group,{class:"lines-group"},t.map((function(t,e){var s=getStyle(a,"line",[{strokeColor:y[e],smooth:f},d.line],[a.dataset.rows[e],e]);return"disabled"===t.state||!1===s?qcharts.h(Z.Node,null):qcharts.h(Z.Polyline,K()({onClick:a.lineClick},s,{animation:{from:t.from,to:t.to}}))}))),qcharts.h(Z.Group,{class:"areas-group"},"area"!==this.type?null:t.map((function(t,e){var s=getStyle(a,"area",[{fillColor:y[e],smooth:f},d.area],[a.dataset.rows[e],e]);return"disabled"===t.state||!1===s?qcharts.h(Z.Node,null):qcharts.h(Z.Polyline,K()({smoothRange:t.smoothRange},s,{animation:{from:t.areaFrom,to:t.areaTo}}))}))),qcharts.h(Z.Group,{class:"line-points"},t.map((function(t,e){return"disabled"===t.state?qcharts.h(Z.Node,null):qcharts.h(Z.Group,null,t.to.points.map((function(s,l){var f={from:{pos:t.from.points[l]},to:{pos:s}},p=getStyle(a,"point",[{fillColor:y[e]},d.point],[a.dataset.rows[e],e,l]),g=getStyle(a,"point:hover",[p,d["point:hover"]],[a.dataset.rows[e],e,l]);return"hover"===a.dataset.rows[e][l].state&&deepObjectMerge(p,g),qcharts.h(dt,K()({},p,{animation:f}))})))}))),qcharts.h(Z.Group,{class:"guide-line-group"},p.length?!1===(e=getStyle(a,"guideline",d.guideline))?qcharts.h(Z.Node,null):qcharts.h(Z.Polyline,K()({points:p},e)):qcharts.h(Z.Node,null)))}},{key:"renderAttrs",get:function(){return H()(R()(Line.prototype),"renderAttrs",this)}}]),Line}(ct);function layout_layout(t,e){var a=[],s=t.map((function(t){return t.reduce((function(e,a){return"disabled"!==t.state?e+a.value:e}),0)})),l=s.reduce((function(t,e){return t+e}),0)||1,f=e.startAngle,p=e.endAngle,d=e.activeOffset,y=Math.min(f,p),g=Math.max(f,p);g>y+360&&(g=y+360);var v=g-y;return s.forEach((function(e,s){var f=e/l*v,p=[0,0],g={startAngle:y,endAngle:y+f,offsetPos:p};if(0!==s){var b=a[s-1];g={startAngle:b.endAngle,endAngle:b.endAngle+f,offsetPos:p}}var m=(g.startAngle+g.endAngle)/2%360;g.bisectorAngle=m,g.bisectorRadian=transRadius(m),"hover"===t[s].state&&(g.offsetPos=[d*Math.cos(g.bisectorRadian),d*Math.sin(g.bisectorRadian)]),a.push(g)})),a}function transRadius(t){return t/180*Math.PI}function computeLinePos(t,e,a,s,l){var f=[],p=transRadius((t+e)/2%360),d=[s*Math.cos(p),s*Math.sin(p)],y=[(s+l)*Math.cos(p),(s+l)*Math.sin(p)],g=[(s+l)*Math.cos(p),(s+l+5)*Math.sin(p)];return g=[a[0]+g[0],a[1]+g[1]],f.push([a[0]+d[0],a[1]+d[1]]),f.push([a[0]+y[0],a[1]+y[1]]),{points:f,labelAnchor:[Math.sin(p/2),1-Math.cos(p/4)],labelPos:g}}function Pie_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Pie_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Pie_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Pie_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var gt=function(t){function Pie(t){var e;return j()(this,Pie),(e=k()(this,R()(Pie).call(this,t))).renderRings=[],e.hoverIndex=-1,e.activeIndex=-1,e}return q()(Pie,t),P()(Pie,[{key:"beforeRender",value:function(){var t=this.getRenderData().rings,e=this.renderAttrs.center,a=t.map((function(a,s){if(0===s)return{from:{startAngle:0,endAngle:0,pos:e},to:Pie_objectSpread({},a,{pos:e})};var l=t[s-1].endAngle;return{from:{startAngle:l,endAngle:l,pos:e},to:Pie_objectSpread({},a,{pos:e})}}));return this.computeLine(a),a}},{key:"beforeUpdate",value:function(){var t=this,e=this.getRenderData().rings,a=this.renderAttrs.center,s=this.renderRings,l=e.map((function(e,l){var f=[a[0]+e.offsetPos[0],a[1]+e.offsetPos[1]],p=w()(e,["startAngle","endAngle"]);return t.hoverIndex,{from:Pie_objectSpread({},s[l].to),to:Pie_objectSpread({},p,{pos:f})}}));return this.computeLine(l),l}},{key:"computeLine",value:function(t){var e=this.renderAttrs.radiusPx;t.forEach((function(t){var a=computeLinePos(t.from.startAngle,t.from.endAngle,t.from.pos,e+1,15),s=a.points,l=a.labelAnchor,f=a.labelPos,p=computeLinePos(t.to.startAngle,t.to.endAngle,t.to.pos,e+1,15),d=p.points,y=p.labelAnchor,g=p.labelPos;t.line={from:{points:s},to:{points:d}},t.label={from:{pos:f,anchor:l},to:{pos:g,anchor:y}}}))}},{key:"getRenderData",value:function(){var t=this.renderAttrs,e=this.renderData();return{rings:layout_layout.call(this,e,t)}}},{key:"rendered",value:function(){}},{key:"defaultAttrs",value:function(){return{layer:"pie",radius:1,innerRadius:0,startAngle:0,endAngle:360,lineWidth:1,activeOffset:10}}},{key:"defaultStyles",value:function(){return{}}},{key:"mousemove",value:function(t,e){var a=this.renderData(),s=e.attr("_index");if(s!==this.hoverIndex){var l=a[s];a.forEach((function(t){"hover"===t.state&&(t.state="default")})),l.state="hover",this.hoverIndex=s}}},{key:"mouseleave",value:function(){this.renderData().forEach((function(t){"hover"===t.state&&(t.state="default")})),this.hoverIndex=-1}},{key:"renderData",value:function(){var t=this.renderAttrs;return this.dataset[t.layoutBy]}},{key:"render",value:function(t){var e=this,a=this.renderAttrs,s=a.clientRect,l=a.innerRadiusPx,f=a.radiusPx,p=this.renderStyles,d=this.theme.colors;return this.renderRings=t,qcharts.h(Z.Group,{zIndex:1,class:"container",pos:[s.left,s.top],size:[s.width,s.height]},qcharts.h(Z.Group,{class:"rings-group",onMouseleave:this.mouseleave},t.map((function(t,a){var s=getStyle(e,"sector",[{strokeColor:d[a],fillColor:d[a],innerRadius:l,outerRadius:f,_index:a},p.sector],[e.dataset.rows[a],a]);return"disabled"===t.state||!1===s?qcharts.h(Z.Node,null):qcharts.h(Z.Ring,K()({onMousemove:e.mousemove},s,{animation:{from:t.from,to:t.to}}))}))),qcharts.h(Z.Group,{class:"line-group"},t.map((function(t,a){var s=getStyle(e,"guideline",[{strokeColor:d[a]},p.guideline],[e.dataset.rows[a],a]),l=!1;return t.to.startAngle!==t.to.endAngle&&"disable"!==t.state&&!1!==s||(l=!0),l||!1===s?qcharts.h(Z.Node,null):qcharts.h(Z.Polyline,K()({},s,{animation:{from:t.line.from,to:t.line.to}}))}))),qcharts.h(Z.Group,{class:"label-group"},t.map((function(t,a){var s=e.dataset.rows[a].name,l=getStyle(e,"guideText",[{fillColor:"#666",fontSize:12},p.guideline],[e.dataset.rows[a],a]),f=!1;return t.to.startAngle!==t.to.endAngle&&"disable"!==t.state&&!1!==l||(f=!0),f||!1===l?qcharts.h(Z.Node,null):qcharts.h(Z.Label,K()({text:s},l,{pos:t.label.from.pos,animation:{from:t.label.from,to:t.label.to}}))}))))}},{key:"renderAttrs",get:function(){var t=H()(R()(Pie.prototype),"renderAttrs",this),e=t.radius,a=t.innerRadius,s=t.clientRect,l=s.width,f=s.height;return t.center=[l/2,f/2],t.radiusPx=Math.min(l,f)*e/2,t.innerRadiusPx=Math.min(l,f)*a/2,t}}]),Pie}(ct),vt=function(t){function Area(t){var e;return j()(this,Area),(e=k()(this,R()(Area).call(this,t))).type="area",e}return q()(Area,t),P()(Area,[{key:"defaultAttrs",value:function(){return deepObjectMerge({},H()(R()(Area.prototype),"defaultAttrs",this).call(this),{stack:!0,animation:{duration:700,easing:"bounceOut"},layer:"area"})}}]),Area}(yt),getPointCoordinate=function(t,e){return[Math.cos(t)*e,Math.sin(t)*e]};function Radar_layout_layout(t,e,a,s,l,f){var p=[],d=[],y=[],g=[];if(t.some((function(t){return 0===t.length})))return{sectionAttrs:g,axisAttrs:y,gridAttrs:d};for(var v=function(t,e){var a=Math.max.apply(Math,nt()(t));return a<10*e?Math.ceil(a/e)*e:10*Math.ceil(a/10/e)*e}(t.reduce((function(t,e){return t.concat(e.map((function(t){return t.value})))}),[]),a),b=t[0].length,m=2*Math.PI/b,_=Math.PI/180*s,O=0;O<b;O++){var w=O*m+_,A=getPointCoordinate(w,e);p.push({point:A,radian:w});var j=getPointCoordinate(w,e+l),x=t[0][O].text;y.push({points:[[0,0],A],lineWidth:1,lineDash:[3,2],strokeColor:"#DDE0E5",label:x,labelPos:j,radian:w,maxScale:v,splitNumber:a})}t.forEach((function(t,a){var s=t.map((function(t,a){var s=t.value,l=p[a].radian;return getPointCoordinate(l,s/v*e)}));g.push({index:a,name:t.name,dataOrigin:t.data,lineWidth:1,points:s,state:t.state,close:!0,strokeColor:f[a],fillColor:f[a]})}));for(var P=p.map((function(t){return t.point})),S=0;S<a;S++){var k=1-S/a;d.push({scale:k,radius:e,points:P,index:S,close:!0,lineWidth:1,strokeColor:"#DDE0E5",anchor:[.5,.5]})}return{sectionAttrs:g,axisAttrs:y,gridAttrs:d}}function Radar_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Radar_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Radar_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Radar_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var bt=function(t){function Radar(t){var e;return j()(this,Radar),e=k()(this,R()(Radar).call(this,t)),p()(E()(e),"onMouseenter",throttle((function(t,a){e.dataset.resetState();var s=a.attributes.name;e.dataset.rows.filter((function(t){return"disabled"!==t.state})).forEach((function(t){t.state=t.name===s?"hover":"default"}))}),16,!0)),e.type="radar",e.sectionData=[],e.scaleEl=[],e.oldPos=null,e}return q()(Radar,t),P()(Radar,[{key:"defaultAttrs",value:function(){return{layer:"radar",gridType:"polygon",splitNumber:4,startAngle:270,radius:.6,labelOffset:7}}},{key:"getPolylineAnimation",value:function(t,e,a){var s=new Array(t.length).fill([0,0]),l={from:{points:(this.sectionData[a]||{animation:{to:{points:s}}}).animation.to.points},to:{points:t}};return"disabled"===e&&(l.to.points=s),l}},{key:"getRenderData",value:function(){var t=this.dataset,e=this.renderAttrs,a=e.len,s=e.splitNumber,l=e.startAngle,f=e.labelOffset,p=this.theme.colors,d=Radar_layout_layout(nt()(t.rows),a,s,l,f,p);return{sectionAttrs:d.sectionAttrs,axisAttrs:d.axisAttrs,gridAttrs:d.gridAttrs}}},{key:"processData",value:function(){var t=this,e=this.getRenderData(),a=e.sectionAttrs;return Radar_objectSpread({},ft()(e,["sectionAttrs"]),{sectionAttrs:a.map((function(e,a){var s=e.points,l=e.state,f=ft()(e,["points","state"]),p=t.getStyle("section",e,nt()(e.dataOrigin),a),d=p.style,y=p.hoverStyle,g="hover"===l?y:{};return deepObjectMerge(f,{state:l},{animation:t.getPolylineAnimation(s,l,a)},d,g)}))})}},{key:"beforeRender",value:function(){H()(R()(Radar.prototype),"beforeRender",this).call(this);var t=this.processData();return this.sectionData=nt()(t.sectionAttrs),t}},{key:"beforeUpdate",value:function(){H()(R()(Radar.prototype),"beforeUpdate",this).call(this);var t=this.processData();if(t.sectionAttrs)for(var e=Math.max(this.sectionData.length,t.sectionAttrs.length),a=0;a<e;a++)this.sectionData[a]=t.sectionAttrs[a];return this.sectionData=nt()(t.sectionAttrs),t}},{key:"rendered",value:function(){}},{key:"getScaleAnimation",value:function(t){return{from:{scale:0},to:{scale:t}}}},{key:"getStyle",value:function(t,e,a,s){return{style:this.style(t)(e,a,s)||{},hoverStyle:this.style("".concat(t,":hover"))(e,a,s)||{}}}},{key:"isSamePoints",value:function(t,e){return t.toString()===e.toString()}},{key:"renderGrid",value:function(t){var e=this,a="circle"===this.renderAttrs.gridType?Z.Arc:Z.Polyline;return t.map((function(t,s){var l=e.scaleEl.length>0?{}:e.getScaleAnimation(t.scale),f=e.getStyle("grid",t,null,s).style;if(!1!==f)return qcharts.h(a,K()({},t,f,{animation:l}))}))}},{key:"renderAxisLabel",value:function(t,e){var a=t.label,s=t.labelPos,l=t.radian,f={text:a,pos:s,color:"#67728C",radian:l,anchor:function(t){return[.5-Math.cos(t),.5-Math.sin(t)]}(l),fontSize:12},p=this.scaleEl.length>0?{}:this.getScaleAnimation(1),d=this.getStyle("label",f,{text:f.label,radian:l},e).style;if(!1!==d)return qcharts.h(Z.Label,K()({},f,d,{animation:p}))}},{key:"renderAxisScale",value:function(t,e){for(var a=function(t){var e=t.points,a=t.splitNumber,s=t.maxScale,l=U()(e[1],2);return[[l[0]/a,l[1]/a],s/a]}(t),s=U()(a,2),l=U()(s[0],2),f=l[0],p=l[1],d=s[1],y=[],g={fontSize:12,anchor:[1,.5],translate:[-5,0],display:0===e?"block":"none"},v=0;v<t.splitNumber+1;v++){var b=[f*v,p*v],m=d*v,_=Radar_objectSpread({text:m,color:"#67728C",pos:b},g),O=this.getStyle("scale",_,{text:m,index:e},v).style;if(!1===O)return;if("none"!==_.display){var w={},A=e*t.splitNumber+v,j=this.scaleEl[A];j?j.text!==m&&(w={from:{text:j.text},to:{text:m},formatter:function(t){return t.text=t.text.toFixed(0),t}}):w={from:{pos:[0,0]},to:{pos:b}},this.scaleEl[v]={text:Number(m.toFixed(0))},y.push(qcharts.h(Z.Label,K()({},_,O,{animation:w})))}}return y}},{key:"renderAxis",value:function(t){var e=this,a=this.scaleEl.length>0?{}:this.getScaleAnimation(1);return t.map((function(t,s){var l=e.getStyle("axis",t,{text:t.label},s).style;if(!1!==l)return qcharts.h(Z.Group,null,qcharts.h(Z.Polyline,K()({},t,l,{animation:a})),e.renderAxisLabel(t,s),e.renderAxisScale(t,s))}))}},{key:"renderPoints",value:function(t){var e=this;return t.map((function(t){var a=t.animation,s=t.dataOrigin,l=t.strokeColor,f=t.state,p=a&&a.from&&a.from.points;return(a&&a.to&&a.to.points).map((function(t,a){var d={pos:t,fillColor:l,radius:2,dataOrigin:s[a]},y=e.getStyle("point",d,Radar_objectSpread({},d.dataOrigin),a),g=y.style,v=y.hoverStyle;if(!1!==g){var b={from:{pos:[0,0],opacity:1},to:{pos:t,opacity:1}};p&&p[a]&&(e.isSamePoints(p[a],t)?b.from.pos=t:b.from.pos=p[a]),"disabled"===f&&(b.to.opacity=0);var m="hover"===f?v:{};return qcharts.h(dt,K()({},d,g,m,{animation:b,zIndex:99}))}}))})).reduce((function(t,e){return t.concat(e)}),[])}},{key:"renderSection",value:function(t){var e=this;return t.map((function(t,a){var s=t.animation,l=ft()(t,["animation"]);return qcharts.h(Z.Polyline,K()({zIndex:9+a},l,{animation:s,onMouseenter:e.onMouseenter,onMouseleave:e.onMouseleave}))}))}},{key:"onMouseleave",value:function(){this.dataset.resetState(),this.dataset.rows.filter((function(t){return"disabled"!==t.state})).forEach((function(t){return"default"===t.state}))}},{key:"render",value:function(t){var e=t.sectionAttrs,a=t.axisAttrs,s=t.gridAttrs,l=this.renderAttrs,f=l.center,p=l.clientRect,d={from:{pos:this.oldPos?this.oldPos:f},to:{pos:f}};return this.oldPos=f,qcharts.h(Z.Group,{pos:[p.left,p.top],size:[p.width,p.height]},qcharts.h(Z.Group,{pos:f,animation:d},this.renderGrid(s),this.renderAxis(a),this.renderSection(e),this.renderPoints(e)))}},{key:"renderAttrs",get:function(){var t=H()(R()(Radar.prototype),"renderAttrs",this),e=t.clientRect,a=e.height,s=[e.width/2,a/2];return Radar_objectSpread({},t,{center:s,len:Math.min.apply(Math,s)*t.radius})}}]),Radar}(ct);function layout_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function layout_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?layout_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):layout_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}function Bar_layout_layout(t,e){var a=t,s=e.stack,l=e.splitNumber,f=e.clientRect,p=[f.width,f.height],d=e.transpose||!1,y=e.groupGap||0,g=e.stackGap||0,v=e.barWidth||0,b=[],m=[],_=[],O={opacity:0,bgcolor:"#000"},w=axis_axis.call(this,{dataSet:a,stack:s,splitNumber:l});if(!w||!w.length)return{barData:b,groupData:m,textData:_};var A=d?{label:p[1],value:p[0]}:{label:p[0],value:p[1]},j=Math.max.apply(this,w),x=Math.min.apply(this,w),P=j/(j-x),S=function(t){for(var e=0,a=0,s=t.length;a<s;a++)"disabled"!==t[a][0].state&&e++;return e||1}(a),k=a[0].length,M=0;0===v?(v=s?.5*A.label/k:.5*A.label/(k*S),M=s?v:v*S):M=s?(A.label-v*k)/k:(A.label-v*S*k-y*(S-1)*k)/k;var R=A.value/(j-x);if(s)for(var D=0,E=k;D<E;D++){for(var C=0,q=0,L=0,B={rects:[]},T=0,I=a.length;T<I;T++){var z=g;L=a[T][D].layoutScaleValue;var G=R*Math.abs(L);0===G&&(z=0);var F=L<0?A.value*(1-P)-q:A.value*(1-P)+C,N=L<0?A.value*P+q+G:A.value*P-C,W={anchor:[d&&L<0?1:0,d||L<0?0:1],size:d?[G-z,v]:[v,G-z],pos:d?[F,M/2+(v+M)*D]:[M/2+(v+M)*D,L<0?A.value*P+q:A.value*P-C],index:T},K=d?"paddingLeft":"paddingBottom",$={opacity:"disabled"!==a[T][D].state?1:0,text:L.toString(),anchor:d?L<0?[1,.5]:[0,.5]:[.5,1],pos:d?[F,+(M+v)/2+(v+M)*D]:[(M+v)/2+(v+M)*D,N]};$[K]=8,"disabled"===a[T][D].state?W.size=d?[0,W.size[1]]:[W.size[0],0]:(L<0?q+=G:C+=G,B.rects.push(W)),_.push($),b.push(W)}B=Object.assign(B,layout_objectSpread({pos:d?[0,(M+v)*D]:[(M+v)*D,0],size:d?[A.value,v+M]:[v+M,A.value]},O)),m.push(B)}else for(var U=0,V=k;U<V;U++){for(var H=0,Z=0,X=0,Y={rects:[]},J=0,Q=a.length;J<Q;J++){X=a[J][U].value,Z=a[J][U].layoutScaleValue;var tt=R*Math.abs(Z),et={anchor:[d&&Z<0?1:0,d||Z<0?0:1],size:d?[tt,v-1]:[v-1,tt],pos:d?[A.value*(1-P),M/2+(v+y)*(J-H)+(v*S+y*(S-1)+M)*U]:[M/2+(v+y)*(J-H)+(v*S+y*(S-1)+M)*U,A.value*P]};"disabled"===a[J][U].state?(et.size=d?[0,et.size[1]]:[et.size[0],0],H++):Y.rects.push(et);var rt={opacity:"disabled"!==a[J][U].state?1:0,text:X.toString(),anchor:[d&&Z<0?1:0,.5],pos:d?[A.value*(1-P),M/2+(v+y)*(J-H)+(v*S+y*(S-1)+M)*U+.5*v]:[M/2+(v+y)*(J-H)+(v*S+y*(S-1)+M)*U+.5*v,A.value*P],rotate:d?0:Z<0?90:270,paddingLeft:8};b.push(et),_.push(rt)}Y=Object.assign(Y,layout_objectSpread({pos:d?[0,(M+v*S+y*(S-1))*U]:[(M+v*S+y*(S-1))*U,0],size:d?[A.value,v*S+y*(S-1)+M]:[v*S+y*(S-1)+M,A.value]},O)),m.push(Y)}return{textData:_,barData:b,groupData:m}}function Bar_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Bar_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Bar_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Bar_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var mt=function(t){function Bar(t){var e;return j()(this,Bar),e=k()(this,R()(Bar).call(this,t)),p()(E()(e),"onMousemove",throttle((function(t,a){if(e.groups.length&&!isNaN(t.x)&&!isNaN(t.y)){var s=0,l=a.getOffsetPosition(t.x,t.y),f=U()(l,2),p=f[0],d=f[1];if(e.renderAttrs.transpose){var y=e.groups[0].size[1];s=Math.floor(d/y)}else{var g=e.groups[0].size[0];s=Math.floor(p/g)}if(s<1?s=0:s>e.groups.length-1&&(s=e.groups.length-1),e.hoverIndex!==s){var v=e.renderAttrs.bgpillarState;v[s]="hover",v[e.hoverIndex]="defualt",e.attr("bgpillarState",v),e.dataset.resetState(),e.dataset.cols[s].state="hover",e.hoverIndex=s}}}),16,!0)),p()(E()(e),"myClick",(function(){console.log("myclick")})),e.type="bar",e.pillars=null,e.texts=null,e.groups=null,e.fromTos=null,e.hoverIndex=-1,e}return q()(Bar,t),P()(Bar,[{key:"beforeRender",value:function(){var t=this,e=this.getRenderData().arrLayout,a=e.barData.map((function(e){return{attrs:e,from:{size:t.renderAttrs.transpose?[0,e.size[1]]:[e.size[0],0]},to:{size:e.size}}})),s=e.textData.map((function(t){return{attrs:t,from:{pos:t.pos},to:{pos:t.pos}}}));return this.pillars=a,this.groups=e.groupData,this.texts=s,{barData:a,textData:s,groupData:e.groupData}}},{key:"beforeUpdate",value:function(){var t=this,e=this.pillars,a=this.texts,s=this.getRenderData().arrLayout,l=s.barData.map((function(a,l){var f=e[l]?e[l]:s.barData[l-1];return f||(f={size:[0,0],pos:a.pos,labelAttrs:null}),{attrs:a,from:{size:f.attrs.disable?t.attr("transpose")?[0,f.attrs.size[1]]:[f.attrs.size[0],0]:f.attrs.size,pos:f.attrs.pos},to:{size:a.size,pos:a.pos}}})),f=s.textData.map((function(t,e){var l=a[e]?a[e]:s.textData[e-1];return l||(l={pos:nextPillar.pos}),{attrs:t,from:{pos:l.attrs.pos},to:{pos:t.pos}}}));return this.pillars=l,this.groups=s.groupData,this.texts=f,{barData:l,textData:f,groupData:s.groupData}}},{key:"getRenderData",value:function(){var t=this.renderAttrs,e=this.dataset[t.layoutBy],a=(e.length>1?e.length:e[0].length,Bar_layout_layout.call(this,e,t));this.theme.colors,this.renderStyles;return a.barData=a.barData.map((function(t,e){return t})),{arrLayout:a}}},{key:"rendered",value:function(){}},{key:"defaultAttrs",value:function(){var t=this.dataset.rows;return{layer:"bar",bgpillarState:Array.from({length:t[0].length},(function(){return"defalut"})),states:{bgpillar:{animation:{duration:20},default:{opacity:.01},hover:{opacity:.1}}}}}},{key:"defaultStyles",value:function(){return{text:{fontSize:12,fillColor:"#666"}}}},{key:"onMouseleave",value:function(t,e){this.dataset.resetState();var a=this.renderAttrs.bgpillarState;a[this.hoverIndex]="defualt",this.attr("bgpillarState",a),this.hoverIndex=-1}},{key:"render",value:function(t){var e=this,a=this.renderAttrs,s=a.clientRect,l=a.bgpillarState,f=a.states,p=this.renderStyles,d=this.dataset[this.renderAttrs.layoutBy],y=d.length>1?d.length:d[0].length,g=this.theme.colors;return qcharts.h(Z.Group,{pos:[s.left,s.top],size:[s.width,s.height],onMouseleave:this.onMouseleave,onMouseenter:this.onMousemove,onMousemove:this.onMousemove,onClick:this.myClick},qcharts.h(Z.Group,{ref:"pillars",class:"pillars-group"},t.barData.map((function(t,a){var s=e.dataset.rows[a%d.length][Math.floor(a/d.length)],l=getStyle(e,"pillar",[Bar_objectSpread({bgcolor:g[a%y]},t.attrs),p.bar],[s.data,Math.floor(a/d.length),a%d.length]),f=getStyle(e,"pillar:hover",[],[s.data,Math.floor(a/d.length),a%d.length]);return"hover"===s.state&&deepObjectMerge(l,f),qcharts.h(Z.Sprite,K()({},t.attrs,t.from,l,{animation:{from:t.from,to:t.to}}))})),t.textData.map((function(a,s){var l=w()(t.barData[s].attrs,["pos","size"]),f=getStyle(e,"text",[{barAttrs:l},p.text],[e.dataset.rows[s%d.length][Math.floor(s/d.length)].data,Math.floor(s/d.length),s%d.length]);return(f=w()(f,[],["barAttrs"])).pos&&(e.texts[s].attrs.pos=f.pos,a.to.pos=f.pos),!1===f?null:qcharts.h(Z.Label,K()({},a.attrs,f,{animation:{from:a.from,to:a.to}}))}))),qcharts.h(Z.Group,{ref:"bgpillar",class:"bgpillars-group"},t.groupData.map((function(t,a){var s=getStyle(e,"backgroundpillar",[],[e.dataset.rows[a%d.length],Math.floor(a/d.length)]);return!1===s?null:qcharts.h(Z.Sprite,K()({state:l[a],states:f.bgpillar},t,s))}))))}},{key:"renderAttrs",get:function(){return H()(R()(Bar.prototype),"renderAttrs",this)}}]),Bar}(ct);function PolarBar_layout_layout(t,e){var a=t,s=e.stack,l=e.splitNumber,f=e.clientRect,p=e.groupPadAngle,d=e.activeOffset,y=[f.width,f.height],g=p||0,v=e.stackGap||0,b=e.radius||1,m=e.innerRadius||0,_=(e.padAngle,[]),O=axis_axis.call(this,{dataSet:a,stack:s,splitNumber:l});if(!O||!O.length)return{barData:_};var w=Math.min(y[0],y[1]),A=Math.max.apply(this,O),j=Math.min.apply(this,O),x=A/(A-j),P=function(t){for(var e=0,a=0,s=t.length;a<s;a++)"disabled"!==t[a][0].state&&e++;return e||1}(a),S=a[0].length,k=.5*b*w,M=k/(A-j);if(s)for(var R=0,D=S;R<D;R++)for(var E=0,C=0,q=0,L={rects:[]},B=(2*Math.PI-S*g)/S,T=0,I=a.length;T<I;T++){var z=(B+g)*R-.5*Math.PI,G=M*(q=a[T][R].value),F=q<0?k*(1-x)-C:k*(1-x)+E,N={innerRadius:F+=m*w*.5,outerRadius:F+G-v,startAngle:180*z/Math.PI,endAngle:180*(z+B)/Math.PI,value:a[T][R].value,text:a[T][R].text,state:a[T][R].state,data:a[T][R].data,offsetPos:[0,0]};"hover"===N.state?N.strokeColor="#F00":delete N.strokeColor,"disabled"===N.state?N.opacity=0:(N.opacity=1,q<0?C-=G:E+=G,L.rects.push(N)),_.push(N)}else for(var W=0,K=S;W<K;W++)for(var $=0,U={rects:[]},V=(2*Math.PI-S*g)/S,H=0,Z=a.length;H<Z;H++){var X=V/P,Y=(V+g)*W+X*(H-$)-.5*Math.PI,J=k*(1-x)+m*w*.5,Q={innerRadius:J,outerRadius:J+M*a[H][W].layoutScaleValue,startAngle:180*Y/Math.PI,endAngle:180*(Y+X)/Math.PI,value:a[H][W].value,text:a[H][W].text,state:a[H][W].state,data:a[H][W].data,id:W*Z+H,offsetPos:[0,0]};if("hover"===Q.state){var tt=(Q.startAngle+Q.endAngle)/2%360;Q.bisectorRadian=tt/180*Math.PI,Q.offsetPos=[d*Math.cos(Q.bisectorRadian),d*Math.sin(Q.bisectorRadian)]}"disabled"===Q.state?(Q.endAngle=Q.startAngle,Q.radius=0,Q.opacity=0,$++):(Q.opacity=1,U.rects.push(Q)),S<2&&(delete Q.startAngle,delete Q.endAngle),_.push(Q)}return{barData:_}}function PolarBar_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function PolarBar_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?PolarBar_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):PolarBar_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var _t=function(t){function PolarBar(t){var e;return j()(this,PolarBar),(e=k()(this,R()(PolarBar).call(this,t))).type="polarbar",e.pillars=[],e.hoverIndex=-1,e.timer=null,e}return q()(PolarBar,t),P()(PolarBar,[{key:"beforeRender",value:function(){var t=this.getRenderData().arrLayout;return this.pillars=t.barData,{barData:t.barData.map((function(t){return{from:{endAngle:t.startAngle},to:t}}))}}},{key:"beforeUpdate",value:function(){var t=this.pillars,e=this.renderAttrs.pos,a=this.getRenderData().arrLayout,s=a.barData.map((function(a,s){var l=[e[0]+a.offsetPos[0],e[1]+a.offsetPos[1]];return a.pos=l,{from:PolarBar_objectSpread({},t[s]),to:PolarBar_objectSpread({},a)}}));return this.pillars=a.barData,{barData:s}}},{key:"getRenderData",value:function(){var t=this,e=this.renderAttrs,a=this.dataset[e.layoutBy];if(!a||0===a.length)return{barData:[]};var s=a.length>1?a.length:a[0].length;this.legendArr=Array.from({length:a.length},(function(){return 1}));var l=PolarBar_layout_layout.call(this,a,e),f=this.theme.colors,p=this.renderStyles;return l.barData.forEach((function(a,l){var d=t.style("pillar")(a.attrs,t.dataset.rows[l],l);a.fillColor=a.fillColor||f[l%s],a.strokeColor=e.strokeColor||"#FFF",a.pos=e.pos,a.hasOwnProperty("startAngle")&&a.hasOwnProperty("endAngle")?a.lineWidth=1:a.lineWidth=0;var y=deepObjectMerge({bgcolor:a.bgcolor||f[l%s]},p.bar,d);a=deepObjectMerge(a,y)})),{arrLayout:l}}},{key:"rendered",value:function(){}},{key:"defaultAttrs",value:function(){return{layer:"bar",activeOffset:10}}},{key:"defaultStyles",value:function(){return{}}},{key:"mouseleave",value:function(){var t=this;this.timer=setTimeout((function(){t.dataset.resetState(),t.hoverIndex=-1}),100)}},{key:"mousemove",value:function(t,e){clearTimeout(this.timer);var a=this.renderData(),s=e.attr("_index"),l=Math.floor(s/a.length);l!==this.hoverIndex&&(this.dataset.resetState(),this.dataset["rows"===this.renderAttrs.layoutBy?"cols":"rows"][l].state="hover",this.hoverIndex=l)}},{key:"groupMousemove",value:function(t,e){console.log(e)}},{key:"renderData",value:function(){var t=this.renderAttrs;return this.dataset[t.layoutBy]}},{key:"render",value:function(t){var e=this,a=this.renderAttrs,s=(a.clientRect,a.innerRadiusPx,a.radiusPx,this.theme.colors,this.renderStyles);return qcharts.h(Z.Group,{class:"container",ref:"wrap"},qcharts.h(Z.Group,{class:"rings-group",onMouseleave:this.mouseleave},t.barData.map((function(t,a){var l=getStyle(e,"sector",[{_index:a},s.sector],[e.dataset.rows[a],a]);return"disabled"===t.state||!1===l?qcharts.h(Node,null):qcharts.h(Z.Ring,K()({onMousemove:e.mousemove},l,{animation:{from:t.from,to:t.to}}))}))))}},{key:"renderAttrs",get:function(){var t=H()(R()(PolarBar.prototype),"renderAttrs",this),e=t.clientRect,a=e.height,s=e.width,l=e.top,f=e.left;return t.pos=[f+s/2,l+a/2],t}}]),PolarBar}(ct);function Funnel_layout_layout(t,e){for(var a=t,s=e.align,l=e.pyramid,f=e.clientRect,p=f.width,d=f.height,y=[],g=t[0][0].value,v=p/g,b=function(t){for(var e=0,a=0,s=t.length;a<s;a++)"disabled"!==t[a][0].state&&e++;0===e&&console.warn("data invalid!");return e||1}(a),m=0,_=0,O=a.length;_<O;_++){var w={colse:!0,lineWidth:3,points:[]},A=a[_][0].value,j=0,x=[0,.5];if("center"===s?(x=[.5,.5],j=.5):"right"===s&&(j=1,x=[1,.5]),w.points.push((g-A)*j*v,d*(_-m)/b),w.points.push((g*j+A*(1-j))*v,d*(_-m)/b),_-m+1<b){for(var P=1;"disabled"===a[_+P][0].state;)P++;var S=a[_+P][0].value;w.points.push((g*j+S*(1-j))*v,d*(_-m+1)/b),w.points.push((g-S)*j*v,d*(_-m+1)/b)}else l?w.points.push(j*p,d):(w.points.push((g*j+A*(1-j))*v,d*(_-m+1)/b),w.points.push((g-A)*j*v,d*(_-m+1)/b));w.opacity=1,"disabled"===a[_][0].state&&(w.points[6]=w.points[0],w.points[7]=w.points[1],w.points[4]=w.points[2],w.points[5]=w.points[3],w.opacity=0,m++),w.labelAttrs={opacity:"disabled"===!a[_][0].state?1:0,text:Math.round(100*A/g)+"%",anchor:x,pos:[p*j+10*(.5-j),(_-m+.5)*d/b],fillColor:"#FFF",fontSize:"12px"},y.push(w)}return y}function Funnel_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Funnel_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Funnel_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Funnel_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var Ot=function(t){function Funnel(t){var e;return j()(this,Funnel),e=k()(this,R()(Funnel).call(this,t)),p()(E()(e),"onMousemove",throttle((function(t,a){if(e.groups.length&&!isNaN(t.x)&&!isNaN(t.y)){var s=0,l=a.getOffsetPosition(t.x,t.y),f=U()(l,2),p=f[0],d=f[1];if(e.renderAttrs.transpose){var y=e.groups[0].size[1];s=Math.floor(d/y)}else{var g=e.groups[0].size[0];s=Math.floor(p/g)}if(s<1?s=0:s>e.groups.length-1&&(s=e.groups.length-1),e.hoverIndex!==s){var v=e.renderAttrs.bgpillarState;v[s]="hover",v[e.hoverIndex]="defualt",e.attr("bgpillarState",v),e.dataset.resetState(),e.dataset.cols[s].state="hover",e.hoverIndex=s}}}),16,!0)),p()(E()(e),"myClick",(function(){console.log("myclick")})),e.type="funnel",e.polygons=null,e.hoverIndex=-1,e}return q()(Funnel,t),P()(Funnel,[{key:"beforeRender",value:function(){var t=this.getRenderData().polygons;return t=t.map((function(t){return{from:{points:8===t.points.length?[t.points[6],t.points[7],t.points[4],t.points[5],t.points[4],t.points[5],t.points[6],t.points[7]]:[t.points[4],t.points[5],t.points[4],t.points[5],t.points[4],t.points[5]]},to:Funnel_objectSpread({pos:[0,0]},t)}})),this.polygons=t,{polygons:t}}},{key:"beforeUpdate",value:function(){var t=this.polygons,e=this.getRenderData().polygons;return e=e.map((function(e,a){return{from:{points:t[a].to.points},to:Funnel_objectSpread({},e)}})),this.polygons=e,{polygons:e}}},{key:"getRenderData",value:function(){var t=this,e=this.renderAttrs,a=Funnel_layout_layout(this.dataset[e.layoutBy],e),s=this.theme.colors,l=this.renderStyles;return{polygons:a=a.map((function(e,a){var f=t.style("polygon")(e.attrs,t.dataset.rows[a],a),p=deepObjectMerge({fillColor:e.bgcolor||s[a]},l.funnel,f);return e=deepObjectMerge(e,p)}))}}},{key:"rendered",value:function(){}},{key:"defaultAttrs",value:function(){var t=this.dataset.rows;return{layer:"bar",bgpillarState:Array.from({length:t[0].length},(function(){return"defalut"})),states:{bgpillar:{animation:{duration:20},default:{opacity:.01},hover:{opacity:.1}}}}}},{key:"defaultStyles",value:function(){return{}}},{key:"onMouseleave",value:function(t,e){this.dataset.resetState();var a=this.renderAttrs.bgpillarState;a[this.hoverIndex]="defualt",this.attr("bgpillarState",a),this.hoverIndex=-1}},{key:"render",value:function(t){var e=this.renderAttrs,a=e.clientRect;e.bgpillarState,e.states;return qcharts.h(Z.Group,{class:"container",ref:"wrap",pos:[a.left,a.top],size:[a.width,a.height]},qcharts.h(Z.Group,{ref:"pillars",class:"pillars-group",bgcolor:"#FF0"},t.polygons.map((function(t,e){return qcharts.h(Z.Polyline,K()({},t.from,{animation:{from:t.from,to:t.to}}))}))))}},{key:"renderAttrs",get:function(){return H()(R()(Funnel.prototype),"renderAttrs",this)}}]),Funnel}(ct);function Scatter_layout_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Scatter_layout_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Scatter_layout_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Scatter_layout_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var layout_getDataRange=function(t){return 0===t.length?[0,1]:[Math.min.apply(Math,nt()(t)),Math.max.apply(Math,nt()(t))]},layout_getBigRange=function(t){if(0===t.length)return[0,1];var e=layout_getDataRange(t),a=U()(e,2),s=a[0],l=a[1];return[10*(Math.round(s/10)-1),10*(Math.round(l/10)+1)]},layout_updateSectionVal=function(t,e){var a=e.min,s=e.max;"number"===jsType(a)&&(t[0]=a),"number"===jsType(s)&&(t[1]=s)};function Scatter_layout_layout(t,e,a){var s=U()(e,2),l=s[0],f=s[1],p=t.option,d=p.text,y=p.value,g=nt()(t),v=layout_getDataRange(t.rows.map((function(t){return t.length})))[1],b=[0,v-1],m=[0,v-1],_=g.some((function(t){return"string"===jsType(t.text)}));if(!_){m=layout_getBigRange(g.map((function(t){return t.text})));var O=axis_axis.call(this,{dataSet:data,stack:!1,field:d,section:m});b=layout_getDataRange(O)}if(g.some((function(t){return"string"===jsType(t.value)})))throw new Error("Scatter's value category data should be Number!");var w=layout_getBigRange(g.map((function(t){return t.layoutScaleValue}))),A=axis_axis.call(this,{dataSet:data,stack:!1,field:"layoutScaleValue",section:w}),j=layout_getDataRange(A);a&&(a[d]&&layout_updateSectionVal(m,a[d]),a[y]&&layout_updateSectionVal(w,a[y]));var x={};x[d]={min:m[0],max:m[1]},x[y]={min:w[0],max:w[1]};var P=scaleLinear().domain(b).range([0,l]),S=scaleLinear().domain(j).range([0,f]);return{data:t.rows.map((function(t){var e=t.map((function(e,a){var s=_?a:e.text,l=e.layoutScaleValue;return{pos:[P(s),f-S(l)],radius:5,anchor:[1,1],dataOrigin:Scatter_layout_objectSpread({},e.data),state:e.state,name:t.name,col:e.col,row:e.row}}));return{name:t.name,state:t.state,attrs:e}})),layoutWay:x}}function Scatter_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Scatter_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Scatter_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Scatter_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var wt=function(t){function Scatter(){var t,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return j()(this,Scatter),(t=k()(this,R()(Scatter).call(this,e))).type="scatter",t.scatterData=[],t.guideLineData=[],t}return q()(Scatter,t),P()(Scatter,[{key:"defaultAttrs",value:function(){return{layer:"scatter",labelField:null,areaField:null,areaRange:null,showGuideLine:!1,layoutWay:null}}},{key:"processData",value:function(){var t=this,e=this.dataset,a=this.renderAttrs,s=a.layoutWay,l=a.clientRect,f=Scatter_layout_layout.call(this,e,[l.width,l.height],s),p=f.data,d=f.layoutWay;return deepObjectMerge(this.renderAttrs.layoutWay||{},d),p.forEach((function(e,a){var s=t.theme.colors[a],l=function(t,e){if(/^rgba\(.+\)$/.test(t))return t;var a;if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(t))return 3===(a=t.substring(1).split("")).length&&(a=[a[0],a[0],a[1],a[1],a[2],a[2]]),"rgba("+[(a="0x"+a.join(""))>>16&255,a>>8&255,255&a].join(",")+","+e+")";throw new Error("Bad Hex")}(s,.3);e.attrs.forEach((function(t){t.strokeColor=s,t.fillColor=l}))})),p}},{key:"beforeUpdate",value:function(){var t=this;H()(R()(Scatter.prototype),"beforeUpdate",this).call(this);var e=this.processData(),a=e.map((function(t){return deepObjectMerge({},t)}));return e.forEach((function(e,a){var s=t.scatterData[a];e.attrs.forEach((function(e,a){var l=t.getRealRadius(Scatter_objectSpread({},e));if(e.radius=l,s&&s.attrs[a]){var f=s.attrs[a],p=nt()(e.pos),d=f.animation.to&&f.animation.to.pos?nt()(f.animation.to.pos):nt()(f.pos);if(p.toString()===d.toString()){var y=l,g=l;"disabled"===e.state&&(g=0),0==f.animation.to.radius&&(y=0),e.animation={from:{radius:y},to:{radius:g}}}else e.animation={from:{pos:d},to:{pos:p}}}else e.animation={from:{radius:0},to:{radius:l}}}))})),this.scatterData=a,e}},{key:"beforeRender",value:function(){var t=this;H()(R()(Scatter.prototype),"beforeRender",this).call(this);var e=this.processData();return this.scatterData=e.map((function(t){return deepObjectMerge({},t)})),e.forEach((function(e){e.attrs.forEach((function(e){var a=t.getRealRadius(Scatter_objectSpread({},e));e.animation={from:{radius:0},to:{radius:a}}}))})),e}},{key:"getRealRadius",value:function(t){var e=this.renderAttrs,a=e.areaRange,s=e.areaField,l=t.radius,f=t.dataOrigin;if(!s||!f.hasOwnProperty(s))return l;if(!a)return f[s];var p=nt()(this.dataset).map((function(t){return t.data[s]})).sort((function(t,e){return t-e}));return scaleLinear().domain([p[0],p[p.length-1]]).range(a)(f[s])}},{key:"onMouseenter",value:function(t,e){var a=e.children[0].attributes,s=a.row,l=a.col,f=a.pos;if(this.dataset.forEach((function(t){t.row===s&&t.col===l&&(t.state="hover")})),this.renderAttrs.showGuideLine){var p=this.renderAttrs.clientRect,d=p.height,y=p.width;this.guideLineData=[[[0,f[1]],[y,f[1]]],[[f[0],0],[f[0],d]]]}}},{key:"onMouseleave",value:function(){this.dataset.resetState(),this.guideLineData=[]}},{key:"renderGuideLine",value:function(){if(this.guideLineData.length>0)return this.guideLineData.map((function(t){return qcharts.h(Z.Polyline,{points:t,strokeColor:"#ddd",lineWidth:1,translate:[.5,.5]})}))}},{key:"renderScatter",value:function(t){var e=this,a=this.renderAttrs.labelField;return t.map((function(t,s){return t.attrs.map((function(t,l){var f=e.style("point")(t,Scatter_objectSpread({},t.dataOrigin),l);if(!1!==f){var p=null;if(a){var d=e.style("label")(t,Scatter_objectSpread({},t.dataOrigin),l);if(!1!==d&&t.dataOrigin.hasOwnProperty(a)){var y=t.strokeColor;p=deepObjectMerge(ft()(t,["strokeColor"]),{fillColor:y,text:t.dataOrigin[a],anchor:[.5,.5],fontSize:"12px",zIndex:10+s+l},d)}}var g=e.style("point:hover")(t,t.dataOrigin,l)||{},v="hover"===t.state?g:{};return qcharts.h(Z.Group,{onMouseenter:e.onMouseenter,onMouseleave:e.onMouseleave},qcharts.h(Z.Arc,K()({},t,f,v,{zIndex:9+s+l})),p?qcharts.h(Z.Label,p):null)}}))})).reduce((function(t,e){return t.concat(e)}),[])}},{key:"render",value:function(t){var e=this.renderAttrs.clientRect,a=e.height,s=e.width,l=e.left,f=e.top;return qcharts.h(Z.Group,{size:[s,a],pos:[l,f],zIndex:10},this.renderScatter(t),this.renderGuideLine())}},{key:"rendered",value:function(){}},{key:"renderAttrs",get:function(){return Scatter_objectSpread({},H()(R()(Scatter.prototype),"renderAttrs",this))}}]),Scatter}(ct);var utils_ellipse2path=function(t,e,a,s){if(!isNaN(t-e+a-s))return"M"+(t-a)+" "+e+"a"+a+" "+s+" 0 1 0 "+2*a+" 0a"+a+" "+s+" 0 1 0 "+-2*a+" 0z"};function Wave_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}var At=function(t){function Wave(t){var e;return j()(this,Wave),(e=k()(this,R()(Wave).call(this,t))).offsetR=50,e.tickId="",e.oldAttr={},e}return q()(Wave,t),P()(Wave,[{key:"rendered",value:function(){this.wave()}},{key:"defaultAttrs",value:function(){return{amplitude:8,wavelength:300,radius:150,percent:65,formatter:function(t){return t+"%"}}}},{key:"wave",value:function(){var t=this,e=0,a=this.$refs.clipWave,s=this.$refs.clipPath||a,l=s.originalContentRect[3],f=this.renderAttrs,p=f.percent,d=f.wavelength,y=f.amplitude,g=f.clientRect,v=f.animation,b=f.shape,m=24/v.duration,_=0-g.left,O=l*(100-p)/100+s.originalContentRect[1];this.tickId=Object(Z.requestAnimationFrame)((function(s){t.offsetR+=m;var f=[[_,O+l]];for(f.push([_,O+y*Math.sin(e+t.offsetR)]);_<g.width+g.left+g.right;)f.push([_,O+y*Math.sin(e+t.offsetR)]),_+=d/8,e+=Math.PI/4;var p=y*Math.sin(e+t.offsetR);f.push([_,O+p]),f.push([_,O+p]),f.push([_,O+l]),a.attr({points:f,clipPath:" "+b}),t.offsetR>=2*Math.PI&&(t.offsetR=t.offsetR%(2*Math.PI)),t.wave()}))}},{key:"render",value:function(){var t=this.renderAttrs,e=t.clientRect,a=t.shape,s=t.pos,l=t.formatter,f=t.percent,d=t.radius,y=this.renderStyles,g=getStyle(this,"wave",y.wave),v=getStyle(this,"shape",y.shape),b=getStyle(this,"text",y.text),m={from:{pos:this.oldAttr.pos||s},to:{pos:s}};return this.oldAttr=function(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Wave_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Wave_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}({},this.renderAttrs),qcharts.h(Z.Group,{zIndex:1,class:"container",pos:[e.left,e.top],size:[e.width,e.height]},qcharts.h(Z.Group,{animation:m},qcharts.h(Z.Path,{ref:"clipPath1",d:a,fillColor:v.fillColor}),qcharts.h(Z.Polyline,K()({ref:"clipWave"},g,{clipPath:a,smooth:!0})),qcharts.h(Z.Path,{ref:"clipPath",d:a,strokeColor:v.strokeColor,lineWidth:v.lineWidth}),!1===b?qcharts.h(Z.Node,null):qcharts.h(Z.Label,K()({text:l(f)},b,{pos:[d,d],anchor:[.5]}))))}},{key:"renderAttrs",get:function(){var t=H()(R()(Wave.prototype),"renderAttrs",this),e=t.clientRect,a=Math.floor(e.width),s=Math.floor(e.height),l=t.radius;return t.pos=[0,0],t.shape||(t.pos=[a/2-l,s/2-l],t.shape=utils_ellipse2path(l,l,t.radius,t.radius)),t}}]),Wave}(ct);function Gauge_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Gauge_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Gauge_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Gauge_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}function Gauge_tickLine(t,e,a,s,l){var f=e*Math.PI/180,p=Math.cos(f),d=Math.sin(f),y=p*t,g=d*t,v=l?[y-a*p,g-a*d]:[y+a*p,g+a*d],b=U()(v,2),m=b[0],_=b[1],O=l?[y-(a+s)*p,g-(a+s)*d]:[y+(a+s)*p,g+(a+s)*d],w=l?p:-p,A=l?d:-d,j=[.5,.5];return Math.abs(w)>Math.abs(A)?j[0]=w<0?0:w:j[1]=A>0?A:0,{points:[[y,g],[m,_]],labelPos:O,anchor:j}}var jt=function(t){function Gauge(t){var e;return j()(this,Gauge),(e=k()(this,R()(Gauge).call(this,t))).gaugeAnimations=[],e.type="Gauge",e.oldPos=null,e.style("tickText",!0),e.style("tickLine",!0),e}return q()(Gauge,t),P()(Gauge,[{key:"defaultAttrs",value:function(){return{layer:"gauge",min:0,max:100,percent:50,lineCap:"round",_useBuiltInColors:!1,lineWidth:10,startAngle:140,endAngle:400,strokeBgcolor:"#dde3ea",title:function(t){return t},tickStep:10,tickLength:10,labelOffset:5,tickFormatter:function(t){return t}}}},{key:"transform",value:function(){var t=this.renderAttrs,e=t.radius,a=t.startAngle,s=t.endAngle,l=t.min,f=t.max,p=t.percent;return{dataOrigin:p,startAngle:a,radius:e,endAngle:(s-a)*(p-l)/Math.abs(f-l)+a,strokeColor:this.color(0)}}},{key:"beforeRender",value:function(){H()(R()(Gauge.prototype),"beforeRender",this).call(this);var t=this.transform();return this.gaugeAnimations={from:{startAngle:t.startAngle,endAngle:t.startAngle},to:{startAngle:t.startAngle,endAngle:t.endAngle}},t}},{key:"beforeUpdate",value:function(){H()(R()(Gauge.prototype),"beforeUpdate",this).call(this);var t=this.transform(),e={from:{startAngle:t.startAngle,endAngle:t.startAngle},to:{startAngle:t.startAngle,endAngle:t.endAngle}};return this.gaugeAnimations&&(e.from=Gauge_objectSpread({},this.gaugeAnimations.to)),this.gaugeAnimations=Gauge_objectSpread({},e),t}},{key:"color",value:function(t){return this.theme.colors[t]}},{key:"renderPointer",value:function(t,e){var a=this.style("pointer")(t,t.dataOrigin,0);if(!1!==a){var s=this.gaugeAnimations,l=s.from,f=s.to,p=l.endAngle+90,d={from:{rotate:p},to:{rotate:f.endAngle+90}},y=this.renderAttrs,g=y.radius,v=(y.pointerWidth,y.center),b=y.tickLength,m=y.labelOffset,_=b+y.lineWidth+m+e;b<0&&(_=_-b-m);var O=g-_,w=g/10,A=this.color(0),j=U()(v,2),x=j[0],P=j[1],S={fillColor:A,rotate:p,transformOrigin:v,zIndex:11,points:[[x,P],[x-w/2,P-.1*O],[x,P-O],[x+w/2,P-.1*O],[x,P]],close:!0};return qcharts.h(Z.Polyline,K()({},S,a,{animation:d}))}}},{key:"isStyleExist",value:function(t){var e=this.style("".concat(t));return Boolean(e)}},{key:"render",value:function(){var t=this,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},a=this.renderAttrs,s=a._useBuiltInColors,l=a.title,f=a.percent,p=a.center,d=a.radius,y=a.startAngle,g=a.endAngle,v=a.lineWidth,b=a.lineCap,m=a.strokeBgcolor,_=a.clientRect,O=[p[0],1.25*p[1]],w=this.ticks,A=this.isStyleExist("tickLine"),j=this.isStyleExist("tickText"),x=l||f,P=null;if(!1!==s){var S=this.theme.colors.reverse(),k={vector:[0,0,2*p[0],2*p[1]],colors:[{color:S[0],offset:0},{color:S[1],offset:.3},{color:S[2],offset:1}]};P=new Z.Gradient(k)}var M=16;!1!==j&&w.map((function(a,s){var l=t.style("tickText")(e,e.dataOrigin,s);if(l&&l.fontSize&&("number"===jsType(l.fontSize)&&M<l.fontSize&&(M=l.fontSize),"string"===jsType(l.fontSize))){var f=Number(l.fontSize.replace("px",""));"number"===jsType(f)&&M<f&&(M=f)}}));var R=[_.left,_.top],D=[_.width,_.height],E={from:{pos:this.oldPos?this.oldPos:R},to:{pos:R}};return this.oldPos=R,qcharts.h(Z.Group,{pos:R,size:D,animation:E},qcharts.h(Z.Arc,{pos:p,lineWidth:v,lineCap:b,startAngle:y,endAngle:g,strokeColor:m,radius:d,zIndex:10}),qcharts.h(Z.Arc,K()({pos:p,lineCap:b,lineWidth:v},e,{animation:this.gaugeAnimations},P?{strokeColor:P}:{strokeColor:this.color(0)},this.style("arc")(e,e.dataOrigin,0),{zIndex:11})),this.renderPointer(e,M),x?qcharts.h(Z.Label,K()({text:"function"===jsType(x)?x(e.dataOrigin):x,pos:O,textAlign:"center",zIndex:10,anchor:[.5,1]},this.style("title")(e,e.dataOrigin,0))):null,!1!==A||!1!==j?w.map((function(a,s){return qcharts.h(Z.Group,{pos:p,anchor:[0,0],zIndex:1010},!1!==A?qcharts.h(Z.Polyline,K()({points:a.points,strokeColor:m},t.style("tickLine")(e,e.dataOrigin,s))):null,!1!==j?qcharts.h(Z.Label,K()({},a.label,t.style("tickText")(e,e.dataOrigin,s))):null)})):null)}},{key:"rendered",value:function(){var t=this;this.on("resize",(function(){return t.forceUpdate()}))}},{key:"renderAttrs",get:function(){var t=H()(R()(Gauge.prototype),"renderAttrs",this),e=t.clientRect,a=e.height,s=e.width,l=[s,a],f=~~Math.min.apply(l,l.map((function(t){return t/2})));return Gauge_objectSpread({},t,{radius:f,pointerWidth:f/10,center:[s/2,a/2]})}},{key:"ticks",get:function(){for(var t=this.renderAttrs,e=t.min,a=t.max,s=t.radius,l=t.startAngle,f=t.endAngle,p=t.lineWidth,d=t.tickStep,y=t.tickLength,g=t.labelOffset,v=t.tickFormatter,b=Math.abs(a-e)/d,m=y>0,_=(f-l)/b,O=[],w=m?s-p/2:s+p/2,A=-1;++A<=b;){var j=Gauge_tickLine(w,A*_+l,Math.abs(y),Math.abs(g),m);O.push({points:j.points,label:{text:v(A*d+e).toFixed(0),pos:j.labelPos,anchor:j.anchor}})}return(O[0].angle+O[O.length-1].angle)%(2*Math.PI)==0&&O.pop(),O}}]),Gauge}(ct);function RadialBar_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function RadialBar_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?RadialBar_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):RadialBar_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}var RadialBar_flattern=function(t){return[].concat.apply([],t)},xt=function(t){function RadialBar(){var t,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return j()(this,RadialBar),(t=k()(this,R()(RadialBar).call(this,e))).type="RadialBar",t.animators=[],t.oldPos=null,t}return q()(RadialBar,t),P()(RadialBar,[{key:"defaultAttrs",value:function(){return{layer:"radialBar",radius:.8,innerRadius:0,startAngle:-90,endAngle:270,lineWidth:5,strokeBgcolor:"#f5f5f5"}}},{key:"transform",value:function(t){var e=this,a=this.renderAttrs,s=a.startAngle,l=a.endAngle,f=a.max,p=a.min,d=a.lineWidth,y=a.colors,g=0;if(isNaN(f)||isNaN(p)){var v=deepObjectMerge(t);v.sort((function(t,e){return e.value-t.value})),g=1.3*v[0].value}else g=f-p;var b=l-s,m=this.innerRadius,_=this.maxOuterRadius,O=t.length,w=(2*(_-m)-d*(d>=5?1:O-1))/(1.5*(2*O-1)),A=null;return t.forEach((function(t,a){A=+t.value,t.pos=[_,_],t.anchor=[.5,.5],t.lineWidth=d,t.startAngle=s,t.endAngle="disabled"===t.state?s:s+b*A/g,t.innerRadius=m+1.5*a*w,t.radius=t.innerRadius+1*w,t.strokeColor=y[a];var l=e.style("arc")(t,t.dataOrigin,t.index);Object.assign(t,l)})),t.sort((function(t,e){return e.radius-t.radius}))}},{key:"beforeRender",value:function(){H()(R()(RadialBar.prototype),"beforeRender",this).call(this);var t=this.renderAttrs.startAngle,e=RadialBar_flattern(this.dataset);return e=this.transform(e),this.animators=e.map((function(e){return{from:{startAngle:t,endAngle:t},to:{startAngle:t,endAngle:e.endAngle}}})),e}},{key:"beforeUpdate",value:function(){var t=this;H()(R()(RadialBar.prototype),"beforeUpdate",this).call(this);var e=this.renderAttrs.startAngle,a=RadialBar_flattern(this.dataset);return a=this.transform(a),this.animators=a.map((function(s,l){if(s.anticlockwise)return s.disabled?{from:{opacity:1},to:{opacity:0}}:{from:{opacity:1},to:{opacity:1}};var f=t.animators[l]?t.animators[l].to:a[l-1];return f||(f={startAngle:e,endAngle:e}),{from:{startAngle:f.startAngle,endAngle:f.endAngle},to:{startAngle:s.startAngle,endAngle:s.endAngle}}})),a}},{key:"onMouseenter",value:function(t,e){var a=e.children[1].attributes,s=a.col,l=a.row;this.dataset.forEach((function(t){t.state=t.col===s&&t.row===l?"hover":"default"}))}},{key:"onMouseleave",value:function(){this.dataset.resetState()}},{key:"render",value:function(){var t=this,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],a=this.renderAttrs.strokeBgcolor,s={from:{pos:this.oldPos?this.oldPos:this.center},to:{pos:this.center}};return this.oldPos=this.center,qcharts.h(Z.Group,null,e.map((function(e,l){var f=e.col,p=e.row,d=e.data;return qcharts.h(Z.Group,{pos:t.center,animation:s,onMouseenter:t.onMouseenter,onMousemove:t.onMouseenter,onMouseleave:t.onMouseleave},qcharts.h(Z.Arc,K()({},e,{startAngle:0,endAngle:360,strokeColor:a})),qcharts.h(Z.Arc,K()({pos:t.center},RadialBar_objectSpread({},e,{col:f,row:p}),{animation:t.animators[l]},t.style("arc")(e,d,l))))})))}},{key:"rendered",value:function(){}},{key:"renderAttrs",get:function(){var t=H()(R()(RadialBar.prototype),"renderAttrs",this),e=t.clientRect;return RadialBar_objectSpread({},t,{size:[e.width,e.height]})}},{key:"maxOuterRadius",get:function(){var t=this.renderAttrs,e=t.startAngle,a=t.endAngle,s=t.radius,l=t.size,f=U()(l,2),p=f[0],d=f[1];return a-e==90?Math.min(p,d)*s:Math.min(p,d)/2*s}},{key:"center",get:function(){var t=this.renderAttrs,e=t.startAngle,a=t.endAngle,s=t.radius,l=t.size,f=(a+e)/2,p=U()(l,2),d=p[0],y=p[1],g=this.maxOuterRadius,v=d/2-g,b=y/2-g;if(a-e==90){var m=s*d,_=s*y;v+=Math.cos(f)<0?m/2:-m/2,b+=Math.sin(f)<0?_/2:-_/2}return[v,b]}},{key:"innerRadius",get:function(){var t=this.renderAttrs,e=t.radius,a=t.innerRadius;return a<=0?0:this.maxOuterRadius/e*a}}]),RadialBar}(ct),Pt=function(t){function BasePlugin(t){var e;return j()(this,BasePlugin),(e=k()(this,R()(BasePlugin).call(this,t))).theme=lt.plugins[e.constructor.name],e.theme.set=function(t){e.theme===lt.visuals[e.constructor.name]&&(e.theme=w()(e.theme)),e.theme=deepObjectMerge(e.theme,t)},e}return q()(BasePlugin,t),BasePlugin}(ot);function Axis_layout_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}function Axis_layout_objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Axis_layout_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Axis_layout_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}function Axis_layout_layout(t,e){var a={scales:[],labels:[],grids:[],axisPoints:[],orient:e.orient},s={top:{label:{anchor:[.5,1],padding:[0,0,6,0],textAlign:"center"},scale:{anchor:[.5,1],width:1,height:4},grid:{strokeColor:"#666"},name:{},type:"category"},bottom:{scale:{anchor:[.5,0],width:1,height:4},label:{anchor:[.5,0],padding:[6,0,0,0],textAlign:"center"},grid:{strokeColor:"#666"},name:{},type:"category"},left:{label:{padding:[0,8,0,0],anchor:[1,.5],textAlign:"right"},scale:{anchor:[1,.5],width:4,height:1},grid:{strokeColor:"#666"},name:{},type:"value"},right:{label:{anchor:[0,.5],padding:[0,0,0,8]},scale:{anchor:[0,.5],width:4,height:1},grid:{strokeColor:"#666"},name:{},type:"value"}},f=e.stack,p=e.splitNumber,d=e.clientRect,y=e.orient,g=e.axisGap;e.transpose&&["top","bottom","right","left"].forEach((function(t){s[t].type="value"===s[t].type?"category":"value"}));var v=d.width,b=d.height,m=axis_axis.call(this,{dataSet:t,stack:f,splitNumber:p}),_=Math.max.apply(this,m),O=Math.min.apply(this,m),w=e.type||s[y].type,A="left"===y||"right"===y?b:v,j=this.dataset.datasetReverse;if("value"===w){var x=scaleLinear().domain([O,_]).range([0,A]);m.forEach((function(t){var e=getItemAttrs(s,y,{text:""+l()(j)=="function"?j(t):t},t,x,d),f=e.scaleAttr,p=e.labelAttr,g=e.gridAttr;a.scales.push(f),a.labels.push(p),a.grids.push(g)}))}else if("category"===w){var P=t[0],S=g?P.length:P.length-1,k=scaleLinear().domain([0,S]).range([0,A]);if(P.forEach((function(t,e){var l=getItemAttrs(s,y,t,e,k,d,g),f=l.scaleAttr,p=l.labelAttr,v=l.gridAttr;a.scales.push(f),a.labels.push(p),a.grids.push(v)})),g){var M=getItemAttrs(s,y,{},P.length,k,d,g),R=M.scaleAttr,D=M.gridAttr;a.scales.push(R),a.grids.push(D)}}if("left"===y||"right"===y){var E="left"===y?0:v;a.axisPoints=[[E,b],[E,0]],a.nameAttr={pos:[E,0],anchor:[.5,1],padding:[10]}}else if("bottom"===y||"top"===y){var C="bottom"===y?b:0;a.axisPoints=[[0,C],[v,C]],a.nameAttr={pos:[v,C],anchor:[0,1]}}return a}function getItemAttrs(t,e,a,s,l,f,p){var d=emptyObject(),y=f.width,g=f.height,v=f.left,b=(f.top,p?s+.5:s);if("left"===e||"right"===e){var m="left"===e?0:y,_=l(s);d.scaleAttr=Axis_layout_objectSpread({},t[e].scale,{pos:[m,g-_]}),d.gridAttr=Axis_layout_objectSpread({},t[e].grid,{points:[[m,g-_],[y,g-_]]}),d.labelAttr=Axis_layout_objectSpread({},t[e].label,{width:v,text:""+a.text,pos:[m,g-l(b)]})}else if("top"===e||"bottom"===e){var O="top"===e?0:g,w=l(s);d.scaleAttr=Axis_layout_objectSpread({},t[e].scale,{pos:[w,O]}),d.gridAttr=Axis_layout_objectSpread({},t[e].grid,{points:[[w,0],[w,O]]}),d.labelAttr=Axis_layout_objectSpread({},t[e].label,{width:v,text:""+a.text,pos:[l(b),O]})}return d}var St=function(t){function Axis(t){var e;return j()(this,Axis),(e=k()(this,R()(Axis).call(this,t))).renderAxis=emptyObject(),e}return q()(Axis,t),P()(Axis,[{key:"beforeRender",value:function(){return this.getRenderData().axis}},{key:"beforeUpdate",value:function(){return this.getRenderData().axis}},{key:"rendered",value:function(){}},{key:"defaultAttrs",value:function(){return{layer:"axis",zIndex:-1,formatter:function(t){return t}}}},{key:"getRenderData",value:function(){var t=this.renderAttrs,e=this.dataset[t.layoutBy];return{axis:Axis_layout_layout.call(this,e,t)}}},{key:"render",value:function(t){var e=this,a=this.renderAxis||emptyObject();this.renderAxis=t;var s=this.renderAttrs,l=s.clientRect,f=s.formatter,p=s.orient,d=s.name,y=this.renderStyles,g=getStyle(this,"axis",y.axis),v=this.chart.plugins.map((function(t){if("Axis"===t.constructor.name)return t.renderAttrs.orient})).filter(Boolean),b=getStyle(this,"name",[y.name||{},w()(t.nameAttr,[],["pos"])]),m={from:{pos:a.nameAttr&&a.nameAttr.pos||t.nameAttr.pos},to:{pos:t.nameAttr.pos}};return qcharts.h(Z.Group,{ref:"wrap",pos:[l.left,l.top]},qcharts.h(Z.Polyline,K()({},g,{animation:{from:{points:a.axisPoints},to:{points:t.axisPoints}}})),qcharts.h(Z.Group,null,t.grids.map((function(s,l){var f={from:{points:a.grids&&a.grids[l]&&a.grids[l].points||s.points},to:{points:s.points}},d=getStyle(e,"grid",y.grid,[l]);if("left"===p||"right"===p){if(0===l&&v.includes("bottom")||l===t.grids.length-1&&v.includes("top"))return qcharts.h(Z.Node,null)}else if(("top"===p||"bottom"===p)&&(0===l&&v.includes("left")||l===t.grids.length-1&&v.includes("right")))return qcharts.h(Z.Node,null);return!1===d?qcharts.h(Z.Node,null):qcharts.h(Z.Polyline,K()({},d,{points:f.from.points,animation:f}))})),t.scales.map((function(t,s){var l={from:{pos:a.scales&&a.scales[s]&&a.scales[s].pos||t.pos},to:{pos:t.pos}},f=getStyle(e,"scale",y.scale,[t,s]);return!1===f?qcharts.h(Z.Node,null):qcharts.h(Z.Group,K()({},w()(t,[],["pos"]),f,{animation:l}))})),t.labels.map((function(t,s){var l=a.labels&&a.labels[s]&&a.labels[s].pos||t.pos,p=getStyle(e,"label",y.label,[t,s]),d={from:{pos:l},to:{pos:t.pos}};return!1===p?qcharts.h(Z.Node,null):qcharts.h(Z.Label,K()({},w()(t,[],["pos","text"]),p,{text:f(t.text),animation:d}))}))),!1===b||void 0===d||0===d.length?qcharts.h(Z.Node,null):qcharts.h(Z.Label,K()({},b,{text:d,animation:m})))}},{key:"renderAttrs",get:function(){var t=H()(R()(Axis.prototype),"renderAttrs",this),e=this.chart.visuals[0];return void 0===t.axisGap&&e&&"Bar"===e.constructor.name&&(t.axisGap=!0),e&&"Scatter"===e.constructor.name&&(t.type="value"),void 0===t.transpose&&e&&(t.transpose=e.renderAttrs.transpose),t}}]),Axis}(Pt);function Legend_ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(t);e&&(s=s.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),a.push.apply(a,s)}return a}var kt=function(t){function Legend(t){var e;return j()(this,Legend),(e=k()(this,R()(Legend).call(this,t))).arrLayout=null,e.state={page:1,totalPage:1,perPageWidthOrHeight:0,paginationSize:[0,0],groupSize:[0,0]},e.twiceRender=!1,e.animationSwitch=!1,e.posFrom=[0,0],e.currentPos=[0,0],e.legendStateArray=[],e}return q()(Legend,t),P()(Legend,[{key:"defaultAttrs",value:function(){return p()({orient:"horizontal",align:["center","bottom"],formatter:function(t){return t.value||t},iconSize:[12,12],textSize:[40,12],outGap:10,innerGap:4},"formatter",(function(t){return t.text||t}))}},{key:"beforeRender",value:function(){return this.twiceRender?this.reset():this.arrLayout=this.getRenderData().arrLayout,this.arrLayout}},{key:"getRenderData",value:function(){var t=this,e=this.renderAttrs,a=e.layoutBy,s=e.innerGap,l=this.dataset[a].map((function(e,a){return t.legendStateArray.push(e.state),{name:e.name,state:e.state}})).map((function(t){return{textAttrs:{text:t.name,paddingLeft:s}}}));return this.arrLayout=l,{arrLayout:l}}},{key:"itemClick",value:function(t,e){var a=e.attr("_index"),s=this.dataset[this.renderAttrs.layoutBy][a].state;s="disabled"!==s?"disabled":"default",this.dataset[this.renderAttrs.layoutBy][a].state=s}},{key:"itemLeave",value:function(t,e){var a=e.attr("_index");this.legendStateArray[a]="default",this.update()}},{key:"itemMove",value:function(t,e){var a=e.attr("_index");"default"===this.legendStateArray[a]&&(this.legendStateArray[a]="hover",this.update())}},{key:"beforeUpdate",value:function(t){return t&&"source"===t.type?(this.animationSwitch=!0,this.twiceRender=!1,this.beforeRender()):(t&&"resize"===t.type&&(this.animationSwitch=!0),this.arrLayout)}},{key:"rendered",value:function(){}},{key:"afterrender",value:function(t,e){this.twiceRender?this.animationSwitch=!1:(this.twiceRender=!0,this.reset(),this.update())}},{key:"reset",value:function(){var t=this,e=[0,0],a=this.renderAttrs,s=a.outGap,l=(a.innerGap,a.iconSize),f=(a.textSize,0),d=this.theme.colors;this.arrLayout=this.arrLayout.map((function(a,y){a.iconAttrs={};t.$refs["icon"+y].getBoundingClientRect();var g=t.$refs["text"+y].getBoundingClientRect(),v={bgcolor:d[y],size:l,pos:t.isVertical?[0,e[1]+(g.height-l[1])/2]:[e[0],(g.height-l[1])/2]};"disabled"===t.dataset[t.renderAttrs.layoutBy][y].state&&(v.bgcolor="#ccc",v.fillColor="#ccc");var b=function(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?Legend_ownKeys(Object(a),!0).forEach((function(e){p()(t,e,a[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):Legend_ownKeys(Object(a)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))}))}return t}({},a.textAttrs,{pos:t.isVertical?[l[0],e[1]]:[l[0]+e[0],0],text:a.textAttrs.text}),m=[l[0]+g.width,l[1]];return m[0]+s>f&&(f=m[0]+s),e=t.isVertical?[f,e[1]+g.height+s]:[e[0]+m[0]+s,g.height],{iconAttrs:v,textAttrs:b}})),this.state.groupSize=e}},{key:"changePage",value:function(t,e){"prev"===e.name&&this.state.page>1?(this.state.page--,this.animationSwitch=!0,this.update()):"next"===e.name&&this.state.page<this.state.totalPage&&(this.state.page++,this.animationSwitch=!0,this.update())}},{key:"render",value:function(t){var e=this;this.posFrom=this.currentPos;var a=this.pos,s=a.pos,l=a.pagePos;this.posFrom=this.twiceRender&&this.animationSwitch?this.posFrom:s;var f=this.state,p=f.page,d=f.totalPage;this.currentPos=s;var y=this.renderStyles,g=this.isVertical;this.twiceRender&&(s[0]=s[0]-1);var v=this.renderAttrs.formatter;if(t)return qcharts.h(Z.Group,{size:[1,1],onAfterrender:this.afterrender},qcharts.h(Z.Group,{animation:{from:{pos:this.posFrom},to:{pos:s},duration:this.twiceRender&&this.animationSwitch?this.renderAttrs.animation.duration:0}},t.map((function(t,a){var s=e.dataset[e.renderAttrs.layoutBy][a],l="hover"===e.legendStateArray[a],f="disabled"===s.state,p=getStyle(e,"point",[{},y.point],[s,a]),d=l?getStyle(e,"point:hover",[{}],[s,a]):{};f&&t.iconAttrs.bgcolor&&(d.bgcolor="#ccc",d.fillColor="#ccc");var g=getStyle(e,"text",[{},y.text],[s,a]),b=l?getStyle(e,"text:hover",[{}],[s,a]):{};return t.textAttrs.text=v(s.name,s.data,a),qcharts.h(Z.Group,K()({onClick:e.itemClick,onMouseleave:e.itemLeave,onMouseenter:e.itemMove,onMousemove:e.itemMove},{_index:a}),qcharts.h(dt,K()({ref:"icon"+a},t.iconAttrs,p,d)),qcharts.h(Z.Label,K()({ref:"text"+a},t.textAttrs,g,b)))}))),d<=1?null:qcharts.h(Z.Group,{pos:l.pos},qcharts.h(Z.Path,K()({pos:l.pagePrev},g?{marginLeft:5}:{},{name:"prev",padding:[g?2:1,0,0,0],d:g?"M 0 15 L 15 15 L7.5 0 Z":"M 0 7.5 L 13 0 L13 15 Z",fillColor:p<=1?"#ccc":"#324556",onClick:this.changePage})),qcharts.h(Z.Label,{pos:l.pageText,ref:"paginationText",fontSize:"14px",text:p+"/"+d,lineBreak:"normal",padding:[0,2]}),qcharts.h(Z.Path,K()({pos:l.pageNext},g?{marginLeft:5}:{},{name:"next",padding:[g?2:1,0,0,0],d:g?"M 0 0 L 15 0 L7.5 13 Z":"M 13 7.5 L 0 0 L0 15 Z",fillColor:p>=d?"#ccc":"#324556",onClick:this.changePage}))))}},{key:"renderAttrs",get:function(){return H()(R()(Legend.prototype),"renderAttrs",this)}},{key:"pos",get:function(){var t=this.renderAttrs,e=t.clientRect,a=t.align,s=this.state.groupSize,l=e.width,f=e.height,p=e.top,d=e.left,y=e.right,g=e.bottom,v=l+d+y,b=f+p+g;this.state.paginationSize=this.isVertical?[30,60]:[70,25];var m,_,O,w,isValidLayout=function(t,e){return"horizontal"===e?["default","left","center","right"].indexOf(t)>-1:["default","top","center","bottom"].indexOf(t)>-1},A={default:0,left:2,center:(v-s[0])/2,right:v-s[0]-2,numberOrPercent:function(t){if("number"==typeof t)return t;var e=0;try{e=parseFloat(t)/100}catch(t){}return(v-s[0])*e}},j={default:0,top:2,center:b/2-s[1]/2,bottom:b-s[1]-2,numberOrPercent:function(t){if("number"==typeof t)return t;var e=0;try{e=parseFloat(t)/100}catch(t){}return(b-s[1])*e}},x=[isValidLayout(a[0],"horizontal")?A[a[0]]:A.numberOrPercent(a[0]),isValidLayout(a[1],"vertical")?j[a[1]]:j.numberOrPercent(a[1])],P=Math.ceil(this.state.groupSize[0]/v),S=Math.ceil(this.state.groupSize[1]/b),k=this.state.paginationSize;if(P>1){this.state.totalPage=P;var M=x[1]+s[1]+k[1]>b?x[1]-k[1]:x[1]+s[1];m=[v-k[0],M],_=[0,0],O=[15,0],w=[45,0],x[0]=-(this.state.page-1)*v}else if(S>1){this.state.totalPage=S,m=[x[0]+s[0]+k[0]>v?x[0]-k[0]:x[0]+s[0],b-k[1]],_=[5,0],O=[0,20],w=[5,40],x[1]=-(this.state.page-1)*b}else this.state.page=1,this.state.totalPage=1;return{pos:x,pagePos:{pos:m,pagePrev:_,pageText:O,pageNext:w}}}},{key:"isVertical",get:function(){return"vertical"===this.renderAttrs.orient}}]),Legend}(Pt),Mt=function(t){function Tooltip(t){var e;return j()(this,Tooltip),e=k()(this,R()(Tooltip).call(this,t)),p()(E()(e),"tipMousemove",throttle((function(t){var a=window.innerWidth-e.$el.getBoundingClientRect().width-5,s=window.innerHeight-e.$el.getBoundingClientRect().height-5,l=t.y>s?s:t.y,f=t.x>a?a:t.x;e.$el.style.left=f+"px",e.$el.style.top=l+"px"}),100,1)),e.$el=null,e}return q()(Tooltip,t),P()(Tooltip,[{key:"beforeRender",value:function(){}},{key:"beforeUpdate",value:function(){}},{key:"rendered",value:function(){var t=this,e=this.renderAttrs,a=e.colors,s=e.sort,l=e.formatter;this.chart.dataset.on("change",(function(e){var f=e.option;if(t.$el.innerHTML="","hover"===f.value){var p=[].concat(t.chart.dataset).filter((function(t){return"hover"===t.state}));if(s&&p.sort(s),p.length){var d="",y=document.createElement("div");y.style.cssText="white-space:nowrap;padding:6px 10px;background-color:rgba(0,0,0,0.5);color:#fff;",p.forEach((function(t,e){var s="".concat(t.text,"：").concat(t.value);l&&(s=l(t.data)||s);var f='<div class="tooltip-item"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:'.concat(a[e],'"></span><span class="text">').concat(s,"</span></div>");d+=f})),y.innerHTML=d,t.$el.appendChild(y)}}else"reset"===f.name&&(t.$el.innerHTML="")})),document.body.addEventListener("mousemove",this.tipMousemove)}},{key:"render",value:function(){this.$el||(this.$el=document.createElement("div"),this.$el.className="qcharts-tooltip",this.$el.style.cssText="transition:top 300ms ease-out,left 300ms ease-out;position:absolute;pointEvents:none;pointer-events:none;font-size:14px;"),document.body.appendChild(this.$el)}},{key:"renderAttrs",get:function(){return H()(R()(Tooltip.prototype),"renderAttrs",this)}}]),Tooltip}(Pt),Rt=function(t){function Chart(t){var e;j()(this,Chart),e=k()(this,R()(Chart).call(this));var a=t.container;if("string"===jsType(a)&&(a=document.querySelector(a)),e.$el=a,e.visuals=[],e.plugins=[],e.children=[],Object(at.b)()){var s=t.pixelUnit,l=void 0===s?"rpx":s,f=t.size,p=t.contextType,d=1;if("rpx"===l)d=wx.getSystemInfoSync().windowWidth/750;e.scene=new Z.Scene({width:f[0]/d,height:f[1]/d,extra:E()(e),contextType:p,displayRatio:d})}else e.scene=new Z.Scene({container:a,displayRatio:Object(at.a)().devicePixelRatio});return e.scene.addEventListener("resize",(function(t){e.checkUpdate({type:"resize"})})),e.checkUpdate=throttle((function(t){e.children.forEach((function(e){e.update(t)}))}),300),e.checkRender=throttle((function(t){e.children.forEach((function(t){t.created(),e.dataset.addDep(t)})),e.__store.__isCreated__=!0,e.dispatchEvent("updated",emptyObject())})),e}return q()(Chart,t),P()(Chart,[{key:"update",value:function(t){this.checkUpdate(t)}},{key:"append",value:function(t){var e=this;if([At,jt].some((function(e){return t instanceof e})))this.source([],{});else if(!this.dataset)return void console.error("Chart should set data before append some graphs");"array"!==jsType(t)?(t instanceof ct?this.visuals.push(t):t instanceof Pt&&this.plugins.push(t),this.children.push(t),t.chart=this,t.scene=this.scene,this.checkRender()):t.forEach((function(t){e.append(t)}))}},{key:"getDataURL",value:function(){return this.scene.snapshot().toDataURL()}}]),Chart}(ot),Dt={version:"1.0.0",Line:yt,Pie:gt,Area:vt,Radar:bt,Bar:mt,PolarBar:_t,Funnel:Ot,Scatter:wt,Gauge:jt,RadialBar:xt,Legend:kt,Axis:St,Wave:At,Tooltip:Mt,h:h,theme:lt,Chart:Rt,easing:y};Object(at.a)().qcharts=Dt;e.default=Dt}]).default}));
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("spritejs/spritejs.min.js"));
+	else if(typeof define === 'function' && define.amd)
+		define(["spritejs"], factory);
+	else if(typeof exports === 'object')
+		exports["qcharts"] = factory(require("spritejs/spritejs.min.js"));
+	else
+		root["qcharts"] = factory(root["spritejs"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE__0__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(18);
+
+var assertThisInitialized = __webpack_require__(9);
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(17);
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var superPropBase = __webpack_require__(24);
+
+function _get(target, property, receiver) {
+  if (typeof Reflect !== "undefined" && Reflect.get) {
+    module.exports = _get = Reflect.get;
+  } else {
+    module.exports = _get = function _get(target, property, receiver) {
+      var base = superPropBase(target, property);
+      if (!base) return;
+      var desc = Object.getOwnPropertyDescriptor(base, property);
+
+      if (desc.get) {
+        return desc.get.call(receiver);
+      }
+
+      return desc.value;
+    };
+  }
+
+  return _get(target, property, receiver || target);
+}
+
+module.exports = _get;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(21);
+
+var iterableToArrayLimit = __webpack_require__(22);
+
+var nonIterableRest = __webpack_require__(23);
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(26);
+
+var iterableToArray = __webpack_require__(27);
+
+var nonIterableSpread = __webpack_require__(28);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function filterClone(obj, include, exclude) {
+  var res = obj;
+
+  if (_typeof(obj) == 'object') {
+    if (getType(obj) === 'array') {
+      res = [];
+
+      for (var i = 0, len = obj.length; i < len; i++) {
+        res.push(filterClone(obj[i], include, exclude));
+      }
+    } else if (obj !== null) {
+      res = Object.create(null);
+
+      for (var j in obj) {
+        if (include && getType(include) === 'array' && include.length) {
+          if (include.indexOf(j) != -1) {
+            res[j] = filterClone(obj[j], include, exclude);
+          }
+        } else if (include && getType(include) === 'regexp') {
+          if (include.test(j)) {
+            res[j] = filterClone(obj[j], include, exclude);
+          }
+        } else if (include && getType(include) === 'function') {
+          if (include(j, obj[j])) {
+            res[j] = filterClone(obj[j], include, exclude);
+          }
+        } else if (exclude && getType(exclude) === 'array' && exclude.length) {
+          if (exclude.indexOf(j) === -1) {
+            res[j] = filterClone(obj[j], include, exclude);
+          }
+        } else if (exclude && getType(exclude) === 'regexp') {
+          if (!exclude.test(j)) {
+            res[j] = filterClone(obj[j], include, exclude);
+          }
+        } else if (exclude && getType(exclude) === 'function') {
+          if (!exclude(j, obj[j])) {
+            res[j] = filterClone(obj[j], include, exclude);
+          }
+        } else {
+          res[j] = filterClone(obj[j], include, exclude);
+        }
+      }
+    }
+  }
+
+  return res;
+
+  function getType(value) {
+    var str = _typeof(value);
+
+    if (str === 'object') {
+      return value === null ? null : Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
+    }
+
+    return str;
+  }
+}
+
+var _default = filterClone;
+exports["default"] = _default;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():undefined}(window,(function(){return function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=0)}([function(t,e,n){"use strict";function r(...t){let e=t[0];if(t.length>1)for(let r=1;r<t.length;r++)n(e,t[r]);return e;function n(t,e){for(var n in e)t[n]=t[n]&&"[object Object]"===t[n].toString()?r(t[n],e[n]):t[n]=e[n];return t}}function o(){return Object.create(null)}function u(t){const e=typeof t;return"object"===e?null===t?null:Object.prototype.toString.call(t).slice(8,-1).toLowerCase():e}function i(t,e=16,n=!1){let r=null,o=n;return function(...n){if(o)return t.apply(this,n),o=!1;r||(r=setTimeout(()=>{clearTimeout(r),r=null,t.apply(this,n)},e))}}function c(t,e){return"string"===u(t)&&t.match(/%$/)?Number(t.substring(0,t.indexOf("%")))/100*e:t}n.r(e),n.d(e,"deepObjectMerge",(function(){return r})),n.d(e,"emptyObject",(function(){return o})),n.d(e,"jsType",(function(){return u})),n.d(e,"throttle",(function(){return i})),n.d(e,"getDistancePx",(function(){return c}))}])}));
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isWeiXin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getGlobal; });
+/* unused harmony export platform */
+var isWeiXin = function isWeiXin() {
+  return typeof wx !== 'undefined' && typeof wx.getSystemInfoSync === 'function';
+};
+var getGlobal = function getGlobal() {
+  if (isWeiXin()) return getApp();
+  if (typeof self !== 'undefined') return self;
+  if (typeof window !== 'undefined') return window;
+  if (typeof global !== 'undefined') return global;
+  throw new Error("unable to locate global object");
+};
+var platform = getGlobal();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(29);
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getPrototypeOf = __webpack_require__(1);
+
+var setPrototypeOf = __webpack_require__(17);
+
+var isNativeFunction = __webpack_require__(19);
+
+var construct = __webpack_require__(20);
+
+function _wrapNativeSuper(Class) {
+  var _cache = typeof Map === "function" ? new Map() : undefined;
+
+  module.exports = _wrapNativeSuper = function _wrapNativeSuper(Class) {
+    if (Class === null || !isNativeFunction(Class)) return Class;
+
+    if (typeof Class !== "function") {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+
+    if (typeof _cache !== "undefined") {
+      if (_cache.has(Class)) return _cache.get(Class);
+
+      _cache.set(Class, Wrapper);
+    }
+
+    function Wrapper() {
+      return construct(Class, arguments, getPrototypeOf(this).constructor);
+    }
+
+    Wrapper.prototype = Object.create(Class.prototype, {
+      constructor: {
+        value: Wrapper,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    return setPrototypeOf(Wrapper, Class);
+  };
+
+  return _wrapNativeSuper(Class);
+}
+
+module.exports = _wrapNativeSuper;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+function _isNativeFunction(fn) {
+  return Function.toString.call(fn).indexOf("[native code]") !== -1;
+}
+
+module.exports = _isNativeFunction;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(17);
+
+function isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function _construct(Parent, args, Class) {
+  if (isNativeReflectConstruct()) {
+    module.exports = _construct = Reflect.construct;
+  } else {
+    module.exports = _construct = function _construct(Parent, args, Class) {
+      var a = [null];
+      a.push.apply(a, args);
+      var Constructor = Function.bind.apply(Parent, a);
+      var instance = new Constructor();
+      if (Class) setPrototypeOf(instance, Class.prototype);
+      return instance;
+    };
+  }
+
+  return _construct.apply(null, arguments);
+}
+
+module.exports = _construct;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+module.exports = _iterableToArrayLimit;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
+module.exports = _nonIterableRest;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getPrototypeOf = __webpack_require__(1);
+
+function _superPropBase(object, property) {
+  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+    object = getPrototypeOf(object);
+    if (object === null) break;
+  }
+
+  return object;
+}
+
+module.exports = _superPropBase;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutPropertiesLoose;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "Dataset", function() { return /* reexport */ src; });
+__webpack_require__.d(__webpack_exports__, "Line", function() { return /* reexport */ visuals_Line; });
+__webpack_require__.d(__webpack_exports__, "Pie", function() { return /* reexport */ visuals_Pie; });
+__webpack_require__.d(__webpack_exports__, "Area", function() { return /* reexport */ visuals_Area; });
+__webpack_require__.d(__webpack_exports__, "Wave", function() { return /* reexport */ visuals_Wave; });
+__webpack_require__.d(__webpack_exports__, "Radar", function() { return /* reexport */ visuals_Radar; });
+__webpack_require__.d(__webpack_exports__, "Tooltip", function() { return /* reexport */ plugins_Tooltip; });
+__webpack_require__.d(__webpack_exports__, "Bar", function() { return /* reexport */ visuals_Bar; });
+__webpack_require__.d(__webpack_exports__, "PolarBar", function() { return /* reexport */ visuals_PolarBar; });
+__webpack_require__.d(__webpack_exports__, "Funnel", function() { return /* reexport */ visuals_Funnel; });
+__webpack_require__.d(__webpack_exports__, "Scatter", function() { return /* reexport */ visuals_Scatter; });
+__webpack_require__.d(__webpack_exports__, "Gauge", function() { return /* reexport */ visuals_Gauge; });
+__webpack_require__.d(__webpack_exports__, "RadialBar", function() { return /* reexport */ visuals_RadialBar; });
+__webpack_require__.d(__webpack_exports__, "Axis", function() { return /* reexport */ plugins_Axis; });
+__webpack_require__.d(__webpack_exports__, "Legend", function() { return /* reexport */ plugins_Legend; });
+__webpack_require__.d(__webpack_exports__, "Chart", function() { return /* reexport */ src_Chart; });
+__webpack_require__.d(__webpack_exports__, "h", function() { return /* reexport */ h; });
+__webpack_require__.d(__webpack_exports__, "theme", function() { return /* reexport */ theme_default; });
+__webpack_require__.d(__webpack_exports__, "easing", function() { return /* reexport */ tween_easing; });
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/src/h.js
+const VNode = function VNode() {}
+const flattern = arr => [].concat.apply([], arr)
+
+function h(tagName, attrs, ...children) {
+  const node = new VNode()
+  node.tagName = tagName
+  node.attrs = attrs || {}
+  node.children = flattern(children).filter(Boolean)
+  return node
+}
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/src/consts.js
+const CREATE = 'CREATE'
+const REPLACE = 'REPLACE'
+const UPDATE = 'UPDATE'
+const REMOVE = 'REMOVE'
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/src/diff.js
+
+
+const isNull = obj => obj === undefined || obj === null
+
+const diffVNodeChildren = (oldVNode, newVNode) => {
+  const patches = []
+  // 新旧节点的子节点长度可能不一样，但是进行比对的次数应当为最长子节点数目
+  const len = Math.max(oldVNode.children.length, newVNode.children.length)
+  for (let i = 0; i < len; i++) {
+    // 注意：这里不使用 patches.push ，是为了保持 子节点 在整个节点树的位置是不变的
+    patches[i] = diff(oldVNode.children[i], newVNode.children[i])
+  }
+  return patches
+}
+
+/**
+ * 比对节点属性
+ * 首先合并新旧节点属性
+ * 新节点没有的属性，则移除属性
+ * 新旧节点属性不一致，则设置属性
+ * @param {*} oldVNode
+ * @param {*} newVNode
+ */
+const diffVNodeAttrs = (oldVNode, newVNode) => {
+  let patches = []
+  const oldVNodeAttrs = oldVNode.attrs
+  const newVNodeAttrs = newVNode.attrs
+  const attrs = Object.assign({}, oldVNodeAttrs, newVNodeAttrs)
+
+  patches = attrs
+
+  return patches
+}
+
+/**
+ * 判断两节点是否不一样
+ * 1. 旧节点为文本节点，新节点不是
+ * 2. 新节点为文本节点，旧节点不是
+ * 3. 新旧节点标签名不一样
+ * @param {*} oldVNode
+ * @param {*} newVNode
+ */
+const isDiffrentVNode = (oldVNode, newVNode) => {
+  return (typeof oldVNode !== 'object' && oldVNode !== newVNode) || (typeof newVNode !== 'object' && oldVNode !== newVNode) || oldVNode.tagName !== newVNode.tagName
+}
+
+/**
+ * diff 新旧节点差异
+ * case CREATE: 旧节点不存在，则应当新建新节点
+ * case REMOVE: 新节点不存在，则移出旧节点
+ * case REPLACE: 只比较新旧节点，不比较其子元素，新旧节点标签名或文本内容不一致，则应当替换旧节点
+ * case UPDATE: 到这里，新旧节点可能只剩下 attrs 和 子节点未进行 diff，所以直接循环 diffAttrs 和 diffChildren 即可
+ * @param {*} oldVNode
+ * @param {*} newVNode
+ */
+function diff(oldVNode, newVNode) {
+  if (isNull(oldVNode)) {
+    return { type: CREATE, newVNode }
+  }
+  if (isNull(newVNode)) {
+    return { type: REMOVE }
+  }
+  if (isDiffrentVNode(oldVNode, newVNode)) {
+    return { type: REPLACE, newVNode }
+  }
+  if (newVNode.tagName) {
+    return {
+      type: UPDATE,
+      children: diffVNodeChildren(oldVNode, newVNode),
+      attrs: diffVNodeAttrs(oldVNode, newVNode)
+    }
+  }
+}
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/src/render.js
+
+function createElement(vnode) {
+  if (!vnode) {
+    return
+  }
+  //当前图形通过绑定this传递进来
+  let graph = this
+  let { tagName: TagName, attrs, children } = vnode
+  const el = new TagName(attrs)
+  //渲染的spritejs对象放到 visual或者plugin上
+  patchAttrs(graph, el, attrs)
+  if (el.appendChild) {
+    children.map(createElement.bind(this)).filter(Boolean).forEach(el.appendChild.bind(el))
+  }
+  return el
+}
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/tween/easing.js
+/**
+ * 缓动代码来自 https://github.com/sole/tween.js/blob/master/src/Tween.js
+ * @see http://sole.github.io/tween.js/examples/03_graphs.html
+ */
+const easing_easing = {
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  linear: function(k) {
+    return k
+  },
+
+  quadIn(k) {
+    return k * k
+  },
+
+  quadOut(k) {
+    return k * (2 - k)
+  },
+
+  quadInOut(k) {
+    return ((k *= 2) <= 1 ? k * k : --k * (2 - k) + 1) / 2
+  },
+
+  // 三次方的缓动（t^3）
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  cubicIn: function(k) {
+    return k * k * k
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  cubicOut: function(k) {
+    return --k * k * k + 1
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  cubicInOut: function(k) {
+    if ((k *= 2) < 1) {
+      return 0.5 * k * k * k
+    }
+    return 0.5 * ((k -= 2) * k * k + 2)
+  },
+
+  // 四次方的缓动（t^4）
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  quarticIn: function(k) {
+    return k * k * k * k
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  quarticOut: function(k) {
+    return 1 - --k * k * k * k
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  quarticInOut: function(k) {
+    if ((k *= 2) < 1) {
+      return 0.5 * k * k * k * k
+    }
+    return -0.5 * ((k -= 2) * k * k * k - 2)
+  },
+
+  // 五次方的缓动（t^5）
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  quinticIn: function(k) {
+    return k * k * k * k * k
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  quinticOut: function(k) {
+    return --k * k * k * k * k + 1
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  quinticInOut: function(k) {
+    if ((k *= 2) < 1) {
+      return 0.5 * k * k * k * k * k
+    }
+    return 0.5 * ((k -= 2) * k * k * k * k + 2)
+  },
+
+  // 正弦曲线的缓动（sin(t)）
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  sinusoidalIn: function(k) {
+    return 1 - Math.cos((k * Math.PI) / 2)
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  sinusoidalOut: function(k) {
+    return Math.sin((k * Math.PI) / 2)
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  sinusoidalInOut: function(k) {
+    return 0.5 * (1 - Math.cos(Math.PI * k))
+  },
+
+  // 指数曲线的缓动（2^t）
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  exponentialIn: function(k) {
+    return k === 0 ? 0 : Math.pow(1024, k - 1)
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  exponentialOut: function(k) {
+    return k === 1 ? 1 : 1 - Math.pow(2, -10 * k)
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  exponentialInOut: function(k) {
+    if (k === 0) {
+      return 0
+    }
+    if (k === 1) {
+      return 1
+    }
+    if ((k *= 2) < 1) {
+      return 0.5 * Math.pow(1024, k - 1)
+    }
+    return 0.5 * (-Math.pow(2, -10 * (k - 1)) + 2)
+  },
+
+  // 圆形曲线的缓动（sqrt(1-t^2)）
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  circularIn: function(k) {
+    return 1 - Math.sqrt(1 - k * k)
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  circularOut: function(k) {
+    return Math.sqrt(1 - --k * k)
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  circularInOut: function(k) {
+    if ((k *= 2) < 1) {
+      return -0.5 * (Math.sqrt(1 - k * k) - 1)
+    }
+    return 0.5 * (Math.sqrt(1 - (k -= 2) * k) + 1)
+  },
+
+  // 创建类似于弹簧在停止前来回振荡的动画
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  elasticIn: function(k) {
+    var s
+    var a = 0.1
+    var p = 0.4
+    if (k === 0) {
+      return 0
+    }
+    if (k === 1) {
+      return 1
+    }
+    if (!a || a < 1) {
+      a = 1
+      s = p / 4
+    } else {
+      s = (p * Math.asin(1 / a)) / (2 * Math.PI)
+    }
+    return -(
+      a *
+      Math.pow(2, 10 * (k -= 1)) *
+      Math.sin(((k - s) * (2 * Math.PI)) / p)
+    )
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  elasticOut: function(k) {
+    var s
+    var a = 0.1
+    var p = 0.4
+    if (k === 0) {
+      return 0
+    }
+    if (k === 1) {
+      return 1
+    }
+    if (!a || a < 1) {
+      a = 1
+      s = p / 4
+    } else {
+      s = (p * Math.asin(1 / a)) / (2 * Math.PI)
+    }
+    return (
+      a * Math.pow(2, -10 * k) * Math.sin(((k - s) * (2 * Math.PI)) / p) + 1
+    )
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  elasticInOut: function(k) {
+    var s
+    var a = 0.1
+    var p = 0.4
+    if (k === 0) {
+      return 0
+    }
+    if (k === 1) {
+      return 1
+    }
+    if (!a || a < 1) {
+      a = 1
+      s = p / 4
+    } else {
+      s = (p * Math.asin(1 / a)) / (2 * Math.PI)
+    }
+    if ((k *= 2) < 1) {
+      return (
+        -0.5 *
+        (a *
+          Math.pow(2, 10 * (k -= 1)) *
+          Math.sin(((k - s) * (2 * Math.PI)) / p))
+      )
+    }
+    return (
+      a *
+        Math.pow(2, -10 * (k -= 1)) *
+        Math.sin(((k - s) * (2 * Math.PI)) / p) *
+        0.5 +
+      1
+    )
+  },
+
+  // 在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  backIn: function(k) {
+    var s = 1.70158
+    return k * k * ((s + 1) * k - s)
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  backOut: function(k) {
+    var s = 1.70158
+    return --k * k * ((s + 1) * k + s) + 1
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  backInOut: function(k) {
+    var s = 1.70158 * 1.525
+    if ((k *= 2) < 1) {
+      return 0.5 * (k * k * ((s + 1) * k - s))
+    }
+    return 0.5 * ((k -= 2) * k * ((s + 1) * k + s) + 2)
+  },
+
+  // 创建弹跳效果
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  bounceIn: function(k) {
+    return 1 - easing_easing.bounceOut(1 - k)
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  bounceOut: function(k) {
+    if (k < 1 / 2.75) {
+      return 7.5625 * k * k
+    } else if (k < 2 / 2.75) {
+      return 7.5625 * (k -= 1.5 / 2.75) * k + 0.75
+    } else if (k < 2.5 / 2.75) {
+      return 7.5625 * (k -= 2.25 / 2.75) * k + 0.9375
+    } else {
+      return 7.5625 * (k -= 2.625 / 2.75) * k + 0.984375
+    }
+  },
+  /**
+   * @param {number} k
+   * @return {number}
+   */
+  bounceInOut: function(k) {
+    if (k < 0.5) {
+      return easing_easing.bounceIn(k * 2) * 0.5
+    }
+    return easing_easing.bounceOut(k * 2 - 1) * 0.5 + 0.5
+  }
+}
+
+/* harmony default export */ var tween_easing = (easing_easing);
+
+// EXTERNAL MODULE: ./node_modules/@qcharts/vnode/node_modules/@qcharts/utils/lib/index.js
+var lib = __webpack_require__(13);
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/util/interpolate.js
+
+
+const constant = x => () => x
+const number = (a, b) => t => a + (b - a) * t
+const array = (a, b) => {
+  const bl = b ? b.length : 0
+  const al = a ? Math.min(bl, a.length) : 0
+  const x = new Array(al)
+  const c = new Array(bl)
+  let i
+
+  for (i = 0; i < al; ++i) {
+    x[i] = interpolate(a[i], b[i])
+  }
+
+  for (; i < bl; ++i) {
+    c[i] = b[i]
+  }
+
+  return t => {
+    for (i = 0; i < al; ++i) {
+      c[i] = x[i](t)
+    }
+
+    return c
+  }
+}
+const object = (a, b) => {
+  let i = {}
+  let c = {}
+  let k
+
+  if (!a || !Object(lib["jsType"])(a) === 'object') {
+    a = {}
+  }
+
+  if (!b || !Object(lib["jsType"])(b) === 'object') {
+    b = {}
+  }
+
+  for (k in b) {
+    if (k in a) {
+      i[k] = interpolate(a[k], b[k])
+    } else {
+      c[k] = b[k]
+    }
+  }
+
+  return t => {
+    for (k in i) {
+      c[k] = i[k](t)
+    }
+
+    return c
+  }
+}
+
+function interpolate(a, b) {
+  let type = typeof b
+  return b === null || type === 'string' || type === 'boolean' ? constant(b) : (type === 'number' ? number : Object(lib["jsType"])(b) === 'array' ? array : object)(a, b)
+}
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/util/invariant.js
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+const NODE_ENV = "production"
+
+function invariant(condition, message) {
+  if (NODE_ENV !== 'production') {
+    if (message === undefined) {
+      throw new Error('invariant requires an error message argument')
+    }
+  }
+
+  if (!condition) {
+    var error
+    if (message === undefined) {
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.')
+    } else {
+      error = new Error(message)
+      error.name = 'Qcharts Error'
+    }
+
+    error.framesToPop = 1 // we don't care about invariant's own frame
+    throw error
+  }
+}
+/* harmony default export */ var util_invariant = (invariant);
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/util/index.js
+
+
+
+function now() {
+  return typeof performance !== 'undefined' ? performance.now() : Date.now()
+}
+
+let requestAnimationFrame, cancelAnimationFrame
+if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
+  requestAnimationFrame = window.requestAnimationFrame
+  cancelAnimationFrame = window.cancelAnimationFrame
+} else {
+  const startTime = now()
+  requestAnimationFrame = (fn) => {
+    return setTimeout(() => {
+      fn(now() - startTime)
+    }, 16)
+  }
+  cancelAnimationFrame = (id) => {
+    return clearTimeout(id)
+  }
+}
+const util_delay = (time) =>
+  new Promise((resolve) =>
+    setTimeout(() => {
+      resolve()
+    }, time)
+  )
+
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/tween/tween.js
+
+
+function Tween(name = 'linear') {
+  this._start = null
+  this._end = null
+  this._delay = 0
+
+  this._canceled = false
+  this._duration = 1
+  this._easing = tween_easing[name] ? tween_easing[name] : tween_easing.linear
+
+  this._onUpdate = () => {}
+  this._onStart = () => {}
+
+  return this
+}
+
+Tween.prototype = {
+  from(val) {
+    this._start = val
+    return this
+  },
+
+  to(val) {
+    this._end = val
+    return this
+  },
+
+  duration(time) {
+    if (typeof time !== 'number') {
+      throw new Error('Duration time must be a number')
+    }
+    this._duration = time
+    return this
+  },
+
+  delay(time) {
+    this._delay = time
+    return this
+  },
+
+  easing(fn) {
+    if (typeof fn !== 'function') {
+      throw new Error('easing function must be a function')
+    }
+    this._easing = fn
+    return this
+  },
+
+  onStart(fn) {
+    if (typeof fn !== 'function') {
+      throw new Error('start callback must be a function')
+    }
+    this._onStart = fn
+    return this
+  },
+
+  onUpdate(fn) {
+    if (typeof fn !== 'function') {
+      throw new Error('update callback must be a function')
+    }
+    this._onUpdate = fn
+    return this
+  },
+
+  onComplete(fn) {
+    if (typeof fn !== 'function') {
+      throw new Error('complete callback must be a function')
+    }
+    this._onComplete = fn
+    return this
+  },
+  start() {
+    // const dt = 16.7 // 每一帧 16.7 ms
+    const e = this._easing
+    const i = interpolate(this._start, this._end)
+    const callback = this._onUpdate
+    let elapseTime = 0 // 已消耗时长
+    let animateTime = this._duration
+    let timer = null
+    let delayTime = this._delay
+    let startTime = 0
+
+    return new Promise(resolve => {
+      const step = () => {
+        elapseTime = now() - startTime
+        const t = e(Math.min(1.0, elapseTime / animateTime))
+        if (elapseTime >= animateTime) {
+          callback(i(1))
+          resolve(this)
+          cancelAnimationFrame(timer)
+        } else {
+          callback(i(t))
+          timer = requestAnimationFrame(step)
+        }
+      }
+
+      const start = () => {
+        startTime = now()
+        this._onStart(this._start, this._end)
+        timer = requestAnimationFrame(step)
+      }
+
+      this.cancel = () => {
+        cancelAnimationFrame(timer)
+      }
+
+      if (delayTime && delayTime > 0) {
+        util_delay(delayTime).then(start)
+      } else {
+        start()
+      }
+    })
+  }
+}
+
+/* harmony default export */ var tween = (Tween);
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/tween/index.js
+
+
+
+
+
+// EXTERNAL MODULE: ./node_modules/filter-clone/lib/index.js
+var filter_clone_lib = __webpack_require__(12);
+var filter_clone_lib_default = /*#__PURE__*/__webpack_require__.n(filter_clone_lib);
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/src/nodeHelper.js
+
+
+
+
+/**
+ * 为 spritejs 元素添加动画
+ * @param {*} el
+ * @param {*} attrs
+ */
+function addAnimate(graph, el, attrs) {
+  if (!el || !attrs.animation) {
+    return
+  }
+  const animation = Object(lib["deepObjectMerge"])(graph.renderAttrs.animation, attrs.animation)
+
+  const { from, middle, use, to, delay, duration, useTween, easing, formatter = d => d } = animation
+
+  if (!from || !to || !use) {
+    return
+  }
+  if (from) {
+    //如果存在from，一开始就设置，防止出现抖动
+    el.attr(from)
+  }
+  let ani = filter_clone_lib_default()(animation, null, ['from', 'to', 'formatter', 'use'])
+
+  const setAnimation = () => {
+    if (!useTween) {
+      let keys = null
+      if (middle) {
+        keys = [from, middle, to]
+      } else {
+        keys = [from, to]
+      }
+      el.animate(keys, {
+        fill: 'both',
+        ...ani
+      }).finished.then(() => {
+        delete to.offset
+        el.attr(to)
+      })
+    } else {
+      new tween(easing)
+        .from(from)
+        .to(to)
+        .delay(delay)
+        .duration(duration)
+        .onUpdate(attr => {
+          el.attr(formatter(attr))
+        })
+        .start()
+    }
+  }
+  setAnimation()
+}
+
+/**
+ * ref 回调函数
+ * @param {*} el
+ * @param {*} attrs
+ */
+function addRef(graph, el, attrs) {
+  const ref = attrs.ref
+  delete attrs.ref
+  if (ref && el) {
+    try {
+      graph.addRef(ref, el)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
+/**
+ * 为 spritejs 元素添加事件
+ * @param {*} el
+ * @param {*} attrs
+ */
+function addAttrs(graph, el, attrs = {}) {
+  let states = attrs['states']
+  let state = attrs['state']
+  if (states && state) {
+    let oldState = el.attr('state')
+    if (state !== oldState) {
+      //不相当就处理，相当上一次已经处理完毕
+      let oldstates = el.attr('states') || Object(lib["emptyObject"])()
+      let oldAttrs = Object(lib["deepObjectMerge"])(Object(lib["emptyObject"])(), attrs, oldstates[oldState])
+      let newAttrs = Object(lib["deepObjectMerge"])(Object(lib["emptyObject"])(), attrs, states[state])
+      el.attr(oldAttrs)
+      let { duration } = Object(lib["deepObjectMerge"])(Object(lib["emptyObject"])(), graph.renderAttrs.animation, states.animation)
+      el.transition(duration / 1000).attr(newAttrs)
+    }
+  } else {
+    el.attr(attrs)
+  }
+}
+/**
+ * 为 spritejs 元素添加事件
+ * @param {*} el
+ * @param {*} attrs
+ */
+function addEvent(graph, el, attrs = {}) {
+  //缓存方法，修改方法指针this
+  Object.keys(attrs).forEach(key => {
+    if (!/^on/.test(key)) {
+      return
+    }
+    const type = key.split('on')[1].toLowerCase()
+    const cb = attrs[key] || (() => {})
+    let newF = evt => cb.call(graph, evt, el)
+    el.removeAllListeners(type)
+    el.addEventListener(type, newF)
+    delete attrs[key]
+  })
+}
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/src/patch.js
+
+
+
+
+function patchAttrs(graph, el, patche) {
+  if (!el) {
+    return
+  }
+  if (!Object.keys(patche).length) {
+    return
+  }
+  addRef(graph, el, patche)
+  addEvent(graph, el, patche)
+  addAttrs(graph, el, patche)
+  //el.attr(patche)
+  addAnimate(graph, el, patche)
+}
+
+/**
+ * @param {*} $el 当前的真实spritejs 节点
+ * @param {*} patches 虚拟节点
+ * @param {*} isRoot 是否是初节点，用于绑定$el与visual或者plugin
+ */
+function patch($el, patche, isRoot = 0) {
+  //core中调用patch的时候，base中处理绑定this到当前图表
+  let graph = this //graph为当前的qcharts对象 visula或者plugin
+  if (!$el && !patche) {
+    return
+  }
+  switch (patche.type) {
+    case CREATE: {
+      const { newVNode } = patche
+      const newEl = createElement.bind(graph)(newVNode)
+      if (newEl) {
+        if (isRoot) {
+          //创建的时候，visual与plugin绑定对应的sprite元素
+          graph.$el = newEl
+        }
+        $el.appendChild(newEl)
+      }
+      break
+    }
+    case REPLACE: {
+      const { newVNode } = patche
+      const newEl = createElement.bind(graph)(newVNode)
+      $el.parent.replaceChild(newEl, $el)
+      break
+    }
+    case REMOVE: {
+      $el.remove()
+      break
+    }
+    case UPDATE: {
+      const { attrs, children } = patche
+      //对应的dom与vnode打上对应的ind，防止remove与create的时候变动i
+      patchAttrs(graph, $el, attrs)
+      if ($el.children && children.length) {
+        $el.children.forEach((child, ind) => {
+          child._ind = ind
+        })
+        children.forEach((child, ind) => {
+          child._ind = ind
+        })
+        let len = children.length > $el.children.length ? children.length : $el.children.length
+        for (let j = 0; j < len; j++) {
+          let curNode = $el.children.filter(child => child._ind === j)[0]
+          let curVnode = children.filter(child => child._ind === j)[0]
+          if (curVnode && curVnode.type === 'CREATE') {
+            //如果是create需要传父级$el
+            patch.bind(graph)($el, curVnode)
+          } else {
+            patch.bind(graph)(curNode, curVnode)
+          }
+        }
+      }
+      break
+    }
+  }
+}
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/vnode/src/index.js
+
+
+
+
+
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
+var classCallCheck = __webpack_require__(3);
+var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
+var createClass = __webpack_require__(6);
+var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
+var possibleConstructorReturn = __webpack_require__(4);
+var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
+var getPrototypeOf = __webpack_require__(1);
+var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
+var assertThisInitialized = __webpack_require__(9);
+var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
+var inherits = __webpack_require__(5);
+var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/wrapNativeSuper.js
+var wrapNativeSuper = __webpack_require__(16);
+var wrapNativeSuper_default = /*#__PURE__*/__webpack_require__.n(wrapNativeSuper);
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/dataset/src/state.js
+/* harmony default export */ var src_state = ({
+  "default": 'default',
+  //默认
+  hide: 'hide',
+  //数据隐藏
+  hover: 'hover',
+  //次激活模式，类似css中的hover
+  active: 'active',
+  //激活模式，如选中等场景
+  disabled: 'disabled',
+  //禁用模式
+  mixed: 'mixed' //混合模式,比如一个row或者col里面有多种状态
+
+});
+// CONCATENATED MODULE: ./node_modules/@qcharts/dataset/src/event.js
+function mixinEvent(target) {
+  if (target.__store) {
+    target.__store.events = [];
+    var events = target.__store.events;
+
+    target.on = function (type, cb) {
+      events.push({
+        type: type,
+        cb: cb
+      });
+      return target;
+    };
+
+    target.off = function (type, cb) {
+      for (var i = 0; i < events.length; i++) {
+        if (cb === undefined) {
+          events = [];
+        } else {
+          var curEvent = events[i];
+
+          if (curEvent.type === type && curEvent.cb === cb) {
+            events.splice(i, 1);
+            i--;
+          }
+        }
+      }
+
+      return target;
+    };
+
+    target.once = function (type, cb) {
+      var listener = function listener() {
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        fn.apply(target, args);
+        self.off(type, cb);
+      };
+
+      return target.on(type, listener);
+    };
+
+    target.dispatchEvent = function (type, option) {
+      events.forEach(function (item) {
+        if (item.type === type) {
+          item.cb.call(target, {
+            type: type,
+            option: option
+          });
+        }
+      });
+      return target;
+    };
+  }
+}
+
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/dataset/src/Cell.js
+
+
+
+
+
+
+
+
+
+
+var Cell_Cell = /*#__PURE__*/function (_Object) {
+  inherits_default()(Cell, _Object);
+
+  function Cell(data, option, dataset) {
+    var _this;
+
+    classCallCheck_default()(this, Cell);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Cell).call(this));
+    _this.__store = Object.create(null);
+    _this.__store.state = src_state["default"];
+    _this.__store.row = undefined;
+    _this.__store.col = undefined;
+    _this.__store.option = option;
+    _this.__store.data = data;
+    _this.__store.datasets = [dataset];
+    _this._layoutScaleFunc = dataset.layoutScaleFunc;
+    mixinEvent(assertThisInitialized_default()(_this));
+    return _this;
+  }
+
+  createClass_default()(Cell, [{
+    key: "datasets",
+    get: function get() {
+      return this.__store.datasets;
+    }
+  }, {
+    key: "data",
+    get: function get() {
+      return this, this.__store.data;
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this.__store.data[this.__store.option["value"]];
+    }
+  }, {
+    key: "layoutScaleValue",
+    get: function get() {
+      return typeof this._layoutScaleFunc === "function" ? this._layoutScaleFunc(this.__store.data[this.__store.option["value"]]) : this.__store.data[this.__store.option["value"]];
+    }
+  }, {
+    key: "text",
+    get: function get() {
+      return this.__store.data[this.__store.option["text"]];
+    }
+  }, {
+    key: "row",
+    set: function set(num) {
+      if (this.__store.row === undefined) {
+        this.__store.row = num;
+      }
+    },
+    get: function get() {
+      return this.__store.row;
+    }
+  }, {
+    key: "col",
+    set: function set(num) {
+      if (this.__store.col === undefined) {
+        this.__store.col = num;
+      }
+    },
+    get: function get() {
+      return this.__store.col;
+    }
+  }, {
+    key: "option",
+    get: function get() {
+      return this.__store.option;
+    }
+  }, {
+    key: "state",
+    get: function get() {
+      return this.__store.state;
+    },
+    set: function set(name) {
+      var _this2 = this;
+
+      if (src_state[name] && this.__store.state !== src_state[name]) {
+        this.__store.state = src_state[name];
+        this.dispatchEvent("change", {
+          name: "cell",
+          value: src_state[name],
+          data: this
+        });
+        this.datasets.forEach(function (dataset) {
+          dataset.dispatchEvent("change", {
+            name: "cell",
+            value: src_state[name],
+            data: _this2
+          });
+        });
+      }
+    }
+  }]);
+
+  return Cell;
+}( /*#__PURE__*/wrapNativeSuper_default()(Object));
+
+/* harmony default export */ var src_Cell = (Cell_Cell);
+// CONCATENATED MODULE: ./node_modules/@qcharts/dataset/src/Row.js
+
+
+
+
+
+
+
+
+
+
+var Row_List = /*#__PURE__*/function (_Array) {
+  inherits_default()(List, _Array);
+
+  function List(name, option) {
+    var _this;
+
+    classCallCheck_default()(this, List);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(List).call(this));
+    _this.__store = Object.create(null);
+    _this.__store.__name = name;
+    _this.__store.__option = option;
+    _this.__store.dataset = null;
+    mixinEvent(assertThisInitialized_default()(_this));
+    return _this;
+  }
+
+  createClass_default()(List, [{
+    key: "data",
+    get: function get() {
+      var arr = [];
+      this.forEach(function (cell) {
+        arr.push(cell.data);
+      });
+      return arr;
+    }
+  }, {
+    key: "dataset",
+    set: function set(arr) {
+      this.__store.dataset = arr;
+    },
+    get: function get() {
+      return this.__store.dataset;
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this.__store.__name;
+    }
+  }, {
+    key: "option",
+    get: function get() {
+      return this.__store.__option;
+    }
+  }, {
+    key: "state",
+    get: function get() {
+      //遍历子项，查看状态是否统一
+      var sta = this[0].state;
+
+      for (var i = 1; i < this.length; i++) {
+        if (this[i].state !== sta) {
+          sta = 'mixed';
+          break;
+        }
+      }
+
+      return sta;
+    },
+    set: function set(name) {
+      if (src_state[name] && this.state !== src_state[name]) {
+        //给所有子项设置state
+        this.forEach(function (cell) {
+          //如果disabled的状态，必须先设置位default,disabled的state不能直接修改位其它状态
+          if (cell.state === 'disabled' && name !== 'default') {
+            return;
+          }
+
+          cell.state = src_state[name];
+        });
+        var dispatchOption = null;
+
+        if (this instanceof Row_Row) {
+          dispatchOption = {
+            name: 'row',
+            value: src_state[name],
+            data: this
+          };
+        } else if (this instanceof Row_Col) {
+          dispatchOption = {
+            name: 'col',
+            value: src_state[name],
+            data: this
+          };
+        }
+
+        this.dispatchEvent('change', dispatchOption);
+        this.dataset && this.dataset.dispatchEvent('change', dispatchOption);
+      }
+    }
+  }]);
+
+  return List;
+}( /*#__PURE__*/wrapNativeSuper_default()(Array));
+
+var Row_Row = /*#__PURE__*/function (_List) {
+  inherits_default()(Row, _List);
+
+  function Row() {
+    classCallCheck_default()(this, Row);
+
+    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(Row).apply(this, arguments));
+  }
+
+  return Row;
+}(Row_List);
+
+var Row_Col = /*#__PURE__*/function (_List2) {
+  inherits_default()(Col, _List2);
+
+  function Col() {
+    classCallCheck_default()(this, Col);
+
+    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(Col).apply(this, arguments));
+  }
+
+  return Col;
+}(Row_List);
+
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/dataset/src/Dataset.js
+
+
+
+
+
+
+
+
+
+
+
+var Dataset_Dataset = /*#__PURE__*/function (_Array) {
+  inherits_default()(Dataset, _Array);
+
+  function Dataset(data, option) {
+    var _this;
+
+    classCallCheck_default()(this, Dataset);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Dataset).call(this));
+    _this.layoutScaleFunc = _this.handleLayoutScale(option.layoutScale);
+    data.forEach(function (item, i) {
+      var cell = item;
+
+      if (!(item instanceof src_Cell)) {
+        cell = new src_Cell(item, option, assertThisInitialized_default()(_this));
+      } else {
+        cell.datasets.push(assertThisInitialized_default()(_this));
+      }
+
+      _this[i] = cell;
+    });
+    _this.__store = Object.create(null);
+    var store = _this.__store;
+    store.__option = option;
+    store.__deps = [];
+    store.__rows = [];
+    store.__rows = getArrData(assertThisInitialized_default()(_this), option);
+    mixinEvent(assertThisInitialized_default()(_this));
+    return _this;
+  }
+
+  createClass_default()(Dataset, [{
+    key: "resetState",
+    value: function resetState() {
+      var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
+      var res = [];
+      this.forEach(function (cell) {
+        //reset的时候不处理disabled
+        if (cell.state !== state && cell.state !== 'disabled') {
+          res.push(cell);
+          cell.state = state;
+        }
+      });
+      this.dispatchEvent('change', {
+        name: 'reset',
+        data: res
+      });
+    }
+  }, {
+    key: "selectRows",
+    value: function selectRows(name) {
+      var rowKey = this.option.row;
+      var arr = [];
+      this.forEach(function (item) {
+        if (name.indexOf(item.data[rowKey]) !== -1) {
+          arr.push(item);
+        }
+      });
+      return new Dataset(arr, this.option);
+    }
+  }, {
+    key: "addDep",
+    value: function addDep(dep) {
+      this.__store.__deps.push(dep);
+    }
+  }, {
+    key: "handleLayoutScale",
+    value: function handleLayoutScale(layoutScale) {
+      if (typeof layoutScale === 'string') {
+        var method = layoutScale.replace(/\d+$/, '');
+        var NUM = 2;
+
+        if (method !== 'sqrt' && method !== 'pow' && method !== 'log') {
+          console.warn('layoutScale type error');
+          return function (value) {
+            return value;
+          };
+        }
+
+        var number = layoutScale.replace(/^[a-z]+/, '');
+
+        if (number) {
+          var isNumber = /^[-+]?\d*$/.test(number);
+
+          if (!isNumber) {
+            console.warn('layoutScale type error');
+            return function (value) {
+              return value;
+            };
+          } else {
+            NUM = Number(number);
+          }
+        }
+
+        switch (method) {
+          case 'sqrt':
+            this.datasetReverse = function (value) {
+              return Math.pow(value, NUM);
+            };
+
+            return function (value) {
+              return Math.pow(value, 1 / NUM);
+            };
+
+          case 'pow':
+            this.datasetReverse = function (value) {
+              return Math.pow(value, 1 / NUM);
+            };
+
+            return function (value) {
+              return Math.pow(value, NUM);
+            };
+
+          case 'log':
+            if (NUM !== 2 && NUM !== 10) {
+              console.warn('layoutScale type error');
+              return function (value) {
+                return value;
+              };
+            }
+
+            this.datasetReverse = function (value) {
+              return Math.pow(NUM, value);
+            };
+
+            return function (value) {
+              return Math['log' + NUM](value);
+            };
+
+          default:
+            console.warn('layoutScale type error');
+            return function (value) {
+              return value;
+            };
+        }
+      }
+
+      return layoutScale;
+    }
+  }, {
+    key: "option",
+    get: function get() {
+      return this.__store.__option;
+    }
+  }, {
+    key: "cols",
+    get: function get() {
+      var _this2 = this;
+
+      var cols = [];
+      var colLen = 0;
+
+      this.__store.__rows.forEach(function (row) {
+        if (row.length > colLen) {
+          colLen = row.length;
+        }
+      });
+
+      var _loop = function _loop(i) {
+        var arr = new Row_Col();
+        arr.dataset = _this2;
+
+        _this2.__store.__rows.forEach(function (item) {
+          arr.push(item[i]);
+        });
+
+        cols.push(arr);
+      };
+
+      for (var i = 0; i < colLen; i++) {
+        _loop(i);
+      }
+
+      return cols;
+    }
+  }, {
+    key: "rows",
+    get: function get() {
+      return this.__store.__rows;
+    }
+  }]);
+
+  return Dataset;
+}( /*#__PURE__*/wrapNativeSuper_default()(Array));
+
+function getArrData() {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var option = arguments.length > 1 ? arguments[1] : undefined;
+  var key = option.row,
+      sort = option.sort;
+  var resArr = [];
+
+  if (key === '*') {
+    var list = new Row_Row('*', option);
+    data.forEach(function (item) {
+      list.push(item);
+    });
+
+    if (sort) {
+      list.sort(function (a, b) {
+        return sort(a.data, b.data);
+      });
+    }
+
+    resArr.push(list);
+  } else {
+    var keys = Object.create(null);
+    data.forEach(function (item) {
+      var data = item.__store.data;
+
+      if (!keys[data[key]]) {
+        keys[data[key]] = new Row_Row(data[key], option);
+      }
+
+      keys[data[key]].push(item);
+    });
+
+    for (var _key in keys) {
+      var curRow = keys[_key];
+
+      if (sort) {
+        curRow.sort(function (a, b) {
+          return sort(a.data, b.data);
+        });
+      }
+
+      resArr.push(curRow);
+    }
+  }
+
+  resArr.forEach(function (list, m) {
+    list.dataset = data;
+    list.forEach(function (cell, n) {
+      cell.row = m;
+      cell.col = n;
+    });
+  });
+  return resArr;
+}
+
+/* harmony default export */ var src_Dataset = (Dataset_Dataset);
+// CONCATENATED MODULE: ./node_modules/@qcharts/dataset/src/index.js
+
+/* harmony default export */ var src = (src_Dataset);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
+var helpers_extends = __webpack_require__(2);
+var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
+var slicedToArray = __webpack_require__(10);
+var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/get.js
+var helpers_get = __webpack_require__(7);
+var get_default = /*#__PURE__*/__webpack_require__.n(helpers_get);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(8);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
+// EXTERNAL MODULE: external {"root":"spritejs","commonjs2":"spritejs/spritejs.min.js","commonjs":"spritejs/spritejs.min.js","amd":"spritejs","umd":"spritejs"}
+var spritejs_min_js_amd_spritejs_umd_spritejs_ = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./src/base/mixin.js
+var lifeCycle = {
+  beforeCreate: 'beforeCreate',
+  //创建前
+  created: 'created',
+  // 图表创建
+  beforeRender: 'beforeRender',
+  //图表渲染前
+  rendered: 'rendered',
+  // 图表渲染结束
+  beforeUpdate: 'beforeUpdate',
+  // 图表更新前
+  updated: 'updated',
+  // 图表更新
+  beforeDestroy: 'beforeDestroy',
+  // 图表卸载前
+  destroyed: 'destroyed' // 图表卸载
+
+};
+
+function mixin(component) {
+  component.on = component.addEventListener;
+  component.off = component.removeEventListener;
+
+  component.once = function (type, fn) {
+    var _this = this;
+
+    var listener = function listener() {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      fn.apply(_this, args);
+
+      _this.off(type, listener);
+    };
+
+    return this.on(type, listener);
+  };
+}
+
+
+// CONCATENATED MODULE: ./node_modules/@qcharts/utils/src/index.js
+function deepObjectMerge(...args) {
+  // 深度合并对象
+  let res = args[0]
+  if (args.length > 1) {
+    for (let i = 1; i < args.length; i++) {
+      objectMerge(res, args[i])
+    }
+  }
+  return res
+  function objectMerge(FirstOBJ, SecondOBJ) {
+    for (var key in SecondOBJ) {
+      if (FirstOBJ[key] && jsType(FirstOBJ[key]) === 'object' && jsType(SecondOBJ[key]) === 'object') {
+        //对象处理
+        deepObjectMerge(FirstOBJ[key], SecondOBJ[key])
+      } else if (FirstOBJ[key] && jsType(FirstOBJ[key]) === 'array' && jsType(SecondOBJ[key]) === 'array') {
+        //数组处理
+        FirstOBJ[key].splice(0, FirstOBJ[key].length, ...SecondOBJ[key])
+      } else {
+        FirstOBJ[key] = SecondOBJ[key]
+      }
+    }
+    return FirstOBJ
+  }
+}
+
+function emptyObject() {
+  //创建空对象
+  return Object.create(null)
+}
+
+function jsType(value) {
+  //判断js数据类型
+  const str = typeof value
+  if (str === 'object') {
+    return value === null ? null : Object.prototype.toString.call(value).slice(8, -1).toLowerCase()
+  }
+  return str
+}
+
+function throttle(fn, interval = 16, immediately = false) {
+  //截流函数
+  let timer = null
+  let firstTime = immediately
+  return function (...args) {
+    if (firstTime) {
+      // 第一次加载
+      fn.apply(this, args)
+      return (firstTime = false)
+    }
+    if (timer) {
+      // 定时器正在执行中，跳过
+      return
+    }
+    timer = setTimeout(() => {
+      clearTimeout(timer)
+      timer = null
+      fn.apply(this, args)
+    }, interval)
+  }
+}
+function debounce(fn, delay = 16, immediately = false) {
+  let timer = null
+  return function () {
+    let args = arguments
+    let context = this
+    if (timer) {
+      clearTimeout(timer)
+      timer = setTimeout(function () {
+        fn.apply(context, args)
+      }, delay)
+    } else {
+      if (immediately) {
+        fn.apply(context, args)
+      }
+      timer = setTimeout(function () {
+        fn.apply(context, args)
+      }, delay)
+    }
+  }
+}
+function getDistancePx(num, distance) {
+  if (jsType(num) === 'string' && num.match(/%$/)) {
+    return (Number(num.substring(0, num.indexOf('%'))) / 100) * distance
+  }
+  return num
+}
+
+
+// EXTERNAL MODULE: ./src/base/platform.js
+var platform = __webpack_require__(14);
+
+// CONCATENATED MODULE: ./src/base/Base.js
+
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+
+
+var Base_Base = /*#__PURE__*/function (_Node) {
+  inherits_default()(Base, _Node);
+
+  function Base(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Base);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Base).call(this));
+
+    _this.dispatchEvent(lifeCycle.beforeCreate);
+
+    mixin(assertThisInitialized_default()(_this));
+    _this['__store'] = emptyObject();
+    var store = _this['__store'];
+    store.__attrs = emptyObject();
+    store.__vnode__ = null;
+    store.__isCreated__ = false;
+    store.__refs = emptyObject();
+    store.dataset = null; // 微信中不支持多图层
+
+    var layerSetting = Object(platform["b" /* isWeiXin */])() ? {
+      layer: 'default'
+    } : {};
+
+    _this.attr(_objectSpread({}, attrs, {}, layerSetting));
+
+    _this.__update = throttle(function (args) {
+      if (store.__isCreated__) {
+        _this.update(args);
+      }
+    });
+    return _this;
+  }
+
+  createClass_default()(Base, [{
+    key: "source",
+    value: function source(data, options) {
+      var _this2 = this;
+
+      var store = this['__store'];
+
+      if (!(data instanceof src)) {
+        var opts = options;
+
+        if (store.dataset) {
+          opts = deepObjectMerge({}, store.dataset.option, options);
+        }
+
+        store.dataset = new src(data, opts);
+      } else {
+        store.dataset = data;
+      }
+
+      if (store.dataset && store.__isCreated__) {
+        store.dataset.on('change', function (_) {
+          _this2.__update({
+            type: 'state'
+          });
+        }); //如果以前存在，则更新
+
+        this.__update({
+          type: 'source'
+        });
+      }
+
+      return this;
+    }
+  }, {
+    key: "created",
+    value: function created() {
+      var _this3 = this;
+
+      //初始化创建的时候执行
+      var store = this['__store'];
+      this.dispatchEvent(lifeCycle.created);
+      store.__vnode__ = this.render(this.beforeRender({
+        type: 'create'
+      }));
+      var patches = diff(null, store.__vnode__);
+      this.dispatchEvent(lifeCycle.beforeRender);
+      patch.bind(this)(this.$el || this.layer, patches, 1);
+      this.dispatchEvent(lifeCycle.rendered);
+      this.rendered();
+      store.__isCreated__ = true;
+      this.dataset.on('change', function (_) {
+        _this3.__update({
+          type: 'state'
+        });
+      });
+    }
+  }, {
+    key: "beforeRender",
+    value: function beforeRender() {
+      //图表初始化准备数据
+      return this.renderAttrs;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      console.warn('this function must be rewrited');
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      return this.renderAttrs;
+    }
+  }, {
+    key: "update",
+    value: function update(params) {
+      //图表更新准备数据
+      var store = this['__store'];
+      this.dispatchEvent(lifeCycle.beforeUpdate);
+      var vnode = this.render(this.beforeUpdate(params));
+      var patches = diff(store.__vnode__, vnode);
+      patch.bind(this)(this.$el || this.layer, patches);
+      store.__vnode__ = vnode;
+      this.dispatchEvent(lifeCycle.updated);
+      this.updated();
+    }
+  }, {
+    key: "updated",
+    value: function updated() {}
+  }, {
+    key: "dispatchEvent",
+    value: function dispatchEvent(event) {
+      var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : emptyObject();
+
+      get_default()(getPrototypeOf_default()(Base.prototype), "dispatchEvent", this).call(this, event, obj);
+    }
+  }, {
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      return emptyObject();
+    }
+  }, {
+    key: "defaultStyles",
+    value: function defaultStyles() {
+      return emptyObject();
+    }
+  }, {
+    key: "baseAttrs",
+    value: function baseAttrs() {
+      var attrs = {
+        //动画类型
+        animation: {
+          use: true,
+          duration: 700,
+          useTween: true,
+          easing: 'bounceOut'
+        },
+        //位置布局信息
+        clientRect: {
+          left: '10%',
+          top: '10%',
+          right: '10%',
+          bottom: '10%',
+          width: undefined,
+          height: undefined
+        },
+        //透明度
+        opacity: 1,
+        layer: 'default',
+        layoutBy: 'rows' //按照哪个数据布局 ['rows','cols']
+
+      };
+      return attrs;
+    }
+  }, {
+    key: "attr",
+    value: function attr(name, val) {
+      //属性设置
+      var store = this['__store'];
+
+      if (jsType(name) === 'object') {
+        for (var key in name) {
+          this.attr(key, name[key]);
+        }
+      } else if (name === undefined) {
+        var res = emptyObject();
+
+        for (var _key in store.__attrs) {
+          //过滤style属性
+          if (_key.indexOf('style@') !== 0) {
+            res[_key] = store.__attrs[_key];
+          }
+        }
+
+        return res;
+      } else if (val === undefined) {
+        //获取属性
+        return store.__attrs[name];
+      } else if (name !== undefined) {
+        store.__attrs[name] = val;
+        store.__isCreated__ && this.__update({
+          type: 'attr'
+        });
+      }
+    }
+  }, {
+    key: "addRef",
+    value: function addRef(ref, el) {
+      this['__store'].__refs[ref] = el; //在vnode中调用，存储到this.__refs中
+    }
+  }, {
+    key: "style",
+    value: function style(type, _style) {
+      var _this4 = this;
+
+      //样式设置，样式用attr逻辑存储，添加@符号
+      if (jsType(type) === 'object') {
+        //多样式赋值
+        for (var key in type) {
+          this.style(key, type[key]);
+        }
+      } else if (type !== undefined && _style === undefined) {
+        //获取样式，统一返回成函数
+        var style = this.attr('style@' + type);
+        return function () {
+          if (jsType(style) === 'function') {
+            for (var _len = arguments.length, args = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {
+              args[_key2] = arguments[_key2];
+            }
+
+            return style.apply(_this4, args);
+          } else {
+            return style;
+          }
+        };
+      } else if (type !== undefined && _style !== undefined) {
+        //赋值
+        this.attr('style@' + type, _style);
+        return this;
+      } else if (type === undefined && _style === undefined) {
+        //获取全部样式
+        var res = emptyObject();
+        var attrs = this['__store'].__attrs;
+
+        for (var _key3 in attrs) {
+          if (_key3.indexOf('style@') === 0) {
+            var styleKey = _key3.substr(6);
+
+            res[styleKey] = this.style(styleKey);
+          }
+        }
+
+        return res;
+      }
+    }
+  }, {
+    key: "store",
+    get: function get() {
+      return this['__store'];
+    }
+  }, {
+    key: "layer",
+    get: function get() {
+      var _deepObjectMerge = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr()),
+          layerName = _deepObjectMerge.layer,
+          _deepObjectMerge$zInd = _deepObjectMerge.zIndex,
+          zIndex = _deepObjectMerge$zInd === void 0 ? 0 : _deepObjectMerge$zInd;
+
+      if (Object(platform["b" /* isWeiXin */])()) {
+        return this.scene.layer(layerName);
+      }
+
+      return this.scene.layer(layerName).attr({
+        zIndex: zIndex
+      });
+    }
+  }, {
+    key: "$refs",
+    get: function get() {
+      return this['__store'].__refs;
+    }
+  }, {
+    key: "renderStyles",
+    get: function get() {
+      var styles = deepObjectMerge({}, this.defaultStyles(), this.theme.styles);
+      return styles;
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //attrs转换
+      var attrs = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr());
+      var animation = attrs.animation,
+          clientRect = attrs.clientRect; //动画数据转换
+
+      if (jsType(animation) === 'boolean') {
+        animation = {
+          use: animation ? true : false
+        };
+      } //处理layer支持多layer
+
+
+      var rect = Object(platform["b" /* isWeiXin */])() ? this.layer.canvas : this.layer.canvas.getBoundingClientRect();
+      var width = rect.width,
+          height = rect.height; //计算布局数据
+
+      for (var key in clientRect) {
+        if (['left', 'right', 'width'].indexOf(key) !== -1) {
+          clientRect[key] = getDistancePx(clientRect[key], width);
+        } else if (['top', 'bottom', 'height'].indexOf(key) !== -1) {
+          clientRect[key] = getDistancePx(clientRect[key], height);
+        }
+      }
+
+      if (clientRect.width === undefined) {
+        clientRect.width = width - clientRect.left - clientRect.right;
+      } else {
+        clientRect.right = width - clientRect.left - clientRect.width;
+      }
+
+      if (clientRect.height === undefined) {
+        clientRect.height = height - clientRect.top - clientRect.bottom;
+      } else {
+        clientRect.bottom = height - clientRect.top - clientRect.height;
+      }
+
+      attrs.colors = this.theme.colors;
+      return attrs;
+    }
+  }, {
+    key: "dataset",
+    get: function get() {
+      return this['__store'].dataset || this.chart && this.chart.dataset;
+    }
+  }]);
+
+  return Base;
+}(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"]);
+
+/* harmony default export */ var base_Base = (Base_Base);
+// CONCATENATED MODULE: ./src/theme/default.js
+
+var default_colors = ['#47A1FF', '#59CB74', '#FFB952', '#FC6980', '#6367EC', '#DA65CC', '#FBD54A', '#ADDF84', '#6CD3FF', '#659AEC', '#9F8CF1', '#ED8CCE', '#A2E5FF', '#4DCCCB', '#F79452', '#84E0BE', '#5982F6', '#E37474', '#3FDDC7', '#9861E5'];
+
+for (var default_i = 0; default_i < 1004; default_i++) {
+  //生成1024种颜色
+  default_colors.push('#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6));
+}
+
+var theme = {
+  colors: default_colors
+};
+theme.visuals = {
+  Line: {
+    colors: theme.colors,
+    styles: {
+      line: {
+        lineWidth: 1
+      },
+      guideline: {
+        strokeColor: '#ddd'
+      },
+      point: {
+        pointType: 'ellipse',
+        radiusX: 4,
+        radiusY: 4,
+        strokeColor: '#fff',
+        borderWidth: 1
+      }
+    },
+    attrs: {
+      statck: false
+    }
+  },
+  Pie: {
+    colors: theme.colors,
+    styles: {
+      sector: {
+        lineWidth: 1,
+        strokeColor: '#fff'
+      }
+    },
+    attrs: {}
+  },
+  Area: {
+    colors: theme.colors,
+    styles: {
+      area: {
+        opacity: 0.5
+      },
+      guideline: {
+        strokeColor: '#ddd'
+      },
+      point: {
+        pointType: 'ellipse',
+        radiusX: 4,
+        radiusY: 4,
+        strokeColor: '#fff',
+        borderWidth: 1
+      }
+    },
+    attrs: {}
+  },
+  Radar: {
+    colors: theme.colors,
+    styles: {
+      area: {
+        opacity: 0.5
+      }
+    },
+    attrs: {}
+  },
+  Bar: {
+    colors: theme.colors,
+    styles: {
+      bar: {
+        textureRepeat: true
+      },
+      groupBar: {
+        opacity: 0.1
+      },
+      text: false
+    },
+    attrs: {
+      statck: false
+    }
+  },
+  PolarBar: {
+    colors: theme.colors,
+    styles: {
+      bar: {}
+    },
+    attrs: {
+      statck: false
+    }
+  },
+  Funnel: {
+    colors: theme.colors,
+    styles: {
+      funnel: {}
+    },
+    attrs: {
+      statck: false
+    }
+  },
+  Scatter: {
+    colors: theme.colors,
+    styles: {
+      point: {}
+    },
+    attrs: {
+      showGuideLine: false
+    }
+  },
+  Wave: {
+    colors: theme.colors,
+    styles: {
+      wave: {
+        fillColor: '#37c',
+        strokeColor: '#37c',
+        lineWidth: 0
+      },
+      text: {
+        fillColor: '#333',
+        fontSize: 24
+      },
+      shape: {
+        fillColor: '#e6f3ff',
+        lineWidth: 3,
+        strokeColor: '#156cbd'
+      }
+    },
+    attrs: {}
+  },
+  Gauge: {
+    colors: theme.colors,
+    attrs: {}
+  },
+  RadialBar: {
+    colors: theme.colors,
+    attrs: {}
+  }
+};
+theme.plugins = {
+  Tooltip: {
+    colors: theme.colors,
+    styles: {},
+    attrs: {}
+  },
+  Legend: {
+    colors: theme.colors,
+    styles: {
+      point: {
+        pointType: 'sprite',
+        iconSize: [12, 12]
+      },
+      text: {
+        fontSize: '12px',
+        fillColor: '#666'
+      }
+    },
+    attrs: {}
+  },
+  Axis: {
+    colors: theme.colors,
+    styles: {
+      axis: {
+        strokeColor: '#ccc',
+        lineWidth: 1
+      },
+      scale: {
+        bgcolor: '#ccc'
+      },
+      label: {
+        fontSize: 12,
+        fillColor: '#666'
+      },
+      grid: {
+        strokeColor: '#ddd',
+        lineDash: [3, 3]
+      },
+      name: {
+        fontSize: 12,
+        fillColor: '#666'
+      }
+    },
+    attrs: {
+      orient: 'bottom'
+    }
+  }
+};
+
+theme.set = function (obj) {
+  //合并样式
+  deepObjectMerge(theme, obj);
+};
+
+/* harmony default export */ var theme_default = (theme);
+// CONCATENATED MODULE: ./src/base/BaseVisual.js
+
+
+
+
+
+
+
+
+
+var BaseVisual_BaseVisual = /*#__PURE__*/function (_Base) {
+  inherits_default()(BaseVisual, _Base);
+
+  function BaseVisual(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, BaseVisual);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(BaseVisual).call(this, attrs));
+    _this.theme = theme_default.visuals[_this.constructor.name]; //如果当前对象设置了theme，不继承theme
+
+    _this.theme.set = function (obj) {
+      if (_this.theme === theme_default.visuals[_this.constructor.name]) {
+        _this.theme = filter_clone_lib_default()(_this.theme);
+      }
+
+      _this.theme = deepObjectMerge(_this.theme, obj);
+    };
+
+    return _this;
+  }
+
+  return BaseVisual;
+}(base_Base);
+
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(11);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
+// CONCATENATED MODULE: ./src/utils/getStyle.js
+
+// merge style
+
+/**
+ * chart:当前的图表
+ * key:当前的样式名称
+ * defaultstyle:为数组或者对象，表示默认的样式
+ * args:调用style方法的时候，style以后的参数
+ */
+
+function getStyle(chart, key, defaultStyle, args) {
+  //合并样式
+  var oStyle = defaultStyle;
+  var arrStyle = defaultStyle;
+  var oArgs = args;
+
+  if (jsType(defaultStyle) === 'array') {
+    oStyle = deepObjectMerge.apply(this, defaultStyle);
+  } else {
+    arrStyle = [defaultStyle];
+  }
+
+  if (jsType(args) !== 'array') {
+    oArgs = [args];
+  }
+
+  var cusStyle = chart.style(key).apply(void 0, [oStyle].concat(toConsumableArray_default()(oArgs)));
+
+  if (cusStyle === false) {
+    return false;
+  } else if (arrStyle.includes(false) && cusStyle === undefined) {
+    return false;
+  } else if (cusStyle !== undefined) {
+    //如果返回的cusStyle不是false或者undefined，需要把default样式进行重写叠加
+    var curStyle = defaultStyle;
+
+    if (jsType(defaultStyle) !== 'array') {
+      curStyle = [defaultStyle];
+    } //获取default样式
+
+
+    var oDefaultStyle = chart.defaultStyles()[key];
+    oStyle = deepObjectMerge({}, oDefaultStyle, curStyle.filter(Boolean), oStyle);
+  }
+
+  return deepObjectMerge({}, oStyle, cusStyle);
+}
+// CONCATENATED MODULE: ./src/utils/scaleLinear.js
+function scaleLinear() {
+  var domain = [0, 1];
+  var range = [0, 1];
+
+  function scale(num) {
+    var disDomain = domain[1] - domain[0];
+    var disRange = range[1] - range[0];
+    var per = (num - domain[0]) / disDomain || 0;
+    return range[0] + disRange * per;
+  }
+
+  scale.domain = function (arr) {
+    domain = arr;
+    return this;
+  };
+
+  scale.range = function (arr) {
+    range = arr;
+    return this;
+  };
+
+  return scale;
+} // const data = [80, 40, 30, 60, 70]
+// const s = scaleLinear().domain([0, 100]).range([0, 100])
+// console.log(data.map(s))
+
+
+
+// CONCATENATED MODULE: ./src/utils/axis.js
+//import { Global } from '../core/Global'
+function axis_axis(attr) {
+  // 计算坐标轴刻度
+  if (!Array.isArray(attr.dataSet) && !attr.hasOwnProperty("section")) {
+    return [];
+  }
+
+  if (attr.section !== undefined) {
+    return sectionAxis(attr.section);
+  }
+
+  var data = dataHandle(attr);
+  var upZero = []; // 大于零的数
+
+  var downZero = []; // 小于零的数
+
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var element = _step.value;
+
+      if (element < 0) {
+        downZero.push(Math.abs(element));
+      } else {
+        upZero.push(element);
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+        _iterator["return"]();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  var length = 5; // 刻度数量
+
+  var sortUpZero = upZero.sort(function (a, b) {
+    return a - b;
+  });
+  var sortDownZero = downZero.sort(function (a, b) {
+    return a - b;
+  });
+  var maxUpZero = sortUpZero.length && Math.ceil(sortUpZero.pop() / 0.95);
+  var maxDownZero = sortDownZero.length && Math.ceil(sortDownZero.pop() / 0.95);
+  var maxValue = maxUpZero - maxDownZero >= 0 ? maxUpZero : maxDownZero;
+  var mixNum = 4;
+  var maxNum = 7;
+
+  if (maxDownZero && maxUpZero) {
+    mixNum = 3;
+    maxNum = 5;
+  }
+
+  if (attr.splitNumber) {
+    mixNum = attr.splitNumber;
+    maxNum = mixNum + 1;
+  }
+
+  var getMax = false;
+  var len = maxValue.toString().length; // 最大值位数
+
+  var max = len < 3 ? Math.ceil(maxValue / Math.pow(10, len - 1)) : Math.ceil(maxValue / Math.pow(10, len - 2));
+
+  do {
+    for (var i = mixNum; i < maxNum; i++) {
+      if (max % i === 0) {
+        length = i;
+        maxValue = len < 3 ? max * Math.pow(10, len - 1) : max * Math.pow(10, len - 2);
+        getMax = true;
+        break;
+      }
+    }
+
+    max++;
+  } while (!getMax);
+
+  var axisArray = new Array(length + 1);
+  axisArray[0] = 0;
+
+  for (var _i = 1; _i < length + 1; _i++) {
+    axisArray[_i] = maxUpZero >= maxDownZero ? Math.round(maxValue / length * _i) : -1 * Math.round(maxValue / length * _i);
+  } // 处理0-1之间的数据
+
+
+  if (maxDownZero <= 1 && maxDownZero > 0 || maxUpZero <= 1 && maxUpZero > 0 || maxUpZero === 0 && maxDownZero === 0) {
+    axisArray = new Array(6);
+    axisArray[0] = 0;
+    maxValue = 1;
+
+    for (var _i2 = 1; _i2 < 6; _i2++) {
+      axisArray[_i2] = maxUpZero >= maxDownZero ? 2 * maxValue * _i2 / 10 : -2 * maxValue * _i2 / 10;
+    }
+  }
+
+  if (maxUpZero < maxDownZero) {
+    axisArray.reverse();
+  }
+
+  if (maxDownZero.length === 0 || maxUpZero.length === 0) {
+    return axisArray;
+  }
+
+  if (maxUpZero >= maxDownZero) {
+    var unit = axisArray[1] * 10;
+
+    for (var _i3 = 1, _len = Math.ceil((axisArray.length - 1) * maxDownZero / maxUpZero); _i3 < _len + 1; _i3++) {
+      axisArray.unshift(-1 * unit * _i3 / 10);
+    }
+  } else {
+    var _unit = axisArray[axisArray.length - 2] * 10;
+
+    for (var _i4 = 1, _len2 = Math.ceil((axisArray.length - 1) * maxUpZero / maxDownZero); _i4 < _len2 + 1; _i4++) {
+      axisArray.push(-1 * _unit * _i4 / 10);
+    }
+  } // if (attr.needReverse) {
+  //   axisArray = axisArray.map((value) => {
+  //     return this.dataset.datasetReverse
+  //       ? Math.round(this.dataset.datasetReverse(value))
+  //       : value;
+  //   });
+  // }
+
+
+  return axisArray;
+}
+
+function dataHandle(attr) {
+  var stack = attr.stack || false;
+  var data = attr.dataSet || [];
+  var arr = [];
+
+  if (stack && data.length !== 0 && data[0].length) {
+    for (var i = 0, len = data[0].length; i < len; i++) {
+      var sum = 0;
+      var sumDown = 0;
+
+      for (var j = 0, leng = data.length; j < leng; j++) {
+        var val = data[j][i].layoutScaleValue;
+
+        if (data[j][i].disabled === true || val === undefined) {
+          continue;
+        }
+
+        if (val < 0) {
+          sumDown = sumDown + val;
+        } else {
+          sum = sum + val;
+        }
+      }
+
+      sum && arr.push(sum);
+      sumDown && arr.push(sumDown);
+    }
+  } else {
+    for (var m = 0; m < data.length; m++) {
+      for (var n = 0; n < data[m].length; n++) {
+        var _val = data[m][n].layoutScaleValue;
+
+        if (data[m][n].disabled === true || _val === undefined) {
+          continue;
+        }
+
+        arr.push(_val);
+      }
+    }
+  }
+
+  return arr;
+}
+
+function sectionAxis(section) {
+  if (section && Array.isArray(section)) {
+    var gap = section[1] - section[0];
+    var arr = [];
+    var divide = 4;
+    arr.push(section[0]);
+
+    for (var i = 4; i < 8; i++) {
+      if (gap % i === 0) {
+        divide = i;
+        break;
+      }
+    }
+
+    for (var j = 1; j <= divide; j++) {
+      arr.push((section[0] + gap * j / divide).toFixed(2));
+    }
+
+    return arr;
+  }
+
+  return [];
+}
+// CONCATENATED MODULE: ./src/visuals/Line/layout.js
+
+
+function layout(arr, attrs) {
+  var type = this.type;
+  var lines = [];
+  var stack = attrs.stack,
+      splitNumber = attrs.splitNumber,
+      clientRect = attrs.clientRect,
+      axisGap = attrs.axisGap;
+  var width = clientRect.width,
+      height = clientRect.height;
+  var scales = axis_axis.call(this, {
+    dataSet: arr,
+    stack: stack,
+    splitNumber: splitNumber
+  });
+  var maxVal = Math.max.apply(this, scales);
+  var minVal = Math.min.apply(this, scales);
+  var scaleFY = scaleLinear().domain([minVal, maxVal]).range([0, height]);
+  var prevRow = null;
+  arr.forEach(function (row) {
+    var line = {
+      points: [],
+      areaPoints: [],
+      smoothRange: [],
+      state: row.state
+    };
+    row.forEach(function (cell, i) {
+      var val = cell.layoutScaleValue;
+
+      if (cell.value !== undefined) {
+        //如果为undefined 不渲染
+        var dx = width / (row.length - 1);
+        var offsetX = 0;
+
+        if (axisGap) {
+          dx = width / row.length;
+          offsetX = dx / 2;
+        }
+
+        var curPos = [dx * i + offsetX, height - scaleFY(val)];
+
+        if (stack && prevRow) {
+          //如果是堆叠并且前一个row存在，则叠加
+          curPos = [dx * i + offsetX, height - scaleFY(val + prevRow[i].layoutScaleValue)];
+        }
+
+        line.points.push(curPos);
+      }
+    });
+    line.axisPoints = [[line.points[0][0], height - scaleFY(0)], [line.points[line.points.length - 1][0], height - scaleFY(0)]];
+
+    if (line.state !== "disabled") {
+      prevRow = row;
+    }
+
+    lines.push(line);
+  });
+
+  if (type === "area") {
+    var curLine = null;
+    lines.forEach(function (line, ind) {
+      var nextPoints = [].concat(line.points).reverse().map(function (point) {
+        return [point[0], height];
+      });
+
+      if (curLine && attrs.stack) {
+        nextPoints = [].concat(lines[ind - 1].points).reverse();
+      }
+
+      var res = transAreaPoint(line.points, nextPoints);
+      line.areaPoints = res.areaPoints;
+      line.smoothRange = res.smoothRange;
+
+      if (line.state !== "disabled") {
+        curLine = line;
+      }
+    });
+  }
+
+  return lines;
+}
+
+function transAreaPoint(startPoints, endPoints) {
+  var res = {
+    areaPoints: [],
+    smoothRange: []
+  };
+  res.areaPoints = [].concat([startPoints[0]]).concat(startPoints).concat([startPoints[startPoints.length - 1]]).concat([endPoints[0]]).concat(endPoints).concat([endPoints[endPoints.length - 1]]);
+  res.smoothRange = [1, startPoints.length, startPoints.length + 3, startPoints.length + endPoints.length + 2];
+  return res;
+}
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js
+var objectWithoutProperties = __webpack_require__(15);
+var objectWithoutProperties_default = /*#__PURE__*/__webpack_require__.n(objectWithoutProperties);
+
+// CONCATENATED MODULE: ./src/utils/Point.js
+
+
+
+
+
+
+
+
+
+function Point_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Point_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Point_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Point_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+var allPoint = {
+  sprite: spritejs_min_js_amd_spritejs_umd_spritejs_["Sprite"],
+  path: spritejs_min_js_amd_spritejs_umd_spritejs_["Path"],
+  ellipse: spritejs_min_js_amd_spritejs_umd_spritejs_["Ellipse"],
+  rect: spritejs_min_js_amd_spritejs_umd_spritejs_["Rect"],
+  triangle: spritejs_min_js_amd_spritejs_umd_spritejs_["Triangle"],
+  parallel: spritejs_min_js_amd_spritejs_umd_spritejs_["Parallel"],
+  regular: spritejs_min_js_amd_spritejs_umd_spritejs_["Regular"],
+  star: spritejs_min_js_amd_spritejs_umd_spritejs_["Star"]
+};
+
+var Point_Point = /*#__PURE__*/function (_Group) {
+  inherits_default()(Point, _Group);
+
+  function Point() {
+    var _this;
+
+    var attrs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    classCallCheck_default()(this, Point);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Point).call(this));
+    _this.pointType = null;
+    _this.$sprite = null;
+
+    _this.attr(Point_objectSpread({
+      pointType: 'ellipse'
+    }, attrs));
+
+    return _this;
+  }
+
+  createClass_default()(Point, [{
+    key: "attr",
+    value: function attr(name, val) {
+      var attrs = name;
+
+      if (jsType(name) !== 'object') {
+        attrs = {};
+        attrs[name] = val;
+      }
+
+      this.renderSymbol(attrs);
+    }
+  }, {
+    key: "renderSymbol",
+    value: function renderSymbol(attrs) {
+      var pointType = attrs.pointType,
+          pos = attrs.pos,
+          renderAttr = objectWithoutProperties_default()(attrs, ["pointType", "pos"]);
+
+      if (pointType && pointType !== this.pointType) {
+        if (!Object.keys(allPoint).includes(pointType)) {
+          throw new Error("pointType should be one of 'sprite','path','ellipse','rect','triangle','parallel','regular','star' but it is ".concat(pointType));
+        }
+
+        this.$sprite && this.$sprite.remove();
+        this.$sprite = new allPoint[pointType](renderAttr);
+        this.append(this.$sprite);
+      } else {
+        this.$sprite.attr(renderAttr);
+      }
+
+      if (pos && pos.length) {
+        get_default()(getPrototypeOf_default()(Point.prototype), "attr", this).call(this, 'pos', pos);
+      }
+
+      this.pointType = pointType;
+    }
+  }]);
+
+  return Point;
+}(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"]);
+
+/* harmony default export */ var utils_Point = (Point_Point);
+// CONCATENATED MODULE: ./src/visuals/Line/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Line_Line = /*#__PURE__*/function (_Base) {
+  inherits_default()(Line, _Base);
+
+  function Line(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Line);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Line).call(this, attrs));
+    _this.renderLines = [];
+    _this.type = 'line';
+    _this.hoverIndex = -1;
+    return _this;
+  }
+
+  createClass_default()(Line, [{
+    key: "beforeRender",
+    value: function beforeRender() {
+      //渲染前的处理函数，返回lines,继承base
+      var _this$getRenderData = this.getRenderData(),
+          arrLayout = _this$getRenderData.arrLayout,
+          maxLen = _this$getRenderData.maxLen;
+
+      var lines = arrLayout.map(function (item) {
+        return {
+          smoothRange: item.smoothRange,
+          areaFrom: {
+            points: item.areaPoints
+          },
+          areaTo: {
+            points: item.areaPoints
+          },
+          from: {
+            points: item.points,
+            lineDash: [1, maxLen]
+          },
+          to: {
+            points: item.points,
+            lineDash: [maxLen, maxLen]
+          }
+        };
+      });
+      return lines;
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      //更新前的处理函数，返回lines,继承base
+      var _this$getRenderData2 = this.getRenderData(),
+          arrLayout = _this$getRenderData2.arrLayout,
+          maxLen = _this$getRenderData2.maxLen;
+
+      var renderLines = this.renderLines;
+      var lines = arrLayout.map(function (item, i) {
+        var from = {
+          points: item.points
+        };
+
+        if (renderLines[i]) {
+          from = {
+            points: renderLines[i].to.points
+          };
+        }
+
+        if (!renderLines[i] || renderLines[i].state === 'disabled') {
+          from.lineDash = [4, maxLen];
+        }
+
+        return {
+          state: item.state,
+          smoothRange: item.smoothRange,
+          areaFrom: renderLines[i] && renderLines[i].areaTo || item.areaPoints,
+          areaTo: {
+            points: item.areaPoints
+          },
+          from: from,
+          to: {
+            points: item.points,
+            lineDash: [maxLen, maxLen]
+          }
+        };
+      });
+      return lines;
+    }
+  }, {
+    key: "getRenderData",
+    value: function getRenderData() {
+      //根据line的特性返回需要数据
+      var renderAttrs = this.renderAttrs;
+      var renderData = this.dataset[renderAttrs.layoutBy];
+      var arrLayout = layout.call(this, renderData, renderAttrs);
+      var _renderAttrs$clientRe = renderAttrs.clientRect,
+          height = _renderAttrs$clientRe.height,
+          width = _renderAttrs$clientRe.width; //对角线长度的2保证会大于曲线的长度
+
+      var maxLen = Math.sqrt(Math.pow(height, 2), Math.pow(width, 2)) * 5;
+      return {
+        width: width,
+        height: height,
+        arrLayout: arrLayout,
+        maxLen: maxLen
+      };
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {//console.log(this.$refs['wrap'])
+    }
+  }, {
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
+      return {
+        guidePoints: [],
+        layer: 'line'
+      };
+    }
+  }, {
+    key: "defaultStyles",
+    value: function defaultStyles() {
+      // 默认的样式,继承base
+      return {//smooth: false,
+      };
+    }
+  }, {
+    key: "guidelineleave",
+    value: function guidelineleave(event, el) {
+      this.attr('guidePoints', []);
+      this.dataset.resetState();
+    }
+  }, {
+    key: "guidelinemove",
+    value: function guidelinemove(event, el) {
+      if (this.renderLines.length) {
+        //获取 x轴坐标的刻度
+        var arrX = this.renderLines[0].to.points.map(function (pos) {
+          return pos[0];
+        }); //转换cancas坐标到当前group的相对坐标
+
+        var _el$getOffsetPosition = el.getOffsetPosition(event.x, event.y),
+            _el$getOffsetPosition2 = slicedToArray_default()(_el$getOffsetPosition, 1),
+            x = _el$getOffsetPosition2[0];
+
+        var curInd = 0; //查找当前位置
+
+        for (var i = 0; i < arrX.length; i++) {
+          if (x > arrX[i] && x < arrX[i + 1]) {
+            curInd = Math.abs(x - arrX[i]) < Math.abs(x - arrX[i + 1]) ? i : i + 1;
+            break;
+          }
+        } //重置所有的dateset的状态
+
+
+        if (this.hoverIndex !== curInd) {
+          this.dataset.resetState(); //设置当前列的state为hover
+
+          this.dataset.cols[curInd].state = 'hover';
+          var clientRect = this.renderAttrs.clientRect;
+          var posX = arrX[curInd];
+          this.hoverIndex = curInd;
+          this.attr({
+            guidePoints: [[posX, 0], [posX, clientRect.height]],
+            lineState: 'default'
+          });
+        }
+      }
+    }
+  }, {
+    key: "render",
+    value: function render(lines) {
+      var _this2 = this;
+
+      var _this$renderAttrs = this.renderAttrs,
+          clientRect = _this$renderAttrs.clientRect,
+          smooth = _this$renderAttrs.smooth,
+          guidePoints = _this$renderAttrs.guidePoints; //渲染的样式，合并了theme中的styles与组件上的defaultStyles
+
+      var styles = this.renderStyles; //当前主体颜色
+
+      var colors = this.theme.colors;
+      this.renderLines = lines;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        zIndex: 1,
+        "class": "container",
+        pos: [clientRect.left, clientRect.top],
+        onMouseleave: this.guidelineleave,
+        onMouseenter: this.guidelinemove,
+        onMousemove: this.guidelinemove,
+        size: [clientRect.width, clientRect.height]
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "lines-group"
+      }, lines.map(function (line, ind) {
+        var style = getStyle(_this2, 'line', [{
+          strokeColor: colors[ind],
+          smooth: smooth
+        }, styles.line], [_this2.dataset.rows[ind], ind]);
+        return line.state === 'disabled' || style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({
+          onClick: _this2.lineClick
+        }, style, {
+          animation: {
+            from: line.from,
+            to: line.to
+          }
+        }));
+      })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "areas-group"
+      }, this.type !== 'area' ? null : lines.map(function (line, ind) {
+        var style = getStyle(_this2, 'area', [{
+          fillColor: colors[ind],
+          smooth: smooth
+        }, styles.area], [_this2.dataset.rows[ind], ind]);
+        return line.state === 'disabled' || style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({
+          smoothRange: line.smoothRange
+        }, style, {
+          animation: {
+            from: line.areaFrom,
+            to: line.areaTo
+          }
+        }));
+      })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "line-points"
+      }, lines.map(function (line, ind) {
+        return line.state === 'disabled' ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], null, line.to.points.map(function (p, j) {
+          var animation = {
+            from: {
+              pos: line.from.points[j]
+            },
+            to: {
+              pos: p
+            }
+          };
+          var style = getStyle(_this2, 'point', [{
+            fillColor: colors[ind]
+          }, styles.point], [_this2.dataset.rows[ind], ind, j]);
+          var styleHover = getStyle(_this2, 'point:hover', [style, styles['point:hover']], [_this2.dataset.rows[ind], ind, j]);
+
+          if (_this2.dataset.rows[ind][j].state === 'hover') {
+            deepObjectMerge(style, styleHover);
+          }
+
+          return getApp().qcharts.h(utils_Point, extends_default()({}, style, {
+            animation: animation
+          }));
+        }));
+      })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "guide-line-group"
+      }, guidePoints.length ? function (_) {
+        var style = getStyle(_this2, 'guideline', styles.guideline);
+        return style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({
+          points: guidePoints
+        }, style));
+      }() : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null)));
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
+      var attrs = get_default()(getPrototypeOf_default()(Line.prototype), "renderAttrs", this);
+
+      return attrs;
+    }
+  }]);
+
+  return Line;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_Line = (Line_Line);
+// CONCATENATED MODULE: ./src/visuals/Pie/layout.js
+function layout_layout(arr, attrs) {
+  var rings = [];
+  var arrVal = arr.map(function (row) {
+    return row.reduce(function (val, item) {
+      return row.state !== 'disabled' ? val + item.value : val;
+    }, 0);
+  }); //当totalVal为0的时候，会造成分母为0 如果totalVal为0 处理成1
+
+  var totalVal = arrVal.reduce(function (val, item) {
+    return val + item;
+  }, 0) || 1;
+  var startAngle = attrs.startAngle,
+      endAngle = attrs.endAngle,
+      activeOffset = attrs.activeOffset;
+  var minAngle = Math.min(startAngle, endAngle);
+  var maxAngle = Math.max(startAngle, endAngle);
+
+  if (maxAngle > minAngle + 360) {
+    maxAngle = minAngle + 360;
+  }
+
+  var totalAngle = maxAngle - minAngle;
+  arrVal.forEach(function (num, ind) {
+    var curPercent = num / totalVal;
+    var perAngle = curPercent * totalAngle; //默认中心坐标偏移量0
+
+    var offsetPos = [0, 0];
+    var curObj = {
+      startAngle: minAngle,
+      endAngle: minAngle + perAngle,
+      offsetPos: offsetPos
+    };
+
+    if (ind !== 0) {
+      var prevRing = rings[ind - 1];
+      curObj = {
+        startAngle: prevRing.endAngle,
+        endAngle: prevRing.endAngle + perAngle,
+        offsetPos: offsetPos
+      };
+    }
+
+    var curAngle = (curObj.startAngle + curObj.endAngle) / 2 % 360;
+    curObj.bisectorAngle = curAngle;
+    curObj.bisectorRadian = transRadius(curAngle);
+
+    if (arr[ind].state === 'hover') {
+      //角平分,角度转弧度,默认是顺时针，角度为相反
+      curObj.offsetPos = [activeOffset * Math.cos(curObj.bisectorRadian), activeOffset * Math.sin(curObj.bisectorRadian)]; //选中状态
+    }
+
+    rings.push(curObj);
+  });
+  return rings;
+}
+function transRadius(angle) {
+  return angle / 180 * Math.PI;
+}
+function computeLinePos(startAngle, endAngle, center, radius, disRadius) {
+  var points = [];
+  var centerAn = (startAngle + endAngle) / 2 % 360;
+  var centerAngle = transRadius(centerAn);
+  var labelAnchor = [0, 0];
+  var startPoint = [radius * Math.cos(centerAngle), radius * Math.sin(centerAngle)];
+  var endPoint = [(radius + disRadius) * Math.cos(centerAngle), (radius + disRadius) * Math.sin(centerAngle)];
+  var labelPos = [(radius + disRadius) * Math.cos(centerAngle), (radius + disRadius + 5) * Math.sin(centerAngle)];
+  labelPos = [center[0] + labelPos[0], center[1] + labelPos[1]];
+  points.push([center[0] + startPoint[0], center[1] + startPoint[1]]);
+  points.push([center[0] + endPoint[0], center[1] + endPoint[1]]);
+  labelAnchor = [Math.sin(centerAngle / 2), 1 - Math.cos(centerAngle / 4)];
+  return {
+    points: points,
+    labelAnchor: labelAnchor,
+    labelPos: labelPos
+  };
+}
+// CONCATENATED MODULE: ./src/visuals/Pie/index.js
+
+
+
+
+
+
+
+
+
+function Pie_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Pie_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Pie_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Pie_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+
+
+var Pie_Pie = /*#__PURE__*/function (_Base) {
+  inherits_default()(Pie, _Base);
+
+  function Pie(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Pie);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Pie).call(this, attrs));
+    _this.renderRings = [];
+    _this.hoverIndex = -1;
+    _this.activeIndex = -1;
+    return _this;
+  }
+
+  createClass_default()(Pie, [{
+    key: "beforeRender",
+    value: function beforeRender() {
+      //渲染前的处理函数，返回lines,继承base
+      var _this$getRenderData = this.getRenderData(),
+          rings = _this$getRenderData.rings;
+
+      var center = this.renderAttrs.center;
+      var arr = rings.map(function (item, ind) {
+        if (ind === 0) {
+          return {
+            from: {
+              startAngle: 0,
+              endAngle: 0,
+              pos: center
+            },
+            to: Pie_objectSpread({}, item, {
+              pos: center
+            })
+          };
+        }
+
+        var pervAngle = rings[ind - 1].endAngle;
+        return {
+          from: {
+            startAngle: pervAngle,
+            endAngle: pervAngle,
+            pos: center
+          },
+          to: Pie_objectSpread({}, item, {
+            pos: center
+          })
+        };
+      });
+      this.computeLine(arr);
+      return arr;
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      var _this2 = this;
+
+      //更新前的处理函数，返回lines,继承base
+      var _this$getRenderData2 = this.getRenderData(),
+          rings = _this$getRenderData2.rings;
+
+      var center = this.renderAttrs.center;
+      var oldRings = this.renderRings;
+      var arr = rings.map(function (item, ind) {
+        var curPos = [center[0] + item.offsetPos[0], center[1] + item.offsetPos[1]];
+        var attrs = filter_clone_lib_default()(item, ['startAngle', 'endAngle']);
+
+        if (ind === _this2.hoverIndex) {
+          return {
+            from: Pie_objectSpread({}, oldRings[ind].to),
+            to: Pie_objectSpread({}, attrs, {
+              pos: curPos
+            })
+          };
+        } else {
+          return {
+            from: Pie_objectSpread({}, oldRings[ind].to),
+            to: Pie_objectSpread({}, attrs, {
+              pos: curPos
+            })
+          };
+        }
+      });
+      this.computeLine(arr);
+      return arr;
+    }
+  }, {
+    key: "computeLine",
+    value: function computeLine(arr) {
+      var radiusPx = this.renderAttrs.radiusPx;
+      arr.forEach(function (item) {
+        var _computeLinePos = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, 15),
+            fromPoints = _computeLinePos.points,
+            fromAnchor = _computeLinePos.labelAnchor,
+            fromPos = _computeLinePos.labelPos;
+
+        var _computeLinePos2 = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, 15),
+            toPoints = _computeLinePos2.points,
+            toAnchor = _computeLinePos2.labelAnchor,
+            toPos = _computeLinePos2.labelPos;
+
+        item.line = {
+          from: {
+            points: fromPoints
+          },
+          to: {
+            points: toPoints
+          }
+        };
+        item.label = {
+          from: {
+            pos: fromPos,
+            anchor: fromAnchor
+          },
+          to: {
+            pos: toPos,
+            anchor: toAnchor
+          }
+        };
+      }); //计算guideline位置
+    }
+  }, {
+    key: "getRenderData",
+    value: function getRenderData() {
+      //根据line的特性返回需要数据
+      var renderAttrs = this.renderAttrs; //let { radiusPx, center } = renderAttrs
+
+      var renderData = this.renderData();
+      var rings = layout_layout.call(this, renderData, renderAttrs);
+      return {
+        rings: rings
+      };
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {//console.log(this.$refs['wrap'])
+    }
+  }, {
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
+      return {
+        layer: 'pie',
+        radius: 1,
+        innerRadius: 0,
+        startAngle: 0,
+        endAngle: 360,
+        lineWidth: 1,
+        //选中偏移量基数
+        activeOffset: 10
+      };
+    }
+  }, {
+    key: "defaultStyles",
+    value: function defaultStyles() {
+      // 默认的样式,继承base
+      return {};
+    }
+  }, {
+    key: "mousemove",
+    value: function mousemove(event, el) {
+      var renderData = this.renderData();
+      var ind = el.attr('_index');
+
+      if (ind !== this.hoverIndex) {
+        var curData = renderData[ind];
+        renderData.forEach(function (row) {
+          if (row.state === 'hover') {
+            row.state = 'default';
+          }
+        });
+        curData.state = 'hover';
+        this.hoverIndex = ind;
+      }
+    }
+  }, {
+    key: "mouseleave",
+    value: function mouseleave() {
+      var renderData = this.renderData();
+      renderData.forEach(function (row) {
+        if (row.state === 'hover') {
+          row.state = 'default';
+        }
+      });
+      this.hoverIndex = -1;
+    }
+  }, {
+    key: "renderData",
+    value: function renderData() {
+      var renderAttrs = this.renderAttrs;
+      return this.dataset[renderAttrs.layoutBy];
+    }
+  }, {
+    key: "render",
+    value: function render(rings) {
+      var _this3 = this;
+
+      //console.log(rings)
+      var _this$renderAttrs = this.renderAttrs,
+          clientRect = _this$renderAttrs.clientRect,
+          innerRadiusPx = _this$renderAttrs.innerRadiusPx,
+          radiusPx = _this$renderAttrs.radiusPx; //渲染的样式，合并了theme中的styles与组件上的defaultStyles
+
+      var styles = this.renderStyles; //当前主体颜色
+
+      var colors = this.theme.colors;
+      this.renderRings = rings;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        zIndex: 1,
+        "class": "container",
+        pos: [clientRect.left, clientRect.top],
+        size: [clientRect.width, clientRect.height]
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "rings-group",
+        onMouseleave: this.mouseleave
+      }, rings.map(function (ring, ind) {
+        var style = getStyle(_this3, 'sector', [{
+          strokeColor: colors[ind],
+          fillColor: colors[ind],
+          innerRadius: innerRadiusPx,
+          outerRadius: radiusPx,
+          _index: ind
+        }, styles.sector], [_this3.dataset.rows[ind], ind]);
+        return ring.state === 'disabled' || style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Ring"], extends_default()({
+          onMousemove: _this3.mousemove
+        }, style, {
+          animation: {
+            from: ring.from,
+            to: ring.to
+          }
+        }));
+      })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "line-group"
+      }, rings.map(function (ring, ind) {
+        var style = getStyle(_this3, 'guideline', [{
+          strokeColor: colors[ind]
+        }, styles.guideline], [_this3.dataset.rows[ind], ind]);
+        var hide = false;
+
+        if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
+          hide = true;
+        }
+
+        return hide || style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({}, style, {
+          animation: {
+            from: ring.line.from,
+            to: ring.line.to
+          }
+        }));
+      })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "label-group"
+      }, rings.map(function (ring, ind) {
+        var name = _this3.dataset.rows[ind].name;
+        var style = getStyle(_this3, 'guideText', [{
+          fillColor: '#666',
+          fontSize: 12
+        }, styles.guideline], [_this3.dataset.rows[ind], ind]);
+        var hide = false;
+
+        if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
+          hide = true;
+        }
+
+        return hide || style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({
+          text: name
+        }, style, {
+          pos: ring.label.from.pos,
+          animation: {
+            from: ring.label.from,
+            to: ring.label.to
+          }
+        }));
+      })));
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
+      var attrs = get_default()(getPrototypeOf_default()(Pie.prototype), "renderAttrs", this);
+
+      var radius = attrs.radius,
+          innerRadius = attrs.innerRadius;
+      var _attrs$clientRect = attrs.clientRect,
+          width = _attrs$clientRect.width,
+          height = _attrs$clientRect.height;
+      attrs.center = [width / 2, height / 2];
+      attrs.radiusPx = Math.min(width, height) * radius / 2;
+      attrs.innerRadiusPx = Math.min(width, height) * innerRadius / 2;
+      return attrs;
+    }
+  }]);
+
+  return Pie;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_Pie = (Pie_Pie);
+// CONCATENATED MODULE: ./src/visuals/Area/index.js
+
+
+
+
+
+
+
+
+
+var Area_Area = /*#__PURE__*/function (_Line) {
+  inherits_default()(Area, _Line);
+
+  function Area(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Area);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Area).call(this, attrs));
+    _this.type = 'area';
+    return _this;
+  }
+
+  createClass_default()(Area, [{
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      return deepObjectMerge({}, get_default()(getPrototypeOf_default()(Area.prototype), "defaultAttrs", this).call(this), {
+        stack: true,
+        animation: {
+          duration: 700,
+          easing: 'bounceOut'
+        },
+        layer: 'area'
+      });
+    }
+  }]);
+
+  return Area;
+}(visuals_Line);
+
+/* harmony default export */ var visuals_Area = (Area_Area);
+// CONCATENATED MODULE: ./src/visuals/Radar/layout.js
+
+
+/**
+ * 根据给定角度和长度获取极坐标值
+ * @param {Number} radian 角度
+ * @param {Number} length 长度
+ * @returns {Array} [x,y]
+ */
+var getPointCoordinate = function getPointCoordinate(radian, length) {
+  var x = Math.cos(radian) * length;
+  var y = Math.sin(radian) * length;
+  return [x, y];
+};
+/**
+ * 获取数组中最大数除以层级后的整数
+ * @param {Array} data
+ * @param {Number} splitNumber
+ * @returns {Number}
+ */
+
+
+var layout_getMax = function getMax(data, splitNumber) {
+  var indicatorMax = Math.max.apply(Math, toConsumableArray_default()(data));
+
+  if (indicatorMax < splitNumber * 10) {
+    return Math.ceil(indicatorMax / splitNumber) * splitNumber;
+  } else {
+    return Math.ceil(indicatorMax / 10 / splitNumber) * 10 * splitNumber;
+  }
+};
+/**
+ * 根据给定的数据，返回绘制雷达图所需要的数据
+ * @param {Array} dataset 数据集
+ * @param {Number} radius 雷达图半径
+ * @param {Number} splitNumber  雷达图背景层级
+ * @param {Number} startAngle 雷达图起始轴角度
+ * @param {Number} labelOffset 雷达图文字偏移值
+ * @param {Array} colors 雷达图主题颜色
+ * @returns {Object} { sectionAttrs, borderAttrs, axisAttrs, gridAttrs }
+ */
+
+
+function Radar_layout_layout(data, radius, splitNumber, startAngle, labelOffset, colors) {
+  var bgPoints = []; // 最外层背景多边形
+
+  var gridAttrs = []; // 蜘蛛网图背景
+
+  var axisAttrs = []; // 坐标轴
+
+  var sectionAttrs = []; // 多边形数据
+
+  if (data.some(function (d) {
+    return d.length === 0;
+  })) {
+    return {
+      sectionAttrs: sectionAttrs,
+      axisAttrs: axisAttrs,
+      gridAttrs: gridAttrs
+    };
+  }
+
+  var allDataValue = data.reduce(function (t, row) {
+    return t.concat(row.map(function (cell) {
+      return cell.value;
+    }));
+  }, []);
+  var max = layout_getMax(allDataValue, splitNumber); // 每个类别的弧度
+
+  var dimension = data[0].length;
+  var perRadian = Math.PI * 2 / dimension; // 起始角度->转弧度
+
+  var startRadian = Math.PI / 180 * startAngle;
+
+  for (var i = 0; i < dimension; i++) {
+    // 根据角度和半径，计算对应的坐标
+    var currentRadian = i * perRadian + startRadian;
+    var point = getPointCoordinate(currentRadian, radius);
+    bgPoints.push({
+      point: point,
+      radian: currentRadian
+    }); // 类别指示坐标
+
+    var labelPos = getPointCoordinate(currentRadian, radius + labelOffset);
+    var label = data[0][i].text; // 坐标轴属性
+
+    axisAttrs.push({
+      points: [[0, 0], point],
+      lineWidth: 1,
+      lineDash: [3, 2],
+      strokeColor: '#DDE0E5',
+      label: label,
+      labelPos: labelPos,
+      radian: currentRadian,
+      maxScale: max,
+      splitNumber: splitNumber
+    });
+  }
+
+  data.forEach(function (row, index) {
+    var categoryPoints = row.map(function (d, i) {
+      var value = d.value;
+      var radian = bgPoints[i].radian;
+      return getPointCoordinate(radian, value / max * radius);
+    });
+    sectionAttrs.push({
+      index: index,
+      name: row.name,
+      dataOrigin: row.data,
+      lineWidth: 1,
+      points: categoryPoints,
+      state: row.state,
+      close: true,
+      strokeColor: colors[index],
+      fillColor: colors[index]
+    });
+  }); // 背景网格多边形坐标
+
+  var gridPoints = bgPoints.map(function (p) {
+    return p.point;
+  });
+
+  for (var _i = 0; _i < splitNumber; _i++) {
+    var scale = 1 - _i / splitNumber;
+    gridAttrs.push({
+      scale: scale,
+      radius: radius,
+      points: gridPoints,
+      index: _i,
+      close: true,
+      lineWidth: 1,
+      strokeColor: '#DDE0E5',
+      anchor: [0.5, 0.5]
+    });
+  }
+
+  return {
+    sectionAttrs: sectionAttrs,
+    axisAttrs: axisAttrs,
+    gridAttrs: gridAttrs
+  };
+}
+// CONCATENATED MODULE: ./src/visuals/Radar/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Radar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Radar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Radar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Radar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+
+var Radar_Radar = /*#__PURE__*/function (_BaseVisual) {
+  inherits_default()(Radar, _BaseVisual);
+
+  function Radar(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Radar);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Radar).call(this, attrs));
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "onMouseenter", throttle(function (event, el) {
+      _this.dataset.resetState();
+
+      var name = el.attributes.name;
+
+      _this.dataset.rows.filter(function (row) {
+        return row.state !== 'disabled';
+      }).forEach(function (row) {
+        row.state = row.name === name ? 'hover' : 'default';
+      });
+    }, 16, true));
+
+    _this.type = 'radar';
+    _this.sectionData = [];
+    _this.scaleEl = [];
+    _this.oldPos = null;
+    return _this;
+  } //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
+
+
+  createClass_default()(Radar, [{
+    key: "defaultAttrs",
+    // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
+    value: function defaultAttrs() {
+      return {
+        layer: 'radar',
+        gridType: 'polygon',
+        // 网格类型,polygon,circle
+        splitNumber: 4,
+        // 网格层次
+        startAngle: 270,
+        // 起始角度
+        radius: 0.6,
+        // 雷达图半径
+        labelOffset: 7 // 文字偏移
+
+      };
+    }
+  }, {
+    key: "getPolylineAnimation",
+    value: function getPolylineAnimation(toPoints, state, index) {
+      var zeroPoints = new Array(toPoints.length).fill([0, 0]);
+      var preData = this.sectionData[index] || {
+        animation: {
+          to: {
+            points: zeroPoints
+          }
+        }
+      };
+      var animation = {
+        from: {
+          points: preData.animation.to.points
+        },
+        to: {
+          points: toPoints
+        }
+      }; // disabled的时候缩回原点并透明
+
+      if (state === 'disabled') {
+        animation.to.points = zeroPoints;
+      }
+
+      return animation;
+    }
+  }, {
+    key: "getRenderData",
+    value: function getRenderData() {
+      var dataSet = this.dataset; // // FIXME 数据筛选之前先按照label进行排序?是否需要？
+
+      var _this$renderAttrs = this.renderAttrs,
+          len = _this$renderAttrs.len,
+          splitNumber = _this$renderAttrs.splitNumber,
+          startAngle = _this$renderAttrs.startAngle,
+          labelOffset = _this$renderAttrs.labelOffset;
+      var colors = this.theme.colors;
+
+      var _layout = Radar_layout_layout(toConsumableArray_default()(dataSet.rows), len, splitNumber, startAngle, labelOffset, colors),
+          sectionAttrs = _layout.sectionAttrs,
+          axisAttrs = _layout.axisAttrs,
+          gridAttrs = _layout.gridAttrs;
+
+      return {
+        sectionAttrs: sectionAttrs,
+        axisAttrs: axisAttrs,
+        gridAttrs: gridAttrs
+      };
+    }
+  }, {
+    key: "processData",
+    value: function processData() {
+      var _this2 = this;
+
+      var _this$getRenderData = this.getRenderData(),
+          sectionAttrs = _this$getRenderData.sectionAttrs,
+          otherData = objectWithoutProperties_default()(_this$getRenderData, ["sectionAttrs"]);
+
+      var processSectionAttrs = sectionAttrs.map(function (attr, i) {
+        var points = attr.points,
+            state = attr.state,
+            otherAttrs = objectWithoutProperties_default()(attr, ["points", "state"]);
+
+        var _this2$getStyle = _this2.getStyle('section', attr, toConsumableArray_default()(attr.dataOrigin), i),
+            style = _this2$getStyle.style,
+            hoverStyle = _this2$getStyle.hoverStyle;
+
+        var stateStyle = state === 'hover' ? hoverStyle : {};
+
+        var animation = _this2.getPolylineAnimation(points, state, i);
+
+        return deepObjectMerge(otherAttrs, {
+          state: state
+        }, {
+          animation: animation
+        }, style, stateStyle);
+      });
+      return Radar_objectSpread({}, otherData, {
+        sectionAttrs: processSectionAttrs
+      });
+    }
+  }, {
+    key: "beforeRender",
+    value: function beforeRender() {
+      get_default()(getPrototypeOf_default()(Radar.prototype), "beforeRender", this).call(this);
+
+      var renderData = this.processData();
+      this.sectionData = toConsumableArray_default()(renderData.sectionAttrs);
+      return renderData;
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      get_default()(getPrototypeOf_default()(Radar.prototype), "beforeUpdate", this).call(this);
+
+      var updateData = this.processData();
+
+      if (updateData.sectionAttrs) {
+        var len = Math.max(this.sectionData.length, updateData.sectionAttrs.length);
+
+        for (var i = 0; i < len; i++) {
+          this.sectionData[i] = updateData.sectionAttrs[i];
+        }
+      }
+
+      this.sectionData = toConsumableArray_default()(updateData.sectionAttrs);
+      return updateData;
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {}
+  }, {
+    key: "getScaleAnimation",
+    value: function getScaleAnimation(toScale) {
+      return {
+        from: {
+          scale: 0
+        },
+        to: {
+          scale: toScale
+        }
+      };
+    }
+  }, {
+    key: "getStyle",
+    value: function getStyle(type, attr, data, index) {
+      return {
+        style: this.style(type)(attr, data, index) || {},
+        hoverStyle: this.style("".concat(type, ":hover"))(attr, data, index) || {}
+      };
+    }
+  }, {
+    key: "isSamePoints",
+    value: function isSamePoints(fromPts, toPts) {
+      return fromPts.toString() === toPts.toString();
+    }
+  }, {
+    key: "renderGrid",
+    value: function renderGrid(gridAttrs) {
+      var _this3 = this;
+
+      var gridType = this.renderAttrs.gridType;
+      var GridShape = gridType === 'circle' ? spritejs_min_js_amd_spritejs_umd_spritejs_["Arc"] : spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"];
+      return gridAttrs.map(function (attr, i) {
+        var animation = _this3.scaleEl.length > 0 ? {} : _this3.getScaleAnimation(attr.scale);
+
+        var _this3$getStyle = _this3.getStyle('grid', attr, null, i),
+            style = _this3$getStyle.style;
+
+        if (style === false) {
+          return;
+        }
+
+        return getApp().qcharts.h(GridShape, extends_default()({}, attr, style, {
+          animation: animation
+        }));
+      });
+    }
+  }, {
+    key: "renderAxisLabel",
+    value: function renderAxisLabel(attrs, i) {
+      var calcAnchor = function calcAnchor(radian) {
+        var x = 0.5 - Math.cos(radian);
+        var y = 0.5 - Math.sin(radian);
+        return [x, y];
+      };
+
+      var label = attrs.label,
+          labelPos = attrs.labelPos,
+          radian = attrs.radian;
+      var anchor = calcAnchor(radian);
+      var attr = {
+        text: label,
+        pos: labelPos,
+        color: '#67728C',
+        radian: radian,
+        anchor: anchor,
+        fontSize: 12
+      };
+      var animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(1);
+
+      var _this$getStyle = this.getStyle('label', attr, {
+        text: attr.label,
+        radian: radian
+      }, i),
+          style = _this$getStyle.style;
+
+      if (style === false) {
+        return;
+      }
+
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({}, attr, style, {
+        animation: animation
+      }));
+    }
+  }, {
+    key: "renderAxisScale",
+    value: function renderAxisScale(attrs, index) {
+      var getPt = function getPt(attrs) {
+        var points = attrs.points,
+            splitNumber = attrs.splitNumber,
+            maxScale = attrs.maxScale;
+
+        var _points$ = slicedToArray_default()(points[1], 2),
+            x = _points$[0],
+            y = _points$[1];
+
+        var perNum = maxScale / splitNumber;
+        return [[x / splitNumber, y / splitNumber], perNum];
+      };
+
+      var _getPt = getPt(attrs),
+          _getPt2 = slicedToArray_default()(_getPt, 2),
+          _getPt2$ = slicedToArray_default()(_getPt2[0], 2),
+          perX = _getPt2$[0],
+          perY = _getPt2$[1],
+          perNum = _getPt2[1];
+
+      var labels = [];
+      var display = index === 0 ? 'block' : 'none';
+      var common = {
+        fontSize: 12,
+        anchor: [1, 0.5],
+        translate: [-5, 0],
+        display: display
+      };
+
+      for (var i = 0; i < attrs.splitNumber + 1; i++) {
+        var point = [perX * i, perY * i];
+        var text = perNum * i;
+
+        var attr = Radar_objectSpread({
+          text: text,
+          color: '#67728C',
+          pos: point
+        }, common);
+
+        var _this$getStyle2 = this.getStyle('scale', attr, {
+          text: text,
+          index: index
+        }, i),
+            style = _this$getStyle2.style;
+
+        if (style === false) {
+          return;
+        }
+
+        if (attr.display !== 'none') {
+          var animation = {};
+          var elIndex = index * attrs.splitNumber + i;
+          var preEl = this.scaleEl[elIndex];
+
+          if (preEl) {
+            if (preEl.text !== text) {
+              animation = {
+                from: {
+                  text: preEl.text
+                },
+                to: {
+                  text: text
+                },
+                formatter: function formatter(attr) {
+                  attr.text = attr.text.toFixed(0);
+                  return attr;
+                }
+              };
+            }
+          } else {
+            animation = {
+              from: {
+                pos: [0, 0]
+              },
+              to: {
+                pos: point
+              }
+            };
+          }
+
+          this.scaleEl[i] = {
+            text: Number(text.toFixed(0))
+          };
+          labels.push(getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({}, attr, style, {
+            animation: animation
+          })));
+        }
+      }
+
+      return labels;
+    }
+  }, {
+    key: "renderAxis",
+    value: function renderAxis(axisAttrs) {
+      var _this4 = this;
+
+      var animation = this.scaleEl.length > 0 ? {} : this.getScaleAnimation(1);
+      return axisAttrs.map(function (attr, i) {
+        var _this4$getStyle = _this4.getStyle('axis', attr, {
+          text: attr.label
+        }, i),
+            style = _this4$getStyle.style;
+
+        if (style === false) {
+          return;
+        }
+
+        return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], null, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({}, attr, style, {
+          animation: animation
+        })), _this4.renderAxisLabel(attr, i), _this4.renderAxisScale(attr, i));
+      });
+    }
+  }, {
+    key: "renderPoints",
+    value: function renderPoints(sectionAttrs) {
+      var _this5 = this;
+
+      var allPoints = sectionAttrs.map(function (attrs) {
+        var secAnimation = attrs.animation,
+            dataOrigin = attrs.dataOrigin,
+            strokeColor = attrs.strokeColor,
+            state = attrs.state;
+        var prePoints = secAnimation && secAnimation.from && secAnimation.from.points;
+        var toPoints = secAnimation && secAnimation.to && secAnimation.to.points;
+        return toPoints.map(function (point, i) {
+          var attr = {
+            pos: point,
+            fillColor: strokeColor,
+            radius: 2,
+            dataOrigin: dataOrigin[i]
+          };
+
+          var _this5$getStyle = _this5.getStyle('point', attr, Radar_objectSpread({}, attr.dataOrigin), i),
+              style = _this5$getStyle.style,
+              hoverStyle = _this5$getStyle.hoverStyle;
+
+          if (style === false) {
+            return;
+          }
+
+          var animation = {
+            from: {
+              pos: [0, 0],
+              opacity: 1
+            },
+            to: {
+              pos: point,
+              opacity: 1
+            }
+          };
+
+          if (prePoints && prePoints[i]) {
+            if (!_this5.isSamePoints(prePoints[i], point)) {
+              animation.from.pos = prePoints[i];
+            } else {
+              animation.from.pos = point;
+            }
+          }
+
+          if (state === 'disabled') {
+            animation.to.opacity = 0;
+          }
+
+          var stateStyle = state === 'hover' ? hoverStyle : {};
+          return getApp().qcharts.h(utils_Point, extends_default()({}, attr, style, stateStyle, {
+            animation: animation,
+            zIndex: 99
+          }));
+        });
+      });
+      return allPoints.reduce(function (pre, cur) {
+        return pre.concat(cur);
+      }, []);
+    }
+  }, {
+    key: "renderSection",
+    value: function renderSection(sectionAttrs) {
+      var _this6 = this;
+
+      return sectionAttrs.map(function (attr, i) {
+        var animation = attr.animation,
+            otherAttr = objectWithoutProperties_default()(attr, ["animation"]);
+
+        return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({
+          zIndex: 9 + i
+        }, otherAttr, {
+          animation: animation,
+          onMouseenter: _this6.onMouseenter,
+          onMouseleave: _this6.onMouseleave
+        }));
+      });
+    }
+  }, {
+    key: "onMouseleave",
+    value: function onMouseleave() {
+      this.dataset.resetState();
+      this.dataset.rows.filter(function (row) {
+        return row.state !== 'disabled';
+      }).forEach(function (row) {
+        return row.state === 'default';
+      });
+    }
+  }, {
+    key: "render",
+    value: function render(_ref) {
+      var sectionAttrs = _ref.sectionAttrs,
+          axisAttrs = _ref.axisAttrs,
+          gridAttrs = _ref.gridAttrs;
+      var _this$renderAttrs2 = this.renderAttrs,
+          center = _this$renderAttrs2.center,
+          clientRect = _this$renderAttrs2.clientRect;
+      var gAnimation = {
+        from: {
+          pos: this.oldPos ? this.oldPos : center
+        },
+        to: {
+          pos: center
+        }
+      };
+      this.oldPos = center;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        pos: [clientRect.left, clientRect.top],
+        size: [clientRect.width, clientRect.height]
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        pos: center,
+        animation: gAnimation
+      }, this.renderGrid(gridAttrs), this.renderAxis(axisAttrs), this.renderSection(sectionAttrs), this.renderPoints(sectionAttrs)));
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      var attrs = get_default()(getPrototypeOf_default()(Radar.prototype), "renderAttrs", this);
+
+      var _attrs$clientRect = attrs.clientRect,
+          height = _attrs$clientRect.height,
+          width = _attrs$clientRect.width;
+      var center = [width / 2, height / 2];
+      var len = Math.min.apply(Math, center) * attrs.radius;
+      return Radar_objectSpread({}, attrs, {
+        center: center,
+        len: len
+      });
+    }
+  }]);
+
+  return Radar;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_Radar = (Radar_Radar);
+// CONCATENATED MODULE: ./src/visuals/Bar/layout.js
+
+
+function layout_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function layout_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { layout_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { layout_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+function Bar_layout_layout(arr, attrs) {
+  // 输入
+  var data = arr;
+  var stack = attrs.stack,
+      splitNumber = attrs.splitNumber,
+      clientRect = attrs.clientRect;
+  var width = clientRect.width,
+      height = clientRect.height;
+  var barSize = [width, height];
+  var transpose = attrs.transpose || false;
+  var groupGap = attrs.groupGap || 0;
+  var stackGap = attrs.stackGap || 0;
+  var barWidth = attrs.barWidth || 0; // 输出
+
+  var barData = [];
+  var groupData = [];
+  var textData = [];
+  var bgPillarAttr = {
+    opacity: 0,
+    bgcolor: "#000"
+  };
+  var valueAxis = axis_axis.call(this, {
+    dataSet: data,
+    stack: stack,
+    splitNumber: splitNumber
+  });
+
+  if (!valueAxis || !valueAxis.length) {
+    return {
+      barData: barData,
+      groupData: groupData,
+      textData: textData
+    };
+  }
+
+  var tableSize = transpose ? {
+    label: barSize[1],
+    value: barSize[0]
+  } : {
+    label: barSize[0],
+    value: barSize[1]
+  };
+  var axisValueMax = Math.max.apply(this, valueAxis);
+  var axisValueMin = Math.min.apply(this, valueAxis);
+  var POSITIVE_RATIO = axisValueMax / (axisValueMax - axisValueMin); // 正负柱子高度比例
+
+  var GROUP_BAR_NUM = computerLegend(data); // 图例显示个数
+
+  var GROUP_NUM = data[0].length;
+  var gap = 0; // 柱子宽度，根据数据绘制类型计算，是否分组，是否旋转
+
+  if (barWidth === 0) {
+    barWidth = stack ? tableSize.label * 0.5 / GROUP_NUM : tableSize.label * 0.5 / (GROUP_NUM * GROUP_BAR_NUM);
+    gap = stack ? barWidth : barWidth * GROUP_BAR_NUM;
+  } else {
+    gap = stack ? (tableSize.label - barWidth * GROUP_NUM) / GROUP_NUM : (tableSize.label - barWidth * GROUP_BAR_NUM * GROUP_NUM - groupGap * (GROUP_BAR_NUM - 1) * GROUP_NUM) / GROUP_NUM;
+  }
+
+  var BAR_HEIGHT_FACTOR = tableSize.value / (axisValueMax - axisValueMin);
+
+  if (!stack) {
+    // 分组柱状图
+    for (var i = 0, len = GROUP_NUM; i < len; i++) {
+      var flag = 0; // 计算当前柱子前面有几根被隐藏
+
+      var value = 0;
+      var rawValue = 0;
+      var gpData = {
+        rects: []
+      }; // 计算单根柱子
+
+      for (var j = 0, lenj = data.length; j < lenj; j++) {
+        // if (data[j][i].state !== "disabled") {
+        //   data[j][i].state = "default";
+        // }
+        rawValue = data[j][i].value;
+        value = data[j][i].layoutScaleValue;
+        var barHeight = BAR_HEIGHT_FACTOR * Math.abs(value);
+        var rect = {
+          anchor: [transpose && value < 0 ? 1 : 0, transpose || value < 0 ? 0 : 1],
+          size: transpose ? [barHeight, barWidth - 1] : [barWidth - 1, barHeight],
+          pos: transpose ? [tableSize.value * (1 - POSITIVE_RATIO), gap / 2 + (barWidth + groupGap) * (j - flag) + (barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap) * i] : [gap / 2 + (barWidth + groupGap) * (j - flag) + (barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap) * i, tableSize.value * POSITIVE_RATIO]
+        };
+
+        if (data[j][i].state === "disabled") {
+          rect.size = transpose ? [0, rect.size[1]] : [rect.size[0], 0];
+          flag++;
+        } else {
+          gpData.rects.push(rect);
+        }
+
+        var label = {
+          opacity: data[j][i].state !== "disabled" ? 1 : 0,
+          text: rawValue.toString(),
+          anchor: [transpose && value < 0 ? 1 : 0, 0.5],
+          pos: transpose ? [tableSize.value * (1 - POSITIVE_RATIO), gap / 2 + (barWidth + groupGap) * (j - flag) + (barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap) * i + barWidth * 0.5] : [gap / 2 + (barWidth + groupGap) * (j - flag) + (barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap) * i + barWidth * 0.5, tableSize.value * POSITIVE_RATIO],
+          rotate: transpose ? 0 : value < 0 ? 90 : 270,
+          paddingLeft: 8
+        };
+        barData.push(rect);
+        textData.push(label);
+      } // 柱子整体属性
+
+
+      gpData = Object.assign(gpData, layout_objectSpread({
+        // title: data[0][i]['_x'],
+        pos: transpose ? [0, (gap + barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1)) * i] : [(gap + barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1)) * i, 0],
+        size: transpose ? [tableSize.value, barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap] : [barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap, tableSize.value]
+      }, bgPillarAttr));
+      groupData.push(gpData);
+    }
+  } else {
+    // 堆叠柱状图
+    for (var _i = 0, _len = GROUP_NUM; _i < _len; _i++) {
+      var heightSumUp = 0;
+      var heightSumDown = 0;
+      var _value = 0;
+      var _gpData = {
+        rects: []
+      }; // 计算单根柱子
+
+      for (var _j = 0, _lenj = data.length; _j < _lenj; _j++) {
+        var stackGapTemp = stackGap; // if (data[j][i].state !== "disabled") {
+        //   data[j][i].state = "default";
+        // }
+
+        _value = data[_j][_i].layoutScaleValue;
+
+        var _barHeight = BAR_HEIGHT_FACTOR * Math.abs(_value);
+
+        if (_barHeight === 0) {
+          stackGapTemp = 0;
+        }
+
+        var posY = _value < 0 ? tableSize.value * POSITIVE_RATIO + heightSumDown : tableSize.value * POSITIVE_RATIO - heightSumUp;
+        var posX = _value < 0 ? tableSize.value * (1 - POSITIVE_RATIO) - heightSumDown : tableSize.value * (1 - POSITIVE_RATIO) + heightSumUp;
+        var posLabelY = _value < 0 ? tableSize.value * POSITIVE_RATIO + heightSumDown + _barHeight : tableSize.value * POSITIVE_RATIO - heightSumUp;
+        var _rect = {
+          anchor: [transpose && _value < 0 ? 1 : 0, transpose || _value < 0 ? 0 : 1],
+          size: transpose ? [_barHeight - stackGapTemp, barWidth] : [barWidth, _barHeight - stackGapTemp],
+          pos: transpose ? [posX, gap / 2 + (barWidth + gap) * _i] : [gap / 2 + (barWidth + gap) * _i, posY],
+          index: _j
+        };
+        var paddingAttrs = transpose ? "paddingLeft" : "paddingBottom";
+        var _label = {
+          opacity: data[_j][_i].state !== "disabled" ? 1 : 0,
+          text: _value.toString(),
+          anchor: transpose ? _value < 0 ? [1, 0.5] : [0, 0.5] : [0.5, 1],
+          pos: transpose ? [posX, +(gap + barWidth) / 2 + (barWidth + gap) * _i] : [(gap + barWidth) / 2 + (barWidth + gap) * _i, posLabelY]
+        };
+        _label[paddingAttrs] = 8;
+
+        if (data[_j][_i].state === "disabled") {
+          _rect.size = transpose ? [0, _rect.size[1]] : [_rect.size[0], 0];
+        } else {
+          _value < 0 ? heightSumDown = heightSumDown + _barHeight : heightSumUp = heightSumUp + _barHeight;
+
+          _gpData.rects.push(_rect);
+        }
+
+        textData.push(_label);
+        barData.push(_rect);
+      } // 柱子整体属性
+
+
+      _gpData = Object.assign(_gpData, layout_objectSpread({
+        pos: transpose ? [0, (gap + barWidth) * _i] : [(gap + barWidth) * _i, 0],
+        size: transpose ? [tableSize.value, barWidth + gap] : [barWidth + gap, tableSize.value]
+      }, bgPillarAttr));
+      groupData.push(_gpData);
+    }
+  }
+
+  return {
+    textData: textData,
+    barData: barData,
+    groupData: groupData
+  };
+}
+
+function computerLegend(data) {
+  var flag = 0;
+
+  for (var i = 0, len = data.length; i < len; i++) {
+    if (data[i][0].state !== "disabled") {
+      flag++;
+    }
+  }
+
+  if (flag === 0) {// console.warn('data invalid!')
+  }
+
+  return flag || 1;
+}
+// CONCATENATED MODULE: ./src/visuals/Bar/index.js
+
+
+
+
+
+
+
+
+
+
+
+function Bar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Bar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Bar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Bar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+
+
+var Bar_Bar = /*#__PURE__*/function (_Base) {
+  inherits_default()(Bar, _Base);
+
+  function Bar(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Bar);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Bar).call(this, attrs));
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "onMousemove", throttle(function (event, el) {
+      if (_this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
+        var curInd = 0;
+
+        var _el$getOffsetPosition = el.getOffsetPosition(event.x, event.y),
+            _el$getOffsetPosition2 = slicedToArray_default()(_el$getOffsetPosition, 2),
+            x = _el$getOffsetPosition2[0],
+            y = _el$getOffsetPosition2[1];
+
+        if (!_this.renderAttrs.transpose) {
+          //获取 x轴坐标的刻度
+          var width = _this.groups[0].size[0]; //转换canvas坐标到当前group的相对坐标
+
+          curInd = Math.floor(x / width);
+        } else {
+          var _width = _this.groups[0].size[1]; //转换canvas坐标到当前group的相对坐标
+
+          curInd = Math.floor(y / _width);
+        }
+
+        if (curInd < 1) {
+          curInd = 0;
+        } else if (curInd > _this.groups.length - 1) {
+          curInd = _this.groups.length - 1;
+        }
+
+        if (_this.hoverIndex !== curInd) {
+          var bgpillarState = _this.renderAttrs.bgpillarState;
+          bgpillarState[curInd] = 'hover';
+          bgpillarState[_this.hoverIndex] = 'defualt';
+
+          _this.attr('bgpillarState', bgpillarState);
+
+          _this.dataset.resetState();
+
+          _this.dataset.cols[curInd].state = 'hover';
+          _this.hoverIndex = curInd;
+        }
+      }
+    }, 16, true));
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "myClick", function () {
+      console.log('myclick');
+    });
+
+    _this.type = 'bar';
+    _this.pillars = null;
+    _this.texts = null;
+    _this.groups = null;
+    _this.fromTos = null;
+    _this.hoverIndex = -1;
+    return _this;
+  }
+
+  createClass_default()(Bar, [{
+    key: "beforeRender",
+    value: function beforeRender() {
+      var _this2 = this;
+
+      //渲染前的处理函数，返回lines,继承base---------before
+      var _this$getRenderData = this.getRenderData(),
+          arrLayout = _this$getRenderData.arrLayout;
+
+      var barData = arrLayout.barData.map(function (item) {
+        return {
+          attrs: item,
+          from: {
+            size: _this2.renderAttrs.transpose ? [0, item.size[1]] : [item.size[0], 0]
+          },
+          to: {
+            size: item.size
+          }
+        };
+      });
+      var textData = arrLayout.textData.map(function (item) {
+        return {
+          attrs: item,
+          from: {
+            pos: item.pos
+          },
+          to: {
+            pos: item.pos
+          }
+        };
+      });
+      this.pillars = barData;
+      this.groups = arrLayout.groupData;
+      this.texts = textData;
+      return {
+        barData: barData,
+        textData: textData,
+        groupData: arrLayout.groupData
+      };
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      var _this3 = this;
+
+      var pillars = this.pillars;
+      var texts = this.texts;
+
+      var _this$getRenderData2 = this.getRenderData(),
+          arrLayout = _this$getRenderData2.arrLayout;
+
+      var barData = arrLayout.barData.map(function (nextPillar, i) {
+        var prev = pillars[i] ? pillars[i] : arrLayout.barData[i - 1];
+
+        if (!prev) {
+          prev = {
+            size: [0, 0],
+            pos: nextPillar.pos,
+            labelAttrs: null
+          };
+        }
+
+        return {
+          attrs: nextPillar,
+          from: {
+            size: prev.attrs.disable ? _this3.attr('transpose') ? [0, prev.attrs.size[1]] : [prev.attrs.size[0], 0] : prev.attrs.size,
+            pos: prev.attrs.pos
+          },
+          to: {
+            size: nextPillar.size,
+            pos: nextPillar.pos
+          }
+        };
+      });
+      var textData = arrLayout.textData.map(function (nextText, i) {
+        var prev = texts[i] ? texts[i] : arrLayout.textData[i - 1];
+
+        if (!prev) {
+          prev = {
+            pos: nextPillar.pos
+          };
+        }
+
+        return {
+          attrs: nextText,
+          from: {
+            pos: prev.attrs.pos
+          },
+          to: {
+            pos: nextText.pos
+          }
+        };
+      });
+      this.pillars = barData;
+      this.groups = arrLayout.groupData;
+      this.texts = textData;
+      return {
+        barData: barData,
+        textData: textData,
+        groupData: arrLayout.groupData
+      };
+    }
+  }, {
+    key: "getRenderData",
+    value: function getRenderData() {
+      var renderAttrs = this.renderAttrs;
+      var renderData = this.dataset[renderAttrs.layoutBy];
+      var dataLength = renderData.length > 1 ? renderData.length : renderData[0].length;
+      var arrLayout = Bar_layout_layout.call(this, renderData, renderAttrs);
+      var colors = this.theme.colors;
+      var styles = this.renderStyles;
+      arrLayout.barData = arrLayout.barData.map(function (bar, i) {
+        // let style = this.style("pillar")(bar.attrs, this.dataset.rows[i], i);
+        // let barStyle = deepObjectMerge(
+        //   { bgcolor: bar.bgcolor || colors[i % dataLength] },
+        //   styles.bar,
+        //   style
+        // );
+        // bar = deepObjectMerge(bar, barStyle);
+        return bar;
+      });
+      return {
+        arrLayout: arrLayout
+      };
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {//console.log(this.$refs['wrap'])
+    }
+  }, {
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      var renderData = this.dataset['rows'];
+      var stateArray = Array.from({
+        length: renderData[0].length
+      }, function () {
+        return 'defalut';
+      }); // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
+
+      return {
+        layer: 'bar',
+        bgpillarState: stateArray,
+        states: {
+          bgpillar: {
+            animation: {
+              duration: 20
+            },
+            "default": {
+              opacity: 0.01
+            },
+            hover: {
+              opacity: 0.1
+            }
+          }
+        }
+      };
+    }
+  }, {
+    key: "defaultStyles",
+    value: function defaultStyles() {
+      // 默认的样式,继承base
+      return {
+        text: {
+          fontSize: 12,
+          fillColor: '#666'
+        }
+      };
+    }
+  }, {
+    key: "onMouseleave",
+    value: function onMouseleave(e, el) {
+      this.dataset.resetState();
+      var bgpillarState = this.renderAttrs.bgpillarState;
+      bgpillarState[this.hoverIndex] = 'defualt';
+      this.attr('bgpillarState', bgpillarState);
+      this.hoverIndex = -1;
+    }
+  }, {
+    key: "render",
+    value: function render(data) {
+      var _this4 = this;
+
+      var _this$renderAttrs = this.renderAttrs,
+          clientRect = _this$renderAttrs.clientRect,
+          bgpillarState = _this$renderAttrs.bgpillarState,
+          states = _this$renderAttrs.states;
+      var styles = this.renderStyles;
+      var renderData = this.dataset[this.renderAttrs.layoutBy];
+      var dataLength = renderData.length > 1 ? renderData.length : renderData[0].length;
+      var colors = this.theme.colors;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        pos: [clientRect.left, clientRect.top],
+        size: [clientRect.width, clientRect.height],
+        onMouseleave: this.onMouseleave,
+        onMouseenter: this.onMousemove,
+        onMousemove: this.onMousemove,
+        onClick: this.myClick // onMousemove={throttle(this.onMousemove)}
+
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        ref: "pillars",
+        "class": "pillars-group"
+      }, data.barData.map(function (pillar, ind) {
+        var cell = _this4.dataset.rows[ind % renderData.length][Math.floor(ind / renderData.length)];
+
+        var style = getStyle(_this4, 'pillar', [Bar_objectSpread({
+          bgcolor: colors[ind % dataLength]
+        }, pillar.attrs), styles.bar], [cell.data, Math.floor(ind / renderData.length), ind % renderData.length]);
+        var hoverStyle = getStyle(_this4, 'pillar:hover', [], [cell.data, Math.floor(ind / renderData.length), ind % renderData.length]);
+
+        if (cell.state === 'hover') {
+          deepObjectMerge(style, hoverStyle);
+        }
+
+        return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Sprite"], extends_default()({}, pillar.attrs, pillar.from, style, {
+          animation: {
+            from: pillar.from,
+            to: pillar.to
+          }
+        }));
+      }), data.textData.map(function (text, ind) {
+        var barAttrs = filter_clone_lib_default()(data.barData[ind].attrs, ['pos', 'size']);
+        var textStyle = getStyle(_this4, 'text', [{
+          barAttrs: barAttrs
+        }, styles.text], [_this4.dataset.rows[ind % renderData.length][Math.floor(ind / renderData.length)].data, Math.floor(ind / renderData.length), ind % renderData.length]); //console.log('aaa', textStyle, styles.text)
+
+        textStyle = filter_clone_lib_default()(textStyle, [], ['barAttrs']);
+
+        if (textStyle.pos) {
+          _this4.texts[ind].attrs.pos = textStyle.pos;
+          text.to.pos = textStyle.pos;
+        }
+
+        return textStyle === false ? null : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({}, text.attrs, textStyle, {
+          animation: {
+            from: text.from,
+            to: text.to
+          }
+        }));
+      })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        ref: "bgpillar",
+        "class": "bgpillars-group"
+      }, data.groupData.map(function (pillar, ind) {
+        var style = getStyle(_this4, 'backgroundpillar', [], [_this4.dataset.rows[ind % renderData.length], Math.floor(ind / renderData.length)]);
+        return style === false ? null : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Sprite"], extends_default()({
+          state: bgpillarState[ind],
+          states: states.bgpillar
+        }, pillar, style));
+      })));
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
+      var attrs = get_default()(getPrototypeOf_default()(Bar.prototype), "renderAttrs", this);
+
+      return attrs;
+    }
+  }]);
+
+  return Bar;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_Bar = (Bar_Bar);
+// CONCATENATED MODULE: ./src/visuals/PolarBar/layout.js
+
+function PolarBar_layout_layout(arr, attrs) {
+  // 输入
+  var data = arr;
+  var stack = attrs.stack,
+      splitNumber = attrs.splitNumber,
+      clientRect = attrs.clientRect,
+      groupPadAngle = attrs.groupPadAngle,
+      activeOffset = attrs.activeOffset;
+  var width = clientRect.width,
+      height = clientRect.height;
+  var barSize = [width, height];
+  var groupGap = groupPadAngle || 0;
+  var stackGap = attrs.stackGap || 0;
+  var radius = attrs.radius || 1;
+  var barInnerRadius = attrs.innerRadius || 0;
+  var padAngle = attrs.padAngle; // 输出
+
+  var barData = [];
+  var bgPillarAttr = {
+    opacity: 0.01,
+    fillColor: "#FF0000"
+  }; // const valueAxis = getAxis(stack, data)
+
+  var valueAxis = axis_axis.call(this, {
+    dataSet: data,
+    stack: stack,
+    splitNumber: splitNumber
+  });
+
+  if (!valueAxis || !valueAxis.length) {
+    return {
+      barData: barData
+    };
+  }
+
+  var tableSize = Math.min(barSize[0], barSize[1]);
+  var axisValueMax = Math.max.apply(this, valueAxis);
+  var axisValueMin = Math.min.apply(this, valueAxis);
+  var POSITIVE_RATIO = axisValueMax / (axisValueMax - axisValueMin); // 正负柱子高度比例
+
+  var GROUP_BAR_NUM = layout_computerLegend(data); // 图例显示个数
+
+  var GROUP_NUM = data[0].length;
+  var BAR_MAX_HEIGHT = 0.5 * radius * tableSize;
+  var BAR_HEIGHT_FACTOR = BAR_MAX_HEIGHT / (axisValueMax - axisValueMin);
+
+  if (!stack) {
+    // 分组柱状图
+    for (var i = 0, len = GROUP_NUM; i < len; i++) {
+      var flag = 0; // 计算当前柱子前面有几根被隐藏
+
+      var value = 0;
+      var gpData = {
+        rects: []
+      };
+      var groupAngle = (Math.PI * 2 - GROUP_NUM * groupGap) / GROUP_NUM; // 计算单根柱子
+
+      for (var j = 0, lenj = data.length; j < lenj; j++) {
+        // if (data[j][i].disabled !== true) {
+        //   data[j][i].disabled = false;
+        // }
+        var barAngle = groupAngle / GROUP_BAR_NUM;
+        var startAngle = (groupAngle + groupGap) * i + barAngle * (j - flag) - Math.PI * 0.5;
+        value = data[j][i].layoutScaleValue;
+        var barHeight = BAR_HEIGHT_FACTOR * value;
+        var innerRadius = BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) + barInnerRadius * tableSize * 0.5; //默认中心坐标偏移量0
+
+        var offsetPos = [0, 0];
+        var rect = {
+          innerRadius: innerRadius,
+          outerRadius: innerRadius + barHeight,
+          startAngle: startAngle * 180 / Math.PI,
+          endAngle: (startAngle + barAngle) * 180 / Math.PI,
+          value: data[j][i].value,
+          text: data[j][i].text,
+          state: data[j][i].state,
+          data: data[j][i].data,
+          id: i * lenj + j,
+          offsetPos: offsetPos
+        };
+
+        if (rect.state === "hover") {
+          var curAngle = (rect.startAngle + rect.endAngle) / 2 % 360;
+          rect.bisectorRadian = layout_transRadius(curAngle); //角平分,角度转弧度,默认是顺时针，角度为相反
+
+          rect.offsetPos = [activeOffset * Math.cos(rect.bisectorRadian), activeOffset * Math.sin(rect.bisectorRadian)]; //选中状态
+        }
+
+        if (rect.state === "disabled") {
+          rect.endAngle = rect.startAngle;
+          rect.radius = 0;
+          rect.opacity = 0;
+          flag++;
+        } else {
+          rect.opacity = 1;
+          gpData.rects.push(rect);
+        }
+
+        if (GROUP_NUM < 2) {
+          delete rect.startAngle;
+          delete rect.endAngle;
+        }
+
+        barData.push(rect);
+      }
+    }
+  } else {
+    // 堆叠柱状图
+    for (var _i = 0, _len = GROUP_NUM; _i < _len; _i++) {
+      var heightSumUp = 0;
+      var heightSumDown = 0;
+      var _value = 0;
+      var _gpData = {
+        rects: []
+      };
+
+      var _groupAngle = (Math.PI * 2 - GROUP_NUM * groupGap) / GROUP_NUM; // 计算单根柱子
+
+
+      for (var _j = 0, _lenj = data.length; _j < _lenj; _j++) {
+        // if (data[j][i].disabled !== true) {
+        //   data[j][i].disabled = false;
+        // }
+        var _startAngle = (_groupAngle + groupGap) * _i - Math.PI * 0.5;
+
+        _value = data[_j][_i].value;
+
+        var _barHeight = BAR_HEIGHT_FACTOR * _value;
+
+        var _innerRadius = _value < 0 ? BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) - heightSumDown : BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) + heightSumUp;
+
+        _innerRadius = _innerRadius + barInnerRadius * tableSize * 0.5;
+        var _offsetPos = [0, 0];
+        var _rect = {
+          innerRadius: _innerRadius,
+          outerRadius: _innerRadius + _barHeight - stackGap,
+          startAngle: _startAngle * 180 / Math.PI,
+          endAngle: (_startAngle + _groupAngle) * 180 / Math.PI,
+          value: data[_j][_i].value,
+          text: data[_j][_i].text,
+          state: data[_j][_i].state,
+          data: data[_j][_i].data,
+          offsetPos: _offsetPos
+        };
+
+        if (_rect.state === "hover") {
+          _rect.strokeColor = "#F00";
+        } else {
+          delete _rect.strokeColor;
+        }
+
+        if (_rect.state === "disabled") {
+          _rect.opacity = 0;
+        } else {
+          _rect.opacity = 1;
+          _value < 0 ? heightSumDown = heightSumDown - _barHeight : heightSumUp = heightSumUp + _barHeight;
+
+          _gpData.rects.push(_rect);
+        }
+
+        barData.push(_rect);
+      }
+    }
+  } // attachPadAngleOfArr(barData, padAngle)
+
+
+  return {
+    barData: barData
+  };
+}
+
+function layout_computerLegend(data) {
+  var flag = 0;
+
+  for (var i = 0, len = data.length; i < len; i++) {
+    if (data[i][0].state !== "disabled") {
+      flag++;
+    }
+  }
+
+  if (flag === 0) {// console.warn('data invalid!')
+  }
+
+  return flag || 1;
+}
+
+function layout_transRadius(angle) {
+  return angle / 180 * Math.PI;
+}
+// CONCATENATED MODULE: ./src/visuals/PolarBar/index.js
+
+
+
+
+
+
+
+
+
+function PolarBar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function PolarBar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { PolarBar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { PolarBar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+
+
+var PolarBar_PolarBar = /*#__PURE__*/function (_Base) {
+  inherits_default()(PolarBar, _Base);
+
+  function PolarBar(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, PolarBar);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(PolarBar).call(this, attrs));
+    _this.type = "polarbar";
+    _this.pillars = [];
+    _this.hoverIndex = -1;
+    _this.timer = null;
+    return _this;
+  }
+
+  createClass_default()(PolarBar, [{
+    key: "beforeRender",
+    value: function beforeRender() {
+      //渲染前的处理函数，返回rings,继承base
+      var _this$getRenderData = this.getRenderData(),
+          arrLayout = _this$getRenderData.arrLayout;
+
+      this.pillars = arrLayout.barData;
+      var barData = arrLayout.barData.map(function (item) {
+        return {
+          from: {
+            endAngle: item.startAngle
+          },
+          to: item
+        };
+      });
+      return {
+        barData: barData
+      };
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      var pillars = this.pillars;
+      var pos = this.renderAttrs.pos;
+
+      var _this$getRenderData2 = this.getRenderData(),
+          arrLayout = _this$getRenderData2.arrLayout;
+
+      var barData = arrLayout.barData.map(function (nextPillar, i) {
+        var curPos = [pos[0] + nextPillar.offsetPos[0], pos[1] + nextPillar.offsetPos[1]];
+        nextPillar.pos = curPos;
+        return {
+          from: PolarBar_objectSpread({}, pillars[i]),
+          to: PolarBar_objectSpread({}, nextPillar)
+        };
+      });
+      this.pillars = arrLayout.barData;
+      return {
+        barData: barData
+      };
+    }
+  }, {
+    key: "getRenderData",
+    value: function getRenderData() {
+      var _this2 = this;
+
+      var renderAttrs = this.renderAttrs;
+      var renderData = this.dataset[renderAttrs.layoutBy];
+
+      if (!renderData || renderData.length === 0) {
+        return {
+          barData: []
+        };
+      }
+
+      var dataLength = renderData.length > 1 ? renderData.length : renderData[0].length;
+      this.legendArr = Array.from({
+        length: renderData.length
+      }, function () {
+        return 1;
+      });
+      var arrLayout = PolarBar_layout_layout.call(this, renderData, renderAttrs);
+      var colors = this.theme.colors;
+      var styles = this.renderStyles;
+      arrLayout.barData.forEach(function (bar, i) {
+        var style = _this2.style("pillar")(bar.attrs, _this2.dataset.rows[i], i);
+
+        bar.fillColor = bar.fillColor || colors[i % dataLength];
+        bar.strokeColor = renderAttrs.strokeColor || "#FFF";
+        bar.pos = renderAttrs.pos;
+
+        if (!bar.hasOwnProperty("startAngle") || !bar.hasOwnProperty("endAngle")) {
+          bar.lineWidth = 0;
+        } else {
+          bar.lineWidth = 1;
+        }
+
+        var barStyle = deepObjectMerge({
+          bgcolor: bar.bgcolor || colors[i % dataLength]
+        }, styles.bar, style);
+        bar = deepObjectMerge(bar, barStyle);
+      });
+      return {
+        arrLayout: arrLayout
+      };
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {//console.log(this.$refs['wrap'])
+    }
+  }, {
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
+      return {
+        layer: "bar",
+        //选中偏移量基数
+        activeOffset: 10
+      };
+    }
+  }, {
+    key: "defaultStyles",
+    value: function defaultStyles() {
+      // 默认的样式,继承base
+      return {};
+    }
+  }, {
+    key: "mouseleave",
+    value: function mouseleave() {
+      var _this3 = this;
+
+      this.timer = setTimeout(function () {
+        _this3.dataset.resetState();
+
+        _this3.hoverIndex = -1;
+      }, 100);
+    }
+  }, {
+    key: "mousemove",
+    value: function mousemove(e, el) {
+      clearTimeout(this.timer); // let fun = throttle(function(e, el) {
+
+      var renderData = this.renderData();
+      var ind = el.attr("_index");
+      var groupInd = Math.floor(ind / renderData.length);
+
+      if (groupInd !== this.hoverIndex) {
+        this.dataset.resetState();
+        this.dataset[this.renderAttrs.layoutBy === "rows" ? "cols" : "rows"][groupInd].state = "hover";
+        this.hoverIndex = groupInd;
+      } // }, 30).bind(this);
+      // fun(e, el);
+
+    }
+  }, {
+    key: "groupMousemove",
+    value: function groupMousemove(e, el) {
+      console.log(el);
+    }
+  }, {
+    key: "renderData",
+    value: function renderData() {
+      var renderAttrs = this.renderAttrs;
+      return this.dataset[renderAttrs.layoutBy];
+    }
+  }, {
+    key: "render",
+    value: function render(data) {
+      var _this4 = this;
+
+      var _this$renderAttrs = this.renderAttrs,
+          clientRect = _this$renderAttrs.clientRect,
+          innerRadiusPx = _this$renderAttrs.innerRadiusPx,
+          radiusPx = _this$renderAttrs.radiusPx;
+      var colors = this.theme.colors;
+      var styles = this.renderStyles;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "container",
+        ref: "wrap"
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "rings-group",
+        onMouseleave: this.mouseleave
+      }, data.barData.map(function (ring, ind) {
+        var style = getStyle(_this4, "sector", [{
+          _index: ind
+        }, styles.sector], [_this4.dataset.rows[ind], ind]);
+        return ring.state === "disabled" || style === false ? getApp().qcharts.h(Node, null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Ring"], extends_default()({
+          onMousemove: _this4.mousemove
+        }, style, {
+          animation: {
+            from: ring.from,
+            to: ring.to
+          }
+        }));
+      })));
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
+      var attrs = get_default()(getPrototypeOf_default()(PolarBar.prototype), "renderAttrs", this);
+
+      var _attrs$clientRect = attrs.clientRect,
+          height = _attrs$clientRect.height,
+          width = _attrs$clientRect.width,
+          top = _attrs$clientRect.top,
+          left = _attrs$clientRect.left;
+      attrs.pos = [left + width / 2, top + height / 2];
+      return attrs;
+    }
+  }]);
+
+  return PolarBar;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_PolarBar = (PolarBar_PolarBar);
+// CONCATENATED MODULE: ./src/visuals/Funnel/layout.js
+
+function Funnel_layout_layout(arr, attrs) {
+  // 输入
+  var data = arr;
+  var align = attrs.align,
+      pyramid = attrs.pyramid,
+      clientRect = attrs.clientRect;
+  var width = clientRect.width,
+      height = clientRect.height; // 输出
+
+  var polygons = [];
+  var max = arr[0][0].value;
+  var widthFactory = width / max;
+  var POLYGON_NUM = Funnel_layout_computerLegend(data); // 图例显示个数
+
+  var flag = 0; // 计算当前polygon前面有几个被隐藏
+
+  for (var i = 0, len = data.length; i < len; i++) {
+    var polygon = {
+      colse: true,
+      lineWidth: 3,
+      points: []
+    };
+    var value = data[i][0].value;
+    var offset = 0;
+    var textAnchor = [0, 0.5];
+
+    if (align === "center") {
+      textAnchor = [0.5, 0.5];
+      offset = 0.5;
+    } else if (align === "right") {
+      offset = 1;
+      textAnchor = [1, 0.5];
+    }
+
+    polygon.points.push((max - value) * offset * widthFactory, height * (i - flag) / POLYGON_NUM);
+    polygon.points.push((max * offset + value * (1 - offset)) * widthFactory, height * (i - flag) / POLYGON_NUM);
+
+    if (i - flag + 1 < POLYGON_NUM) {
+      var counter = 1;
+
+      while (data[i + counter][0].state === "disabled") {
+        counter++;
+      }
+
+      var nextValue = data[i + counter][0].value;
+      polygon.points.push((max * offset + nextValue * (1 - offset)) * widthFactory, height * (i - flag + 1) / POLYGON_NUM);
+      polygon.points.push((max - nextValue) * offset * widthFactory, height * (i - flag + 1) / POLYGON_NUM);
+    } else {
+      if (pyramid) {
+        polygon.points.push(offset * width, height);
+      } else {
+        polygon.points.push((max * offset + value * (1 - offset)) * widthFactory, height * (i - flag + 1) / POLYGON_NUM);
+        polygon.points.push((max - value) * offset * widthFactory, height * (i - flag + 1) / POLYGON_NUM);
+      }
+    }
+
+    polygon.opacity = 1;
+
+    if (data[i][0].state === "disabled") {
+      polygon.points[6] = polygon.points[0];
+      polygon.points[7] = polygon.points[1];
+      polygon.points[4] = polygon.points[2];
+      polygon.points[5] = polygon.points[3];
+      polygon.opacity = 0;
+      flag++;
+    }
+
+    polygon.labelAttrs = {
+      opacity: !data[i][0].state === "disabled" ? 1 : 0,
+      text: Math.round(100 * value / max) + "%",
+      anchor: textAnchor,
+      pos: [width * offset + (0.5 - offset) * 10, (i - flag + 0.5) * height / POLYGON_NUM],
+      fillColor: "#FFF",
+      fontSize: "12px"
+    };
+    polygons.push(polygon);
+  }
+
+  return polygons;
+}
+
+function Funnel_layout_computerLegend(data) {
+  var flag = 0;
+
+  for (var i = 0, len = data.length; i < len; i++) {
+    if (data[i][0].state !== "disabled") {
+      flag++;
+    }
+  }
+
+  if (flag === 0) {
+    console.warn("data invalid!");
+  }
+
+  return flag || 1;
+}
+// CONCATENATED MODULE: ./src/visuals/Funnel/index.js
+
+
+
+
+
+
+
+
+
+
+
+function Funnel_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Funnel_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Funnel_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Funnel_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+var Funnel_Funnel = /*#__PURE__*/function (_Base) {
+  inherits_default()(Funnel, _Base);
+
+  function Funnel(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Funnel);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Funnel).call(this, attrs));
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "onMousemove", throttle(function (event, el) {
+      if (_this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
+        var curInd = 0;
+
+        var _el$getOffsetPosition = el.getOffsetPosition(event.x, event.y),
+            _el$getOffsetPosition2 = slicedToArray_default()(_el$getOffsetPosition, 2),
+            x = _el$getOffsetPosition2[0],
+            y = _el$getOffsetPosition2[1];
+
+        if (!_this.renderAttrs.transpose) {
+          //获取 x轴坐标的刻度
+          var width = _this.groups[0].size[0]; //转换canvas坐标到当前group的相对坐标
+
+          curInd = Math.floor(x / width);
+        } else {
+          var _width = _this.groups[0].size[1]; //转换canvas坐标到当前group的相对坐标
+
+          curInd = Math.floor(y / _width);
+        }
+
+        if (curInd < 1) {
+          curInd = 0;
+        } else if (curInd > _this.groups.length - 1) {
+          curInd = _this.groups.length - 1;
+        }
+
+        if (_this.hoverIndex !== curInd) {
+          var bgpillarState = _this.renderAttrs.bgpillarState;
+          bgpillarState[curInd] = "hover";
+          bgpillarState[_this.hoverIndex] = "defualt";
+
+          _this.attr("bgpillarState", bgpillarState);
+
+          _this.dataset.resetState();
+
+          _this.dataset.cols[curInd].state = "hover";
+          _this.hoverIndex = curInd;
+        }
+      }
+    }, 16, true));
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "myClick", function () {
+      console.log("myclick");
+    });
+
+    _this.type = "funnel";
+    _this.polygons = null;
+    _this.hoverIndex = -1;
+    return _this;
+  }
+
+  createClass_default()(Funnel, [{
+    key: "beforeRender",
+    value: function beforeRender() {
+      //渲染前的处理函数，返回lines,继承base---------before
+      var _this$getRenderData = this.getRenderData(),
+          polygons = _this$getRenderData.polygons;
+
+      polygons = polygons.map(function (plg) {
+        return {
+          from: {
+            points: plg.points.length === 8 ? [plg.points[6], plg.points[7], plg.points[4], plg.points[5], plg.points[4], plg.points[5], plg.points[6], plg.points[7]] : [plg.points[4], plg.points[5], plg.points[4], plg.points[5], plg.points[4], plg.points[5]]
+          },
+          to: Funnel_objectSpread({
+            pos: [0, 0]
+          }, plg)
+        };
+      });
+      this.polygons = polygons;
+      return {
+        polygons: polygons
+      };
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      var oldPolygons = this.polygons;
+
+      var _this$getRenderData2 = this.getRenderData(),
+          polygons = _this$getRenderData2.polygons;
+
+      polygons = polygons.map(function (polygon, i) {
+        return {
+          from: {
+            points: oldPolygons[i].to.points
+          },
+          to: Funnel_objectSpread({}, polygon)
+        };
+      });
+      this.polygons = polygons;
+      return {
+        polygons: polygons
+      };
+    }
+  }, {
+    key: "getRenderData",
+    value: function getRenderData() {
+      var _this2 = this;
+
+      var renderAttrs = this.renderAttrs;
+      var renderData = this.dataset[renderAttrs.layoutBy];
+      var polygons = Funnel_layout_layout(renderData, renderAttrs);
+      var colors = this.theme.colors;
+      var styles = this.renderStyles;
+      polygons = polygons.map(function (plg, i) {
+        var style = _this2.style("polygon")(plg.attrs, _this2.dataset.rows[i], i);
+
+        var plgStyle = deepObjectMerge({
+          fillColor: plg.bgcolor || colors[i]
+        }, styles.funnel, style);
+        plg = deepObjectMerge(plg, plgStyle);
+        return plg;
+      });
+      return {
+        polygons: polygons
+      };
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {//console.log(this.$refs['wrap'])
+    }
+  }, {
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      var renderData = this.dataset["rows"];
+      var stateArray = Array.from({
+        length: renderData[0].length
+      }, function () {
+        return "defalut";
+      }); // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
+
+      return {
+        layer: "bar",
+        bgpillarState: stateArray,
+        states: {
+          bgpillar: {
+            animation: {
+              duration: 20
+            },
+            "default": {
+              opacity: 0.01
+            },
+            hover: {
+              opacity: 0.1
+            }
+          }
+        }
+      };
+    }
+  }, {
+    key: "defaultStyles",
+    value: function defaultStyles() {
+      // 默认的样式,继承base
+      return {};
+    }
+  }, {
+    key: "onMouseleave",
+    value: function onMouseleave(e, el) {
+      this.dataset.resetState();
+      var bgpillarState = this.renderAttrs.bgpillarState;
+      bgpillarState[this.hoverIndex] = "defualt";
+      this.attr("bgpillarState", bgpillarState);
+      this.hoverIndex = -1;
+    }
+  }, {
+    key: "render",
+    value: function render(data) {
+      var _this$renderAttrs = this.renderAttrs,
+          clientRect = _this$renderAttrs.clientRect,
+          bgpillarState = _this$renderAttrs.bgpillarState,
+          states = _this$renderAttrs.states;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        "class": "container",
+        ref: "wrap",
+        pos: [clientRect.left, clientRect.top],
+        size: [clientRect.width, clientRect.height]
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        ref: "pillars",
+        "class": "pillars-group",
+        bgcolor: "#FF0"
+      }, data.polygons.map(function (pillar, ind) {
+        return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({}, pillar.from, {
+          animation: {
+            from: pillar.from,
+            to: pillar.to
+          }
+        }));
+      })));
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
+      var attrs = get_default()(getPrototypeOf_default()(Funnel.prototype), "renderAttrs", this);
+
+      return attrs;
+    }
+  }]);
+
+  return Funnel;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_Funnel = (Funnel_Funnel);
+// CONCATENATED MODULE: ./src/utils/color.js
+function hexToRgba(hex, opacity) {
+  // 16进制颜色转rgba
+  if (/^rgba\(.+\)$/.test(hex)) {
+    return hex;
+  }
+
+  var c;
+
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split('');
+
+    if (c.length === 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+
+    c = '0x' + c.join('');
+    return 'rgba(' + [c >> 16 & 255, c >> 8 & 255, c & 255].join(',') + ',' + opacity + ')';
+  }
+
+  throw new Error('Bad Hex');
+}
+function randomHexColor() {
+  // 随机生成十六进制颜色
+  var random = Math.floor(Math.random() * 16777216).toString(16); // 生成ffffff以内16进制数
+
+  while (random.length < 6) {
+    // while循环判断hex位数，少于6位前面加0凑够6位
+    random = "0".concat(random);
+  }
+
+  return "#".concat(random);
+}
+// CONCATENATED MODULE: ./src/visuals/Scatter/layout.js
+
+
+
+
+function Scatter_layout_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Scatter_layout_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Scatter_layout_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Scatter_layout_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+var layout_getDataRange = function getDataRange(data) {
+  if (data.length === 0) {
+    return [0, 1];
+  }
+
+  var min = Math.min.apply(Math, toConsumableArray_default()(data));
+  var max = Math.max.apply(Math, toConsumableArray_default()(data));
+  return [min, max];
+};
+
+var layout_getBigRange = function getBigRange(data) {
+  if (data.length === 0) {
+    return [0, 1];
+  }
+
+  var _getDataRange = layout_getDataRange(data),
+      _getDataRange2 = slicedToArray_default()(_getDataRange, 2),
+      min = _getDataRange2[0],
+      max = _getDataRange2[1];
+
+  var n = Math.round(min / 10) - 1;
+  var m = Math.round(max / 10) + 1;
+  return [n * 10, m * 10];
+};
+
+var layout_updateSectionVal = function updateSectionVal(section, newSection) {
+  var min = newSection.min,
+      max = newSection.max;
+
+  if (jsType(min) === 'number') {
+    section[0] = min;
+  }
+
+  if (jsType(max) === 'number') {
+    section[1] = max;
+  }
+};
+
+function Scatter_layout_layout(dataSet, size, layoutWay) {
+  var _size = slicedToArray_default()(size, 2),
+      width = _size[0],
+      height = _size[1];
+
+  var _dataSet$option = dataSet.option,
+      textField = _dataSet$option.text,
+      valueField = _dataSet$option.value;
+
+  var allData = toConsumableArray_default()(dataSet); // 如果X轴是文本框，则进行均分
+
+
+  var maxLen = layout_getDataRange(dataSet.rows.map(function (d) {
+    return d.length;
+  }))[1];
+  var xDomain = [0, maxLen - 1];
+  var xSection = [0, maxLen - 1];
+  var xIsTextData = allData.some(function (d) {
+    return jsType(d.text) === 'string';
+  });
+
+  if (!xIsTextData) {
+    xSection = layout_getBigRange(allData.map(function (d) {
+      return d.text;
+    }));
+    var xScales = axis_axis.call(this, {
+      dataSet: data,
+      stack: false,
+      field: textField,
+      section: xSection
+    });
+    xDomain = layout_getDataRange(xScales);
+  }
+
+  var yIsTextData = allData.some(function (d) {
+    return jsType(d.value) === 'string';
+  });
+
+  if (yIsTextData) {
+    throw new Error("Scatter's value category data should be Number!");
+  }
+
+  var ySection = layout_getBigRange(allData.map(function (d) {
+    return d.layoutScaleValue;
+  }));
+  var yScales = axis_axis.call(this, {
+    dataSet: data,
+    stack: false,
+    field: 'layoutScaleValue',
+    section: ySection
+  });
+  var yDomain = layout_getDataRange(yScales);
+
+  if (layoutWay) {
+    if (layoutWay[textField]) {
+      layout_updateSectionVal(xSection, layoutWay[textField]);
+    }
+
+    if (layoutWay[valueField]) {
+      layout_updateSectionVal(ySection, layoutWay[valueField]);
+    }
+  }
+
+  var newLayoutWay = {};
+  newLayoutWay[textField] = {
+    min: xSection[0],
+    max: xSection[1]
+  };
+  newLayoutWay[valueField] = {
+    min: ySection[0],
+    max: ySection[1]
+  };
+  var xLinear = scaleLinear().domain(xDomain).range([0, width]);
+  var yLinear = scaleLinear().domain(yDomain).range([0, height]);
+  var resultData = dataSet.rows.map(function (dArry) {
+    var attrs = dArry.map(function (d, i) {
+      var x = xIsTextData ? i : d.text;
+      var y = d.layoutScaleValue;
+      var pos = [xLinear(x), height - yLinear(y)];
+      return {
+        pos: pos,
+        radius: 5,
+        anchor: [1, 1],
+        dataOrigin: Scatter_layout_objectSpread({}, d.data),
+        state: d.state,
+        name: dArry.name,
+        col: d.col,
+        row: d.row
+      };
+    });
+    return {
+      name: dArry.name,
+      state: dArry.state,
+      attrs: attrs
+    };
+  });
+  return {
+    data: resultData,
+    layoutWay: newLayoutWay
+  };
+}
+// CONCATENATED MODULE: ./src/visuals/Scatter/index.js
+
+
+
+
+
+
+
+
+
+
+
+function Scatter_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Scatter_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Scatter_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Scatter_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+
+
+var Scatter_Scatter = /*#__PURE__*/function (_BaseVisual) {
+  inherits_default()(Scatter, _BaseVisual);
+
+  function Scatter() {
+    var _this;
+
+    var attrs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    classCallCheck_default()(this, Scatter);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Scatter).call(this, attrs));
+    _this.type = "scatter";
+    _this.scatterData = [];
+    _this.guideLineData = [];
+    return _this;
+  }
+
+  createClass_default()(Scatter, [{
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      return {
+        layer: "scatter",
+        labelField: null,
+        areaField: null,
+        //气泡大小字段值，不设置此值则为散点图
+        areaRange: null,
+        // 面积映射
+        showGuideLine: false,
+        layoutWay: null
+      };
+    }
+  }, {
+    key: "processData",
+    value: function processData() {
+      var _this2 = this;
+
+      var dataSet = this.dataset;
+      var _this$renderAttrs = this.renderAttrs,
+          layoutWay = _this$renderAttrs.layoutWay,
+          clientRect = _this$renderAttrs.clientRect;
+
+      var _layout$call = Scatter_layout_layout.call(this, dataSet, [clientRect.width, clientRect.height], layoutWay),
+          data = _layout$call.data,
+          newLayoutWay = _layout$call.layoutWay;
+
+      deepObjectMerge(this.renderAttrs.layoutWay || {}, newLayoutWay);
+      data.forEach(function (item, i) {
+        var color = _this2.theme.colors[i];
+        var fillColor = hexToRgba(color, 0.3);
+        item.attrs.forEach(function (di) {
+          di.strokeColor = color;
+          di.fillColor = fillColor;
+        });
+      });
+      return data;
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      var _this3 = this;
+
+      get_default()(getPrototypeOf_default()(Scatter.prototype), "beforeUpdate", this).call(this);
+
+      var updateData = this.processData();
+      var temp = updateData.map(function (row) {
+        return deepObjectMerge({}, row);
+      });
+      updateData.forEach(function (row, ind) {
+        var oldRow = _this3.scatterData[ind];
+        row.attrs.forEach(function (cell, cInd) {
+          var radius = _this3.getRealRadius(Scatter_objectSpread({}, cell));
+
+          cell.radius = radius;
+
+          if (oldRow && oldRow.attrs[cInd]) {
+            var oldCell = oldRow.attrs[cInd];
+
+            var toPos = toConsumableArray_default()(cell.pos);
+
+            var fromPos = oldCell.animation.to && oldCell.animation.to.pos ? toConsumableArray_default()(oldCell.animation.to.pos) : toConsumableArray_default()(oldCell.pos); // 位置相同
+
+            if (toPos.toString() === fromPos.toString()) {
+              var fromRadius = radius;
+              var toRadius = radius; //default-> disabled
+
+              if (cell.state === "disabled") {
+                toRadius = 0;
+              } // old is disabled
+
+
+              if (oldCell.animation.to.radius == 0) {
+                fromRadius = 0;
+              }
+
+              cell.animation = {
+                from: {
+                  radius: fromRadius
+                },
+                to: {
+                  radius: toRadius
+                }
+              };
+            } else {
+              cell.animation = {
+                from: {
+                  pos: fromPos
+                },
+                to: {
+                  pos: toPos
+                }
+              };
+            }
+          } else {
+            cell.animation = {
+              from: {
+                radius: 0
+              },
+              to: {
+                radius: radius
+              }
+            };
+          }
+        });
+      });
+      this.scatterData = temp;
+      return updateData;
+    }
+  }, {
+    key: "beforeRender",
+    value: function beforeRender() {
+      var _this4 = this;
+
+      get_default()(getPrototypeOf_default()(Scatter.prototype), "beforeRender", this).call(this);
+
+      var renderData = this.processData();
+      this.scatterData = renderData.map(function (row) {
+        return deepObjectMerge({}, row);
+      });
+      renderData.forEach(function (row) {
+        row.attrs.forEach(function (cell) {
+          var radius = _this4.getRealRadius(Scatter_objectSpread({}, cell));
+
+          cell.animation = {
+            from: {
+              radius: 0
+            },
+            to: {
+              radius: radius
+            }
+          };
+        });
+      });
+      return renderData;
+    }
+  }, {
+    key: "getRealRadius",
+    value: function getRealRadius(attr) {
+      var _this$renderAttrs2 = this.renderAttrs,
+          areaRange = _this$renderAttrs2.areaRange,
+          areaField = _this$renderAttrs2.areaField;
+      var radius = attr.radius,
+          dataOrigin = attr.dataOrigin; // 面积字段未定义，直接返回半径
+
+      if (!areaField || !dataOrigin.hasOwnProperty(areaField)) {
+        return radius;
+      } // 面积范围未定义，直接返回数据中的面积
+
+
+      if (!areaRange) {
+        return dataOrigin[areaField];
+      }
+
+      var allData = toConsumableArray_default()(this.dataset).map(function (d) {
+        return d.data[areaField];
+      }).sort(function (a, b) {
+        return a - b;
+      });
+
+      var linear = scaleLinear().domain([allData[0], allData[allData.length - 1]]).range(areaRange);
+      var realArea = linear(dataOrigin[areaField]);
+      return realArea;
+    }
+  }, {
+    key: "onMouseenter",
+    value: function onMouseenter(event, el) {
+      var arc = el.children[0];
+      var _arc$attributes = arc.attributes,
+          rowInd = _arc$attributes.row,
+          colInd = _arc$attributes.col,
+          pos = _arc$attributes.pos;
+      this.dataset.forEach(function (cell) {
+        if (cell.row === rowInd && cell.col === colInd) {
+          cell.state = "hover";
+        }
+      });
+      var showGuideLine = this.renderAttrs.showGuideLine;
+
+      if (showGuideLine) {
+        var _this$renderAttrs$cli = this.renderAttrs.clientRect,
+            height = _this$renderAttrs$cli.height,
+            width = _this$renderAttrs$cli.width;
+        this.guideLineData = [[[0, pos[1]], [width, pos[1]]], [[pos[0], 0], [pos[0], height]]];
+      }
+    }
+  }, {
+    key: "onMouseleave",
+    value: function onMouseleave() {
+      this.dataset.resetState();
+      this.guideLineData = [];
+    }
+  }, {
+    key: "renderGuideLine",
+    value: function renderGuideLine() {
+      if (this.guideLineData.length > 0) {
+        return this.guideLineData.map(function (points) {
+          return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], {
+            points: points,
+            strokeColor: "#ddd",
+            lineWidth: 1,
+            translate: [0.5, 0.5]
+          });
+        });
+      }
+
+      return;
+    }
+  }, {
+    key: "renderScatter",
+    value: function renderScatter(data) {
+      var _this5 = this;
+
+      var labelField = this.renderAttrs.labelField;
+      var scatters = data.map(function (item, di) {
+        return item.attrs.map(function (attr, ci) {
+          var style = _this5.style('point')(attr, Scatter_objectSpread({}, attr.dataOrigin), ci);
+
+          if (style === false) {
+            return;
+          }
+
+          var labelAttr = null;
+
+          if (labelField) {
+            var _style = _this5.style('label')(attr, Scatter_objectSpread({}, attr.dataOrigin), ci);
+
+            if (_style !== false) {
+              if (attr.dataOrigin.hasOwnProperty(labelField)) {
+                var strokeColor = attr.strokeColor,
+                    other = objectWithoutProperties_default()(attr, ["strokeColor"]);
+
+                var text = attr.dataOrigin[labelField];
+                labelAttr = deepObjectMerge(other, {
+                  fillColor: strokeColor,
+                  text: text,
+                  anchor: [0.5, 0.5],
+                  fontSize: '12px',
+                  zIndex: 10 + di + ci
+                }, _style);
+              }
+            }
+          }
+
+          var hStyle = _this5.style('point:hover')(attr, attr.dataOrigin, ci) || {};
+          var stateStyle = attr.state === 'hover' ? hStyle : {};
+          return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+            onMouseenter: _this5.onMouseenter,
+            onMouseleave: _this5.onMouseleave
+          }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Arc"], extends_default()({}, attr, style, stateStyle, {
+            zIndex: 9 + di + ci
+          })), labelAttr ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], labelAttr) : null);
+        });
+      });
+      return scatters.reduce(function (pre, cur) {
+        return pre.concat(cur);
+      }, []);
+    }
+  }, {
+    key: "render",
+    value: function render(data) {
+      var _this$renderAttrs$cli2 = this.renderAttrs.clientRect,
+          height = _this$renderAttrs$cli2.height,
+          width = _this$renderAttrs$cli2.width,
+          left = _this$renderAttrs$cli2.left,
+          top = _this$renderAttrs$cli2.top;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        size: [width, height],
+        pos: [left, top],
+        zIndex: 10
+      }, this.renderScatter(data), this.renderGuideLine());
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {}
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      return Scatter_objectSpread({}, get_default()(getPrototypeOf_default()(Scatter.prototype), "renderAttrs", this));
+    }
+  }]);
+
+  return Scatter;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_Scatter = (Scatter_Scatter);
+// CONCATENATED MODULE: ./src/utils/ellipse2path.js
+//通过圆生成path
+function ellipse2path(cx, cy, rx, ry) {
+  //非数值单位计算，如当宽度像100%则移除
+  if (isNaN(cx - cy + rx - ry)) return;
+  var path = 'M' + (cx - rx) + ' ' + cy + 'a' + rx + ' ' + ry + ' 0 1 0 ' + 2 * rx + ' 0' + 'a' + rx + ' ' + ry + ' 0 1 0 ' + -2 * rx + ' 0' + 'z';
+  return path;
+}
+
+/* harmony default export */ var utils_ellipse2path = (ellipse2path);
+// CONCATENATED MODULE: ./src/visuals/Wave/index.js
+
+
+
+
+
+
+
+
+
+function Wave_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Wave_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Wave_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Wave_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+var Wave_Wave = /*#__PURE__*/function (_Base) {
+  inherits_default()(Wave, _Base);
+
+  function Wave(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Wave);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Wave).call(this, attrs)); //波纹振偏移量
+
+    _this.offsetR = 50;
+    _this.tickId = '';
+    _this.oldAttr = {};
+    return _this;
+  }
+
+  createClass_default()(Wave, [{
+    key: "rendered",
+    value: function rendered() {
+      //path的高宽
+      this.wave();
+    }
+  }, {
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
+      return {
+        amplitude: 8,
+        //振幅
+        wavelength: 300,
+        //波长`
+        radius: 150,
+        percent: 65,
+        formatter: function formatter(per) {
+          return per + '%';
+        }
+      };
+    }
+  }, {
+    key: "wave",
+    value: function wave() {
+      var _this2 = this;
+
+      var currentR = 0;
+      var per = 4;
+      var clipWave = this.$refs['clipWave'];
+      var clipPath = this.$refs['clipPath'] || clipWave;
+      var pathHeight = clipPath.originalContentRect[3];
+      var _this$renderAttrs = this.renderAttrs,
+          percent = _this$renderAttrs.percent,
+          wavelength = _this$renderAttrs.wavelength,
+          amplitude = _this$renderAttrs.amplitude,
+          clientRect = _this$renderAttrs.clientRect,
+          animation = _this$renderAttrs.animation,
+          shape = _this$renderAttrs.shape;
+      var perR = 24 / animation.duration;
+      var currentX = 0 - clientRect.left; //以路径的top为起点，计算百分比
+
+      var startY = pathHeight * (100 - percent) / 100 + clipPath.originalContentRect[1];
+      this.tickId = Object(spritejs_min_js_amd_spritejs_umd_spritejs_["requestAnimationFrame"])(function (_) {
+        _this2.offsetR += perR;
+        var points = [[currentX, startY + pathHeight]];
+        points.push([currentX, startY + amplitude * Math.sin(currentR + _this2.offsetR)]);
+
+        while (currentX < clientRect.width + clientRect.left + clientRect.right) {
+          points.push([currentX, startY + amplitude * Math.sin(currentR + _this2.offsetR)]);
+          currentX += wavelength / (per * 2);
+          currentR += Math.PI / per;
+        }
+
+        var lastY = amplitude * Math.sin(currentR + _this2.offsetR);
+        points.push([currentX, startY + lastY]);
+        points.push([currentX, startY + lastY]);
+        points.push([currentX, startY + pathHeight]);
+        clipWave.attr({
+          points: points,
+          clipPath: ' ' + shape
+        });
+
+        if (_this2.offsetR >= 2 * Math.PI) {
+          _this2.offsetR = _this2.offsetR % (2 * Math.PI);
+        }
+
+        _this2.wave();
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$renderAttrs2 = this.renderAttrs,
+          clientRect = _this$renderAttrs2.clientRect,
+          shape = _this$renderAttrs2.shape,
+          pos = _this$renderAttrs2.pos,
+          formatter = _this$renderAttrs2.formatter,
+          percent = _this$renderAttrs2.percent,
+          radius = _this$renderAttrs2.radius;
+      var renderStyles = this.renderStyles;
+      var waveStyle = getStyle(this, 'wave', renderStyles.wave);
+      var shapeStyle = getStyle(this, 'shape', renderStyles.shape);
+      var textStyle = getStyle(this, 'text', renderStyles.text);
+      var animation = {
+        from: {
+          pos: this.oldAttr.pos || pos
+        },
+        to: {
+          pos: pos
+        }
+      };
+      this.oldAttr = Wave_objectSpread({}, this.renderAttrs);
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        zIndex: 1,
+        "class": "container",
+        pos: [clientRect.left, clientRect.top],
+        size: [clientRect.width, clientRect.height]
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        animation: animation
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Path"], {
+        ref: "clipPath1",
+        d: shape,
+        fillColor: shapeStyle.fillColor
+      }), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({
+        ref: "clipWave"
+      }, waveStyle, {
+        clipPath: shape,
+        smooth: true
+      })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Path"], {
+        ref: "clipPath",
+        d: shape,
+        strokeColor: shapeStyle.strokeColor,
+        lineWidth: shapeStyle.lineWidth
+      }), textStyle === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({
+        text: formatter(percent)
+      }, textStyle, {
+        pos: [radius, radius],
+        anchor: [0.5]
+      }))));
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
+      var attrs = get_default()(getPrototypeOf_default()(Wave.prototype), "renderAttrs", this);
+
+      var clientRect = attrs.clientRect;
+      var width = Math.floor(clientRect.width);
+      var height = Math.floor(clientRect.height);
+      var radius = attrs.radius;
+      attrs.pos = [0, 0];
+
+      if (!attrs.shape) {
+        attrs.pos = [width / 2 - radius, height / 2 - radius];
+        attrs.shape = utils_ellipse2path(radius, radius, attrs.radius, attrs.radius);
+      }
+
+      return attrs;
+    }
+  }]);
+
+  return Wave;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_Wave = (Wave_Wave);
+// CONCATENATED MODULE: ./src/visuals/Gauge/index.js
+
+
+
+
+
+
+
+
+
+
+function Gauge_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Gauge_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Gauge_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Gauge_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+/**
+ * 根据给定参数，生成仪表盘刻度的坐标以及刻度文字标注的坐标
+ * @param {Number} radius 仪表盘半径
+ * @param {Number} angle 刻度的角度 单位度
+ * @param {Number} tickLength 刻度的长度
+ * @param {Number} labelOffset 刻度文字的偏移值
+ * @param {Boolean} isInner 刻度是否在仪表盘内部
+ */
+
+function Gauge_tickLine(radius, angle, tickLength, labelOffset, isInner) {
+  var radian = angle * Math.PI / 180;
+  var cos = Math.cos(radian);
+  var sin = Math.sin(radian); // 起点
+
+  var x = cos * radius,
+      y = sin * radius; // 中点
+
+  var _ref = isInner ? [x - tickLength * cos, y - tickLength * sin] : [x + tickLength * cos, y + tickLength * sin],
+      _ref2 = slicedToArray_default()(_ref, 2),
+      cX0 = _ref2[0],
+      cY0 = _ref2[1];
+
+  var labelPos = isInner ? [x - (tickLength + labelOffset) * cos, y - (tickLength + labelOffset) * sin] : [x + (tickLength + labelOffset) * cos, y + (tickLength + labelOffset) * sin];
+  var anchorX = isInner ? cos : -cos;
+  var anchorY = isInner ? sin : -sin;
+  var anchor = [0.5, 0.5];
+
+  if (Math.abs(anchorX) > Math.abs(anchorY)) {
+    anchor[0] = anchorX < 0 ? 0 : anchorX;
+  } else {
+    anchor[1] = anchorY > 0 ? anchorY : 0;
+  }
+
+  return {
+    points: [[x, y], [cX0, cY0]],
+    labelPos: labelPos,
+    anchor: anchor
+  };
+}
+
+var Gauge_Gauge = /*#__PURE__*/function (_BaseVisual) {
+  inherits_default()(Gauge, _BaseVisual);
+
+  function Gauge(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Gauge);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Gauge).call(this, attrs));
+    _this.gaugeAnimations = [];
+    _this.type = 'Gauge';
+    _this.oldPos = null;
+
+    _this.style('tickText', true);
+
+    _this.style('tickLine', true);
+
+    return _this;
+  }
+
+  createClass_default()(Gauge, [{
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      return {
+        layer: 'gauge',
+        min: 0,
+        // 刻度最小值
+        max: 100,
+        // 刻度最大值
+        percent: 50,
+        // 指针值
+        lineCap: 'round',
+        _useBuiltInColors: false,
+        // 默认颜色不使用渐变色
+        lineWidth: 10,
+        // 仪表盘圆弧宽度
+        startAngle: 140,
+        // 仪表盘弧度起始角度，arc 角度顺时针增加，0度为屏幕X轴方向
+        endAngle: 400,
+        // 仪表盘弧度终止角度
+        strokeBgcolor: '#dde3ea',
+        // 仪表盘弧度的背景色
+        title: function title(d) {
+          return d;
+        },
+        tickStep: 10,
+        // tick 步进，生成 tick 的数量为 (max - min) / tickStep
+        tickLength: 10,
+        // 刻度长度，为负值时向外绘制
+        labelOffset: 5,
+        tickFormatter: function tickFormatter(d) {
+          return d;
+        } // 刻度文本格式化
+
+      };
+    }
+  }, {
+    key: "transform",
+    value: function transform() {
+      var _this$renderAttrs = this.renderAttrs,
+          radius = _this$renderAttrs.radius,
+          startAngle = _this$renderAttrs.startAngle,
+          endAngle = _this$renderAttrs.endAngle,
+          min = _this$renderAttrs.min,
+          max = _this$renderAttrs.max,
+          percent = _this$renderAttrs.percent;
+      var total = Math.abs(max - min);
+      return {
+        dataOrigin: percent,
+        startAngle: startAngle,
+        radius: radius,
+        endAngle: (endAngle - startAngle) * (percent - min) / total + startAngle,
+        strokeColor: this.color(0)
+      };
+    }
+  }, {
+    key: "beforeRender",
+    value: function beforeRender() {
+      get_default()(getPrototypeOf_default()(Gauge.prototype), "beforeRender", this).call(this);
+
+      var arc = this.transform();
+      this.gaugeAnimations = {
+        from: {
+          startAngle: arc.startAngle,
+          endAngle: arc.startAngle
+        },
+        to: {
+          startAngle: arc.startAngle,
+          endAngle: arc.endAngle
+        }
+      };
+      return arc;
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      get_default()(getPrototypeOf_default()(Gauge.prototype), "beforeUpdate", this).call(this);
+
+      var arc = this.transform();
+      var animation = {
+        from: {
+          startAngle: arc.startAngle,
+          endAngle: arc.startAngle
+        },
+        to: {
+          startAngle: arc.startAngle,
+          endAngle: arc.endAngle
+        }
+      };
+
+      if (this.gaugeAnimations) {
+        animation.from = Gauge_objectSpread({}, this.gaugeAnimations.to);
+      }
+
+      this.gaugeAnimations = Gauge_objectSpread({}, animation);
+      return arc;
+    }
+  }, {
+    key: "color",
+    value: function color(i) {
+      return this.theme.colors[i];
+    }
+    /**
+     * 渲染指针
+     * @param {Number} angle 角度
+     */
+
+  }, {
+    key: "renderPointer",
+    value: function renderPointer(d, maxTickTextFontSize) {
+      var style = this.style('pointer')(d, d.dataOrigin, 0);
+
+      if (style === false) {
+        return;
+      } // 动画
+
+
+      var _this$gaugeAnimations = this.gaugeAnimations,
+          from = _this$gaugeAnimations.from,
+          to = _this$gaugeAnimations.to; // rotate角度起始位置为屏幕Y轴方向，arc角度为X轴方向
+
+      var fromRotate = from.endAngle + 90;
+      var toRotate = to.endAngle + 90;
+      var pointerAnimation = {
+        from: {
+          rotate: fromRotate
+        },
+        to: {
+          rotate: toRotate
+        }
+      }; // 半径
+
+      var _this$renderAttrs2 = this.renderAttrs,
+          radius = _this$renderAttrs2.radius,
+          pointerWidth = _this$renderAttrs2.pointerWidth,
+          center = _this$renderAttrs2.center,
+          tickLength = _this$renderAttrs2.tickLength,
+          labelOffset = _this$renderAttrs2.labelOffset,
+          lineWidth = _this$renderAttrs2.lineWidth; // 指针顶部离仪表盘的距离
+
+      var pointerTopOffset = tickLength + lineWidth + labelOffset + maxTickTextFontSize;
+
+      if (tickLength < 0) {
+        pointerTopOffset = pointerTopOffset - tickLength - labelOffset;
+      } // 指针长度
+
+
+      var pointerLen = radius - pointerTopOffset; // 指针宽度
+
+      var pWidth = radius / 10; // 指针颜色
+
+      var color = this.color(0);
+
+      var _center = slicedToArray_default()(center, 2),
+          x = _center[0],
+          y = _center[1];
+
+      var attr = {
+        fillColor: color,
+        rotate: fromRotate,
+        transformOrigin: center,
+        zIndex: 11,
+        points: [[x, y], [x - pWidth / 2, y - pointerLen * 0.1], [x, y - pointerLen], [x + pWidth / 2, y - pointerLen * 0.1], [x, y]],
+        close: true
+      };
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({}, attr, style, {
+        animation: pointerAnimation
+      }));
+    }
+  }, {
+    key: "isStyleExist",
+    value: function isStyleExist(name) {
+      var style = this.style("".concat(name));
+      return Boolean(style);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var _this$renderAttrs3 = this.renderAttrs,
+          _useBuiltInColors = _this$renderAttrs3._useBuiltInColors,
+          title = _this$renderAttrs3.title,
+          percent = _this$renderAttrs3.percent,
+          center = _this$renderAttrs3.center,
+          radius = _this$renderAttrs3.radius,
+          startAngle = _this$renderAttrs3.startAngle,
+          endAngle = _this$renderAttrs3.endAngle,
+          lineWidth = _this$renderAttrs3.lineWidth,
+          lineCap = _this$renderAttrs3.lineCap,
+          strokeBgcolor = _this$renderAttrs3.strokeBgcolor,
+          clientRect = _this$renderAttrs3.clientRect;
+      var labelCenter = [center[0], center[1] * 1.25];
+      var ticks = this.ticks;
+      var tickLine = this.isStyleExist('tickLine');
+      var tickText = this.isStyleExist('tickText');
+      var realTitle = title || percent;
+      var gradientColor = null; // 默认使用内置的渐变配色方案
+
+      if (_useBuiltInColors !== false) {
+        var colors = this.theme.colors.reverse();
+        var gradientOpt = {
+          vector: [0, 0, center[0] * 2, center[1] * 2],
+          colors: [{
+            color: colors[0],
+            offset: 0
+          }, {
+            color: colors[1],
+            offset: 0.3
+          }, {
+            color: colors[2],
+            offset: 1
+          }]
+        };
+        gradientColor = new spritejs_min_js_amd_spritejs_umd_spritejs_["Gradient"](gradientOpt);
+      }
+
+      var maxTickTextFontSize = 16;
+
+      if (tickText !== false) {
+        ticks.map(function (tick, j) {
+          var style = _this2.style('tickText')(data, data.dataOrigin, j);
+
+          if (style && style.fontSize) {
+            if (jsType(style.fontSize) === 'number' && maxTickTextFontSize < style.fontSize) {
+              maxTickTextFontSize = style.fontSize;
+            }
+
+            if (jsType(style.fontSize) === 'string') {
+              var realSize = Number(style.fontSize.replace('px', ''));
+
+              if (jsType(realSize) === 'number' && maxTickTextFontSize < realSize) {
+                maxTickTextFontSize = realSize;
+              }
+            }
+          }
+        });
+      }
+
+      var gPos = [clientRect.left, clientRect.top];
+      var gSize = [clientRect.width, clientRect.height];
+      var gAnimation = {
+        from: {
+          pos: this.oldPos ? this.oldPos : gPos
+        },
+        to: {
+          pos: gPos
+        }
+      };
+      this.oldPos = gPos;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        pos: gPos,
+        size: gSize,
+        animation: gAnimation
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Arc"], {
+        pos: center,
+        lineWidth: lineWidth,
+        lineCap: lineCap,
+        startAngle: startAngle,
+        endAngle: endAngle,
+        strokeColor: strokeBgcolor,
+        radius: radius,
+        zIndex: 10
+      }), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Arc"], extends_default()({
+        pos: center,
+        lineCap: lineCap,
+        lineWidth: lineWidth
+      }, data, {
+        animation: this.gaugeAnimations
+      }, gradientColor ? {
+        strokeColor: gradientColor
+      } : {
+        strokeColor: this.color(0)
+      }, this.style('arc')(data, data.dataOrigin, 0), {
+        zIndex: 11
+      })), this.renderPointer(data, maxTickTextFontSize), realTitle ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({
+        text: jsType(realTitle) === 'function' ? realTitle(data.dataOrigin) : realTitle,
+        pos: labelCenter,
+        textAlign: "center",
+        zIndex: 10,
+        anchor: [0.5, 1]
+      }, this.style('title')(data, data.dataOrigin, 0))) : null, tickLine !== false || tickText !== false ? ticks.map(function (tick, j) {
+        return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+          pos: center,
+          anchor: [0, 0],
+          zIndex: 1010
+        }, tickLine !== false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({
+          points: tick.points,
+          strokeColor: strokeBgcolor
+        }, _this2.style('tickLine')(data, data.dataOrigin, j))) : null, tickText !== false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({}, tick.label, _this2.style('tickText')(data, data.dataOrigin, j))) : null);
+      }) : null);
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {
+      var _this3 = this;
+
+      this.on('resize', function () {
+        return _this3.forceUpdate();
+      });
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      var attrs = get_default()(getPrototypeOf_default()(Gauge.prototype), "renderAttrs", this); // 仪表盘半径
+
+
+      var clientRect = attrs.clientRect;
+      var height = clientRect.height,
+          width = clientRect.width;
+      var size = [width, height];
+      var radius = ~~Math.min.apply(size, size.map(function (v) {
+        return v / 2;
+      })); // 指针宽度
+
+      var pointerWidth = radius / 10; // 绘图中心
+
+      var center = [width / 2, height / 2];
+      return Gauge_objectSpread({}, attrs, {
+        radius: radius,
+        pointerWidth: pointerWidth,
+        center: center
+      });
+    }
+  }, {
+    key: "ticks",
+    get: function get() {
+      var _this$renderAttrs4 = this.renderAttrs,
+          min = _this$renderAttrs4.min,
+          max = _this$renderAttrs4.max,
+          radius = _this$renderAttrs4.radius,
+          startAngle = _this$renderAttrs4.startAngle,
+          endAngle = _this$renderAttrs4.endAngle,
+          lineWidth = _this$renderAttrs4.lineWidth,
+          tickStep = _this$renderAttrs4.tickStep,
+          tickLength = _this$renderAttrs4.tickLength,
+          labelOffset = _this$renderAttrs4.labelOffset,
+          tickFormatter = _this$renderAttrs4.tickFormatter;
+      var count = Math.abs(max - min) / tickStep;
+      var total = endAngle - startAngle;
+      var isInner = tickLength > 0;
+      var perAngle = total / count;
+      var ticks = [];
+      var tickRadius = isInner ? radius - lineWidth / 2 : radius + lineWidth / 2;
+      var angle = 0;
+      var i = -1;
+
+      while (++i <= count) {
+        angle = i * perAngle + startAngle;
+        var ret = Gauge_tickLine(tickRadius, angle, Math.abs(tickLength), Math.abs(labelOffset), isInner);
+        ticks.push({
+          points: ret.points,
+          label: {
+            text: tickFormatter(i * tickStep + min).toFixed(0),
+            pos: ret.labelPos,
+            anchor: ret.anchor
+          }
+        });
+      }
+
+      if ((ticks[0].angle + ticks[ticks.length - 1].angle) % (Math.PI * 2) === 0) {
+        ticks.pop();
+      }
+
+      return ticks;
+    }
+  }]);
+
+  return Gauge;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_Gauge = (Gauge_Gauge);
+// CONCATENATED MODULE: ./src/visuals/RadialBar/index.js
+
+
+
+
+
+
+
+
+
+
+function RadialBar_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function RadialBar_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { RadialBar_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { RadialBar_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+ // 数据拷贝
+
+var RadialBar_flattern = function flattern(arr) {
+  return [].concat.apply([], arr);
+};
+
+var RadialBar_RadialBar = /*#__PURE__*/function (_BaseVisual) {
+  inherits_default()(RadialBar, _BaseVisual);
+
+  function RadialBar() {
+    var _this;
+
+    var attrs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    classCallCheck_default()(this, RadialBar);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(RadialBar).call(this, attrs));
+    _this.type = 'RadialBar';
+    _this.animators = [];
+    _this.oldPos = null;
+    return _this;
+  }
+
+  createClass_default()(RadialBar, [{
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      return {
+        layer: 'radialBar',
+        radius: 0.8,
+        innerRadius: 0,
+        startAngle: -90,
+        endAngle: 270,
+        lineWidth: 5,
+        strokeBgcolor: '#f5f5f5'
+      };
+    }
+  }, {
+    key: "transform",
+    value: function transform(data) {
+      var _this2 = this;
+
+      var _this$renderAttrs = this.renderAttrs,
+          startAngle = _this$renderAttrs.startAngle,
+          endAngle = _this$renderAttrs.endAngle,
+          max = _this$renderAttrs.max,
+          min = _this$renderAttrs.min,
+          lineWidth = _this$renderAttrs.lineWidth,
+          colors = _this$renderAttrs.colors;
+      var total = 0;
+
+      if (!isNaN(max) && !isNaN(min)) {
+        total = max - min;
+      } else {
+        var cloneData = deepObjectMerge(data);
+        cloneData.sort(function (a, b) {
+          return b.value - a.value;
+        });
+        total = cloneData[0].value * 1.3;
+      }
+
+      var angle = endAngle - startAngle;
+      var innerRadius = this.innerRadius;
+      var outerRadius = this.maxOuterRadius;
+      var arcOffset = 0.5;
+      var len = data.length;
+      var perRadius = ((outerRadius - innerRadius) * 2 - lineWidth * (lineWidth >= 5 ? 1 : len - 1)) / ((len * 2 - 1) * (1 + arcOffset));
+      var value = null;
+      data.forEach(function (d, i) {
+        value = +d.value;
+        d.pos = [outerRadius, outerRadius];
+        d.anchor = [0.5, 0.5];
+        d.lineWidth = lineWidth;
+        d.startAngle = startAngle;
+        d.endAngle = d.state === 'disabled' ? startAngle : startAngle + angle * value / total;
+        d.innerRadius = innerRadius + i * (1 + arcOffset) * perRadius;
+        d.radius = d.innerRadius + 1 * perRadius;
+        d.strokeColor = colors[i];
+
+        var normalStyle = _this2.style('arc')(d, d.dataOrigin, d.index);
+
+        Object.assign(d, normalStyle);
+      }); // 半径大的在底，小的在上，这样事件触发才正常
+
+      return data.sort(function (a, b) {
+        return b.radius - a.radius;
+      });
+    }
+  }, {
+    key: "beforeRender",
+    value: function beforeRender() {
+      get_default()(getPrototypeOf_default()(RadialBar.prototype), "beforeRender", this).call(this);
+
+      var startAngle = this.renderAttrs.startAngle;
+      var data = RadialBar_flattern(this.dataset);
+      data = this.transform(data);
+      this.animators = data.map(function (d) {
+        return {
+          from: {
+            startAngle: startAngle,
+            endAngle: startAngle
+          },
+          to: {
+            startAngle: startAngle,
+            endAngle: d.endAngle
+          }
+        };
+      });
+      return data;
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      var _this3 = this;
+
+      get_default()(getPrototypeOf_default()(RadialBar.prototype), "beforeUpdate", this).call(this);
+
+      var startAngle = this.renderAttrs.startAngle;
+      var data = RadialBar_flattern(this.dataset);
+      data = this.transform(data);
+      this.animators = data.map(function (d, i) {
+        if (d.anticlockwise) {
+          return d.disabled ? {
+            from: {
+              opacity: 1
+            },
+            to: {
+              opacity: 0
+            }
+          } : {
+            from: {
+              opacity: 1
+            },
+            to: {
+              opacity: 1
+            }
+          };
+        } else {
+          var prev = _this3.animators[i] ? _this3.animators[i].to : data[i - 1];
+
+          if (!prev) {
+            prev = {
+              startAngle: startAngle,
+              endAngle: startAngle
+            };
+          }
+
+          return {
+            from: {
+              startAngle: prev.startAngle,
+              endAngle: prev.endAngle
+            },
+            to: {
+              startAngle: d.startAngle,
+              endAngle: d.endAngle
+            }
+          };
+        }
+      });
+      return data;
+    }
+  }, {
+    key: "onMouseenter",
+    value: function onMouseenter(event, el) {
+      var _el$children$1$attrib = el.children[1].attributes,
+          col = _el$children$1$attrib.col,
+          row = _el$children$1$attrib.row;
+      this.dataset.forEach(function (item) {
+        item.state = item.col === col && item.row === row ? 'hover' : 'default';
+      });
+    }
+  }, {
+    key: "onMouseleave",
+    value: function onMouseleave() {
+      this.dataset.resetState();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var strokeBgcolor = this.renderAttrs.strokeBgcolor;
+      var gAnimation = {
+        from: {
+          pos: this.oldPos ? this.oldPos : this.center
+        },
+        to: {
+          pos: this.center
+        }
+      };
+      this.oldPos = this.center;
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], null, data.map(function (d, i) {
+        var col = d.col,
+            row = d.row,
+            data = d.data;
+        return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+          pos: _this4.center,
+          animation: gAnimation,
+          onMouseenter: _this4.onMouseenter,
+          onMousemove: _this4.onMouseenter,
+          onMouseleave: _this4.onMouseleave
+        }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Arc"], extends_default()({}, d, {
+          startAngle: 0,
+          endAngle: 360,
+          strokeColor: strokeBgcolor
+        })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Arc"], extends_default()({
+          pos: _this4.center
+        }, RadialBar_objectSpread({}, d, {
+          col: col,
+          row: row
+        }), {
+          animation: _this4.animators[i]
+        }, _this4.style('arc')(d, data, i))));
+      }));
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {}
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      var attrs = get_default()(getPrototypeOf_default()(RadialBar.prototype), "renderAttrs", this);
+
+      var clientRect = attrs.clientRect;
+      var size = [clientRect.width, clientRect.height];
+      return RadialBar_objectSpread({}, attrs, {
+        size: size
+      });
+    }
+  }, {
+    key: "maxOuterRadius",
+    get: function get() {
+      var _this$renderAttrs2 = this.renderAttrs,
+          startAngle = _this$renderAttrs2.startAngle,
+          endAngle = _this$renderAttrs2.endAngle,
+          radius = _this$renderAttrs2.radius,
+          size = _this$renderAttrs2.size;
+
+      var _size = slicedToArray_default()(size, 2),
+          width = _size[0],
+          height = _size[1];
+
+      if (endAngle - startAngle === 90) {
+        return Math.min(width, height) * radius;
+      } else {
+        return Math.min(width, height) / 2 * radius;
+      }
+    }
+  }, {
+    key: "center",
+    get: function get() {
+      var _this$renderAttrs3 = this.renderAttrs,
+          startAngle = _this$renderAttrs3.startAngle,
+          endAngle = _this$renderAttrs3.endAngle,
+          radius = _this$renderAttrs3.radius,
+          size = _this$renderAttrs3.size;
+      var angle = (endAngle + startAngle) / 2;
+
+      var _size2 = slicedToArray_default()(size, 2),
+          width = _size2[0],
+          height = _size2[1];
+
+      var maxRadius = this.maxOuterRadius;
+      var x = width / 2 - maxRadius,
+          y = height / 2 - maxRadius;
+
+      if (endAngle - startAngle === 90) {
+        // 区分象限
+        var cos = Math.cos(angle);
+        var sin = Math.sin(angle);
+        var maxWidth = radius * width;
+        var maxHeight = radius * height;
+        x += cos < 0 ? maxWidth / 2 : -(maxWidth / 2);
+        y += sin < 0 ? maxHeight / 2 : -(maxHeight / 2);
+      }
+
+      return [x, y];
+    }
+  }, {
+    key: "innerRadius",
+    get: function get() {
+      var _this$renderAttrs4 = this.renderAttrs,
+          radius = _this$renderAttrs4.radius,
+          innerRadius = _this$renderAttrs4.innerRadius;
+      return innerRadius <= 0 ? 0 : this.maxOuterRadius / radius * innerRadius;
+    }
+  }]);
+
+  return RadialBar;
+}(BaseVisual_BaseVisual);
+
+/* harmony default export */ var visuals_RadialBar = (RadialBar_RadialBar);
+// CONCATENATED MODULE: ./src/base/BasePlugin.js
+
+
+
+
+
+
+
+
+
+var BasePlugin_BasePlugin = /*#__PURE__*/function (_Base) {
+  inherits_default()(BasePlugin, _Base);
+
+  function BasePlugin(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, BasePlugin);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(BasePlugin).call(this, attrs));
+    _this.theme = theme_default.plugins[_this.constructor.name]; //如果当前对象设置了theme，不继承theme
+
+    _this.theme.set = function (obj) {
+      if (_this.theme === theme_default.visuals[_this.constructor.name]) {
+        _this.theme = filter_clone_lib_default()(_this.theme);
+      }
+
+      _this.theme = deepObjectMerge(_this.theme, obj);
+    };
+
+    return _this;
+  }
+
+  return BasePlugin;
+}(base_Base);
+
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
+var helpers_typeof = __webpack_require__(18);
+var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
+
+// CONCATENATED MODULE: ./src/plugins/Axis/layout.js
+
+
+
+function Axis_layout_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Axis_layout_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Axis_layout_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Axis_layout_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+function Axis_layout_layout(arr, attrs) {
+  var res = {
+    scales: [],
+    labels: [],
+    grids: [],
+    axisPoints: [],
+    orient: attrs.orient
+  };
+  var defaultAttrs = {
+    top: {
+      label: {
+        anchor: [0.5, 1],
+        padding: [0, 0, 6, 0],
+        textAlign: 'center'
+      },
+      scale: {
+        anchor: [0.5, 1],
+        width: 1,
+        height: 4
+      },
+      grid: {
+        strokeColor: '#666'
+      },
+      name: {},
+      type: 'category'
+    },
+    bottom: {
+      scale: {
+        anchor: [0.5, 0],
+        width: 1,
+        height: 4
+      },
+      label: {
+        anchor: [0.5, 0],
+        padding: [6, 0, 0, 0],
+        textAlign: 'center'
+      },
+      grid: {
+        strokeColor: '#666'
+      },
+      name: {},
+      type: 'category'
+    },
+    left: {
+      label: {
+        padding: [0, 8, 0, 0],
+        anchor: [1, 0.5],
+        textAlign: 'right'
+      },
+      scale: {
+        anchor: [1, 0.5],
+        width: 4,
+        height: 1
+      },
+      grid: {
+        strokeColor: '#666'
+      },
+      name: {},
+      type: 'value'
+    },
+    right: {
+      label: {
+        anchor: [0, 0.5],
+        padding: [0, 0, 0, 8]
+      },
+      scale: {
+        anchor: [0, 0.5],
+        width: 4,
+        height: 1
+      },
+      grid: {
+        strokeColor: '#666'
+      },
+      name: {},
+      type: 'value'
+    }
+  };
+  var stack = attrs.stack,
+      splitNumber = attrs.splitNumber,
+      clientRect = attrs.clientRect,
+      orient = attrs.orient,
+      axisGap = attrs.axisGap,
+      transpose = attrs.transpose;
+
+  if (transpose) {
+    ;
+    ['top', 'bottom', 'right', 'left'].forEach(function (str) {
+      defaultAttrs[str].type = defaultAttrs[str].type === 'value' ? 'category' : 'value';
+    });
+  }
+
+  var width = clientRect.width,
+      height = clientRect.height;
+  var scales = axis_axis.call(this, {
+    dataSet: arr,
+    stack: stack,
+    splitNumber: splitNumber // needReverse: true,
+
+  });
+  var maxVal = Math.max.apply(this, scales);
+  var minVal = Math.min.apply(this, scales);
+  var type = attrs.type || defaultAttrs[orient].type;
+  var distance = orient === 'left' || orient === 'right' ? height : width;
+  var datasetReverse = this.dataset.datasetReverse;
+
+  if (type === 'value') {
+    var scaleFY = scaleLinear().domain([minVal, maxVal]).range([0, distance]);
+    scales.forEach(function (num) {
+      var _getItemAttrs = getItemAttrs(defaultAttrs, orient, {
+        text: '' + typeof_default()(datasetReverse) === 'function' ? datasetReverse(num) : num
+      }, num, scaleFY, clientRect),
+          scaleAttr = _getItemAttrs.scaleAttr,
+          labelAttr = _getItemAttrs.labelAttr,
+          gridAttr = _getItemAttrs.gridAttr;
+
+      res.scales.push(scaleAttr);
+      res.labels.push(labelAttr);
+      res.grids.push(gridAttr);
+    });
+  } else if (type === 'category') {
+    var curArr = arr[0];
+    var len = axisGap ? curArr.length : curArr.length - 1;
+
+    var _scaleFY = scaleLinear().domain([0, len]).range([0, distance]);
+
+    curArr.forEach(function (cell, ind) {
+      var _getItemAttrs2 = getItemAttrs(defaultAttrs, orient, cell, ind, _scaleFY, clientRect, axisGap),
+          scaleAttr = _getItemAttrs2.scaleAttr,
+          labelAttr = _getItemAttrs2.labelAttr,
+          gridAttr = _getItemAttrs2.gridAttr;
+
+      res.scales.push(scaleAttr);
+      res.labels.push(labelAttr);
+      res.grids.push(gridAttr);
+    });
+
+    if (axisGap) {
+      // 如果是axisGap为true，需要添加一个点
+      var _getItemAttrs3 = getItemAttrs(defaultAttrs, orient, {}, curArr.length, _scaleFY, clientRect, axisGap),
+          scaleAttr = _getItemAttrs3.scaleAttr,
+          gridAttr = _getItemAttrs3.gridAttr;
+
+      res.scales.push(scaleAttr);
+      res.grids.push(gridAttr);
+    }
+  }
+
+  if (orient === 'left' || orient === 'right') {
+    var dx = orient === 'left' ? 0 : width;
+    res.axisPoints = [[dx, height], [dx, 0]];
+    res.nameAttr = {
+      pos: [dx, 0],
+      anchor: [0.5, 1],
+      padding: [10]
+    };
+  } else if (orient === 'bottom' || orient === 'top') {
+    var dy = orient === 'bottom' ? height : 0;
+    res.axisPoints = [[0, dy], [width, dy]];
+    res.nameAttr = {
+      pos: [width, dy],
+      anchor: [0, 1]
+    };
+  }
+
+  return res;
+}
+
+function getItemAttrs(defaultAttrs, orient, cell, value, scaleF, clientRect, axisGap) {
+  var res = emptyObject();
+  var width = clientRect.width,
+      height = clientRect.height,
+      left = clientRect.left,
+      top = clientRect.top;
+  var labelPosValue = axisGap ? value + 0.5 : value;
+
+  if (orient === 'left' || orient === 'right') {
+    var x = orient === 'left' ? 0 : width;
+    var yv = scaleF(value);
+    res.scaleAttr = Axis_layout_objectSpread({}, defaultAttrs[orient].scale, {
+      pos: [x, height - yv]
+    });
+    res.gridAttr = Axis_layout_objectSpread({}, defaultAttrs[orient].grid, {
+      points: [[x, height - yv], [width, height - yv]]
+    });
+    res.labelAttr = Axis_layout_objectSpread({}, defaultAttrs[orient].label, {
+      width: left,
+      text: '' + cell.text,
+      pos: [x, height - scaleF(labelPosValue)]
+    });
+  } else if (orient === 'top' || orient === 'bottom') {
+    var y = orient === 'top' ? 0 : height;
+    var xv = scaleF(value);
+    res.scaleAttr = Axis_layout_objectSpread({}, defaultAttrs[orient].scale, {
+      pos: [xv, y]
+    });
+    res.gridAttr = Axis_layout_objectSpread({}, defaultAttrs[orient].grid, {
+      points: [[xv, 0], [xv, y]]
+    });
+    res.labelAttr = Axis_layout_objectSpread({}, defaultAttrs[orient].label, {
+      width: left,
+      text: '' + cell.text,
+      pos: [scaleF(labelPosValue), y]
+    });
+  }
+
+  return res;
+}
+// CONCATENATED MODULE: ./src/plugins/Axis/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Axis_Axis = /*#__PURE__*/function (_Base) {
+  inherits_default()(Axis, _Base);
+
+  function Axis(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Axis);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Axis).call(this, attrs));
+    _this.renderAxis = emptyObject();
+    return _this;
+  }
+
+  createClass_default()(Axis, [{
+    key: "beforeRender",
+    value: function beforeRender() {
+      var _this$getRenderData = this.getRenderData(),
+          axis = _this$getRenderData.axis;
+
+      return axis;
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {
+      var _this$getRenderData2 = this.getRenderData(),
+          axis = _this$getRenderData2.axis;
+
+      return axis;
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {//console.log(this.$refs['wrap'])
+    }
+  }, {
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      return {
+        layer: 'axis',
+        zIndex: -1,
+        formatter: function formatter(e) {
+          return e;
+        }
+      };
+    } //defaultStyles() {}
+
+  }, {
+    key: "getRenderData",
+    value: function getRenderData() {
+      //根据axis的特性返回需要数据
+      var renderAttrs = this.renderAttrs;
+      var renderData = this.dataset[renderAttrs.layoutBy];
+      var axis = Axis_layout_layout.call(this, renderData, renderAttrs);
+      return {
+        axis: axis
+      };
+    }
+  }, {
+    key: "render",
+    value: function render(axis) {
+      var _this2 = this;
+
+      var oldAxis = this.renderAxis || emptyObject();
+      this.renderAxis = axis;
+      var _this$renderAttrs = this.renderAttrs,
+          clientRect = _this$renderAttrs.clientRect,
+          formatter = _this$renderAttrs.formatter,
+          orient = _this$renderAttrs.orient,
+          name = _this$renderAttrs.name; //渲染的样式，合并了theme中的styles与组件上的defaultStyles
+
+      var styles = this.renderStyles;
+      var axisStyle = getStyle(this, 'axis', styles.axis); //当前主体颜色
+
+      var arrOrient = this.chart.plugins.map(function (plugin) {
+        if (plugin.constructor.name === 'Axis') {
+          return plugin.renderAttrs.orient;
+        }
+      }).filter(Boolean);
+      var nameStyle = getStyle(this, 'name', [styles.name || {}, filter_clone_lib_default()(axis.nameAttr, [], ['pos'])]);
+      var oldPos = oldAxis.nameAttr && oldAxis.nameAttr.pos || axis.nameAttr.pos;
+      var nameAni = {
+        from: {
+          pos: oldPos
+        },
+        to: {
+          pos: axis.nameAttr.pos
+        }
+      };
+      return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+        ref: "wrap",
+        pos: [clientRect.left, clientRect.top]
+      }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({}, axisStyle, {
+        animation: {
+          from: {
+            points: oldAxis.axisPoints
+          },
+          to: {
+            points: axis.axisPoints
+          }
+        }
+      })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], null, axis.grids.map(function (grid, ind) {
+        var fromPoints = oldAxis.grids && oldAxis.grids[ind] && oldAxis.grids[ind].points || grid.points;
+        var ani = {
+          from: {
+            points: fromPoints
+          },
+          to: {
+            points: grid.points
+          }
+        };
+        var style = getStyle(_this2, 'grid', styles.grid, [ind]);
+
+        if (orient === 'left' || orient === 'right') {
+          if (ind === 0 && arrOrient.includes('bottom') || ind === axis.grids.length - 1 && arrOrient.includes('top')) {
+            return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null);
+          }
+        } else if (orient === 'top' || orient === 'bottom') {
+          if (ind === 0 && arrOrient.includes('left') || ind === axis.grids.length - 1 && arrOrient.includes('right')) {
+            return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null);
+          }
+        }
+
+        return style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Polyline"], extends_default()({}, style, {
+          points: ani.from.points,
+          animation: ani
+        }));
+      }), axis.scales.map(function (scale, ind) {
+        var fromPos = oldAxis.scales && oldAxis.scales[ind] && oldAxis.scales[ind].pos || scale.pos;
+        var ani = {
+          from: {
+            pos: fromPos
+          },
+          to: {
+            pos: scale.pos
+          }
+        }; // 排除pos属性，pos属性用来处理动画，其它属性直接赋值
+
+        var style = getStyle(_this2, 'scale', styles.scale, [scale, ind]);
+        return style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], extends_default()({}, filter_clone_lib_default()(scale, [], ['pos']), style, {
+          animation: ani
+        }));
+      }), axis.labels.map(function (label, ind) {
+        var fromPos = oldAxis.labels && oldAxis.labels[ind] && oldAxis.labels[ind].pos || label.pos;
+        var style = getStyle(_this2, 'label', styles.label, [label, ind]);
+        var ani = {
+          from: {
+            pos: fromPos
+          },
+          to: {
+            pos: label.pos
+          }
+        };
+        return style === false ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({}, filter_clone_lib_default()(label, [], ['pos', 'text']), style, {
+          text: formatter(label.text),
+          animation: ani
+        }));
+      })), nameStyle === false || name === undefined || name.length === 0 ? getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Node"], null) : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({}, nameStyle, {
+        text: name,
+        animation: nameAni
+      })));
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
+      var attrs = get_default()(getPrototypeOf_default()(Axis.prototype), "renderAttrs", this);
+
+      var targetVisual = this.chart.visuals[0];
+
+      if (attrs.axisGap === undefined && targetVisual && targetVisual.constructor.name === 'Bar') {
+        //如果axisGap没有赋值
+        //如果是柱状图
+        attrs.axisGap = true;
+      }
+
+      if (targetVisual && targetVisual.constructor.name === 'Scatter') {
+        attrs.type = 'value';
+      }
+
+      if (attrs.transpose === undefined && targetVisual) {
+        //坐标轴转换
+        attrs.transpose = targetVisual.renderAttrs.transpose;
+      }
+
+      return attrs;
+    }
+  }]);
+
+  return Axis;
+}(BasePlugin_BasePlugin);
+
+/* harmony default export */ var plugins_Axis = (Axis_Axis);
+// CONCATENATED MODULE: ./src/plugins/Legend/index.js
+
+
+
+
+
+
+
+
+
+function Legend_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function Legend_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { Legend_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { Legend_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+
+
+var Legend_Legend = /*#__PURE__*/function (_Base) {
+  inherits_default()(Legend, _Base);
+
+  function Legend(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Legend);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Legend).call(this, attrs));
+    _this.arrLayout = null;
+    _this.state = {
+      page: 1,
+      totalPage: 1,
+      perPageWidthOrHeight: 0,
+      // 每页长度（或宽度）
+      paginationSize: [0, 0],
+      // 分页控件大小
+      groupSize: [0, 0] // legends 容器大小
+
+    };
+    _this.twiceRender = false;
+    _this.animationSwitch = false;
+    _this.posFrom = [0, 0];
+    _this.currentPos = [0, 0];
+    _this.legendStateArray = [];
+    return _this;
+  }
+
+  createClass_default()(Legend, [{
+    key: "defaultAttrs",
+    value: function defaultAttrs() {
+      return defineProperty_default()({
+        orient: "horizontal",
+        // 布局方式， vertical | horizontal
+        align: ["center", "bottom"],
+        // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
+        formatter: function formatter(d) {
+          return d.value || d;
+        },
+        iconSize: [12, 12],
+        textSize: [40, 12],
+        outGap: 10,
+        innerGap: 4
+      }, "formatter", function formatter(d) {
+        return d.text || d;
+      });
+    }
+  }, {
+    key: "beforeRender",
+    value: function beforeRender() {
+      if (this.twiceRender) {
+        this.reset();
+      } else {
+        this.arrLayout = this.getRenderData().arrLayout;
+      }
+
+      return this.arrLayout;
+    }
+  }, {
+    key: "getRenderData",
+    value: function getRenderData() {
+      var _this2 = this;
+
+      var _this$renderAttrs = this.renderAttrs,
+          layoutBy = _this$renderAttrs.layoutBy,
+          innerGap = _this$renderAttrs.innerGap;
+      var renderData = this.dataset[layoutBy].map(function (item, index) {
+        _this2.legendStateArray.push(item.state);
+
+        return {
+          name: item.name,
+          state: item.state
+        };
+      });
+      var arrLayout = renderData.map(function (item) {
+        return {
+          textAttrs: {
+            text: item.name,
+            paddingLeft: innerGap
+          }
+        };
+      });
+      this.arrLayout = arrLayout;
+      return {
+        arrLayout: arrLayout
+      };
+    }
+  }, {
+    key: "itemClick",
+    value: function itemClick(e, el) {
+      var ind = el.attr("_index");
+      var state = this.dataset[this.renderAttrs.layoutBy][ind].state;
+      state = state !== "disabled" ? "disabled" : "default";
+      this.dataset[this.renderAttrs.layoutBy][ind].state = state;
+    }
+  }, {
+    key: "itemLeave",
+    value: function itemLeave(e, el) {
+      var ind = el.attr("_index");
+      this.legendStateArray[ind] = "default";
+      this.update();
+    }
+  }, {
+    key: "itemMove",
+    value: function itemMove(e, el) {
+      var ind = el.attr("_index");
+
+      if (this.legendStateArray[ind] === "default") {
+        this.legendStateArray[ind] = "hover";
+        this.update();
+      }
+    }
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate(params) {
+      if (params && params.type === "source") {
+        this.animationSwitch = true;
+        this.twiceRender = false;
+        return this.beforeRender();
+      } else {
+        if (params && params.type === "resize") {
+          this.animationSwitch = true;
+        }
+
+        return this.arrLayout;
+      }
+    }
+  }, {
+    key: "rendered",
+    value: function rendered() {// console.log("rendered");
+    }
+  }, {
+    key: "afterrender",
+    value: function afterrender(e, el) {
+      if (this.twiceRender) {
+        this.animationSwitch = false;
+        return;
+      }
+
+      this.twiceRender = true;
+      this.reset();
+      this.update();
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      var _this3 = this;
+
+      var legendsSize = [0, 0];
+      var _this$renderAttrs2 = this.renderAttrs,
+          outGap = _this$renderAttrs2.outGap,
+          innerGap = _this$renderAttrs2.innerGap,
+          iconSize = _this$renderAttrs2.iconSize,
+          textSize = _this$renderAttrs2.textSize;
+      var maxTextWidth = 0;
+      var colors = this.theme.colors;
+      this.arrLayout = this.arrLayout.map(function (item, index) {
+        item.iconAttrs = {};
+        var iconEl = _this3.$refs["icon" + index];
+        var iconRect = iconEl.getBoundingClientRect();
+        var textEl = _this3.$refs["text" + index];
+        var textRect = textEl.getBoundingClientRect();
+        var iconAttrs = {
+          bgcolor: colors[index],
+          size: iconSize,
+          pos: _this3.isVertical ? [0, legendsSize[1] + (textRect.height - iconSize[1]) / 2] : [legendsSize[0], (textRect.height - iconSize[1]) / 2]
+        };
+
+        if (_this3.dataset[_this3.renderAttrs.layoutBy][index].state === "disabled") {
+          iconAttrs.bgcolor = "#ccc";
+          iconAttrs.fillColor = "#ccc";
+        }
+
+        var textAttrs = Legend_objectSpread({}, item.textAttrs, {
+          pos: _this3.isVertical ? [iconSize[0], legendsSize[1]] : [iconSize[0] + legendsSize[0], 0],
+          text: item.textAttrs.text
+        });
+
+        var size = [iconSize[0] + textRect.width, iconSize[1]];
+
+        if (size[0] + outGap > maxTextWidth) {
+          maxTextWidth = size[0] + outGap;
+        }
+
+        legendsSize = _this3.isVertical ? [maxTextWidth, legendsSize[1] + textRect.height + outGap] : [legendsSize[0] + size[0] + outGap, textRect.height];
+        return {
+          iconAttrs: iconAttrs,
+          textAttrs: textAttrs
+        };
+      });
+      this.state.groupSize = legendsSize;
+    }
+  }, {
+    key: "changePage",
+    value: function changePage(e, el) {
+      if (el.name === "prev" && this.state.page > 1) {
+        this.state.page--;
+        this.animationSwitch = true;
+        this.update();
+      } else if (el.name === "next" && this.state.page < this.state.totalPage) {
+        this.state.page++;
+        this.animationSwitch = true;
+        this.update();
+      }
+    }
+  }, {
+    key: "render",
+    value: function render(arr) {
+      var _this4 = this;
+
+      this.posFrom = this.currentPos;
+      var _this$pos = this.pos,
+          pos = _this$pos.pos,
+          pagePos = _this$pos.pagePos;
+      this.posFrom = this.twiceRender && this.animationSwitch ? this.posFrom : pos;
+      var _this$state = this.state,
+          page = _this$state.page,
+          totalPage = _this$state.totalPage;
+      this.currentPos = pos;
+      var styles = this.renderStyles;
+      var isVertical = this.isVertical;
+
+      if (this.twiceRender) {
+        pos[0] = pos[0] - 1;
+      }
+
+      var formatter = this.renderAttrs.formatter;
+
+      if (arr) {
+        return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+          size: [1, 1],
+          onAfterrender: this.afterrender
+        }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+          animation: {
+            from: {
+              pos: this.posFrom
+            },
+            to: {
+              pos: pos
+            },
+            duration: this.twiceRender && this.animationSwitch ? this.renderAttrs.animation.duration : 0
+          } // pos={pos}
+
+        }, arr.map(function (attrs, ind) {
+          var cell = _this4.dataset[_this4.renderAttrs.layoutBy][ind];
+          var hover = _this4.legendStateArray[ind] === "hover";
+          var disabled = cell.state === "disabled";
+          var style = getStyle(_this4, "point", [{}, styles.point], [cell, ind]);
+          var hoverStyle = hover ? getStyle(_this4, "point:hover", [{}], [cell, ind]) : {};
+
+          if (disabled && attrs.iconAttrs.bgcolor) {
+            hoverStyle.bgcolor = "#ccc";
+            hoverStyle.fillColor = "#ccc";
+          }
+
+          var textStyle = getStyle(_this4, "text", [{}, styles.text], [cell, ind]);
+          var textHoverStyle = hover ? getStyle(_this4, "text:hover", [{}], [cell, ind]) : {};
+          attrs.textAttrs.text = formatter(cell.name, cell.data, ind);
+          return getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], extends_default()({
+            onClick: _this4.itemClick,
+            onMouseleave: _this4.itemLeave,
+            onMouseenter: _this4.itemMove,
+            onMousemove: _this4.itemMove
+          }, {
+            _index: ind
+          }), getApp().qcharts.h(utils_Point, extends_default()({
+            ref: "icon" + ind
+          }, attrs.iconAttrs, style, hoverStyle)), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], extends_default()({
+            ref: "text" + ind
+          }, attrs.textAttrs, textStyle, textHoverStyle)));
+        })), totalPage <= 1 ? null : getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Group"], {
+          pos: pagePos.pos
+        }, getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Path"], extends_default()({
+          pos: pagePos.pagePrev
+        }, isVertical ? {
+          marginLeft: 5
+        } : {}, {
+          name: "prev",
+          padding: [isVertical ? 2 : 1, 0, 0, 0],
+          d: isVertical ? "M 0 15 L 15 15 L7.5 0 Z" : "M 0 7.5 L 13 0 L13 15 Z",
+          fillColor: page <= 1 ? "#ccc" : "#324556",
+          onClick: this.changePage
+        })), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Label"], {
+          pos: pagePos.pageText,
+          ref: "paginationText",
+          fontSize: "14px",
+          text: page + "/" + totalPage + "",
+          lineBreak: "normal",
+          padding: isVertical ? [0, 2] : [0, 2]
+        }), getApp().qcharts.h(spritejs_min_js_amd_spritejs_umd_spritejs_["Path"], extends_default()({
+          pos: pagePos.pageNext
+        }, isVertical ? {
+          marginLeft: 5
+        } : {}, {
+          name: "next",
+          padding: [isVertical ? 2 : 1, 0, 0, 0],
+          d: isVertical ? "M 0 0 L 15 0 L7.5 13 Z" : "M 13 7.5 L 0 0 L0 15 Z",
+          fillColor: page >= totalPage ? "#ccc" : "#324556",
+          onClick: this.changePage
+        }))));
+      }
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
+      var attrs = get_default()(getPrototypeOf_default()(Legend.prototype), "renderAttrs", this);
+
+      return attrs;
+    }
+  }, {
+    key: "pos",
+    get: function get() {
+      var _this$renderAttrs3 = this.renderAttrs,
+          clientRect = _this$renderAttrs3.clientRect,
+          align = _this$renderAttrs3.align;
+      var groupSize = this.state.groupSize;
+      var width = clientRect.width,
+          height = clientRect.height,
+          top = clientRect.top,
+          left = clientRect.left,
+          right = clientRect.right,
+          bottom = clientRect.bottom;
+      var canvasWidth = width + left + right;
+      var canvasHeight = height + top + bottom;
+      this.state.paginationSize = this.isVertical ? [30, 60] : [70, 25];
+
+      var isValidLayout = function isValidLayout(value, type) {
+        if (type === "horizontal") {
+          // 水平布局
+          return ["default", "left", "center", "right"].indexOf(value) > -1;
+        } else {
+          // 垂直布局
+          return ["default", "top", "center", "bottom"].indexOf(value) > -1;
+        }
+      };
+
+      var hLocation = {
+        // 水平定位
+        "default": 0,
+        left: 2,
+        center: (canvasWidth - groupSize[0]) / 2,
+        right: canvasWidth - groupSize[0] - 2,
+        numberOrPercent: function numberOrPercent(num) {
+          // 输入 数字或百分比
+          if (typeof num === "number") {
+            return num;
+          } else {
+            var val = 0;
+
+            try {
+              val = parseFloat(num) / 100;
+            } catch (e) {}
+
+            return (canvasWidth - groupSize[0]) * val;
+          }
+        }
+      };
+      var vLocation = {
+        // 垂直定位
+        "default": 0,
+        top: 2,
+        center: canvasHeight / 2 - groupSize[1] / 2,
+        bottom: canvasHeight - groupSize[1] - 2,
+        numberOrPercent: function numberOrPercent(num) {
+          // 输入 数字或百分比
+          if (typeof num === "number") {
+            return num;
+          } else {
+            var val = 0;
+
+            try {
+              val = parseFloat(num) / 100;
+            } catch (e) {}
+
+            return (canvasHeight - groupSize[1]) * val;
+          }
+        }
+      };
+      var pos = [isValidLayout(align[0], "horizontal") ? hLocation[align[0]] : hLocation.numberOrPercent(align[0]), isValidLayout(align[1], "vertical") ? vLocation[align[1]] : vLocation.numberOrPercent(align[1])];
+      var pagePos;
+      var totalPageX = Math.ceil(this.state.groupSize[0] / canvasWidth);
+      var totalPageY = Math.ceil(this.state.groupSize[1] / canvasHeight);
+      var paginationSize = this.state.paginationSize;
+      var pagePrev, pageText, pageNext;
+
+      if (totalPageX > 1) {
+        this.state.totalPage = totalPageX;
+        var pagePosY = pos[1] + groupSize[1] + paginationSize[1] > canvasHeight ? pos[1] - paginationSize[1] : pos[1] + groupSize[1];
+        pagePos = [canvasWidth - paginationSize[0], pagePosY];
+        pagePrev = [0, 0];
+        pageText = [15, 0];
+        pageNext = [45, 0];
+        pos[0] = -(this.state.page - 1) * canvasWidth;
+      } else if (totalPageY > 1) {
+        this.state.totalPage = totalPageY;
+        var pagePosX = pos[0] + groupSize[0] + paginationSize[0] > canvasWidth ? pos[0] - paginationSize[0] : pos[0] + groupSize[0];
+        pagePos = [pagePosX, canvasHeight - paginationSize[1]];
+        pagePrev = [5, 0];
+        pageText = [0, 20];
+        pageNext = [5, 40];
+        pos[1] = -(this.state.page - 1) * canvasHeight;
+      } else {
+        this.state.page = 1;
+        this.state.totalPage = 1;
+      }
+
+      return {
+        pos: pos,
+        pagePos: {
+          pos: pagePos,
+          pagePrev: pagePrev,
+          pageText: pageText,
+          pageNext: pageNext
+        }
+      };
+    }
+  }, {
+    key: "isVertical",
+    get: function get() {
+      return this.renderAttrs.orient === "vertical";
+    }
+  }]);
+
+  return Legend;
+}(BasePlugin_BasePlugin);
+
+/* harmony default export */ var plugins_Legend = (Legend_Legend);
+// CONCATENATED MODULE: ./src/plugins/Tooltip/index.js
+
+
+
+
+
+
+
+
+
+
+
+var Tooltip_Tooltip = /*#__PURE__*/function (_Base) {
+  inherits_default()(Tooltip, _Base);
+
+  function Tooltip(attrs) {
+    var _this;
+
+    classCallCheck_default()(this, Tooltip);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Tooltip).call(this, attrs));
+
+    defineProperty_default()(assertThisInitialized_default()(_this), "tipMousemove", throttle(function (e) {
+      var maxLeft = window.innerWidth - _this.$el.getBoundingClientRect().width - 5;
+      var maxTop = window.innerHeight - _this.$el.getBoundingClientRect().height - 5;
+      var tarTop = e.y > maxTop ? maxTop : e.y;
+      var tarLeft = e.x > maxLeft ? maxLeft : e.x;
+      _this.$el.style.left = tarLeft + 'px';
+      _this.$el.style.top = tarTop + 'px';
+    }, 100, 1));
+
+    _this.$el = null;
+    return _this;
+  }
+
+  createClass_default()(Tooltip, [{
+    key: "beforeRender",
+    value: function beforeRender() {}
+  }, {
+    key: "beforeUpdate",
+    value: function beforeUpdate() {}
+  }, {
+    key: "rendered",
+    value: function rendered() {
+      var _this2 = this;
+
+      var _this$renderAttrs = this.renderAttrs,
+          colors = _this$renderAttrs.colors,
+          sort = _this$renderAttrs.sort,
+          formatter = _this$renderAttrs.formatter;
+      this.chart.dataset.on('change', function (data) {
+        var option = data.option;
+        _this2.$el.innerHTML = ''; // let reverse = param => {
+        //   return typeof this.dataset.datasetReverse === 'function' ? this.dataset.datasetReverse(param) : param
+        // }
+
+        if (option.value === 'hover') {
+          var arr = [].concat(_this2.chart.dataset).filter(function (item) {
+            return item.state === 'hover';
+          });
+
+          if (sort) {
+            arr.sort(sort);
+          }
+
+          if (arr.length) {
+            var innerHtml = '';
+            var $div = document.createElement('div');
+            $div.style.cssText = 'white-space:nowrap;padding:6px 10px;background-color:rgba(0,0,0,0.5);color:#fff;';
+            arr.forEach(function (item, ind) {
+              var text = "".concat(item.text, "\uFF1A").concat(item.value);
+
+              if (formatter) {
+                text = formatter(item.data) || text;
+              }
+
+              var html = "<div class=\"tooltip-item\"><span class=\"icon\" style=\"margin-right:6px;display:inline-block;width:10px;height:10px;background-color:".concat(colors[ind], "\"></span><span class=\"text\">").concat(text, "</span></div>");
+              innerHtml += html;
+            });
+            $div.innerHTML = innerHtml;
+
+            _this2.$el.appendChild($div);
+          }
+        } else if (option.name === 'reset') {
+          _this2.$el.innerHTML = '';
+        }
+      });
+      document.body.addEventListener('mousemove', this.tipMousemove);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (!this.$el) {
+        this.$el = document.createElement('div');
+        this.$el.className = 'qcharts-tooltip';
+        this.$el.style.cssText = 'transition:top 300ms ease-out,left 300ms ease-out;position:absolute;pointEvents:none;pointer-events:none;font-size:14px;';
+      }
+
+      document.body.appendChild(this.$el);
+    }
+  }, {
+    key: "renderAttrs",
+    get: function get() {
+      //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
+      var attrs = get_default()(getPrototypeOf_default()(Tooltip.prototype), "renderAttrs", this);
+
+      return attrs;
+    }
+  }]);
+
+  return Tooltip;
+}(BasePlugin_BasePlugin);
+
+/* harmony default export */ var plugins_Tooltip = (Tooltip_Tooltip);
+// CONCATENATED MODULE: ./src/Chart.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Chart_Chart = /*#__PURE__*/function (_Base) {
+  inherits_default()(Chart, _Base);
+
+  function Chart(attr) {
+    var _this;
+
+    classCallCheck_default()(this, Chart);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(Chart).call(this));
+    var container = attr.container;
+
+    if (jsType(container) === 'string') {
+      container = document.querySelector(container);
+    }
+
+    _this.$el = container;
+    _this.visuals = [];
+    _this.plugins = [];
+    _this.children = [];
+
+    if (Object(platform["b" /* isWeiXin */])()) {
+      var _attr$pixelUnit = attr.pixelUnit,
+          pixelUnit = _attr$pixelUnit === void 0 ? 'rpx' : _attr$pixelUnit,
+          size = attr.size,
+          contextType = attr.contextType;
+      var displayRatio = 1;
+
+      if (pixelUnit === 'rpx') {
+        var _wx$getSystemInfoSync = wx.getSystemInfoSync(),
+            windowWidth = _wx$getSystemInfoSync.windowWidth;
+
+        displayRatio = windowWidth / 750;
+      }
+
+      _this.scene = new spritejs_min_js_amd_spritejs_umd_spritejs_["Scene"]({
+        width: size[0] / displayRatio,
+        height: size[1] / displayRatio,
+        extra: assertThisInitialized_default()(_this),
+        contextType: contextType,
+        displayRatio: displayRatio
+      });
+    } else {
+      _this.scene = new spritejs_min_js_amd_spritejs_umd_spritejs_["Scene"]({
+        container: container,
+        displayRatio: Object(platform["a" /* getGlobal */])().devicePixelRatio
+      });
+    }
+
+    _this.scene.addEventListener('resize', function (_) {
+      //舞台变化的时候
+      _this.checkUpdate({
+        type: 'resize'
+      });
+    });
+
+    _this.checkUpdate = throttle(function (args) {
+      _this.children.forEach(function (node) {
+        node.update(args);
+      });
+    }, 300);
+    _this.checkRender = throttle(function (_) {
+      _this.children.forEach(function (child) {
+        child.created();
+
+        _this.dataset.addDep(child);
+      });
+
+      _this.__store.__isCreated__ = true;
+
+      _this.dispatchEvent('updated', emptyObject());
+    });
+    return _this;
+  }
+
+  createClass_default()(Chart, [{
+    key: "update",
+    value: function update(args) {
+      //图表发生更新，触发图表内组件更新
+      this.checkUpdate(args);
+    }
+  }, {
+    key: "append",
+    value: function append(node) {
+      var _this2 = this;
+
+      var notNeedDataSetList = [visuals_Wave, visuals_Gauge];
+
+      if (notNeedDataSetList.some(function (Target) {
+        return node instanceof Target;
+      })) {
+        //补齐dataset，wave中不用dataset
+        this.source([], {});
+      } else if (!this.dataset) {
+        console.error('Chart should set data before append some graphs');
+        return;
+      }
+
+      if (jsType(node) === 'array') {
+        node.forEach(function (item) {
+          _this2.append(item);
+        });
+        return;
+      } else if (node instanceof BaseVisual_BaseVisual) {
+        this.visuals.push(node);
+      } else if (node instanceof BasePlugin_BasePlugin) {
+        this.plugins.push(node);
+      }
+
+      this.children.push(node);
+      node.chart = this;
+      node.scene = this.scene;
+      this.checkRender();
+    }
+  }, {
+    key: "getDataURL",
+    value: function getDataURL() {
+      return this.scene.snapshot().toDataURL();
+    }
+  }]);
+
+  return Chart;
+}(base_Base);
+
+/* harmony default export */ var src_Chart = (Chart_Chart);
+// CONCATENATED MODULE: ./src/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var qcharts = {
+  version: '1.0.0',
+  Line: visuals_Line,
+  Pie: visuals_Pie,
+  Area: visuals_Area,
+  Radar: visuals_Radar,
+  Bar: visuals_Bar,
+  PolarBar: visuals_PolarBar,
+  Funnel: visuals_Funnel,
+  Scatter: visuals_Scatter,
+  Gauge: visuals_Gauge,
+  RadialBar: visuals_RadialBar,
+  Legend: plugins_Legend,
+  Axis: plugins_Axis,
+  Wave: visuals_Wave,
+  Tooltip: plugins_Tooltip,
+  h: h,
+  theme: theme_default,
+  Chart: src_Chart,
+  easing: tween_easing
+};
+var global = Object(platform["a" /* getGlobal */])();
+global.qcharts = qcharts;
+
+/* harmony default export */ var src_0 = __webpack_exports__["default"] = (qcharts);
+
+/***/ })
+/******/ ])["default"];
+});
 //# sourceMappingURL=index.js.map

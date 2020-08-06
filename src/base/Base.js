@@ -36,6 +36,9 @@ class Base extends Node {
       this.theme.attrs,
       this.attr()
     )
+    if (isWeiXin()) {
+      return this.scene.layer(layerName)
+    }
     return this.scene.layer(layerName).attr({ zIndex })
   }
   get $refs() {
