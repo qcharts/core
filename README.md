@@ -69,4 +69,4 @@ chart.add([line, tooltip, axisBottom, axisLeft, legend])
 
 ## 在 React/Vue 中使用 qchart
 
-基于 qchart 良好的组合性和扩展性，qchart 天然支持对 React 和 Vue 这两个常用框架的深度整合，在 React 环境下，我们推荐使用[cat-charts-react](https://github.com/spritejs/cat-charts-react) ，在 Vue 环境下，我们推荐使用 [cat-charts-vue](https://github.com/spritejs/cat-charts-vue)。这两个产品都是基于 qchart 的封装，与 qchart 有着一致的开发体验，可以前往官网获取详细的使用说明和示例。当然，你可以自己动手封装成其他框架下的组件，在 qchart 下，这些封装成本非常低。
+基于 qchart 良好的组合性和扩展性，qchart 天然支持对 React 和 Vue 这两个常用框架的深度整合，在 React 环境下，我们推荐使用[qcharts-react](https://github.com/qcharts/qcharts-react) ，在 Vue 环境下，我们推荐使用 [qcharts-vue](https://github.com/qcharts/qcharts-vue)。这两个产品都是基于 qchart 的封装，与 qchart 有着一致的开发体验，可以前往官网获取详细的使用说明和示例。当然，你可以自己动手封装成其他框架下的组件，在 qchart 下，这些封装成本非常低。

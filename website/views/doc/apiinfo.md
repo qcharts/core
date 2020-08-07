@@ -10,9 +10,19 @@ let line = new Line({ smooth: true })
 
 如上代码：在初始化折线图的时候，`{smooth:true}` 就是属性 `attr`。
 
+##### 通用属性
+
+Qcharts 中，Visual 与 Plugin 有一些通用属性 attr
+| 名称 | 描述 | 值 |
+| ----------- | ---------------------------------------- | ------------------------------------------------------------------- |
+| clientRect | 位置信息 | 可以设置 top,bottom,left,right,widh,height |
+| animation | 动画属性 |可以设置 duration,easing 等|
+
+除了属性以外，visual 和 plugin 还有`style`
+
 ```javascript
 //point是一个比较特殊的样式，它除了面的基本属性外，它还有pointType和size属性，point是由Point插件来完成渲染的,详情查看 Plugin → Point
-line.style('point', { pointType: 'star', size: 8 })
+line.style('point', { pointType: 'star', angles: 5, innerRadius: 5, outerRadius: 10 })
 ```
 
 如上代码：上面的代码将折线图的 point 类型设置为`star`，并将大小设置成 8。

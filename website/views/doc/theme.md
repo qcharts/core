@@ -42,6 +42,10 @@ theme.set({
 })
 ```
 
+通过 `qcharts.theme` 可以获取到默认的全局 theme 配置，方便对属性进行查看修改
+
+<img src="https://p0.ssl.qhimg.com/t018869aae1d36f086b.jpg" width="572">
+
 也可以单独设置某个组件的样式,单独通过 style 设置的优先级高于统一 theme 设置
 
 ```js
