@@ -46,7 +46,7 @@ class Tooltip extends Base {
             if (formatter) {
               text = formatter(item.data) || text
             }
-            let html = `<div class="tooltip-item"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[ind]}"></span><span class="text">${text}</span></div>`
+            let html = `<div class="tooltip-item"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[item.row]}"></span><span class="text">${text}</span></div>`
             innerHtml += html
           })
           $div.innerHTML = innerHtml
