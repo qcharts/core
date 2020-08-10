@@ -44,8 +44,8 @@ class Tooltip extends Base {
             if (formatter) {
               text = formatter(item.data) || text
             }
-            let style = getStyle(this, 'point', [{ 'background-color': colors[item.row] }, styles.point], [this.dataset.rows[ind].data, ind])
-            let styleText = getStyle(this, 'text', [styles.text], [this.dataset.rows[ind].data, ind])
+            let style = getStyle(this, 'point', [{ 'background-color': colors[item.row] }, styles.point], [item.data, ind])
+            let styleText = getStyle(this, 'text', [styles.text], [item.data, ind])
             let $html = document.createElement('div')
             $html.className = 'tooltip-item'
             $html.innerHTML = `<span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[item.row]}"></span><span class="text">${text}</span>`
@@ -59,7 +59,7 @@ class Tooltip extends Base {
             let $title = document.createElement('div')
             $title.className = 'tooltip-title'
             $title.innerHTML = title || ''
-            let styleTitle = getStyle(this, 'title', [styles.title], [this.dataset.rows.data])
+            let styleTitle = getStyle(this, 'title', [styles.title], [arr.data])
             Object.assign($title.style, styleTitle)
             $div.prepend($title)
           }
