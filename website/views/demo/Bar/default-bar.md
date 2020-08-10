@@ -31,7 +31,7 @@ const bar = new Bar({
     easing: "elasticOut",
   },
 })
-bar.style("pillar", { bgcolor: "#47A1FF" })
+
 const tooltip = new Tooltip()
 const axisBottom = new Axis().style("scale", false)
 const axisLeft = new Axis({
