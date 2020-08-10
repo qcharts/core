@@ -18,6 +18,7 @@ class Legend extends Base {
     this.posFrom = [0, 0]
     this.currentPos = [0, 0]
     this.legendStateArray = []
+    this.lineCounter = 0 //在scroll属性为false的情况下计算legend的行数(或列数)
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
@@ -31,13 +32,16 @@ class Legend extends Base {
       formatter: (d) => d.value || d,
       iconSize: [12, 12],
       textSize: [40, 12],
+      scroll: true,
       outGap: 10,
       innerGap: 4,
+      lineGap: 5,
       formatter: (d) => d.text || d,
+      padding: 2,
     }
   }
   get pos() {
-    const { clientRect, align } = this.renderAttrs
+    const { clientRect, align, padding } = this.renderAttrs
     let groupSize = this.state.groupSize
     let { width, height, top, left, right, bottom } = clientRect
     let canvasWidth = width + left + right
@@ -57,9 +61,9 @@ class Legend extends Base {
     const hLocation = {
       // 水平定位
       default: 0,
-      left: 2,
+      left: padding,
       center: (canvasWidth - groupSize[0]) / 2,
-      right: canvasWidth - groupSize[0] - 2,
+      right: canvasWidth - groupSize[0] - padding,
       numberOrPercent(num) {
         // 输入 数字或百分比
         if (typeof num === "number") {
@@ -77,9 +81,9 @@ class Legend extends Base {
     const vLocation = {
       // 垂直定位
       default: 0,
-      top: 2,
+      top: padding,
       center: canvasHeight / 2 - groupSize[1] / 2,
-      bottom: canvasHeight - groupSize[1] - 2,
+      bottom: canvasHeight - groupSize[1] - padding,
       numberOrPercent(num) {
         // 输入 数字或百分比
         if (typeof num === "number") {
@@ -216,22 +220,64 @@ class Legend extends Base {
     this.update()
   }
   reset() {
-    let legendsSize = [0, 0]
-    let { outGap, innerGap, iconSize, textSize } = this.renderAttrs
+    let {
+      outGap,
+      innerGap,
+      iconSize,
+      textSize,
+      clientRect,
+      lineGap,
+      padding,
+    } = this.renderAttrs
+    let legendsSize = this.isVertical ? [[0, padding]] : [[padding, 0]]
     let maxTextWidth = 0
     let colors = this.theme.colors
+    let { width, height, top, left, right, bottom } = clientRect
+    let canvasWidth = width + left + right
+    let canvasHeight = height + top + bottom
+    this.lineCounter = 0
     this.arrLayout = this.arrLayout.map((item, index) => {
       item.iconAttrs = {}
       let iconEl = this.$refs["icon" + index]
       let iconRect = iconEl.getBoundingClientRect()
       let textEl = this.$refs["text" + index]
       let textRect = textEl.getBoundingClientRect()
+      let heightSize = iconSize[1] > textRect ? iconSize[1] : textRect.height
+      // 垂直布局下，已有的列数的width和
+      let lineWidth =
+        legendsSize.reduce((i, j) => {
+          return i + j[0]
+        }, 0) - legendsSize[this.lineCounter][0]
+      // 单个legend的左上角坐标
+      let iconPos = this.isVertical
+        ? [
+            lineWidth,
+            legendsSize[this.lineCounter][1] +
+              (textRect.height - iconSize[1]) / 2,
+          ]
+        : [
+            legendsSize[this.lineCounter][0],
+            (textRect.height - iconSize[1]) / 2 +
+              this.lineCounter * (heightSize + lineGap),
+          ]
+      // 超过单行长度后换行
+      if (this.isVertical && iconPos[1] + textRect.height > canvasHeight) {
+        this.lineCounter++
+        iconPos = [iconPos[0] + legendsSize[this.lineCounter - 1][0], padding]
+        maxTextWidth = 0 // 换行后重置最宽legend
+        legendsSize.push([0, 0])
+      } else if (
+        !this.isVertical &&
+        iconPos[0] + iconSize[0] + textRect.width + outGap > canvasWidth
+      ) {
+        this.lineCounter++
+        iconPos = [padding, this.lineCounter * (heightSize + lineGap)]
+        legendsSize.push([0, 0])
+      }
       let iconAttrs = {
         bgcolor: colors[index],
         size: iconSize,
-        pos: this.isVertical
-          ? [0, legendsSize[1] + (textRect.height - iconSize[1]) / 2]
-          : [legendsSize[0], (textRect.height - iconSize[1]) / 2],
+        pos: iconPos,
       }
       if (this.dataset[this.renderAttrs.layoutBy][index].state === "disabled") {
         iconAttrs.bgcolor = "#ccc"
@@ -240,32 +286,47 @@ class Legend extends Base {
       let textAttrs = {
         ...item.textAttrs,
         pos: this.isVertical
-          ? [iconSize[0], legendsSize[1]]
-          : [iconSize[0] + legendsSize[0], 0],
+          ? [iconPos[0] + iconSize[0], iconPos[1]]
+          : [iconSize[0] + legendsSize[this.lineCounter][0], iconPos[1]],
         text: item.textAttrs.text,
       }
-      let size = [iconSize[0] + textRect.width, iconSize[1]]
+      // 单个legend的宽高
+      let size = [iconSize[0] + textRect.width, heightSize]
       if (size[0] + outGap > maxTextWidth) {
         maxTextWidth = size[0] + outGap
       }
-      legendsSize = this.isVertical
-        ? [maxTextWidth, legendsSize[1] + textRect.height + outGap]
-        : [legendsSize[0] + size[0] + outGap, textRect.height]
+      // 每个legend宽高累加
+      legendsSize[this.lineCounter] = this.isVertical
+        ? [maxTextWidth, legendsSize[this.lineCounter][1] + size[1] + outGap]
+        : [
+            legendsSize[this.lineCounter][0] + size[0] + outGap,
+            size[1] + lineGap,
+          ]
       return { iconAttrs, textAttrs }
     })
-    this.state.groupSize = legendsSize
+    this.state.groupSize = this.isVertical
+      ? [
+          legendsSize.reduce((i, j) => {
+            return i + j[0]
+          }, 0),
+          this.lineCounter === 0 ? legendsSize[0][1] : canvasHeight,
+        ]
+      : [
+          this.lineCounter === 0 ? legendsSize[0][0] : canvasWidth,
+          (this.lineCounter + 1) * legendsSize[0][1],
+        ]
   }
-  changePage(e, el) {
-    if (el.name === "prev" && this.state.page > 1) {
-      this.state.page--
-      this.animationSwitch = true
-      this.update()
-    } else if (el.name === "next" && this.state.page < this.state.totalPage) {
-      this.state.page++
-      this.animationSwitch = true
-      this.update()
-    }
-  }
+  // changePage(e, el) {
+  //   if (el.name === "prev" && this.state.page > 1) {
+  //     this.state.page--
+  //     this.animationSwitch = true
+  //     this.update()
+  //   } else if (el.name === "next" && this.state.page < this.state.totalPage) {
+  //     this.state.page++
+  //     this.animationSwitch = true
+  //     this.update()
+  //   }
+  // }
   render(arr) {
     this.posFrom = this.currentPos
     const { pos, pagePos } = this.pos
@@ -347,7 +408,7 @@ class Legend extends Base {
             })}
           </Group>
 
-          {totalPage <= 1 ? null : (
+          {/* {totalPage<=1 ? null : (
             <Group pos={pagePos.pos}>
               <Path
                 pos={pagePos.pagePrev}
@@ -385,7 +446,7 @@ class Legend extends Base {
                 onClick={this.changePage}
               />
             </Group>
-          )}
+          )} */}
         </Group>
       )
     }
@@ -393,3 +454,44 @@ class Legend extends Base {
 }
 
 export default Legend
+
+// reset() {
+//   let legendsSize = [0, 0]
+//   let { outGap, innerGap, iconSize, textSize } = this.renderAttrs
+//   let maxTextWidth = 0
+//   let colors = this.theme.colors
+//   this.arrLayout = this.arrLayout.map((item, index) => {
+//     item.iconAttrs = {}
+//     let iconEl = this.$refs["icon" + index]
+//     let iconRect = iconEl.getBoundingClientRect()
+//     let textEl = this.$refs["text" + index]
+//     let textRect = textEl.getBoundingClientRect()
+//     let iconAttrs = {
+//       bgcolor: colors[index],
+//       size: iconSize,
+//       pos: this.isVertical
+//         ? [0, legendsSize[1] + (textRect.height - iconSize[1]) / 2]
+//         : [legendsSize[0], (textRect.height - iconSize[1]) / 2],
+//     }
+//     if (this.dataset[this.renderAttrs.layoutBy][index].state === "disabled") {
+//       iconAttrs.bgcolor = "#ccc"
+//       iconAttrs.fillColor = "#ccc"
+//     }
+//     let textAttrs = {
+//       ...item.textAttrs,
+//       pos: this.isVertical
+//         ? [iconSize[0], legendsSize[1]]
+//         : [iconSize[0] + legendsSize[0], 0],
+//       text: item.textAttrs.text,
+//     }
+//     let size = [iconSize[0] + textRect.width, iconSize[1]]
+//     if (size[0] + outGap > maxTextWidth) {
+//       maxTextWidth = size[0] + outGap
+//     }
+//     legendsSize = this.isVertical
+//       ? [maxTextWidth, legendsSize[1] + textRect.height + outGap]
+//       : [legendsSize[0] + size[0] + outGap, textRect.height]
+//     return { iconAttrs, textAttrs }
+//   })
+//   this.state.groupSize = legendsSize
+// }
