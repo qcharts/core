@@ -12,7 +12,8 @@ export function getStyle(chart, key, defaultStyle, args) {
   let arrStyle = defaultStyle
   let oArgs = args
   if (jsType(defaultStyle) === 'array') {
-    oStyle = deepObjectMerge.apply(this, defaultStyle)
+    //oStyle = deepObjectMerge.apply(this, defaultStyle)
+    oStyle = deepObjectMerge.call(this, {}, ...defaultStyle)
   } else {
     arrStyle = [defaultStyle]
   }
@@ -32,7 +33,8 @@ export function getStyle(chart, key, defaultStyle, args) {
     }
     //获取default样式
     let oDefaultStyle = chart.defaultStyles()[key]
-    oStyle = deepObjectMerge({}, oDefaultStyle, curStyle.filter(Boolean), oStyle)
+    oStyle = deepObjectMerge({}, oDefaultStyle, curStyle.filter(Boolean)[0], oStyle)
   }
-  return deepObjectMerge({}, oStyle, cusStyle)
+  let resStyle = deepObjectMerge({}, oStyle, cusStyle)
+  return resStyle
 }
