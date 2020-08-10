@@ -290,7 +290,7 @@ chart.source(data, {
   text: "label",
   layoutScale: "sqrt",
 })
-const bar = new Bar({}).style("pillar", { bgcolor: "#47A1FF" })
+const bar = new Bar({})
 const tooltip = new Tooltip()
 
 const axisBottom = new Axis().style("grid", false)
