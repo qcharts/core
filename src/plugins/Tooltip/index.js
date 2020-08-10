@@ -26,14 +26,11 @@ class Tooltip extends Base {
     1
   )
   rendered() {
-    let { colors, sort, formatter } = this.renderAttrs
+    let { colors, sort, formatter, title } = this.renderAttrs
     let styles = this.renderStyles
     this.chart.dataset.on('change', data => {
       let { option } = data
       this.$el.innerHTML = ''
-      // let reverse = param => {
-      //   return typeof this.dataset.datasetReverse === 'function' ? this.dataset.datasetReverse(param) : param
-      // }
       if (option.value === 'hover') {
         let arr = [].concat(this.chart.dataset).filter(item => item.state === 'hover')
         if (sort) {
@@ -58,6 +55,14 @@ class Tooltip extends Base {
             Object.assign($icon.style, style)
             Object.assign($text.style, styleText)
           })
+          if (title) {
+            let $title = document.createElement('div')
+            $title.className = 'tooltip-title'
+            $title.innerHTML = title || ''
+            let styleTitle = getStyle(this, 'title', [styles.title], [this.dataset.rows.data])
+            Object.assign($title.style, styleTitle)
+            $div.prepend($title)
+          }
           this.$el.appendChild($div)
         }
       } else if (option.name === 'reset') {
