@@ -93,11 +93,20 @@ class RadialBar extends BaseVisual {
     data.forEach((d, i) => {
       value = +d.value
 
+      let endAngle = startAngle
+      if (d.state !== 'disabled') {
+        endAngle = startAngle + (angle * value) / total
+      }
+      // spriteJS bug, 起始角度差为360的时候位置会发生偏差
+      if (endAngle - startAngle > 359.9) {
+        endAngle = 359.9 + startAngle
+      }
+
       d.pos = [outerRadius, outerRadius]
       d.anchor = [0.5, 0.5]
       d.lineWidth = lineWidth
       d.startAngle = startAngle
-      d.endAngle = d.state === 'disabled' ? startAngle : startAngle + (angle * value) / total
+      d.endAngle = endAngle
       d.innerRadius = innerRadius + i * (1 + arcOffset) * perRadius
       d.radius = d.innerRadius + 1 * perRadius
       d.strokeColor = colors[i]
@@ -181,27 +190,27 @@ class RadialBar extends BaseVisual {
     this.oldPos = this.center
     return (
       <Group>
-        {data
-          .map((d, i) => {
-            const { col, row, data } = d
-            return (
-              <Group
+        {data.map((d, i) => {
+          const { col, row, data } = d
+          console.log(d)
+          return (
+            <Group
+              pos={this.center}
+              animation={gAnimation}
+              onMouseenter={this.onMouseenter}
+              onMousemove={this.onMouseenter}
+              onMouseleave={this.onMouseleave}
+            >
+              <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
+              <Arc
                 pos={this.center}
-                animation={gAnimation}
-                onMouseenter={this.onMouseenter}
-                onMousemove={this.onMouseenter}
-                onMouseleave={this.onMouseleave}
-              >
-                <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
-                <Arc
-                  pos={this.center}
-                  {...{ ...d, col, row }}
-                  animation={this.animators[i]}
-                  {...this.style('arc')(d, data, i)}
-                />
-              </Group>
-            )
-          })}
+                {...{ ...d, col, row }}
+                animation={this.animators[i]}
+                {...this.style('arc')(d, data, i)}
+              />
+            </Group>
+          )
+        })}
       </Group>
     )
   }
