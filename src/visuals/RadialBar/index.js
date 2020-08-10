@@ -192,7 +192,6 @@ class RadialBar extends BaseVisual {
       <Group>
         {data.map((d, i) => {
           const { col, row, data } = d
-          console.log(d)
           return (
             <Group
               pos={this.center}
