@@ -44,8 +44,8 @@ class Tooltip extends Base {
             if (formatter) {
               text = formatter(item.data) || text
             }
-            let style = getStyle(this, 'point', [{ 'background-color': colors[item.row] }, styles.point], [item.data, ind])
-            let styleText = getStyle(this, 'text', [styles.text], [item.data, ind])
+            let style = getStyle(this, 'point', [{ 'background-color': colors[item.row] }, styles.point], [arr.map(item => item.data), ind])
+            let styleText = getStyle(this, 'text', [styles.text], [arr.map(item => item.data), ind])
             let $html = document.createElement('div')
             $html.className = 'tooltip-item'
             $html.innerHTML = `<span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[item.row]}"></span><span class="text">${text}</span>`
