@@ -5,7 +5,7 @@
 :::demo
 
 ```javascript
-const data = [1, 2, 3, 4, 5].map((num) => {
+const data = [1, 2, 3, 4, 5].map(num => {
   return { value: num }
 })
 
@@ -20,7 +20,7 @@ chart.source(data, { value: 'value' })
 
 const pie = new Pie()
 
-const tooltip = new Tooltip({ formatter: (d) => d.value })
+const tooltip = new Tooltip({ formatter: d => d.value })
 
 chart.append([pie, tooltip])
 ```
@@ -29,8 +29,7 @@ chart.append([pie, tooltip])
 
 ### 属性
 
-| 属性名    | 类型               | 默认值   | 描述                                 |
-| --------- | ------------------ | -------- | ------------------------------------ |
-| title     | String \| Function | `null`   | 标题                                 |
-| pos       | Array              | `null`   | 一旦设置了此值，tooltip 的位置将固定 |
-| formatter | Function           | `d => d` | 除标题外，其他文本格式化函数         |
+| 属性名    | 类型               | 默认值   | 描述                         |
+| --------- | ------------------ | -------- | ---------------------------- |
+| title     | String \| Function | `null`   | 标题                         |
+| formatter | Function           | `d => d` | 除标题外，其他文本格式化函数 |

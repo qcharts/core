@@ -204,7 +204,7 @@ class Bar extends Base {
         <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
             let cell = this.dataset.rows[ind % renderData.length][Math.floor(ind / renderData.length)]
-            const style = getStyle(this, 'pillar', [{ bgcolor: colors[ind % dataLength], ...pillar.attrs }, styles.bar], [cell.data, Math.floor(ind / renderData.length), ind % renderData.length])
+            const style = getStyle(this, 'pillar', [{ bgcolor: colors[cell.row % dataLength], ...pillar.attrs }, styles.bar], [cell.data, Math.floor(ind / renderData.length), ind % renderData.length])
             const hoverStyle = getStyle(this, 'pillar:hover', [], [cell.data, Math.floor(ind / renderData.length), ind % renderData.length])
             if (cell.state === 'hover') {
               deepObjectMerge(style, hoverStyle)
