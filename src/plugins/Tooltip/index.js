@@ -1,5 +1,6 @@
 import Base from '../../base/BasePlugin'
 import { throttle } from '@qcharts/utils'
+import { getStyle } from '@/utils/getStyle'
 class Tooltip extends Base {
   constructor(attrs) {
     super(attrs)
@@ -26,6 +27,7 @@ class Tooltip extends Base {
   )
   rendered() {
     let { colors, sort, formatter } = this.renderAttrs
+    let styles = this.renderStyles
     this.chart.dataset.on('change', data => {
       let { option } = data
       this.$el.innerHTML = ''
@@ -38,7 +40,6 @@ class Tooltip extends Base {
           arr.sort(sort)
         }
         if (arr.length) {
-          let innerHtml = ''
           let $div = document.createElement('div')
           $div.style.cssText = 'white-space:nowrap;padding:6px 10px;background-color:rgba(0,0,0,0.5);color:#fff;'
           arr.forEach((item, ind) => {
@@ -46,10 +47,17 @@ class Tooltip extends Base {
             if (formatter) {
               text = formatter(item.data) || text
             }
-            let html = `<div class="tooltip-item"><span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[ind]}"></span><span class="text">${text}</span></div>`
-            innerHtml += html
+            let style = getStyle(this, 'point', [{ 'background-color': colors[item.row] }, styles.point], [this.dataset.rows[ind], ind])
+            let styleText = getStyle(this, 'text', [styles.text], [this.dataset.rows[ind], ind])
+            let $html = document.createElement('div')
+            $html.className = 'tooltip-item'
+            $html.innerHTML = `<span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[item.row]}"></span><span class="text">${text}</span>`
+            $div.append($html)
+            let $icon = $html.querySelector('.icon')
+            let $text = $html.querySelector('.text')
+            Object.assign($icon.style, style)
+            Object.assign($text.style, styleText)
           })
-          $div.innerHTML = innerHtml
           this.$el.appendChild($div)
         }
       } else if (option.name === 'reset') {
