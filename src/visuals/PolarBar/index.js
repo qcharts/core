@@ -68,7 +68,7 @@ class PolarBar extends Base {
 
     arrLayout.barData.forEach((bar, i) => {
       let cell = renderData[i % dataLength][Math.floor(i / dataLength)]
-      let style = this.style("pillar")(bar.attrs, renderData[i], i)
+      let style = this.style("pillar")(bar, cell.data, i)
       bar.fillColor = bar.fillColor || colors[cell.row]
       bar.strokeColor = renderAttrs.strokeColor || "#FFF"
       bar.pos = renderAttrs.pos
