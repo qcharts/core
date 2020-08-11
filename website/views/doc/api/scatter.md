@@ -19,7 +19,7 @@
 
 | 名称        | 基本类型 | 说明                |
 | ----------- | -------- | ------------------- |
-| point       | 面       | 点的样式            |
-| point:hover | 面       | 点 hover 样式       |
+| point       | 面       | 点的样式,拥有Arc元素的全部属性            |
+| point:hover | 面       | 点 hover 样式，拥有Arc元素的全部属性       |
 | label       | 文本     | label 样式          |
 | guideline   | 线       | 指导线样式          |

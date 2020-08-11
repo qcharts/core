@@ -21,11 +21,11 @@ Qcharts 中，Visual 与 Plugin 有一些通用属性 attr
 除了属性以外，visual 和 plugin 还有`style`
 
 ```javascript
-//point是一个比较特殊的样式，它除了面的基本属性外，它还有pointType和size属性，point是由Point插件来完成渲染的,详情查看 Plugin → Point
+//point是一个比较特殊的样式，它除了面的基本属性外，它还有pointType属性，point是由Point插件来完成渲染的,详情查看 Plugin → Point
 line.style('point', { pointType: 'star', angles: 5, innerRadius: 5, outerRadius: 10 })
 ```
 
-如上代码：上面的代码将折线图的 point 类型设置为`star`，并将大小设置成 8。
+如上代码：上面的代码将折线图的 point 类型设置为`star`，并设置了内外半径来控制大小。
 
 对于有哪些属性`attr`设置，请具体参考具体的 api 文档说明，对于样式`style`的设置，`线`、`面`、`文字` 有一些通用属性，如下：
 
