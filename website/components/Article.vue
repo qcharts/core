@@ -1,23 +1,37 @@
 <template>
   <div class="page">
-    <aside :class="{'is-show':showMenu,'side-menu':1}">
+    <aside :class="{ 'is-show': showMenu, 'side-menu': 1 }">
       <nav>
         <ul>
           <template v-for="(item, i) in routes">
-            <li v-if="!item.redirect&&!item.hidden" :key="i">
+            <li v-if="!item.redirect && !item.hidden" :key="i">
               <div v-if="item.children">
                 <div class="menu menu-title" @click="menuTitleClick(item.path)">
-                  <span>{{item.title}}</span>
-                  <img src="./down.svg" :class="{transfrom0:item.path===showPath}" />
+                  <span>{{ item.title }}</span>
+                  <img
+                    src="./down.svg"
+                    :class="{ transfrom0: item.path === showPath }"
+                  />
                 </div>
                 <transition name="collapse">
-                  <ul v-show="item.path===showPath">
-                    <template v-for="(subItem,index) in item.children">
-                      <li v-if="!subItem.redirect&&!subItem.hidden" :key="index">
+                  <ul v-show="item.path === showPath">
+                    <template v-for="(subItem, index) in item.children">
+                      <li
+                        v-if="!subItem.redirect && !subItem.hidden"
+                        :key="index"
+                      >
                         <router-link
-                          :to="'/' + parentRoutePath +  '/'+item.path+'/' + subItem.path"
+                          :to="
+                            '/' +
+                            parentRoutePath +
+                            '/' +
+                            item.path +
+                            '/' +
+                            subItem.path
+                          "
                           class="menu menu-item"
-                        >{{ subItem.title }}</router-link>
+                          >{{ subItem.title }}</router-link
+                        >
                       </li>
                     </template>
                   </ul>
@@ -26,9 +40,10 @@
 
               <div v-else>
                 <router-link
-                  :to="'/' + parentRoutePath +  '/'+item.path"
+                  :to="'/' + parentRoutePath + '/' + item.path"
                   class="menu menu-title"
-                >{{ item.title }}</router-link>
+                  >{{ item.title }}</router-link
+                >
               </div>
             </li>
           </template>
@@ -228,7 +243,7 @@ export default {
       }
 
       h2:first-child::before {
-        content: '';
+        content: "";
         display: inline-block;
         background: #1979ff;
         height: 32px;
@@ -248,6 +263,10 @@ export default {
             line-height: 20px;
           }
         }
+      }
+      a {
+        color: #42b983;
+        font-weight: 500;
       }
     }
 

@@ -27,6 +27,7 @@ style 方式支持链式调用，第一个参数为 style 名称，第二个参�
 | ------------- | -------- | ------------------------ |
 | section       | 面       | 雷达图数据区样式         |
 | section:hover | 面       | 雷达图数据区 hover 样式  |
+| point          | 面，除了基础面的全部属性外，还有(<a style="text-decoration:underline" href="./#/doc/plugin/Point">Point</a>)的特殊属性       | 雷达图数据区域的点的样式             |
 | axis          | 线       | 坐标轴的样式             |
 | grid          | 线       | 雷达图背景网格样式       |
 | label         | 文本     | 类别指示文字的样式(x 轴) |
