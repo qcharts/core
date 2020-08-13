@@ -50,7 +50,7 @@ class Wave extends Base {
     let perR = 24 / animation.duration
     let currentX = 0 - clientRect.left
     //以路径的top为起点，计算百分比
-    let startY = pathHeight * (100 - percent) / 100 + clipPath.originalContentRect[1]
+    let startY = (pathHeight * (100 - percent)) / 100 + clipPath.originalContentRect[1]
     this.tickId = requestAnimationFrame(_ => {
       this.offsetR += perR
       let points = [[currentX, startY + pathHeight]]
@@ -73,7 +73,6 @@ class Wave extends Base {
   }
   render() {
     let { clientRect, shape, pos, formatter, percent, radius } = this.renderAttrs
-
     let renderStyles = this.renderStyles
     let waveStyle = getStyle(this, 'wave', renderStyles.wave)
     let shapeStyle = getStyle(this, 'shape', renderStyles.shape)
@@ -88,7 +87,7 @@ class Wave extends Base {
     }
     this.oldAttr = { ...this.renderAttrs }
     return (
-      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
+      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]}>
         <Group animation={animation}>
           <Path ref="clipPath1" d={shape} fillColor={shapeStyle.fillColor} />
           <Polyline ref="clipWave" {...waveStyle} clipPath={shape} smooth={true} />

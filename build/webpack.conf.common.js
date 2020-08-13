@@ -18,11 +18,7 @@ module.exports = {
             }
           }
         ],
-        include: [
-          path.resolve(__dirname, '../website/'), 
-          path.resolve(__dirname, '../src/'),
-          path.resolve('node_modules/@qcharts/dataset')
-        ],
+        include: [path.resolve(__dirname, '../website/'), path.resolve(__dirname, '../src/'), path.resolve('node_modules/@qcharts/dataset')]
       },
       {
         test: /\.vue$/,

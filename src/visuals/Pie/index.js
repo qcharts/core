@@ -154,7 +154,7 @@ class Pie extends Base {
     let colors = this.theme.colors
     this.renderRings = rings
     return (
-      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
+      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]}>
         <Group class="rings-group" onMouseleave={this.mouseleave}>
           {rings.map((ring, ind) => {
             let style = getStyle(this, 'sector', [{ strokeColor: colors[ind], fillColor: colors[ind], innerRadius: innerRadiusPx, outerRadius: radiusPx, _index: ind }, styles.sector], [this.dataset.rows[ind], ind])
@@ -174,7 +174,7 @@ class Pie extends Base {
         <Group class="label-group">
           {rings.map((ring, ind) => {
             let name = this.dataset.rows[ind].name
-            let style = getStyle(this, 'guideText', [{ fillColor: '#666', fontSize: 12 }, styles.guideline], [this.dataset.rows[ind], ind])
+            let style = getStyle(this, 'guideText', [{ fillColor: '#666', fontSize: 12 }, styles.guideText], [this.dataset.rows[ind], ind])
             let hide = false
             if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
               hide = true
