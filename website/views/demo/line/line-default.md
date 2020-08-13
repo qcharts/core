@@ -25,7 +25,11 @@ chart.source(data, {
 })
 const line = new Line()
 const axisBottom = new Axis().style('grid', false)
-const toolTip = new Tooltip()
+const toolTip = new Tooltip({
+  title: arr => {
+    return arr[0].date + ':数据'
+  }
+})
 const legend = new Legend()
 const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale', false)
 

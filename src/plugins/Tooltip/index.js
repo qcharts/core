@@ -56,9 +56,14 @@ class Tooltip extends Base {
             Object.assign($text.style, styleText)
           })
           if (title) {
+            let str = title
+            if (typeof title === 'function') {
+              let formatterData = arr.map(cell => cell.data)
+              str = title(formatterData)
+            }
             let $title = document.createElement('div')
             $title.className = 'tooltip-title'
-            $title.innerHTML = title || ''
+            $title.innerHTML = str || ''
             let styleTitle = getStyle(this, 'title', [styles.title], [arr.data])
             Object.assign($title.style, styleTitle)
             $div.prepend($title)
