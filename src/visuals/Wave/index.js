@@ -76,7 +76,7 @@ class Wave extends Base {
     let renderStyles = this.renderStyles
     let waveStyle = getStyle(this, 'wave', renderStyles.wave)
     let shapeStyle = getStyle(this, 'shape', renderStyles.shape)
-    let textStyle = getStyle(this, 'text', renderStyles.text)
+    let textStyle = getStyle(this, 'text', [{ pos: [radius, radius], anchor: [0.5, 0.5] }, renderStyles.text])
     let animation = {
       from: {
         pos: this.oldAttr.pos || pos
@@ -92,7 +92,7 @@ class Wave extends Base {
           <Path ref="clipPath1" d={shape} fillColor={shapeStyle.fillColor} />
           <Polyline ref="clipWave" {...waveStyle} clipPath={shape} smooth={true} />
           <Path ref="clipPath" d={shape} strokeColor={shapeStyle.strokeColor} lineWidth={shapeStyle.lineWidth} />
-          {textStyle === false ? <Node /> : <Label text={formatter(percent)} {...textStyle} pos={[radius, radius]} anchor={[0.5]} />}
+          {textStyle === false ? <Node /> : <Label text={formatter(percent)} {...textStyle} />}
         </Group>
       </Group>
     )
