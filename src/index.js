@@ -18,7 +18,7 @@ import { getGlobal } from './base/platform'
 import Chart from './Chart'
 import theme from './theme/default'
 const qcharts = {
-  version: '1.0.2',
+  version: '1.0.7',
   Line,
   Pie,
   Area,
