@@ -88,6 +88,10 @@ class Gauge extends BaseVisual {
     const pointerWidth = radius / 10
     // 绘图中心
     const center = [width / 2, height / 2]
+    // Fixed: spriteJS bug, 起始角度差为360的时候位置会发生偏差
+    if (attrs.endAngle - attrs.startAngle > 359.9) {
+      attrs.endAngle = attrs.startAngle + 359.9
+    }
 
     return {
       ...attrs,
@@ -145,11 +149,17 @@ class Gauge extends BaseVisual {
     const { radius, startAngle, endAngle, min, max, percent } = this.renderAttrs
     const total = Math.abs(max - min)
 
+    let attrEndAngle = ((endAngle - startAngle) * (percent - min)) / total + startAngle
+    // 最大不可超过endAngle
+    if (attrEndAngle > endAngle) {
+      attrEndAngle = endAngle
+    }
+
     return {
       dataOrigin: percent,
       startAngle,
       radius,
-      endAngle: ((endAngle - startAngle) * (percent - min)) / total + startAngle,
+      endAngle: attrEndAngle,
       strokeColor: this.color(0)
     }
   }
