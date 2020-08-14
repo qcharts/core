@@ -238,11 +238,16 @@ class Legend extends Base {
     this.lineCounter = 0
     this.arrLayout = this.arrLayout.map((item, index) => {
       item.iconAttrs = {}
-      let iconEl = this.$refs["icon" + index]
+      let iconEl = this.$refs["icon" + index].$sprite
       let iconRect = iconEl.getBoundingClientRect()
+      iconSize = [
+        iconEl.width ? iconEl.width : iconSize[0],
+        iconEl.height ? iconEl.height : iconSize[1],
+      ]
       let textEl = this.$refs["text" + index]
       let textRect = textEl.getBoundingClientRect()
-      let heightSize = iconSize[1] > textRect ? iconSize[1] : textRect.height
+      let heightSize =
+        iconSize[1] > textRect.height ? iconSize[1] : textRect.height
       // 垂直布局下，已有的列数的width和
       let lineWidth =
         legendsSize.reduce((i, j) => {
@@ -277,7 +282,7 @@ class Legend extends Base {
       let iconAttrs = {
         bgcolor: colors[index],
         size: iconSize,
-        pos: iconPos,
+        pos: [0, 0],
       }
       if (this.dataset[this.renderAttrs.layoutBy][index].state === "disabled") {
         iconAttrs.bgcolor = "#ccc"
@@ -285,9 +290,7 @@ class Legend extends Base {
       }
       let textAttrs = {
         ...item.textAttrs,
-        pos: this.isVertical
-          ? [iconPos[0] + iconSize[0], iconPos[1]]
-          : [iconSize[0] + legendsSize[this.lineCounter][0], iconPos[1]],
+        pos: this.isVertical ? [iconSize[0], 0] : [iconSize[0], 0],
         text: item.textAttrs.text,
       }
       // 单个legend的宽高
@@ -302,7 +305,14 @@ class Legend extends Base {
             legendsSize[this.lineCounter][0] + size[0] + outGap,
             size[1] + lineGap,
           ]
-      return { iconAttrs, textAttrs }
+      return {
+        iconAttrs,
+        textAttrs,
+        groupAttrs: {
+          size: size,
+          pos: iconPos,
+        },
+      }
     })
     this.state.groupSize = this.isVertical
       ? [
@@ -390,6 +400,7 @@ class Legend extends Base {
                   onMouseenter={this.itemMove}
                   onMousemove={this.itemMove}
                   {...{ _index: ind }}
+                  {...attrs.groupAttrs}
                 >
                   <Point
                     {...{ ref: "icon" + ind }}
