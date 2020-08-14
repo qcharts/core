@@ -46,7 +46,7 @@ export default function layout(dataSet, size, layoutWay) {
   if (!xIsTextData) {
     xSection = getBigRange(allData.map((d) => d.text))
     const xScales = axis.call(this, {
-      dataSet: data,
+      dataSet: allData,
       stack: false,
       field: textField,
       section: xSection
@@ -60,7 +60,7 @@ export default function layout(dataSet, size, layoutWay) {
   }
   let ySection = getBigRange(allData.map((d) => d.layoutScaleValue))
   const yScales = axis.call(this, {
-    dataSet: data,
+    dataSet: allData,
     stack: false,
     field: 'layoutScaleValue',
     section: ySection
