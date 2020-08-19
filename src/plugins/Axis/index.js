@@ -3,7 +3,7 @@ import { Group, Label, Polyline, Node } from 'spritejs'
 import { emptyObject } from '@qcharts/utils'
 import filterClone from 'filter-clone'
 import layout from './layout'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 class Axis extends Base {
   constructor(attrs) {
     super(attrs)

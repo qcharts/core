@@ -1,6 +1,6 @@
 import Base from '../../base/BaseVisual'
 import { Group, Polyline, Node } from 'spritejs'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 import layout from './layout'
 import Point from '../../utils/Point'
 import { deepObjectMerge } from '@qcharts/utils'
