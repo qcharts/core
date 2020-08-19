@@ -3,7 +3,7 @@ import { Group, Node, Ring, Polyline, Label } from 'spritejs'
 import filterClone from 'filter-clone'
 import layout from './layout'
 import { computeLinePos } from './layout'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 class Pie extends Base {
   constructor(attrs) {
     super(attrs)

@@ -1,6 +1,6 @@
 import Base from '../../base/BasePlugin'
 import { throttle } from '@qcharts/utils'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 class Tooltip extends Base {
   constructor(attrs) {
     super(attrs)

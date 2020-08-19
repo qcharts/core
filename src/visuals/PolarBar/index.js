@@ -1,13 +1,13 @@
-import Base from "../../base/BaseVisual"
-import { Group, Ring } from "spritejs"
-import { deepObjectMerge } from "@qcharts/utils"
-import layout from "./layout"
-import { getStyle } from "@/utils/getStyle"
-import filterClone from "filter-clone"
+import Base from '../../base/BaseVisual'
+import { Group, Ring } from 'spritejs'
+import { deepObjectMerge } from '@qcharts/utils'
+import layout from './layout'
+import { getStyle } from '../../utils/getStyle'
+import filterClone from 'filter-clone'
 class PolarBar extends Base {
   constructor(attrs) {
     super(attrs)
-    this.type = "polarbar"
+    this.type = 'polarbar'
     this.pillars = []
     this.hoverIndex = -1
     this.timer = null
@@ -24,12 +24,12 @@ class PolarBar extends Base {
     //渲染前的处理函数，返回rings,继承base
     let { arrLayout } = this.getRenderData()
     this.pillars = arrLayout.barData
-    let barData = arrLayout.barData.map((item) => {
+    let barData = arrLayout.barData.map(item => {
       return {
         from: {
-          endAngle: item.startAngle,
+          endAngle: item.startAngle
         },
-        to: item,
+        to: item
       }
     })
     return { barData }
@@ -39,14 +39,11 @@ class PolarBar extends Base {
     let { pos } = this.renderAttrs
     let { arrLayout } = this.getRenderData()
     let barData = arrLayout.barData.map((nextPillar, i) => {
-      let curPos = [
-        pos[0] + nextPillar.offsetPos[0],
-        pos[1] + nextPillar.offsetPos[1],
-      ]
+      let curPos = [pos[0] + nextPillar.offsetPos[0], pos[1] + nextPillar.offsetPos[1]]
       nextPillar.pos = curPos
       return {
         from: { ...pillars[i] },
-        to: { ...nextPillar },
+        to: { ...nextPillar }
       }
     })
     this.pillars = arrLayout.barData
@@ -54,7 +51,7 @@ class PolarBar extends Base {
   }
   getRenderData() {
     let renderAttrs = this.renderAttrs
-    let renderData = this.dataset["rows"]
+    let renderData = this.dataset['rows']
     if (!renderData || renderData.length === 0) {
       return { barData: [] }
     }
@@ -68,14 +65,11 @@ class PolarBar extends Base {
 
     arrLayout.barData.forEach((bar, i) => {
       let cell = renderData[i % dataLength][Math.floor(i / dataLength)]
-      let style = this.style("pillar")(bar, cell.data, i)
+      let style = this.style('pillar')(bar, cell.data, i)
       bar.fillColor = bar.fillColor || colors[cell.row]
-      bar.strokeColor = renderAttrs.strokeColor || "#FFF"
+      bar.strokeColor = renderAttrs.strokeColor || '#FFF'
       bar.pos = renderAttrs.pos
-      if (
-        !bar.hasOwnProperty("startAngle") ||
-        !bar.hasOwnProperty("endAngle")
-      ) {
+      if (!bar.hasOwnProperty('startAngle') || !bar.hasOwnProperty('endAngle')) {
         bar.lineWidth = 0
       } else {
         bar.lineWidth = 1
@@ -91,9 +85,9 @@ class PolarBar extends Base {
   defaultAttrs() {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
-      layer: "bar",
+      layer: 'bar',
       //选中偏移量基数
-      activeOffset: 10,
+      activeOffset: 10
     }
   }
   defaultStyles() {
@@ -112,13 +106,11 @@ class PolarBar extends Base {
     clearTimeout(this.timer)
     // let fun = throttle(function(e, el) {
     let renderData = this.renderData()
-    let ind = el.attr("_index")
+    let ind = el.attr('_index')
     let groupInd = Math.floor(ind / renderData.length)
     if (groupInd !== this.hoverIndex) {
       this.dataset.resetState()
-      this.dataset[this.renderAttrs.layoutBy === "rows" ? "cols" : "rows"][
-        groupInd
-      ].state = "hover"
+      this.dataset[this.renderAttrs.layoutBy === 'rows' ? 'cols' : 'rows'][groupInd].state = 'hover'
       this.hoverIndex = groupInd
     }
     // }, 30).bind(this);
@@ -141,24 +133,16 @@ class PolarBar extends Base {
           {data.barData.map((ring, ind) => {
             let style = getStyle(
               this,
-              "sector",
+              'sector',
               [
                 {
-                  _index: ind,
+                  _index: ind
                 },
-                styles.sector,
+                styles.sector
               ],
               [this.dataset.rows[ind], ind]
             )
-            return ring.state === "disabled" || style === false ? (
-              <Node />
-            ) : (
-              <Ring
-                onMousemove={this.mousemove}
-                {...style}
-                animation={{ from: ring.from, to: ring.to }}
-              />
-            )
+            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMousemove={this.mousemove} {...style} animation={{ from: ring.from, to: ring.to }} />
           })}
         </Group>
       </Group>
