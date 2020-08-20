@@ -361,6 +361,8 @@ class Gauge extends BaseVisual {
       </Group>
     )
   }
+  
+  rendered(){}
 }
 
 export default Gauge
