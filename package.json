@@ -96,5 +96,11 @@
     "url": "https://github.com/qcharts/core/issues"
   },
   "homepage": "https://github.com/qcharts/core",
-  "sideEffects": false
+  "sideEffects": [
+    "*.vue",
+    "*.css",
+    "*.scss",
+    "*.sass",
+    "*.less"
+  ]
 }
