@@ -9,11 +9,12 @@ export default function layout(arr, attrs) {
   const groupGap = attrs.groupGap || 0
   const stackGap = attrs.stackGap || 0
   let barWidth = attrs.barWidth || 0
+
   // 输出
   const barData = []
   const groupData = []
   const textData = []
-  const bgPillarAttr = { opacity: 0, bgcolor: "#000" }
+  const bgPillarAttr = { opacity: 0.01, bgcolor: "#000" }
 
   const valueAxis = axis.call(this, { dataSet: data, stack, splitNumber })
   if (!valueAxis || !valueAxis.length) {
@@ -61,36 +62,48 @@ export default function layout(arr, attrs) {
         rawValue = data[j][i].value
         value = data[j][i].layoutScaleValue
         let barHeight = BAR_HEIGHT_FACTOR * Math.abs(value)
-        let rect = {
-          anchor: [
-            transpose && value < 0 ? 1 : 0,
-            transpose || value < 0 ? 0 : 1,
-          ],
-          size: transpose
-            ? [barHeight, barWidth - 1]
-            : [barWidth - 1, barHeight],
-          pos: transpose
-            ? [
-                tableSize.value * (1 - POSITIVE_RATIO),
-                gap / 2 +
-                  (barWidth + groupGap) * (j - flag) +
-                  (barWidth * GROUP_BAR_NUM +
-                    groupGap * (GROUP_BAR_NUM - 1) +
-                    gap) *
-                    i,
-              ]
-            : [
-                gap / 2 +
-                  (barWidth + groupGap) * (j - flag) +
-                  (barWidth * GROUP_BAR_NUM +
-                    groupGap * (GROUP_BAR_NUM - 1) +
-                    gap) *
-                    i,
-                tableSize.value * POSITIVE_RATIO,
-              ],
+        const pos = transpose
+          ? [
+              tableSize.value * (1 - POSITIVE_RATIO),
+              gap / 2 +
+                (barWidth + groupGap) * (j - flag) +
+                (barWidth * GROUP_BAR_NUM +
+                  groupGap * (GROUP_BAR_NUM - 1) +
+                  gap) *
+                  i,
+            ]
+          : [
+              gap / 2 +
+                (barWidth + groupGap) * (j - flag) +
+                (barWidth * GROUP_BAR_NUM +
+                  groupGap * (GROUP_BAR_NUM - 1) +
+                  gap) *
+                  i,
+              tableSize.value * POSITIVE_RATIO,
+            ]
+        const size = transpose
+          ? [barHeight, barWidth - 1]
+          : [barWidth - 1, barHeight]
+        const anchor = [
+          transpose && value < 0 ? 1 : 0,
+          transpose || value < 0 ? 0 : 1,
+        ]
+        // const point1 = [gap / 2 + barWidth]
+        const rect = {
+          anchor: anchor,
+          size: size,
+          pos: pos,
         }
+
+        rect.points = getPoints({
+          pos,
+          size,
+          anchor,
+          transpose,
+        })
+        delete rect.pos
         if (data[j][i].state === "disabled") {
-          rect.size = transpose ? [0, rect.size[1]] : [rect.size[0], 0]
+          getDisabledPoints({ value, points: rect.points, transpose })
           flag++
         } else {
           gpData.rects.push(rect)
@@ -126,35 +139,44 @@ export default function layout(arr, attrs) {
         barData.push(rect)
         textData.push(label)
       }
+      const groupPos = transpose
+        ? [
+            0,
+            (gap + barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1)) *
+              i,
+          ]
+        : [
+            (gap + barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1)) *
+              i,
+            0,
+          ]
+      const groupSize = transpose
+        ? [
+            tableSize.value,
+            barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap,
+          ]
+        : [
+            barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap,
+            tableSize.value,
+          ]
       // 柱子整体属性
       gpData = Object.assign(gpData, {
         // title: data[0][i]['_x'],
-        pos: transpose
-          ? [
-              0,
-              (gap +
-                barWidth * GROUP_BAR_NUM +
-                groupGap * (GROUP_BAR_NUM - 1)) *
-                i,
-            ]
-          : [
-              (gap +
-                barWidth * GROUP_BAR_NUM +
-                groupGap * (GROUP_BAR_NUM - 1)) *
-                i,
-              0,
-            ],
-        size: transpose
-          ? [
-              tableSize.value,
-              barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap,
-            ]
-          : [
-              barWidth * GROUP_BAR_NUM + groupGap * (GROUP_BAR_NUM - 1) + gap,
-              tableSize.value,
-            ],
+        pos: groupPos,
+        size: groupSize,
         ...bgPillarAttr,
       })
+
+      gpData.points = getPoints({
+        pos: groupPos,
+        size: groupSize,
+        anchor: [0, 0],
+        transpose,
+        value,
+        stillSprite: true,
+      })
+      delete gpData.pos
+
       groupData.push(gpData)
     }
   } else {
@@ -187,19 +209,30 @@ export default function layout(arr, attrs) {
           value < 0
             ? tableSize.value * POSITIVE_RATIO + heightSumDown + barHeight
             : tableSize.value * POSITIVE_RATIO - heightSumUp
+        const pos = transpose
+          ? [posX, gap / 2 + (barWidth + gap) * i]
+          : [gap / 2 + (barWidth + gap) * i, posY]
+        const size = transpose
+          ? [barHeight - stackGapTemp, barWidth]
+          : [barWidth, barHeight - stackGapTemp]
+        const anchor = [
+          transpose && value < 0 ? 1 : 0,
+          transpose || value < 0 ? 0 : 1,
+        ]
         let rect = {
-          anchor: [
-            transpose && value < 0 ? 1 : 0,
-            transpose || value < 0 ? 0 : 1,
-          ],
-          size: transpose
-            ? [barHeight - stackGapTemp, barWidth]
-            : [barWidth, barHeight - stackGapTemp],
-          pos: transpose
-            ? [posX, gap / 2 + (barWidth + gap) * i]
-            : [gap / 2 + (barWidth + gap) * i, posY],
+          anchor: anchor,
+          size: size,
+          pos: pos,
           index: j,
         }
+
+        rect.points = getPoints({
+          pos,
+          size,
+          anchor,
+          transpose,
+        })
+        delete rect.pos
         let paddingAttrs = transpose ? "paddingLeft" : "paddingBottom"
         let label = {
           opacity: data[j][i].state !== "disabled" ? 1 : 0,
@@ -211,7 +244,7 @@ export default function layout(arr, attrs) {
         }
         label[paddingAttrs] = 8
         if (data[j][i].state === "disabled") {
-          rect.size = transpose ? [0, rect.size[1]] : [rect.size[0], 0]
+          getDisabledPoints({ value, points: rect.points, transpose })
         } else {
           value < 0
             ? (heightSumDown = heightSumDown + barHeight)
@@ -221,14 +254,27 @@ export default function layout(arr, attrs) {
         textData.push(label)
         barData.push(rect)
       }
+      const groupPos = transpose
+        ? [0, (gap + barWidth) * i]
+        : [(gap + barWidth) * i, 0]
+      const groupSize = transpose
+        ? [tableSize.value, barWidth + gap]
+        : [barWidth + gap, tableSize.value]
       // 柱子整体属性
       gpData = Object.assign(gpData, {
-        pos: transpose ? [0, (gap + barWidth) * i] : [(gap + barWidth) * i, 0],
-        size: transpose
-          ? [tableSize.value, barWidth + gap]
-          : [barWidth + gap, tableSize.value],
+        pos: groupPos,
+        size: groupSize,
         ...bgPillarAttr,
       })
+
+      gpData.points = getPoints({
+        pos: groupPos,
+        size: groupSize,
+        anchor: [0, 0],
+        transpose,
+      })
+      delete gpData.pos
+
       groupData.push(gpData)
     }
   }
@@ -247,4 +293,48 @@ function computerLegend(data) {
     // console.warn('data invalid!')
   }
   return flag || 1
+}
+
+function getPoints(params) {
+  let { pos, size, anchor, transpose } = params
+  return transpose
+    ? [
+        [pos[0] - anchor[0] * size[0], pos[1] - anchor[1] * size[1]],
+        [pos[0] + size[0] - anchor[0] * size[0], pos[1] - anchor[1] * size[1]],
+        [
+          pos[0] + size[0] - anchor[0] * size[0],
+          pos[1] + size[1] - anchor[1] * size[1],
+        ],
+        [pos[0] - anchor[0] * size[0], pos[1] + size[1] - anchor[1] * size[1]],
+      ]
+    : [
+        [pos[0] - anchor[0] * size[0], pos[1] - anchor[1] * size[1]],
+        [pos[0] + size[0] - anchor[0] * size[0], pos[1] - anchor[1] * size[1]],
+        [
+          pos[0] + size[0] - anchor[0] * size[0],
+          pos[1] + size[1] - anchor[1] * size[1],
+        ],
+        [pos[0] - anchor[0] * size[0], pos[1] + size[1] - anchor[1] * size[1]],
+      ]
+}
+function getDisabledPoints(params) {
+  let { points, value, transpose } = params
+  if (transpose) {
+    if (value < 0) {
+      points[0][0] = points[1][0]
+      points[3][0] = points[2][0]
+    } else {
+      points[1][0] = points[0][0]
+      points[2][0] = points[3][0]
+    }
+  } else {
+    if (value < 0) {
+      points[2][1] = points[1][1]
+      points[3][1] = points[0][1]
+    } else {
+      points[1][1] = points[2][1]
+      points[0][1] = points[3][1]
+    }
+  }
+  return points
 }

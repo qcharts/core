@@ -1,4 +1,4 @@
-## 间距堆叠条形图
+## 间距堆叠条形图 2
 
 :::demo
 
@@ -12,47 +12,47 @@ const data = [
   {
     data: "自然灾害",
     type: "较大",
-    value: 15,
+    value: 10,
   },
   {
     data: "自然灾害",
     type: "重大",
-    value: 4,
+    value: 8,
   },
   {
     data: "自然灾害",
     type: "特大",
-    value: 0,
+    value: 2,
   },
   {
     data: "事故灾害",
     type: "一般",
-    value: 36,
+    value: 19,
   },
   {
     data: "事故灾害",
-    type: "较大",
-    value: 18,
-  },
-  {
-    data: "事故灾害",
-    type: "重大",
-    value: 3,
-  },
-  {
-    data: "事故灾害",
-    type: "特大",
-    value: 0,
-  },
-  {
-    data: "社会安全",
-    type: "一般",
-    value: 36,
-  },
-  {
-    data: "社会安全",
     type: "较大",
     value: 12,
+  },
+  {
+    data: "事故灾害",
+    type: "重大",
+    value: 6,
+  },
+  {
+    data: "事故灾害",
+    type: "特大",
+    value: 2,
+  },
+  {
+    data: "社会安全",
+    type: "一般",
+    value: 14,
+  },
+  {
+    data: "社会安全",
+    type: "较大",
+    value: 9,
   },
   {
     data: "社会安全",
@@ -67,12 +67,12 @@ const data = [
   {
     data: "公共卫生",
     type: "一般",
-    value: 28,
+    value: 10,
   },
   {
     data: "公共卫生",
     type: "较大",
-    value: 22,
+    value: 5,
   },
   {
     data: "公共卫生",
@@ -82,9 +82,11 @@ const data = [
   {
     data: "公共卫生",
     type: "特大",
-    value: 0,
+    value: 1,
   },
 ]
+const BAR_WIDTH = 30
+const SCOPE_PIXEL = 20
 const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
@@ -95,35 +97,43 @@ chart.source(data, {
   text: "data",
 })
 const colors = ["#1DC19E", "#F4FA58", "#FE9A2E", "#FE2E2E"]
-const texts = [15, 9, 26, 19]
 const bar = new Bar({
   stack: true,
   transpose: true,
-  barWidth: 30,
+  barWidth: BAR_WIDTH,
   stackGap: 5,
   size: ["60%", "80%"],
+  polygon: true,
 })
   .style("pillar", (attr, data, i, j) => {
-    return { fillColor: colors[j] }
-  })
-  .style("text", (attrs, data, i, j) => {
-    if ((j + 1) % 4 !== 0) {
-      return false
+    let points = attr.points
+    if (points[0][0] === points[1][0] && points[0][0] === 0) {
+      points[2][0] = 0
+    } else {
+      points[2][0] = points[2][0] - SCOPE_PIXEL
     }
-    let size = attrs.barAttrs.size
-    let points = attrs.barAttrs.points
-    return {
-      fillColor: "#1DCE91",
-      rotate: 0,
-      text: texts[i],
-      anchor: [0, 0.5],
-      pos: [points[1][0] + 5, (points[1][1] + points[2][1]) / 2],
+    if (points[0][0] !== 0) {
+      points[3][0] = points[3][0] - SCOPE_PIXEL
     }
+    return { points, fillColor: colors[j] }
   })
+  .style("backgroundpillar", (attr, data, i) => {
+    let attrs = attr
+    let points = attrs.points
+    let size = attrs.size
+    points[0][1] = points[0][1] + (size[1] - BAR_WIDTH) / 2
+    points[1][1] = points[0][1]
+    points[2][1] = points[2][1] - (size[1] - BAR_WIDTH) / 2
+    points[3][1] = points[2][1]
+    points[2][0] = points[2][0] - SCOPE_PIXEL
+    const opacity = 0.05
+    return { points, opacity }
+  })
+
 const tooltip = new Tooltip({
   formatter: (d) => ` ${d.type}: ${d.value}`,
 })
-const legend = new Legend({ align: ["left", "top"] }).style(
+const legend = new Legend({ align: ["center", "top"] }).style(
   "point",
   (attr, data, i) => {
     return {
@@ -139,7 +149,8 @@ const axisLeft = new Axis({
   .style("grid", false)
   .style("scale", false)
   .style("label", { color: "#1DCE91" })
-chart.append([bar, legend, axisLeft])
+const axisBottom = new Axis()
+chart.append([bar, legend, axisLeft, axisBottom])
 ```
 
 :::

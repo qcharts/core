@@ -26,7 +26,7 @@ const bar = new Bar({})
   .style("pillar", { bgcolor: "#47A1FF" })
   .style("text", (attrs, data, i, j) => {
     let size = attrs.barAttrs.size
-    let pos = attrs.barAttrs.pos
+    let points = attrs.barAttrs.points
     let str = data.value + ""
 
     let result = str
@@ -40,7 +40,7 @@ const bar = new Bar({})
       rotate: 0,
       text: result,
       anchor: [0.5, 1],
-      pos: [pos[0] + size[0] / 2, pos[1] - size[1]],
+      pos: [(points[0][0] + points[1][0]) / 2, points[0][1]],
       padding: 0,
     }
   })
