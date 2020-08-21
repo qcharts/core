@@ -102,7 +102,6 @@ const bar = new Bar({
   transpose: true,
   barWidth: BAR_WIDTH,
   stackGap: 5,
-  size: ["60%", "80%"],
   polygon: true,
 })
   .style("pillar", (attr, data, i, j) => {

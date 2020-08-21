@@ -19,12 +19,10 @@ chart.source(data, {
   text: "label",
 })
 const bar = new Bar({
-  pos: ["20%", "10%"],
-  size: ["70%", "80%"],
   transpose: true,
   barWidth: 30,
 })
-//[445, 0, 450, 40]
+
 const texture1 = "https://p3.ssl.qhimg.com/t01128a717c0ff244f1.png"
 const texture2 = "https://p5.ssl.qhimg.com/t01c5d76eabda023606.png"
 bar

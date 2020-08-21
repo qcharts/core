@@ -101,7 +101,6 @@ const bar = new Bar({
   transpose: true,
   barWidth: 30,
   stackGap: 5,
-  size: ["60%", "80%"],
 })
   .style("pillar", (attr, data, i, j) => {
     return { fillColor: colors[j] }
