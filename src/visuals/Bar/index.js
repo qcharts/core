@@ -1,5 +1,5 @@
 import Base from "../../base/BaseVisual"
-import { Group, Sprite, Label, Polyline } from "spritejs"
+import { Group, Label, Polyline } from "spritejs"
 import { getStyle } from "../../utils/getStyle"
 import { deepObjectMerge, throttle } from "@qcharts/utils"
 import layout from "./layout"
@@ -21,7 +21,7 @@ class Bar extends Base {
   }
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base---------before
-    let { polygon, transpose } = this.renderAttrs
+    let { transpose } = this.renderAttrs
     let { arrLayout } = this.getRenderData()
     let textData = arrLayout.textData.map((item) => {
       return {
@@ -37,40 +37,33 @@ class Bar extends Base {
     let barData = arrLayout.barData.map((item, ind) => {
       let fromPoints = null
       let value = parseFloat(textData[ind].attrs.text)
-      if (polygon) {
-        fromPoints = filterClone(item.points)
-        if (transpose) {
-          if (value < 0) {
-            fromPoints[0][0] = fromPoints[1][0]
-            fromPoints[3][0] = fromPoints[3][1]
-          } else {
-            fromPoints[1][0] = fromPoints[0][0]
-            fromPoints[2][0] = fromPoints[3][0]
-          }
+
+      fromPoints = filterClone(item.points)
+      if (transpose) {
+        if (value < 0) {
+          fromPoints[0][0] = fromPoints[1][0]
+          fromPoints[3][0] = fromPoints[2][0]
         } else {
-          if (value < 0) {
-            fromPoints[3][1] = fromPoints[0][1]
-            fromPoints[2][1] = fromPoints[1][1]
-          } else {
-            fromPoints[0][1] = fromPoints[3][1]
-            fromPoints[1][1] = fromPoints[2][1]
-          }
+          fromPoints[1][0] = fromPoints[0][0]
+          fromPoints[2][0] = fromPoints[3][0]
+        }
+      } else {
+        if (value < 0) {
+          fromPoints[3][1] = fromPoints[0][1]
+          fromPoints[2][1] = fromPoints[1][1]
+        } else {
+          fromPoints[0][1] = fromPoints[3][1]
+          fromPoints[1][1] = fromPoints[2][1]
         }
       }
+
       return {
         attrs: item,
-        from: polygon
-          ? {
-              points: fromPoints,
-            }
-          : {
-              size: transpose ? [0, item.size[1]] : [item.size[0], 0],
-            },
-        to: polygon
-          ? { points: item.points }
-          : {
-              size: item.size,
-            },
+        from: {
+          points: fromPoints,
+        },
+
+        to: { points: item.points },
       }
     })
 
@@ -80,7 +73,6 @@ class Bar extends Base {
     return { barData, textData, groupData: arrLayout.groupData }
   }
   beforeUpdate() {
-    const { polygon } = this.renderAttrs
     const pillars = this.pillars
     const texts = this.texts
     let { arrLayout } = this.getRenderData()
@@ -95,26 +87,12 @@ class Bar extends Base {
       }
       return {
         attrs: nextPillar,
-        from: polygon
-          ? {
-              points: prev.attrs.points,
-            }
-          : {
-              size: prev.attrs.disable
-                ? this.attr("transpose")
-                  ? [0, prev.attrs.size[1]]
-                  : [prev.attrs.size[0], 0]
-                : prev.attrs.size,
-              pos: prev.attrs.pos,
-            },
-        to: polygon
-          ? {
-              points: nextPillar.points,
-            }
-          : {
-              size: nextPillar.size,
-              pos: nextPillar.pos,
-            },
+        from: {
+          points: prev.attrs.points,
+        },
+        to: {
+          points: nextPillar.points,
+        },
       }
     })
     let textData = arrLayout.textData.map((nextText, i) => {
@@ -179,7 +157,6 @@ class Bar extends Base {
           hover: { opacity: 0.1 },
         },
       },
-      polygon: false,
     }
   }
   defaultStyles() {
@@ -234,13 +211,7 @@ class Bar extends Base {
   }
 
   render(data) {
-    let {
-      clientRect,
-      bgpillarState,
-      states,
-      layoutBy,
-      polygon,
-    } = this.renderAttrs
+    let { clientRect, bgpillarState, states, layoutBy } = this.renderAttrs
     const styles = this.renderStyles
     let renderData = this.dataset[layoutBy]
     const dataLength =
@@ -291,15 +262,8 @@ class Bar extends Base {
             if (cell.state === "hover") {
               deepObjectMerge(style, hoverStyle)
             }
-            return polygon ? (
+            return (
               <Polyline
-                {...pillar.attrs}
-                {...pillar.from}
-                {...style}
-                animation={{ from: pillar.from, to: pillar.to }}
-              />
-            ) : (
-              <Sprite
                 {...pillar.attrs}
                 {...pillar.from}
                 {...style}
@@ -356,8 +320,8 @@ class Bar extends Base {
                 Math.floor(ind / renderData.length),
               ]
             )
-            style.points = polygon ? style.points.flat() : style.points
-            return style === false ? null : polygon ? (
+            style.points = style.points.flat()
+            return style === false ? null : (
               <Polyline
                 state={bgpillarState[ind]}
                 states={states.bgpillar}
@@ -368,13 +332,6 @@ class Bar extends Base {
                   to: { points: style.points },
                   duration: 0,
                 }}
-              />
-            ) : (
-              <Sprite
-                state={bgpillarState[ind]}
-                states={states.bgpillar}
-                {...pillar}
-                {...style}
               />
             )
           })}

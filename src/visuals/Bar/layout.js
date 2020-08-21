@@ -2,7 +2,7 @@ import { axis } from "../../utils/axis"
 export default function layout(arr, attrs) {
   // 输入
   const data = arr
-  const { stack, splitNumber, clientRect, polygon } = attrs
+  const { stack, splitNumber, clientRect } = attrs
   const { width, height } = clientRect
   const barSize = [width, height]
   const transpose = attrs.transpose || false
@@ -94,21 +94,16 @@ export default function layout(arr, attrs) {
           size: size,
           pos: pos,
         }
-        if (polygon) {
-          rect.points = getPoints({
-            pos,
-            size,
-            anchor,
-            transpose,
-          })
-          delete rect.pos
-        }
+
+        rect.points = getPoints({
+          pos,
+          size,
+          anchor,
+          transpose,
+        })
+        delete rect.pos
         if (data[j][i].state === "disabled") {
-          if (polygon) {
-            getDisabledPoints({ value, points: rect.points, transpose })
-          } else {
-            rect.size = transpose ? [0, rect.size[1]] : [rect.size[0], 0]
-          }
+          getDisabledPoints({ value, points: rect.points, transpose })
           flag++
         } else {
           gpData.rects.push(rect)
@@ -171,18 +166,17 @@ export default function layout(arr, attrs) {
         size: groupSize,
         ...bgPillarAttr,
       })
-      if (polygon) {
-        gpData.points = getPoints({
-          pos: groupPos,
-          size: groupSize,
-          anchor: [0, 0],
-          polygon,
-          transpose,
-          value,
-          stillSprite: true,
-        })
-        delete gpData.pos
-      }
+
+      gpData.points = getPoints({
+        pos: groupPos,
+        size: groupSize,
+        anchor: [0, 0],
+        transpose,
+        value,
+        stillSprite: true,
+      })
+      delete gpData.pos
+
       groupData.push(gpData)
     }
   } else {
@@ -231,15 +225,14 @@ export default function layout(arr, attrs) {
           pos: pos,
           index: j,
         }
-        if (polygon) {
-          rect.points = getPoints({
-            pos,
-            size,
-            anchor,
-            transpose,
-          })
-          delete rect.pos
-        }
+
+        rect.points = getPoints({
+          pos,
+          size,
+          anchor,
+          transpose,
+        })
+        delete rect.pos
         let paddingAttrs = transpose ? "paddingLeft" : "paddingBottom"
         let label = {
           opacity: data[j][i].state !== "disabled" ? 1 : 0,
@@ -251,11 +244,7 @@ export default function layout(arr, attrs) {
         }
         label[paddingAttrs] = 8
         if (data[j][i].state === "disabled") {
-          if (polygon) {
-            getDisabledPoints({ value, points: rect.points, transpose })
-          } else {
-            rect.size = transpose ? [0, rect.size[1]] : [rect.size[0], 0]
-          }
+          getDisabledPoints({ value, points: rect.points, transpose })
         } else {
           value < 0
             ? (heightSumDown = heightSumDown + barHeight)
@@ -277,15 +266,15 @@ export default function layout(arr, attrs) {
         size: groupSize,
         ...bgPillarAttr,
       })
-      if (polygon) {
-        gpData.points = getPoints({
-          pos: groupPos,
-          size: groupSize,
-          anchor: [0, 0],
-          transpose,
-        })
-        delete gpData.pos
-      }
+
+      gpData.points = getPoints({
+        pos: groupPos,
+        size: groupSize,
+        anchor: [0, 0],
+        transpose,
+      })
+      delete gpData.pos
+
       groupData.push(gpData)
     }
   }

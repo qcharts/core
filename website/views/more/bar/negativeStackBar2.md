@@ -134,7 +134,6 @@ const axisBottom = new Axis().style("scale", false).style("grid", false)
 const axisLeft = new Axis({
   orient: "left",
   formatter: (a, b) => {
-    console.log(a, b)
     return ` ${a}`
   },
 })
