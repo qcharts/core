@@ -17,8 +17,9 @@ import Tooltip from './plugins/Tooltip/index'
 import { getGlobal } from './base/platform'
 import Chart from './Chart'
 import theme from './theme/default'
+
 const qcharts = {
-  version: '1.0.8',
+  version: '1.0.9',
   Line,
   Pie,
   Area,
