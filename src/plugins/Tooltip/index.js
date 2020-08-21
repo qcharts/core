@@ -11,6 +11,11 @@ class Tooltip extends Base {
     let attrs = super.renderAttrs
     return attrs
   }
+  defaultAttrs() {
+    return {
+      layer: 'tooltip'
+    }
+  }
   beforeRender() {}
   beforeUpdate() {}
   tipMousemove = throttle(

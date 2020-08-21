@@ -31,6 +31,7 @@ class Wave extends Base {
   defaultAttrs() {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
+      layer: 'wave',
       amplitude: 8, //振幅
       wavelength: 300, //波长`
       radius: 150,
