@@ -212,7 +212,7 @@ class Gauge extends BaseVisual {
       to: { rotate: toRotate }
     }
     // 半径
-    const { radius, pointerWidth, center, tickLength, labelOffset, lineWidth } = this.renderAttrs
+    const { radius, center, tickLength, labelOffset, lineWidth } = this.renderAttrs
     // 指针顶部离仪表盘的距离
     let pointerTopOffset = tickLength + lineWidth + labelOffset + maxTickTextFontSize
     if (tickLength < 0) {
@@ -361,10 +361,8 @@ class Gauge extends BaseVisual {
       </Group>
     )
   }
-
-  rendered() {
-    this.on('resize', () => this.forceUpdate())
-  }
+  
+  rendered(){}
 }
 
 export default Gauge
