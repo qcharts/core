@@ -310,43 +310,41 @@ function getPoints(params) {
   let { pos, size, anchor, transpose } = params
   return transpose
     ? [
-        pos[0] - anchor[0] * size[0],
-        pos[1] - anchor[1] * size[1],
-        pos[0] + size[0] - anchor[0] * size[0],
-        pos[1] - anchor[1] * size[1],
-        pos[0] + size[0] - anchor[0] * size[0],
-        pos[1] + size[1] - anchor[1] * size[1],
-        pos[0] - anchor[0] * size[0],
-        pos[1] + size[1] - anchor[1] * size[1],
+        [pos[0] - anchor[0] * size[0], pos[1] - anchor[1] * size[1]],
+        [pos[0] + size[0] - anchor[0] * size[0], pos[1] - anchor[1] * size[1]],
+        [
+          pos[0] + size[0] - anchor[0] * size[0],
+          pos[1] + size[1] - anchor[1] * size[1],
+        ],
+        [pos[0] - anchor[0] * size[0], pos[1] + size[1] - anchor[1] * size[1]],
       ]
     : [
-        pos[0] - anchor[0] * size[0],
-        pos[1] - anchor[1] * size[1],
-        pos[0] + size[0] - anchor[0] * size[0],
-        pos[1] - anchor[1] * size[1],
-        pos[0] + size[0] - anchor[0] * size[0],
-        pos[1] + size[1] - anchor[1] * size[1],
-        pos[0] - anchor[0] * size[0],
-        pos[1] + size[1] - anchor[1] * size[1],
+        [pos[0] - anchor[0] * size[0], pos[1] - anchor[1] * size[1]],
+        [pos[0] + size[0] - anchor[0] * size[0], pos[1] - anchor[1] * size[1]],
+        [
+          pos[0] + size[0] - anchor[0] * size[0],
+          pos[1] + size[1] - anchor[1] * size[1],
+        ],
+        [pos[0] - anchor[0] * size[0], pos[1] + size[1] - anchor[1] * size[1]],
       ]
 }
 function getDisabledPoints(params) {
   let { points, value, transpose } = params
   if (transpose) {
     if (value < 0) {
-      points[0] = points[2]
-      points[6] = points[4]
+      points[0][0] = points[1][0]
+      points[3][0] = points[2][0]
     } else {
-      points[2] = points[0]
-      points[4] = points[6]
+      points[1][0] = points[0][0]
+      points[2][0] = points[3][0]
     }
   } else {
     if (value < 0) {
-      points[5] = points[3]
-      points[7] = points[1]
+      points[2][1] = points[1][1]
+      points[3][1] = points[0][1]
     } else {
-      points[3] = points[5]
-      points[1] = points[7]
+      points[1][1] = points[2][1]
+      points[0][1] = points[3][1]
     }
   }
   return points

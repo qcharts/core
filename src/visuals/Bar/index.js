@@ -38,22 +38,22 @@ class Bar extends Base {
       let fromPoints = null
       let value = parseFloat(textData[ind].attrs.text)
       if (polygon) {
-        fromPoints = [...item.points]
+        fromPoints = filterClone(item.points)
         if (transpose) {
           if (value < 0) {
-            fromPoints[0] = fromPoints[2]
-            fromPoints[6] = fromPoints[4]
+            fromPoints[0][0] = fromPoints[1][0]
+            fromPoints[3][0] = fromPoints[3][1]
           } else {
-            fromPoints[2] = fromPoints[0]
-            fromPoints[4] = fromPoints[6]
+            fromPoints[1][0] = fromPoints[0][0]
+            fromPoints[2][0] = fromPoints[3][0]
           }
         } else {
           if (value < 0) {
-            fromPoints[7] = fromPoints[1]
-            fromPoints[5] = fromPoints[3]
+            fromPoints[3][1] = fromPoints[0][1]
+            fromPoints[2][1] = fromPoints[1][1]
           } else {
-            fromPoints[1] = fromPoints[7]
-            fromPoints[3] = fromPoints[5]
+            fromPoints[0][1] = fromPoints[3][1]
+            fromPoints[1][1] = fromPoints[2][1]
           }
         }
       }
@@ -356,6 +356,7 @@ class Bar extends Base {
                 Math.floor(ind / renderData.length),
               ]
             )
+            style.points = style.points.flat()
             return style === false ? null : polygon ? (
               <Polyline
                 state={bgpillarState[ind]}

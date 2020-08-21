@@ -105,23 +105,23 @@ const bar = new Bar({
 bar.style("backgroundpillar", (attr, data, i) => {
   let points = attr.points
   let size = attr.size
-  points[1] = points[1] + (size[1] - BAR_WIDTH) / 2
-  points[3] = points[1]
-  points[5] = points[5] - (size[1] - BAR_WIDTH) / 2
-  points[7] = points[5]
-  points[6] = points[6] + SCOPE_PIXEL
-  points[4] = points[4] - SCOPE_PIXEL
+  points[0][1] = points[0][1] + (size[1] - BAR_WIDTH) / 2
+  points[1][1] = points[0][1]
+  points[2][1] = points[2][1] - (size[1] - BAR_WIDTH) / 2
+  points[3][1] = points[2][1]
+  points[3][0] = points[3][0] + SCOPE_PIXEL
+  points[2][0] = points[2][0] - SCOPE_PIXEL
   const opacity = 0.1
   return { points, opacity }
 })
 bar.style("pillar", (attr, data, i, j) => {
   let points = attr.points
-  if (points[6] !== points[4]) {
+  if (points[3][0] !== points[2][0]) {
     if (j === 0) {
-      points[6] = points[6] + SCOPE_PIXEL
+      points[3][0] = points[3][0] + SCOPE_PIXEL
       // return { points }
     } else {
-      points[4] = points[4] - SCOPE_PIXEL
+      points[2][0] = points[2][0] - SCOPE_PIXEL
     }
   }
   return { points }
