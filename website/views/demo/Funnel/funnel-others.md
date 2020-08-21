@@ -28,7 +28,7 @@ const tooltip = new Tooltip()
 const rightFunnel = new Funnel({
   clientRect: {
     left: "22%",
-    top: "20%",
+    top: "15%",
     width: "25%",
     height: "70%",
   },
@@ -41,7 +41,7 @@ const rightFunnel = new Funnel({
 const leftFunnel = new Funnel({
   clientRect: {
     left: "50%",
-    top: "20%",
+    top: "15%",
     width: "25%",
     height: "70%",
   },

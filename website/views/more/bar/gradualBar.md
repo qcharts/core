@@ -27,7 +27,7 @@ const bar = new Bar({ barWidth: 12 })
     let size = attrs.size
     if (i === 0) {
       return {
-        bgcolor: new Gradient({
+        fillColor: new Gradient({
           vector: [0, 0, size[0], size[1]],
           colors: [
             { color: "#007BF1", offset: 0 },
@@ -37,7 +37,7 @@ const bar = new Bar({ barWidth: 12 })
       }
     } else if (i === 1) {
       return {
-        bgcolor: new Gradient({
+        fillColor: new Gradient({
           vector: [0, 0, size[0], size[1]],
           colors: [
             { color: "#BC9621", offset: 0 },
@@ -47,7 +47,7 @@ const bar = new Bar({ barWidth: 12 })
       }
     } else if (i === 2) {
       return {
-        bgcolor: new Gradient({
+        fillColor: new Gradient({
           vector: [0, 0, size[0], size[1]],
           colors: [
             { color: "#E44E00", offset: 0 },
@@ -57,7 +57,7 @@ const bar = new Bar({ barWidth: 12 })
       }
     } else if (i === 3) {
       return {
-        bgcolor: new Gradient({
+        fillColor: new Gradient({
           vector: [0, 0, size[0], size[1]],
           colors: [
             { color: "#F10000", offset: 0 },
@@ -68,14 +68,14 @@ const bar = new Bar({ barWidth: 12 })
     }
   })
   .style("text", (attrs, data, i) => {
-    let size = attrs.barAttrs.size
-    let pos = attrs.barAttrs.pos
+    const size = attrs.barAttrs.size
+    const points = attrs.barAttrs.points
     return {
       padding: 0,
       rotate: 0,
       text: "158",
       anchor: [0.5, 1],
-      pos: [pos[0] + size[0] / 2, pos[1] - size[1] - 10],
+      pos: [(points[0][0] + points[1][0]) / 2, points[0][1] - 10],
     }
   })
 

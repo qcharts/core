@@ -22,8 +22,6 @@ chart.source(data, {
   text: "label",
 })
 const bar = new Bar({
-  pos: ["20%", "10%"],
-  size: ["70%", "80%"],
   transpose: true,
   barWidth: 18,
   animation: {
