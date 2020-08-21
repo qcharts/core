@@ -132,7 +132,11 @@ class Line extends Base {
         <Group class="lines-group">
           {lines.map((line, ind) => {
             let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind], ind])
-            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...style} animation={{ from: line.from, to: line.to }} />
+            if (style.lineDash) {
+              line.to.lineDash = style.lineDash
+              line.from.lineDash = style.lineDash
+            }
+            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} animation={{ from: line.from, to: line.to }} {...style} />
           })}
         </Group>
         <Group class="areas-group">
