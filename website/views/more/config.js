@@ -52,7 +52,7 @@ export default [
     path: "bar-gapStackBar",
   },
   {
-    img: "http://p2.qhimg.com/t01670ed67013eafe8b.png",
+    img: "https://p1.ssl.qhimg.com/d/inn/67523310f062/gapStackBar2.png",
     title: "间距堆叠条形图2",
     path: "bar-gapStackBar2",
   },
@@ -72,7 +72,7 @@ export default [
     path: "bar-negativeStackBar",
   },
   {
-    img: "https://p5.ssl.qhimg.com/t0111906506d1b724d5.png",
+    img: "https://p0.ssl.qhimg.com/d/inn/df0b4188f12f/negativeStackBar2.png",
     title: "负值堆叠柱状图2",
     path: "bar-negativeStackBar2",
   },
