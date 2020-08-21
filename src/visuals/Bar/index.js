@@ -356,7 +356,7 @@ class Bar extends Base {
                 Math.floor(ind / renderData.length),
               ]
             )
-            style.points = style.points.flat()
+            style.points = polygon ? style.points.flat() : style.points
             return style === false ? null : polygon ? (
               <Polyline
                 state={bgpillarState[ind]}
