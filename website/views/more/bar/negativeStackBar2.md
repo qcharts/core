@@ -1,4 +1,4 @@
-## 负值堆叠条形图
+## 负值堆叠条形图 2
 
 :::demo
 
@@ -85,6 +85,8 @@ const data = [
     value: 20.2,
   },
 ]
+const BAR_WIDTH = 20
+const SCOPE_PIXEL = 20
 const { Chart, Bar, Tooltip, Axis, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
@@ -97,25 +99,32 @@ chart.source(data, {
 const bar = new Bar({
   stack: true,
   transpose: true,
-  barWidth: 20,
-}).style("text", (attrs, data, i, j) => {
-  let size = attrs.barAttrs.size
-  let points = attrs.barAttrs.points
-  let anchor = [0, 0.5]
-  let newPos = [points[1][0], (points[1][1] + points[2][1]) / 2]
-  if (j % 2 === 0) {
-    anchor = [1, 0.5]
-    newPos = [points[0][0], (points[0][1] + points[3][1]) / 2]
+  barWidth: BAR_WIDTH,
+  polygon: true,
+})
+bar.style("backgroundpillar", (attr, data, i) => {
+  let points = attr.points
+  let size = attr.size
+  points[0][1] = points[0][1] + (size[1] - BAR_WIDTH) / 2
+  points[1][1] = points[0][1]
+  points[2][1] = points[2][1] - (size[1] - BAR_WIDTH) / 2
+  points[3][1] = points[2][1]
+  points[3][0] = points[3][0] + SCOPE_PIXEL
+  points[2][0] = points[2][0] - SCOPE_PIXEL
+  const opacity = 0.1
+  return { points, opacity }
+})
+bar.style("pillar", (attr, data, i, j) => {
+  let points = attr.points
+  if (points[3][0] !== points[2][0]) {
+    if (j === 0) {
+      points[3][0] = points[3][0] + SCOPE_PIXEL
+      // return { points }
+    } else {
+      points[2][0] = points[2][0] - SCOPE_PIXEL
+    }
   }
-  return {
-    fillColor: "#333",
-    rotate: 0,
-    fontSize: 14,
-    text: Math.abs(data.value),
-    anchor: anchor,
-    padding: [4, 4],
-    pos: newPos,
-  }
+  return { points }
 })
 const tooltip = new Tooltip({
   formatter: (d) => ` ${d.type}: ${d.value}`,
