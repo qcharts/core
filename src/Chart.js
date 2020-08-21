@@ -1,5 +1,6 @@
 import Base from './base/Base'
 import { jsType, emptyObject, throttle } from '@qcharts/utils'
+import { h } from '@qcharts/vnode'
 import { getGlobal, isWeiXin } from './base/platform'
 import BaseVisual from './base/BaseVisual'
 import BasePlugin from './base/BasePlugin'
@@ -8,6 +9,11 @@ import { Wave, Gauge } from './index'
 class Chart extends Base {
   constructor(attr) {
     super()
+    // 预先将jsx 解析函数挂载到全局
+    const global = getGlobal()
+    if (!global.qcharts || (global.qcharts && !global.qcharts.h)) {
+      global.qcharts = { h }
+    }
     let { container } = attr
     if (jsType(container) === 'string') {
       container = document.querySelector(container)
@@ -17,7 +23,7 @@ class Chart extends Base {
     this.plugins = []
     this.children = []
     if (isWeiXin()) {
-      const { pixelUnit='rpx', size, contextType } = attr
+      const { pixelUnit = 'rpx', size, contextType } = attr
       let displayRatio = 1
       if (pixelUnit === 'rpx') {
         const { windowWidth } = wx.getSystemInfoSync()

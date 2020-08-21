@@ -10,9 +10,9 @@ module.exports = function(api) {
       [
         '@babel/preset-env',
         {
-          modules: false,
+          modules: env !== 'compile',// babel编译的时候保留 es module方式
           targets: {
-            browsers: ['> 1%', 'last 2 versions', 'not ie <= 9']
+            browsers: ['> 1%', 'last 2 versions', 'not ie <= 8']
           }
         }
       ]
