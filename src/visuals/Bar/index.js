@@ -13,22 +13,21 @@ class Bar extends Base {
     this.groups = null
     this.fromTos = null
     this.hoverIndex = -1
+    this.bgpillarState = null
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
     let attrs = super.renderAttrs
-    let renderData = this.dataset["rows"]
-    let stateArray = Array.from(
-      { length: renderData[0].length },
-      () => "defalut"
-    )
-    // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
-    return Object.assign(attrs, { bgpillarState: stateArray })
+    return attrs
   }
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base---------before
     let { transpose } = this.renderAttrs
     let { arrLayout } = this.getRenderData()
+    this.bgpillarState = Array.from(
+      { length: arrLayout.length },
+      () => "defalut"
+    )
     let textData = arrLayout.textData.map((item) => {
       return {
         attrs: item,
@@ -152,7 +151,7 @@ class Bar extends Base {
       states: {
         bgpillar: {
           animation: { duration: 20 },
-          default: { opacity: 0.01 },
+          default: { opacity: 0.0001 },
           hover: { opacity: 0.1 },
         },
       },
@@ -167,6 +166,7 @@ class Bar extends Base {
   onMousemove = throttle(
     (event, el) => {
       if (this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
+        let bgpillarState = this.bgpillarState
         let curInd = 0
         let [x, y] = el.getOffsetPosition(event.x, event.y)
         if (!this.renderAttrs.transpose) {
@@ -185,10 +185,10 @@ class Bar extends Base {
           curInd = this.groups.length - 1
         }
         if (this.hoverIndex !== curInd) {
-          let { bgpillarState } = this.renderAttrs
           bgpillarState[curInd] = "hover"
-          bgpillarState[this.hoverIndex] = "defualt"
-          this.attr("bgpillarState", bgpillarState)
+          if (this.hoverIndex > -1) {
+            bgpillarState[this.hoverIndex] = "defualt"
+          }
           this.dataset.resetState()
           this.dataset.cols[curInd].state = "hover"
           this.hoverIndex = curInd
@@ -200,9 +200,7 @@ class Bar extends Base {
   )
   onMouseleave(e, el) {
     this.dataset.resetState()
-    let { bgpillarState } = this.renderAttrs
-    bgpillarState[this.hoverIndex] = "defualt"
-    this.attr("bgpillarState", bgpillarState)
+    this.bgpillarState[this.hoverIndex] = "defualt"
     this.hoverIndex = -1
   }
   myClick = function() {
@@ -210,7 +208,8 @@ class Bar extends Base {
   }
 
   render(data) {
-    let { clientRect, bgpillarState, states, layoutBy } = this.renderAttrs
+    let { clientRect, states, layoutBy } = this.renderAttrs
+
     const styles = this.renderStyles
     let renderData = this.dataset[layoutBy]
     const dataLength =
@@ -322,7 +321,7 @@ class Bar extends Base {
             style.points = style.points.flat()
             return style === false ? null : (
               <Polyline
-                state={bgpillarState[ind]}
+                state={this.bgpillarState[ind]}
                 states={states.bgpillar}
                 {...pillar}
                 {...style}

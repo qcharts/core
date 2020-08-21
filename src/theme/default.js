@@ -83,7 +83,7 @@ theme.visuals = {
     colors: theme.colors,
     styles: {
       bar: { textureRepeat: true, close: true },
-      groupBar: { bgcolor: "#000", fillColor: "#000" },
+      groupBar: { bgcolor: "#000", fillColor: "#000", opacity: 0.0001 },
       text: false,
     },
     attrs: {

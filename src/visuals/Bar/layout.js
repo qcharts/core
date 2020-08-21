@@ -14,7 +14,7 @@ export default function layout(arr, attrs) {
   const barData = []
   const groupData = []
   const textData = []
-  const bgPillarAttr = { opacity: 0.01, bgcolor: "#000" }
+  // const bgPillarAttr = { opacity: 0.01, bgcolor: "#000" }
 
   const valueAxis = axis.call(this, { dataSet: data, stack, splitNumber })
   if (!valueAxis || !valueAxis.length) {
@@ -164,7 +164,7 @@ export default function layout(arr, attrs) {
         // title: data[0][i]['_x'],
         pos: groupPos,
         size: groupSize,
-        ...bgPillarAttr,
+        // ...bgPillarAttr,
       })
 
       gpData.points = getPoints({
@@ -264,7 +264,7 @@ export default function layout(arr, attrs) {
       gpData = Object.assign(gpData, {
         pos: groupPos,
         size: groupSize,
-        ...bgPillarAttr,
+        // ...bgPillarAttr,
       })
 
       gpData.points = getPoints({
