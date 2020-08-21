@@ -26,7 +26,7 @@ class Base extends Node {
     })
   }
   get constructorName() {
-    let curName = this.defaultAttrs().layer.replace(/^\w/, str => str.toUpperCase())
+    let curName = this.defaultAttrs().layer.replace(/^\w/, str => str.toLocaleUpperCase())
     return curName
     //return this.constructor.toString().match(/function (.+)\(/)[1]
   }
