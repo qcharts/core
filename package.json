@@ -2,15 +2,17 @@
   "name": "@qcharts/core",
   "version": "1.0.8",
   "description": "QCharts 是一个基于 spritejs 封装的图表库，可以让用户以组件的形式组合出各种图表",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
+  "module": "lib/index.js",
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --config ./build/webpack.conf.dev.js",
-    "build": "npm run build:docs && npm run build:chart && echo 'Build successfully!'",
+    "build": "npm run build:docs && npm run build:chart && npm run compile && echo 'Build successfully!'",
     "build:chart": "rimraf dist && webpack --config ./build/webpack.conf.prod.chart.js",
     "build:wxapp": "rimraf dist && cross-env NODE_ENV=wxapp webpack --config ./build/webpack.conf.prod.chart.js",
     "build:docs": "rimraf docs && webpack --config ./build/webpack.conf.prod.docs.js",
-    "prepublishOnly": "npm run build:chart"
+    "compile": "rimraf lib/* && ./node_modules/.bin/babel src -d lib",
+    "prepublishOnly": "npm run build:chart && npm run compile"
   },
   "dependencies": {
     "@qcharts/dataset": "0.0.11",
@@ -19,13 +21,14 @@
     "filter-clone": "0.0.12"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
     "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-proposal-class-properties": "^7.2.3",
     "@babel/plugin-proposal-decorators": "^7.2.3",
     "@babel/plugin-proposal-dynamic-import": "^7.5.0",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-modules-amd": "^7.5.0",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
@@ -92,5 +95,6 @@
   "bugs": {
     "url": "https://github.com/qcharts/core/issues"
   },
-  "homepage": "https://github.com/qcharts/core"
+  "homepage": "https://github.com/qcharts/core",
+  "sideEffects": false
 }

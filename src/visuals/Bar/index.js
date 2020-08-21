@@ -17,7 +17,10 @@ class Bar extends Base {
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
     let attrs = super.renderAttrs
-    return attrs
+    let renderData = this.dataset['rows']
+    let stateArray = Array.from({ length: renderData[0].length }, () => 'defalut')
+    // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
+    return Object.assign(attrs, { bgpillarState: stateArray })
   }
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base---------before
@@ -141,6 +144,7 @@ class Bar extends Base {
     //console.log(this.$refs['wrap'])
   }
   defaultAttrs() {
+<<<<<<< HEAD
     let renderData = this.dataset["rows"]
     let stateArray = Array.from(
       { length: renderData[0].length },
@@ -150,6 +154,10 @@ class Bar extends Base {
     return {
       layer: "bar",
       bgpillarState: stateArray,
+=======
+    return {
+      layer: 'bar',
+>>>>>>> master
       states: {
         bgpillar: {
           animation: { duration: 20 },

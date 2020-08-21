@@ -27,6 +27,7 @@ class Legend extends Base {
   }
   defaultAttrs() {
     return {
+      layer: 'legend',
       orient: 'horizontal', // 布局方式， vertical | horizontal
       align: ['center', 'bottom'], // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
       formatter: d => d.value || d,

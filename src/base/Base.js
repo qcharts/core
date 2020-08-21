@@ -19,23 +19,22 @@ class Base extends Node {
     // 微信中不支持多图层
     const layerSetting = isWeiXin() ? { layer: 'default' } : {}
     this.attr({ ...attrs, ...layerSetting })
-    this.__update = throttle((args) => {
+    this.__update = throttle(args => {
       if (store.__isCreated__) {
         this.update(args)
       }
     })
   }
+  get constructorName() {
+    let curName = this.defaultAttrs().layer.replace(/^\w/, str => str.toUpperCase())
+    return curName
+    //return this.constructor.toString().match(/function (.+)\(/)[1]
+  }
   get store() {
     return this['__store']
   }
   get layer() {
-    let { layer: layerName, zIndex = 0 } = deepObjectMerge(
-      {},
-      this.baseAttrs(),
-      this.defaultAttrs(),
-      this.theme.attrs,
-      this.attr()
-    )
+    let { layer: layerName, zIndex = 0 } = deepObjectMerge({}, this.baseAttrs(), this.defaultAttrs(), this.theme.attrs, this.attr())
     if (isWeiXin()) {
       return this.scene.layer(layerName)
     }
@@ -96,7 +95,7 @@ class Base extends Node {
       store.dataset = data
     }
     if (store.dataset && store.__isCreated__) {
-      store.dataset.on('change', (_) => {
+      store.dataset.on('change', _ => {
         this.__update({ type: 'state' })
       })
       //如果以前存在，则更新
@@ -115,7 +114,7 @@ class Base extends Node {
     this.dispatchEvent(lifeCycle.rendered)
     this.rendered()
     store.__isCreated__ = true
-    this.dataset.on('change', (_) => {
+    this.dataset.on('change', _ => {
       this.__update({ type: 'state' })
     })
   }
