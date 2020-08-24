@@ -50,7 +50,7 @@ class RadialBar extends BaseVisual {
     const { size } = this.renderAttrs
     const [width, height] = size
     const maxRadius = this.maxOuterRadius
-    return [(width - maxRadius)/2, (height  - maxRadius)/2]
+    return [width/2 - maxRadius, height/2- maxRadius]
   }
 
   get innerRadius() {
@@ -169,15 +169,17 @@ class RadialBar extends BaseVisual {
   }
 
   render(data = []) {
-    const { strokeBgcolor } = this.renderAttrs
+    const { strokeBgcolor,clientRect } = this.renderAttrs
     const gAnimation = {
       from: { pos: this.oldPos ? this.oldPos : this.center },
       to: { pos: this.center }
     }
     this.oldPos = this.center
 
+    const gPos = [clientRect.left, clientRect.top]
+    const gSize = [clientRect.width, clientRect.height]
     return (
-      <Group>
+      <Group pos={gPos} size={gSize}>
         {data.map((d, i) => {
           const { col, row, data } = d
           return (
@@ -189,7 +191,6 @@ class RadialBar extends BaseVisual {
             >
               <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
               <Arc
-                pos={this.center}
                 {...{ ...d, col, row }}
                 animation={this.animators[i]}
                 {...this.style('arc')(d, data, i)}
