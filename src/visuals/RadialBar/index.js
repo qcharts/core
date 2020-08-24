@@ -47,23 +47,10 @@ class RadialBar extends BaseVisual {
   }
 
   get center() {
-    const { startAngle, endAngle, radius, size } = this.renderAttrs
-    const angle = (endAngle + startAngle) / 2
+    const { size } = this.renderAttrs
     const [width, height] = size
     const maxRadius = this.maxOuterRadius
-    let [x, y] = [width / 2 - maxRadius, height / 2 - maxRadius]
-
-    if (endAngle - startAngle === 90) {
-      // 区分象限
-      const cos = Math.cos(angle)
-      const sin = Math.sin(angle)
-      const maxWidth = radius * width
-      const maxHeight = radius * height
-      x += cos < 0 ? maxWidth / 2 : -(maxWidth / 2)
-      y += sin < 0 ? maxHeight / 2 : -(maxHeight / 2)
-    }
-
-    return [x, y]
+    return [(width - maxRadius)/2, (height  - maxRadius)/2]
   }
 
   get innerRadius() {
@@ -188,13 +175,13 @@ class RadialBar extends BaseVisual {
       to: { pos: this.center }
     }
     this.oldPos = this.center
+
     return (
       <Group>
         {data.map((d, i) => {
           const { col, row, data } = d
           return (
             <Group
-              pos={this.center}
               animation={gAnimation}
               onMouseenter={this.onMouseenter}
               onMousemove={this.onMouseenter}
