@@ -42,9 +42,9 @@ const data = [
   { date: '12月', category: '梨子', val: 6.6 }
 ]
 
-const { Chart, Area, Bar, Legend, Axis } = qcharts
+const { Chart, Area, Bar, Legend, Axis, theme } = qcharts
 const { Gradient } = spritejs
-
+theme.set({ colors: ['#30FBAB', '#FBCB0B', '#F63766'] })
 const chart = new Chart({
   container: '#app'
 })
@@ -57,22 +57,25 @@ chart.source(data, {
 
 const area = new Area({
   stack: false,
+  axisGap: true,
   smooth: true
 })
+  .style('guideline', false)
   .style('line', function(attr, data, i) {
     if (i !== 0) {
       return { lineDash: [6, 6] }
     }
   })
+  .style('point', false)
   .style('area', function(attr, data, i) {
     if (i === 0) {
       return {
         fillColor: new Gradient({
-          vector: [0, 0, 0, 250],
+          vector: [0, 0, 0, 280],
           colors: [
-            { offset: 0, color: 'rgba(42, 239, 156, 1)' },
-            { offset: 0.5, color: 'rgba(42, 239, 156, 0.5)' },
-            { offset: 1, color: 'rgba(42, 239, 156, 0)' }
+            { offset: 0, color: 'rgba(48, 251, 171,1)' },
+            { offset: 0.5, color: 'rgba(48, 251, 171,0.5)' },
+            { offset: 1, color: 'rgba(48, 251, 171,0)' }
           ]
         })
       }
@@ -86,12 +89,16 @@ const axisLeft = new Axis({
 })
   .style('axis', false)
   .style('scale', false)
-  .style('grid', { lineDash: [3, 3] })
+  .style('grid', { lineDash: [3, 3], strokeColor: 'rgba(48, 251, 171,0.7)' })
+  .style('label', { fillColor: '#30FBAB' })
 
 const axisBottom = new Axis()
-  .style('scale', hideAxis)
-  .style('label', hideAxis)
+  .style('scale', false)
+  .style('label', { fillColor: '#30FBAB' })
   .style('grid', false)
+  .style('axis', {
+    strokeColor: '#30FBAB'
+  })
 
 function hideAxis(attrs, data, i) {
   if (i % 2 !== 0) {

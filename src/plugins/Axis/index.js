@@ -18,6 +18,9 @@ class Axis extends Base {
       //如果是柱状图
       attrs.axisGap = true
     }
+    if (targetVisual && targetVisual.attr('axisGap')) {
+      attrs.axisGap = targetVisual.attr('axisGap')
+    }
     if (targetVisual && targetVisual.constructorName === 'Scatter') {
       attrs.type = 'value'
     }
