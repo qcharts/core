@@ -4,10 +4,11 @@
 
 ```javascript
 const data = [
-  { value: 3350, label: '易涝区' },
-  { value: 1548, label: '台风易受灾区' },
-  { value: 2340, label: '重大' },
-  { value: 3000, label: '特大' }
+  { value: 7, label: '易涝区' },
+  { value: 11, label: '台风易受灾区' },
+  { value: 20, label: '坍塌' },
+  { value: 6, label: '滑坡' },
+  { value: 3, label: '泥石流危险区' }
 ]
 const BAR_WIDTH = 30
 const color = '#30FBAB'
@@ -48,11 +49,11 @@ const tooltip = new Tooltip({
 const axisLeft = new Axis({ orient: 'left' })
   .style('axis', false)
   .style('scale', false)
-  .style('grid', { strokeColor: 'rgba(48, 251, 171,0.5);' })
+  .style('grid', { strokeColor: 'rgba(48, 251, 171,0.5)' })
   .style('label', { fillColor: color })
 const axisBottom = new Axis()
   .style('scale', false)
-  .style('axis', { strokeColor: 'rgba(48, 251, 171,1);' })
+  .style('axis', { strokeColor: 'rgba(48, 251, 171,1)' })
   .style('label', { padding: [20, 5], fillColor: color })
   .style('grid', false)
 
