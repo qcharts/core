@@ -57,6 +57,12 @@ export default [
     path: 'scatter-common'
   },
   {
+    img: 'https://p4.ssl.qhimg.com/t0168ac425d625cd18f.png',
+    title: '散点图',
+    path: 'scatter-safe'
+  },
+
+  {
     img: 'http://p2.qhimg.com/t01670ed67013eafe8b.png',
     title: '间距堆叠条形图',
     path: 'bar-gapStackBar'

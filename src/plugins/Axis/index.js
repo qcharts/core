@@ -22,7 +22,7 @@ class Axis extends Base {
       attrs.axisGap = targetVisual.attr('axisGap')
     }
     if (targetVisual && targetVisual.constructorName === 'Scatter') {
-      attrs.type = 'value'
+      attrs.type = attrs.type || 'value'
     }
     if (attrs.transpose === undefined && targetVisual) {
       //坐标轴转换

@@ -30,19 +30,14 @@ class Scatter extends BaseVisual {
 
   processData() {
     const dataSet = this.dataset
-    const { layoutWay, clientRect } = this.renderAttrs
-    const { data, layoutWay: newLayoutWay } = layout.call(
-      this,
-      dataSet,
-      [clientRect.width, clientRect.height],
-      layoutWay
-    )
+    const { layoutWay, clientRect, axisGap } = this.renderAttrs
+    const { data, layoutWay: newLayoutWay } = layout.call(this, dataSet, [clientRect.width, clientRect.height], layoutWay, axisGap)
     deepObjectMerge(this.renderAttrs.layoutWay || {}, newLayoutWay)
 
     data.forEach((item, i) => {
       const color = this.theme.colors[i]
       const fillColor = hexToRgba(color, 0.3)
-      item.attrs.forEach((di) => {
+      item.attrs.forEach(di => {
         di.strokeColor = color
         di.fillColor = fillColor
       })
@@ -53,7 +48,7 @@ class Scatter extends BaseVisual {
   beforeUpdate() {
     super.beforeUpdate()
     const updateData = this.processData()
-    const temp = updateData.map((row) => deepObjectMerge({}, row))
+    const temp = updateData.map(row => deepObjectMerge({}, row))
     updateData.forEach((row, ind) => {
       const oldRow = this.scatterData[ind]
       row.attrs.forEach((cell, cInd) => {
@@ -62,8 +57,7 @@ class Scatter extends BaseVisual {
         if (oldRow && oldRow.attrs[cInd]) {
           const oldCell = oldRow.attrs[cInd]
           const toPos = [...cell.pos]
-          const fromPos =
-            oldCell.animation.to && oldCell.animation.to.pos ? [...oldCell.animation.to.pos] : [...oldCell.pos]
+          const fromPos = oldCell.animation.to && oldCell.animation.to.pos ? [...oldCell.animation.to.pos] : [...oldCell.pos]
           // 位置相同
           if (toPos.toString() === fromPos.toString()) {
             let fromRadius = radius
@@ -101,9 +95,9 @@ class Scatter extends BaseVisual {
   beforeRender() {
     super.beforeRender()
     const renderData = this.processData()
-    this.scatterData = renderData.map((row) => deepObjectMerge({}, row))
-    renderData.forEach((row) => {
-      row.attrs.forEach((cell) => {
+    this.scatterData = renderData.map(row => deepObjectMerge({}, row))
+    renderData.forEach(row => {
+      row.attrs.forEach(cell => {
         const radius = this.getRealRadius({ ...cell })
         cell.animation = {
           from: { radius: 0 },
@@ -126,7 +120,7 @@ class Scatter extends BaseVisual {
       return dataOrigin[areaField]
     }
 
-    const allData = [...this.dataset].map((d) => d.data[areaField]).sort((a, b) => a - b)
+    const allData = [...this.dataset].map(d => d.data[areaField]).sort((a, b) => a - b)
     const linear = scaleLinear()
       .domain([allData[0], allData[allData.length - 1]])
       .range(areaRange)
@@ -137,7 +131,7 @@ class Scatter extends BaseVisual {
   onMouseenter(event, el) {
     const arc = el.children[0]
     const { row: rowInd, col: colInd, pos } = arc.attributes
-    this.dataset.forEach((cell) => {
+    this.dataset.forEach(cell => {
       if (cell.row === rowInd && cell.col === colInd) {
         cell.state = 'hover'
       }
@@ -165,7 +159,7 @@ class Scatter extends BaseVisual {
 
   renderGuideLine() {
     if (this.guideLineData.length > 0) {
-      return this.guideLineData.map((points) => {
+      return this.guideLineData.map(points => {
         return <Polyline points={points} strokeColor={'#ddd'} lineWidth={1} translate={[0.5, 0.5]} />
       })
     }
