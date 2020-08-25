@@ -47,6 +47,11 @@ export default [
     path: 'bar-gradualBar'
   },
   {
+    img: 'https://p4.ssl.qhimg.com/t01ecf1d8114c5aa86b.png',
+    title: '切角柱状图',
+    path: 'bar-cutBar'
+  },
+  {
     img: 'https://p1.ssl.qhimg.com/t0153188b21ef99f471.png',
     title: '无坐标散点图',
     path: 'scatter-common'
