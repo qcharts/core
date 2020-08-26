@@ -2,7 +2,7 @@ import { axis } from '../../utils/axis'
 import { scaleLinear } from '../../utils/scaleLinear'
 import { jsType } from '@qcharts/utils'
 
-const getDataRange = (data) => {
+const getDataRange = data => {
   if (data.length === 0) {
     return [0, 1]
   }
@@ -11,7 +11,7 @@ const getDataRange = (data) => {
   return [min, max]
 }
 
-const getBigRange = (data) => {
+const getBigRange = data => {
   if (data.length === 0) {
     return [0, 1]
   }
@@ -31,20 +31,25 @@ const updateSectionVal = (section, newSection) => {
   }
 }
 
-export default function layout(dataSet, size, layoutWay) {
+export default function layout(dataSet, size, layoutWay, axisGap) {
   const [width, height] = size
 
   const { text: textField, value: valueField } = dataSet.option
   const allData = [...dataSet]
 
   // 如果X轴是文本框，则进行均分
-  const maxLen = getDataRange(dataSet.rows.map((d) => d.length))[1]
+  const maxLen = getDataRange(dataSet.rows.map(d => d.length))[1]
 
   let xDomain = [0, maxLen - 1]
+  let xOffset = 0
+  if (axisGap) {
+    xDomain = [0, maxLen]
+    xOffset = width / maxLen / 2
+  }
   let xSection = [0, maxLen - 1]
-  const xIsTextData = allData.some((d) => jsType(d.text) === 'string')
+  const xIsTextData = allData.some(d => jsType(d.text) === 'string')
   if (!xIsTextData) {
-    xSection = getBigRange(allData.map((d) => d.text))
+    xSection = getBigRange(allData.map(d => d.text))
     const xScales = axis.call(this, {
       dataSet: allData,
       stack: false,
@@ -54,11 +59,11 @@ export default function layout(dataSet, size, layoutWay) {
     xDomain = getDataRange(xScales)
   }
 
-  const yIsTextData = allData.some((d) => jsType(d.value) === 'string')
+  const yIsTextData = allData.some(d => jsType(d.value) === 'string')
   if (yIsTextData) {
     throw new Error("Scatter's value category data should be Number!")
   }
-  let ySection = getBigRange(allData.map((d) => d.layoutScaleValue))
+  let ySection = getBigRange(allData.map(d => d.layoutScaleValue))
   const yScales = axis.call(this, {
     dataSet: allData,
     stack: false,
@@ -87,11 +92,11 @@ export default function layout(dataSet, size, layoutWay) {
     .domain(yDomain)
     .range([0, height])
 
-  const resultData = dataSet.rows.map((dArry) => {
+  const resultData = dataSet.rows.map(dArry => {
     const attrs = dArry.map((d, i) => {
       const x = xIsTextData ? i : d.text
       const y = d.layoutScaleValue
-      const pos = [xLinear(x), height - yLinear(y)]
+      const pos = [xLinear(x) + xOffset, height - yLinear(y)]
       return {
         pos,
         radius: 5,
