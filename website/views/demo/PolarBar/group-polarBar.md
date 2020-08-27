@@ -82,25 +82,25 @@ const data = [
     year: "图例三",
     sales: 350,
   },
-];
-const { Chart, PolarBar, Tooltip, Legend } = qcharts;
+]
+const { Chart, PolarBar, Tooltip, Legend } = qcharts
 const chart = new Chart({
   container: "#app",
-});
+})
 chart.source(data, {
   row: "year",
   value: "sales",
   text: "product",
-});
+})
 const bar = new PolarBar({
   innerRadius: 0.3,
   radius: 0.7,
-  groupPadAngle: Math.PI * 0.2,
-});
-const legend = new Legend();
-const tooltip = new Tooltip();
+  groupPadAngle: 30,
+})
+const legend = new Legend()
+const tooltip = new Tooltip()
 
-chart.append([bar, tooltip, legend]);
+chart.append([bar, tooltip, legend])
 ```
 
 :::
