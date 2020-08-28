@@ -153,7 +153,7 @@ export default function layout(arr, attrs) {
 }
 function getItemAttrs(defaultAttrs, orient, cell, value, scaleF, clientRect, axisGap) {
   let res = emptyObject()
-  let { width, height, left, top } = clientRect
+  let { width, height, left } = clientRect
   let labelPosValue = axisGap ? value + 0.5 : value
   if (orient === 'left' || orient === 'right') {
     let x = orient === 'left' ? 0 : width

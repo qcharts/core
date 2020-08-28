@@ -111,7 +111,10 @@ class Pie extends Base {
       endAngle: 360,
       lineWidth: 1,
       //选中偏移量基数
-      activeOffset: 10
+      activeOffset: 10,
+      formatter: function(str, data) {
+        return str
+      }
     }
   }
   defaultStyles() {
@@ -147,7 +150,7 @@ class Pie extends Base {
   }
   render(rings) {
     //console.log(rings)
-    let { clientRect, innerRadiusPx, radiusPx } = this.renderAttrs
+    let { clientRect, innerRadiusPx, radiusPx, formatter } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
     //当前主体颜色
@@ -173,7 +176,7 @@ class Pie extends Base {
         </Group>
         <Group class="label-group">
           {rings.map((ring, ind) => {
-            let name = this.dataset.rows[ind].name
+            let name = formatter(this.dataset.rows[ind].name, this.dataset.rows[ind].data)
             let style = getStyle(this, 'guideText', [{ fillColor: '#666', fontSize: 12 }, styles.guideText], [this.dataset.rows[ind], ind])
             let hide = false
             if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
