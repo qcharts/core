@@ -38,7 +38,7 @@ export default function layout(arr, attrs) {
       let flag = 0 // 计算当前柱子前面有几根被隐藏
       let value = 0
       let gpData = { rects: [] }
-      let groupAngle = (Math.PI * 2 - GROUP_NUM * groupGap) / GROUP_NUM
+      let groupAngle = (360 - GROUP_NUM * groupGap) / GROUP_NUM
       // 计算单根柱子
       for (let j = 0, lenj = data.length; j < lenj; j++) {
         // if (data[j][i].disabled !== true) {
@@ -46,7 +46,7 @@ export default function layout(arr, attrs) {
         // }
         let barAngle = groupAngle / GROUP_BAR_NUM
         let startAngle =
-          (groupAngle + groupGap) * i + barAngle * (j - flag) - Math.PI * 0.5
+          (groupAngle + groupGap) * i + barAngle * (j - flag) - 90
         value = data[j][i].layoutScaleValue
         let barHeight = BAR_HEIGHT_FACTOR * value
         let innerRadius =
@@ -57,8 +57,8 @@ export default function layout(arr, attrs) {
         let rect = {
           innerRadius: innerRadius,
           outerRadius: innerRadius + barHeight,
-          startAngle: (startAngle * 180) / Math.PI,
-          endAngle: ((startAngle + barAngle) * 180) / Math.PI,
+          startAngle: startAngle,
+          endAngle: startAngle + barAngle,
           value: data[j][i].value,
           text: data[j][i].text,
           state: data[j][i].state,
@@ -99,13 +99,13 @@ export default function layout(arr, attrs) {
       let heightSumDown = 0
       let value = 0
       let gpData = { rects: [] }
-      let groupAngle = (Math.PI * 2 - GROUP_NUM * groupGap) / GROUP_NUM
+      let groupAngle = (360 - GROUP_NUM * groupGap) / GROUP_NUM
       // 计算单根柱子
       for (let j = 0, lenj = data.length; j < lenj; j++) {
         // if (data[j][i].disabled !== true) {
         //   data[j][i].disabled = false;
         // }
-        let startAngle = (groupAngle + groupGap) * i - Math.PI * 0.5
+        let startAngle = (groupAngle + groupGap) * i - 90
         value = data[j][i].value
         let barHeight = BAR_HEIGHT_FACTOR * value
         let innerRadius =
@@ -117,8 +117,8 @@ export default function layout(arr, attrs) {
         let rect = {
           innerRadius: innerRadius,
           outerRadius: innerRadius + barHeight - stackGap,
-          startAngle: (startAngle * 180) / Math.PI,
-          endAngle: ((startAngle + groupAngle) * 180) / Math.PI,
+          startAngle: startAngle,
+          endAngle: startAngle + groupAngle,
           value: data[j][i].value,
           text: data[j][i].text,
           state: data[j][i].state,
@@ -144,7 +144,7 @@ export default function layout(arr, attrs) {
       }
     }
   }
-  // attachPadAngleOfArr(barData, padAngle)
+  attachPadAngleOfArr(barData, padAngle)
   return { barData }
 }
 
@@ -162,4 +162,25 @@ function computerLegend(data) {
 }
 export function transRadius(angle) {
   return (angle / 180) * Math.PI
+}
+function attachPadAngleOfArr(arr, padAngle = 0) {
+  // 设置 padAngle
+  const maxPadAngle = Math.min.apply(
+    null,
+    arr.filter((d) => !d.disabled).map((a) => a.endAngle - a.startAngle)
+  )
+
+  if (padAngle >= 0) {
+    padAngle = padAngle > maxPadAngle ? maxPadAngle / 2 : padAngle
+
+    arr
+      .filter((d) => !d.disabled)
+      .forEach((a) => {
+        if (a.endAngle - a.startAngle > padAngle * 2) {
+          a.padAngle = padAngle
+          a.startAngle += padAngle
+          a.endAngle -= padAngle
+        }
+      })
+  }
 }

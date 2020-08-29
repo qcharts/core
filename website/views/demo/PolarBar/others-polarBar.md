@@ -97,7 +97,7 @@ chart.source(data, {
 const bar = new PolarBar({
   innerRadius: 0.1,
   radius: 0.9,
-  groupPadAngle: Math.PI * 0.2,
+  groupPadAngle: 10,
 })
 const tooltip = new Tooltip()
 const legend = new Legend()
