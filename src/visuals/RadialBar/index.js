@@ -1,6 +1,7 @@
 import { Group, Arc } from 'spritejs'
 import { deepObjectMerge } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
+import { getStyle } from '../../utils/getStyle'
 
 // 数据拷贝
 const flattern = (arr) => [].concat.apply([], arr)
@@ -50,7 +51,7 @@ class RadialBar extends BaseVisual {
     const { size } = this.renderAttrs
     const [width, height] = size
     const maxRadius = this.maxOuterRadius
-    return [width/2 - maxRadius, height/2- maxRadius]
+    return [width / 2 - maxRadius, height / 2 - maxRadius]
   }
 
   get innerRadius() {
@@ -98,7 +99,7 @@ class RadialBar extends BaseVisual {
       d.radius = d.innerRadius + 1 * perRadius
       d.strokeColor = colors[i]
 
-      const normalStyle = this.style('arc')(d, d.dataOrigin, d.index)
+      const normalStyle = getStyle(this, 'arc', [d], [d.dataOrigin, d.index])
 
       Object.assign(d, normalStyle)
     })
@@ -169,7 +170,7 @@ class RadialBar extends BaseVisual {
   }
 
   render(data = []) {
-    const { strokeBgcolor,clientRect } = this.renderAttrs
+    const { strokeBgcolor, clientRect } = this.renderAttrs
     const gAnimation = {
       from: { pos: this.oldPos ? this.oldPos : this.center },
       to: { pos: this.center }
@@ -190,11 +191,7 @@ class RadialBar extends BaseVisual {
               onMouseleave={this.onMouseleave}
             >
               <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
-              <Arc
-                {...{ ...d, col, row }}
-                animation={this.animators[i]}
-                {...this.style('arc')(d, data, i)}
-              />
+              <Arc {...{ ...d, col, row }} animation={this.animators[i]} {...getStyle(this, 'arc', [d], [data, i])} />
             </Group>
           )
         })}
