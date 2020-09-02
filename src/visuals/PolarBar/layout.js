@@ -48,7 +48,7 @@ export default function layout(arr, attrs) {
         let startAngle =
           (groupAngle + groupGap) * i + barAngle * (j - flag) - 90
         value = data[j][i].layoutScaleValue
-        let barHeight = BAR_HEIGHT_FACTOR * value
+        let barHeight = BAR_HEIGHT_FACTOR * value || 1
         let innerRadius =
           BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) +
           barInnerRadius * tableSize * 0.5
@@ -107,7 +107,8 @@ export default function layout(arr, attrs) {
         // }
         let startAngle = (groupAngle + groupGap) * i - 90
         value = data[j][i].value
-        let barHeight = BAR_HEIGHT_FACTOR * value
+        let barHeight = BAR_HEIGHT_FACTOR * value || 10
+
         let innerRadius =
           value < 0
             ? BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) - heightSumDown
