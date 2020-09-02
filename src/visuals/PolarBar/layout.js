@@ -48,7 +48,7 @@ export default function layout(arr, attrs) {
         let startAngle =
           (groupAngle + groupGap) * i + barAngle * (j - flag) - 90
         value = data[j][i].layoutScaleValue
-        let barHeight = BAR_HEIGHT_FACTOR * value || 1
+        let barHeight = BAR_HEIGHT_FACTOR * value
         let innerRadius =
           BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) +
           barInnerRadius * tableSize * 0.5
@@ -56,7 +56,7 @@ export default function layout(arr, attrs) {
         let offsetPos = [0, 0]
         let rect = {
           innerRadius: innerRadius,
-          outerRadius: innerRadius + barHeight,
+          outerRadius: value === 0 ? innerRadius + 1 : innerRadius + barHeight,
           startAngle: startAngle,
           endAngle: startAngle + barAngle,
           value: data[j][i].value,
@@ -65,6 +65,7 @@ export default function layout(arr, attrs) {
           data: data[j][i].data,
           id: i * lenj + j,
           offsetPos: offsetPos,
+          opacity: value === 0 ? 0 : 1,
         }
         if (rect.state === "hover") {
           let curAngle = ((rect.startAngle + rect.endAngle) / 2) % 360
@@ -82,7 +83,7 @@ export default function layout(arr, attrs) {
           rect.opacity = 0
           flag++
         } else {
-          rect.opacity = 1
+          // rect.opacity = 1
           gpData.rects.push(rect)
         }
         if (GROUP_NUM < 2) {
@@ -107,7 +108,7 @@ export default function layout(arr, attrs) {
         // }
         let startAngle = (groupAngle + groupGap) * i - 90
         value = data[j][i].value
-        let barHeight = BAR_HEIGHT_FACTOR * value || 10
+        let barHeight = BAR_HEIGHT_FACTOR * value
 
         let innerRadius =
           value < 0
@@ -117,7 +118,8 @@ export default function layout(arr, attrs) {
         let offsetPos = [0, 0]
         let rect = {
           innerRadius: innerRadius,
-          outerRadius: innerRadius + barHeight - stackGap,
+          outerRadius:
+            value === 0 ? innerRadius + 1 : innerRadius + barHeight - stackGap,
           startAngle: startAngle,
           endAngle: startAngle + groupAngle,
           value: data[j][i].value,
@@ -125,6 +127,7 @@ export default function layout(arr, attrs) {
           state: data[j][i].state,
           data: data[j][i].data,
           offsetPos: offsetPos,
+          opacity: value === 0 ? 0 : 1,
         }
 
         if (rect.state === "hover") {
@@ -135,7 +138,7 @@ export default function layout(arr, attrs) {
         if (rect.state === "disabled") {
           rect.opacity = 0
         } else {
-          rect.opacity = 1
+          // rect.opacity = 1
           value < 0
             ? (heightSumDown = heightSumDown - barHeight)
             : (heightSumUp = heightSumUp + barHeight)
