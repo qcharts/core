@@ -63,7 +63,7 @@ export default function layout(dataSet, size, layoutWay, axisGap) {
   if (yIsTextData) {
     throw new Error("Scatter's value category data should be Number!")
   }
-  let ySection = getBigRange(allData.map(d => d.layoutScaleValue))
+  let ySection = getBigRange(allData.map(d => d.layoutScaleValue()))
   const yScales = axis.call(this, {
     dataSet: allData,
     stack: false,
@@ -95,7 +95,7 @@ export default function layout(dataSet, size, layoutWay, axisGap) {
   const resultData = dataSet.rows.map(dArry => {
     const attrs = dArry.map((d, i) => {
       const x = xIsTextData ? i : d.text
-      const y = d.layoutScaleValue
+      const y = d.layoutScaleValue()
       const pos = [xLinear(x) + xOffset, height - yLinear(y)]
       return {
         pos,

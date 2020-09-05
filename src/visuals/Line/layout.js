@@ -21,7 +21,7 @@ export default function layout(arr, attrs) {
       state: row.state
     }
     row.forEach((cell, i) => {
-      let val = cell.layoutScaleValue
+      let val = cell.layoutScaleValue()
       if (cell.value !== undefined) {
         //如果为undefined 不渲染
         let dx = width / (row.length - 1)
@@ -44,9 +44,9 @@ export default function layout(arr, attrs) {
     ]
     if (stack && row.state !== 'disabled') {
       if (!prevScaleValues.length) {
-        prevScaleValues = row.map(cell => cell.layoutScaleValue)
+        prevScaleValues = row.map(cell => cell.layoutScaleValue())
       } else {
-        prevScaleValues = row.map((cell, ind) => cell.layoutScaleValue + prevScaleValues[ind])
+        prevScaleValues = row.map((cell, ind) => cell.layoutScaleValue() + prevScaleValues[ind])
       }
     }
     lines.push(line)
