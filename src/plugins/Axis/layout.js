@@ -95,7 +95,6 @@ export default function layout(arr, attrs) {
     axisAttrs.field = targetVisual.dataset.option.text
   }
   let scales = axis.call(this, axisAttrs)
-
   let maxVal = Math.max.apply(this, scales)
   let minVal = Math.min.apply(this, scales)
   let type = attrs.type || defaultAttrs[orient].type
