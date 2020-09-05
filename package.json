@@ -15,7 +15,7 @@
     "prepublishOnly": "npm run build:chart && npm run compile"
   },
   "dependencies": {
-    "@qcharts/dataset": "0.0.12",
+    "@qcharts/dataset": "0.0.14",
     "@qcharts/utils": "^0.0.5",
     "@qcharts/vnode": "0.0.16",
     "filter-clone": "0.0.12"
