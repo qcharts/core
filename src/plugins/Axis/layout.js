@@ -92,7 +92,7 @@ export default function layout(arr, attrs) {
     splitNumber
   }
   if (targetVisual.constructorName === 'Scatter' && defaultAttrs[attrs.orient].type === 'category') {
-    axisAttrs.layoutScaleKey = 'text'
+    axisAttrs.field = targetVisual.dataset.option.text
   }
   let scales = axis.call(this, axisAttrs)
 
