@@ -85,6 +85,7 @@ export default function layout(arr, attrs) {
     })
   }
   const { width, height } = clientRect
+  console.log(arr)
   let scales = axis.call(this, {
     dataSet: arr,
     stack,
