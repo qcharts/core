@@ -22,8 +22,6 @@ chart.source(data, {
   text: "label",
 })
 const bar = new Bar({
-  pos: ["20%", "10%"],
-  size: ["70%", "80%"],
   transpose: true,
   barWidth: 18,
   animation: {
@@ -31,7 +29,7 @@ const bar = new Bar({
     easing: "elasticOut",
   },
 })
-bar.style("pillar", { bgcolor: "#47A1FF" })
+
 const tooltip = new Tooltip()
 const axisBottom = new Axis().style("scale", false)
 const axisLeft = new Axis({

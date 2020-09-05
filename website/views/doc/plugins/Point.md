@@ -19,14 +19,14 @@ qcharts 中 point 使用面绘制，因此，point 可配置属性除 [api 简�
 
 | 可选项   | 描述                                                                                              |
 | -------- | ------------------------------------------------------------------------------------------------- |
-| sprite   | 精灵元素，可设置`texture`属性使用图片                                                             |
-| path     | path 是最基础的路径元素，它可以通过设置`d`属性来绘制 SVG Path                                     |
-| ellipse  | 椭圆形(默认值)，可以通过设置 radius，或者 radiusX 和 radiusY 属性                                 |
-| rect     | 矩形，可以直接设置`width、height`属性（或`size`属性）                                             |
-| triangle | 三角形，只需要设置`sides`和`angle`属性                                                            |
-| parallel | 平行四边形，只需要设置`sides`和`angle`属性                                                        |
-| regular  | 正多边形，edges 表示边数，radius 表示半径，offsetAngle 表示旋转角度                               |
-| star     | 多角星，angles 表示角数，innerRadius 表示内半径，outerRadius 表示外半径，offsetAngle 表示旋转角度 |
+| sprite   | <a href="https://spritejs.org/#/zh-cn/api/sprite" target="_blank">精灵元素</a>，可设置`texture`属性使用图片                                                             |
+| path     | <a href="https://spritejs.org/#/zh-cn/api/path" target="_blank">路径元素</a>，它可以通过设置`d`属性来绘制 SVG Path                                     |
+| ellipse  | <a href="https://spritejs.org/#/zh-cn/api/ellipse" target="_blank">椭圆形</a>(默认值)，可以通过设置 radius，或者 radiusX 和 radiusY 属性                                 |
+| rect     | <a href="https://spritejs.org/#/zh-cn/api/rect" target="_blank">矩形</a>，可以直接设置`width、height`属性（或`size`属性）                                             |
+| triangle | <a href="https://spritejs.org/#/zh-cn/api/triangle" target="_blank">三角形</a>，只需要设置`sides`和`angle`属性                                                            |
+| parallel | <a href="https://spritejs.org/#/zh-cn/api/parallel" target="_blank">平行四边形</a>，只需要设置`sides`和`angle`属性                                                        |
+| regular  | <a href="https://spritejs.org/#/zh-cn/api/regular" target="_blank">正多边形</a>，edges 表示边数，radius 表示半径，offsetAngle 表示旋转角度                               |
+| star     | <a href="https://spritejs.org/#/zh-cn/api/star" target="_blank">多角星</a>，angles 表示角数，innerRadius 表示内半径，outerRadius 表示外半径，offsetAngle 表示旋转角度 |
 
 ### 示例
 

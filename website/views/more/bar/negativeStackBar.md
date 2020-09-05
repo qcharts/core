@@ -100,12 +100,12 @@ const bar = new Bar({
   barWidth: 20,
 }).style("text", (attrs, data, i, j) => {
   let size = attrs.barAttrs.size
-  let pos = attrs.barAttrs.pos
+  let points = attrs.barAttrs.points
   let anchor = [0, 0.5]
-  let newPos = [pos[0] + size[0], pos[1] + size[1] / 2]
+  let newPos = [points[1][0], (points[1][1] + points[2][1]) / 2]
   if (j % 2 === 0) {
     anchor = [1, 0.5]
-    newPos = [pos[0] - size[0], pos[1] + size[1] / 2]
+    newPos = [points[0][0], (points[0][1] + points[3][1]) / 2]
   }
   return {
     fillColor: "#333",
@@ -125,7 +125,6 @@ const axisBottom = new Axis().style("scale", false).style("grid", false)
 const axisLeft = new Axis({
   orient: "left",
   formatter: (a, b) => {
-    console.log(a, b)
     return ` ${a}`
   },
 })

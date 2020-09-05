@@ -1,6 +1,6 @@
 import Base from '../../base/BaseVisual'
 import { Group, Polyline, Node } from 'spritejs'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 import layout from './layout'
 import Point from '../../utils/Point'
 import { deepObjectMerge } from '@qcharts/utils'
@@ -24,8 +24,10 @@ class Line extends Base {
         smoothRange: item.smoothRange,
         areaFrom: { points: item.areaPoints },
         areaTo: { points: item.areaPoints },
-        from: { points: item.points, lineDash: [1, maxLen] },
-        to: { points: item.points, lineDash: [maxLen, maxLen] }
+        // from: { points: item.points, lineDash: [1, maxLen] },
+        // to: { points: item.points, lineDash: [maxLen, maxLen] }
+        from: { points: item.points },
+        to: { points: item.points }
       }
     })
     return lines
@@ -40,7 +42,7 @@ class Line extends Base {
         from = { points: renderLines[i].to.points }
       }
       if (!renderLines[i] || renderLines[i].state === 'disabled') {
-        from.lineDash = [4, maxLen]
+        // from.lineDash = [4, maxLen]
       }
       return {
         state: item.state,
@@ -51,8 +53,8 @@ class Line extends Base {
         },
         from,
         to: {
-          points: item.points,
-          lineDash: [maxLen, maxLen]
+          points: item.points
+          // lineDash: [maxLen, maxLen]
         }
       }
     })
@@ -128,11 +130,15 @@ class Line extends Base {
     let colors = this.theme.colors
     this.renderLines = lines
     return (
-      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove} size={[clientRect.width, clientRect.height]}>
+      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove}>
         <Group class="lines-group">
           {lines.map((line, ind) => {
             let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind], ind])
-            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} {...style} animation={{ from: line.from, to: line.to }} />
+            // if (style.lineDash) {
+            //   line.to.lineDash = style.lineDash
+            //   line.from.lineDash = style.lineDash
+            // }
+            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} animation={{ from: line.from, to: line.to }} {...style} />
           })}
         </Group>
         <Group class="areas-group">

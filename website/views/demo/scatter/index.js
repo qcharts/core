@@ -17,11 +17,11 @@ export default [
   {
     title: '气泡图',
     path: 'bubble',
-    component: () => import('./bubble2.md')
+    component: () => import('./bubble.md')
   },
   {
     title: '文本气泡图',
     path: 'bubble2',
-    component: () => import('./bubble.md')
+    component: () => import('./bubble2.md')
   }
 ]

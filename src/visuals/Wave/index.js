@@ -1,7 +1,7 @@
 import Base from '../../base/BaseVisual'
 import { Group, Polyline, Path, requestAnimationFrame, Label, Node } from 'spritejs'
 import ellipse2path from '../../utils/ellipse2path'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 class Wave extends Base {
   constructor(attrs) {
     super(attrs)
@@ -31,6 +31,7 @@ class Wave extends Base {
   defaultAttrs() {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
+      layer: 'wave',
       amplitude: 8, //振幅
       wavelength: 300, //波长`
       radius: 150,
@@ -50,7 +51,7 @@ class Wave extends Base {
     let perR = 24 / animation.duration
     let currentX = 0 - clientRect.left
     //以路径的top为起点，计算百分比
-    let startY = pathHeight * (100 - percent) / 100 + clipPath.originalContentRect[1]
+    let startY = (pathHeight * (100 - percent)) / 100 + clipPath.originalContentRect[1]
     this.tickId = requestAnimationFrame(_ => {
       this.offsetR += perR
       let points = [[currentX, startY + pathHeight]]
@@ -73,11 +74,10 @@ class Wave extends Base {
   }
   render() {
     let { clientRect, shape, pos, formatter, percent, radius } = this.renderAttrs
-
     let renderStyles = this.renderStyles
     let waveStyle = getStyle(this, 'wave', renderStyles.wave)
     let shapeStyle = getStyle(this, 'shape', renderStyles.shape)
-    let textStyle = getStyle(this, 'text', renderStyles.text)
+    let textStyle = getStyle(this, 'text', [{ pos: [radius, radius], anchor: [0.5, 0.5] }, renderStyles.text])
     let animation = {
       from: {
         pos: this.oldAttr.pos || pos
@@ -88,12 +88,12 @@ class Wave extends Base {
     }
     this.oldAttr = { ...this.renderAttrs }
     return (
-      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
+      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]}>
         <Group animation={animation}>
           <Path ref="clipPath1" d={shape} fillColor={shapeStyle.fillColor} />
           <Polyline ref="clipWave" {...waveStyle} clipPath={shape} smooth={true} />
           <Path ref="clipPath" d={shape} strokeColor={shapeStyle.strokeColor} lineWidth={shapeStyle.lineWidth} />
-          {textStyle === false ? <Node /> : <Label text={formatter(percent)} {...textStyle} pos={[radius, radius]} anchor={[0.5]} />}
+          {textStyle === false ? <Node /> : <Label text={formatter(percent)} {...textStyle} />}
         </Group>
       </Group>
     )

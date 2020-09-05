@@ -101,23 +101,22 @@ const bar = new Bar({
   transpose: true,
   barWidth: 30,
   stackGap: 5,
-  size: ["60%", "80%"],
 })
   .style("pillar", (attr, data, i, j) => {
-    return { bgcolor: colors[j] }
+    return { fillColor: colors[j] }
   })
   .style("text", (attrs, data, i, j) => {
     if ((j + 1) % 4 !== 0) {
       return false
     }
     let size = attrs.barAttrs.size
-    let pos = attrs.barAttrs.pos
+    let points = attrs.barAttrs.points
     return {
       fillColor: "#1DCE91",
       rotate: 0,
       text: texts[i],
       anchor: [0, 0.5],
-      pos: [pos[0] + size[0] + 5, pos[1] + size[1] / 2],
+      pos: [points[1][0] + 5, (points[1][1] + points[2][1]) / 2],
     }
   })
 const tooltip = new Tooltip({

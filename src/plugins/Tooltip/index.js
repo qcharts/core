@@ -1,6 +1,6 @@
 import Base from '../../base/BasePlugin'
 import { throttle } from '@qcharts/utils'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 class Tooltip extends Base {
   constructor(attrs) {
     super(attrs)
@@ -10,6 +10,11 @@ class Tooltip extends Base {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
     let attrs = super.renderAttrs
     return attrs
+  }
+  defaultAttrs() {
+    return {
+      layer: 'tooltip'
+    }
   }
   beforeRender() {}
   beforeUpdate() {}
@@ -44,8 +49,8 @@ class Tooltip extends Base {
             if (formatter) {
               text = formatter(item.data) || text
             }
-            let style = getStyle(this, 'point', [{ 'background-color': colors[item.row] }, styles.point], [this.dataset.rows[ind], ind])
-            let styleText = getStyle(this, 'text', [styles.text], [this.dataset.rows[ind], ind])
+            let style = getStyle(this, 'point', [{ 'background-color': colors[item.row] }, styles.point], [arr.map(item => item.data), ind])
+            let styleText = getStyle(this, 'text', [styles.text], [arr.map(item => item.data), ind])
             let $html = document.createElement('div')
             $html.className = 'tooltip-item'
             $html.innerHTML = `<span class="icon" style="margin-right:6px;display:inline-block;width:10px;height:10px;background-color:${colors[item.row]}"></span><span class="text">${text}</span>`
@@ -56,10 +61,15 @@ class Tooltip extends Base {
             Object.assign($text.style, styleText)
           })
           if (title) {
+            let str = title
+            if (typeof title === 'function') {
+              let formatterData = arr.map(cell => cell.data)
+              str = title(formatterData)
+            }
             let $title = document.createElement('div')
             $title.className = 'tooltip-title'
-            $title.innerHTML = title || ''
-            let styleTitle = getStyle(this, 'title', [styles.title], [this.dataset.rows.data])
+            $title.innerHTML = str || ''
+            let styleTitle = getStyle(this, 'title', [styles.title], [arr.data])
             Object.assign($title.style, styleTitle)
             $div.prepend($title)
           }

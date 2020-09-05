@@ -14,11 +14,12 @@ import RadialBar from './visuals/RadialBar'
 import Axis from './plugins/Axis/index'
 import Legend from './plugins/Legend/index'
 import Tooltip from './plugins/Tooltip/index'
-import {getGlobal} from './base/platform'
+import { getGlobal } from './base/platform'
 import Chart from './Chart'
 import theme from './theme/default'
+
 const qcharts = {
-  version: '1.0.0',
+  version: '1.0.16',
   Line,
   Pie,
   Area,

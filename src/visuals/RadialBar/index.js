@@ -47,23 +47,10 @@ class RadialBar extends BaseVisual {
   }
 
   get center() {
-    const { startAngle, endAngle, radius, size } = this.renderAttrs
-    const angle = (endAngle + startAngle) / 2
+    const { size } = this.renderAttrs
     const [width, height] = size
     const maxRadius = this.maxOuterRadius
-    let [x, y] = [width / 2 - maxRadius, height / 2 - maxRadius]
-
-    if (endAngle - startAngle === 90) {
-      // 区分象限
-      const cos = Math.cos(angle)
-      const sin = Math.sin(angle)
-      const maxWidth = radius * width
-      const maxHeight = radius * height
-      x += cos < 0 ? maxWidth / 2 : -(maxWidth / 2)
-      y += sin < 0 ? maxHeight / 2 : -(maxHeight / 2)
-    }
-
-    return [x, y]
+    return [width/2 - maxRadius, height/2- maxRadius]
   }
 
   get innerRadius() {
@@ -182,19 +169,21 @@ class RadialBar extends BaseVisual {
   }
 
   render(data = []) {
-    const { strokeBgcolor } = this.renderAttrs
+    const { strokeBgcolor,clientRect } = this.renderAttrs
     const gAnimation = {
       from: { pos: this.oldPos ? this.oldPos : this.center },
       to: { pos: this.center }
     }
     this.oldPos = this.center
+
+    const gPos = [clientRect.left, clientRect.top]
+    const gSize = [clientRect.width, clientRect.height]
     return (
-      <Group>
+      <Group pos={gPos} size={gSize}>
         {data.map((d, i) => {
           const { col, row, data } = d
           return (
             <Group
-              pos={this.center}
               animation={gAnimation}
               onMouseenter={this.onMouseenter}
               onMousemove={this.onMouseenter}
@@ -202,7 +191,6 @@ class RadialBar extends BaseVisual {
             >
               <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
               <Arc
-                pos={this.center}
                 {...{ ...d, col, row }}
                 animation={this.animators[i]}
                 {...this.style('arc')(d, data, i)}

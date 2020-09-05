@@ -52,6 +52,8 @@ theme.visuals = {
     colors: theme.colors,
     styles: {
       sector: { lineWidth: 1, strokeColor: "#fff" },
+      guideText: {},
+      guideline: {},
     },
     attrs: {},
   },
@@ -80,8 +82,8 @@ theme.visuals = {
   Bar: {
     colors: theme.colors,
     styles: {
-      bar: { textureRepeat: true },
-      groupBar: { opacity: 0.1 },
+      bar: { textureRepeat: true, close: true },
+      groupBar: { bgcolor: "#000", fillColor: "#000", opacity: 0.0001 },
       text: false,
     },
     attrs: {

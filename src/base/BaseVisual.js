@@ -5,13 +5,13 @@ import filterClone from 'filter-clone'
 export default class BaseVisual extends Base {
   constructor(attrs) {
     super(attrs)
-    this.theme = theme.visuals[this.constructor.name]
+    this.theme = theme.visuals[this.constructorName]
     //如果当前对象设置了theme，不继承theme
     this.theme.set = obj => {
-      if (this.theme === theme.visuals[this.constructor.name]) {
+      if (this.theme === theme.visuals[this.constructorName]) {
         this.theme = filterClone(this.theme)
       }
-      this.theme = deepObjectMerge(this.theme, obj)
+      this.theme = deepObjectMerge({}, this.theme, obj)
     }
   }
 }

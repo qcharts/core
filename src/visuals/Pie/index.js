@@ -1,15 +1,17 @@
 import Base from '../../base/BaseVisual'
 import { Group, Node, Ring, Polyline, Label } from 'spritejs'
 import filterClone from 'filter-clone'
+import { throttle } from '@qcharts/utils'
 import layout from './layout'
 import { computeLinePos } from './layout'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 class Pie extends Base {
   constructor(attrs) {
     super(attrs)
     this.renderRings = []
     this.hoverIndex = -1
     this.activeIndex = -1
+    this.computeLabel = throttle(this.reComputeLabel, 100)
   }
   get renderAttrs() {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理，如果需要新增渲染时的默认值，在该处处理
@@ -99,7 +101,13 @@ class Pie extends Base {
     return { rings }
   }
   rendered() {
-    //console.log(this.$refs['wrap'])
+    let $wrap = this.$refs['wrap']
+    let $labels = this.$refs['label-group'].children.filter(node => node instanceof Label)
+    let $lines = this.$refs['line-group'].children.filter(node => node instanceof Polyline)
+    this.computeLabel($labels, $lines)
+    $wrap.addEventListener('afterrender', _ => {
+      this.computeLabel($labels, $lines)
+    })
   }
   defaultAttrs() {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
@@ -111,7 +119,10 @@ class Pie extends Base {
       endAngle: 360,
       lineWidth: 1,
       //选中偏移量基数
-      activeOffset: 10
+      activeOffset: 10,
+      formatter: function(str, data) {
+        return str
+      }
     }
   }
   defaultStyles() {
@@ -145,23 +156,26 @@ class Pie extends Base {
     let renderAttrs = this.renderAttrs
     return this.dataset[renderAttrs.layoutBy]
   }
+  reComputeLabel(labels, lines) {
+    console.log(labels, lines)
+  }
   render(rings) {
     //console.log(rings)
-    let { clientRect, innerRadiusPx, radiusPx } = this.renderAttrs
+    let { clientRect, innerRadiusPx, radiusPx, formatter } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
     //当前主体颜色
     let colors = this.theme.colors
     this.renderRings = rings
     return (
-      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
+      <Group zIndex={1} class="container" ref="wrap" pos={[clientRect.left, clientRect.top]}>
         <Group class="rings-group" onMouseleave={this.mouseleave}>
           {rings.map((ring, ind) => {
             let style = getStyle(this, 'sector', [{ strokeColor: colors[ind], fillColor: colors[ind], innerRadius: innerRadiusPx, outerRadius: radiusPx, _index: ind }, styles.sector], [this.dataset.rows[ind], ind])
             return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMousemove={this.mousemove} {...style} animation={{ from: ring.from, to: ring.to }} />
           })}
         </Group>
-        <Group class="line-group">
+        <Group class="line-group" ref="line-group">
           {rings.map((ring, ind) => {
             let style = getStyle(this, 'guideline', [{ strokeColor: colors[ind] }, styles.guideline], [this.dataset.rows[ind], ind])
             let hide = false
@@ -171,10 +185,10 @@ class Pie extends Base {
             return hide || style === false ? <Node /> : <Polyline {...style} animation={{ from: ring.line.from, to: ring.line.to }} />
           })}
         </Group>
-        <Group class="label-group">
+        <Group class="label-group" ref="label-group">
           {rings.map((ring, ind) => {
-            let name = this.dataset.rows[ind].name
-            let style = getStyle(this, 'guideText', [{ fillColor: '#666', fontSize: 12 }, styles.guideline], [this.dataset.rows[ind], ind])
+            let name = formatter(this.dataset.rows[ind].name, this.dataset.rows[ind].data)
+            let style = getStyle(this, 'guideText', [{ fillColor: '#666', fontSize: 12 }, styles.guideText], [this.dataset.rows[ind], ind])
             let hide = false
             if (ring.to.startAngle === ring.to.endAngle || ring.state === 'disable' || style === false) {
               hide = true

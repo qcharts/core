@@ -27,6 +27,11 @@ export default [
     path: 'line-endPoint'
   },
   {
+    img: 'https://p4.ssl.qhimg.com/t010c7b316126d20d3d.png',
+    title: '折线面积图',
+    path: 'area-lineArea'
+  },
+  {
     img: 'https://p5.ssl.qhimg.com/d/inn/e48ee7ed2877/mixLineAndBar.png',
     title: '图表组合',
     path: 'line-mixLineAndBar'
@@ -42,14 +47,30 @@ export default [
     path: 'bar-gradualBar'
   },
   {
+    img: 'https://p4.ssl.qhimg.com/t01ecf1d8114c5aa86b.png',
+    title: '切角柱状图',
+    path: 'bar-cutBar'
+  },
+  {
     img: 'https://p1.ssl.qhimg.com/t0153188b21ef99f471.png',
     title: '无坐标散点图',
     path: 'scatter-common'
   },
   {
+    img: 'https://p4.ssl.qhimg.com/t0168ac425d625cd18f.png',
+    title: '散点图',
+    path: 'scatter-safe'
+  },
+
+  {
     img: 'http://p2.qhimg.com/t01670ed67013eafe8b.png',
     title: '间距堆叠条形图',
     path: 'bar-gapStackBar'
+  },
+  {
+    img: 'https://p1.ssl.qhimg.com/d/inn/67523310f062/gapStackBar2.png',
+    title: '间距堆叠条形图2',
+    path: 'bar-gapStackBar2'
   },
   {
     img: 'http://p9.qhimg.com/t0173ea1c4135741bf9.png',
@@ -65,6 +86,11 @@ export default [
     img: 'https://p5.ssl.qhimg.com/t0111906506d1b724d5.png',
     title: '负值堆叠柱状图',
     path: 'bar-negativeStackBar'
+  },
+  {
+    img: 'https://p0.ssl.qhimg.com/d/inn/df0b4188f12f/negativeStackBar2.png',
+    title: '负值堆叠柱状图2',
+    path: 'bar-negativeStackBar2'
   },
   {
     img: 'https://p3.ssl.qhimg.com/t012408ef8db6084cbd.png',

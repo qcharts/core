@@ -47,6 +47,6 @@ export function computeLinePos(startAngle, endAngle, center, radius, disRadius) 
   labelPos = [center[0] + labelPos[0], center[1] + labelPos[1]]
   points.push([center[0] + startPoint[0], center[1] + startPoint[1]])
   points.push([center[0] + endPoint[0], center[1] + endPoint[1]])
-  labelAnchor = [Math.sin(centerAngle / 2), 1 - Math.cos(centerAngle / 4)]
+  labelAnchor = [0.5, 0.5]
   return { points, labelAnchor, labelPos: labelPos }
 }

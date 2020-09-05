@@ -3,7 +3,7 @@ import { Group, Label, Polyline, Node } from 'spritejs'
 import { emptyObject } from '@qcharts/utils'
 import filterClone from 'filter-clone'
 import layout from './layout'
-import { getStyle } from '@/utils/getStyle'
+import { getStyle } from '../../utils/getStyle'
 class Axis extends Base {
   constructor(attrs) {
     super(attrs)
@@ -13,13 +13,16 @@ class Axis extends Base {
     //处理默认属性，变为渲染时的属性，比如高宽的百分比，通用属性到base中处理
     let attrs = super.renderAttrs
     let targetVisual = this.chart.visuals[0]
-    if (attrs.axisGap === undefined && targetVisual && targetVisual.constructor.name === 'Bar') {
+    if (attrs.axisGap === undefined && targetVisual && targetVisual.constructorName === 'Bar') {
       //如果axisGap没有赋值
       //如果是柱状图
       attrs.axisGap = true
     }
-    if (targetVisual && targetVisual.constructor.name === 'Scatter') {
-      attrs.type = 'value'
+    if (targetVisual && targetVisual.attr('axisGap')) {
+      attrs.axisGap = targetVisual.attr('axisGap')
+    }
+    if (targetVisual && targetVisual.constructorName === 'Scatter') {
+      attrs.type = attrs.type || 'value'
     }
     if (attrs.transpose === undefined && targetVisual) {
       //坐标轴转换
@@ -63,7 +66,7 @@ class Axis extends Base {
     //当前主体颜色
     let arrOrient = this.chart.plugins
       .map(plugin => {
-        if (plugin.constructor.name === 'Axis') {
+        if (plugin.constructorName === 'Axis') {
           return plugin.renderAttrs.orient
         }
       })
