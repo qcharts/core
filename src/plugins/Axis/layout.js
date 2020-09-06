@@ -85,16 +85,12 @@ export default function layout(arr, attrs) {
     })
   }
   const { width, height } = clientRect
-  let targetVisual = attrs.targetVisual || this.chart.visuals[0]
-  let axisAttrs = {
+  let scales = axis.call(this, {
     dataSet: arr,
     stack,
     splitNumber
-  }
-  if (targetVisual.constructorName === 'Scatter' && defaultAttrs[attrs.orient].type === 'category') {
-    axisAttrs.field = targetVisual.dataset.option.text
-  }
-  let scales = axis.call(this, axisAttrs)
+    // needReverse: true,
+  })
   let maxVal = Math.max.apply(this, scales)
   let minVal = Math.min.apply(this, scales)
   let type = attrs.type || defaultAttrs[orient].type

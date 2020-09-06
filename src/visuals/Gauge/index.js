@@ -1,6 +1,5 @@
 import { Group, Polyline, Label, Arc, Gradient } from 'spritejs'
 import { jsType } from '@qcharts/utils'
-import { getStyle } from '../../utils/getStyle'
 import BaseVisual from '../../base/BaseVisual'
 
 /**
@@ -199,7 +198,7 @@ class Gauge extends BaseVisual {
    * @param {Number} angle 角度
    */
   renderPointer(d, maxTickTextFontSize) {
-    const style = this.getStyle('pointer', [d], [d.dataOrigin, 0])
+    const style = this.style('pointer')(d, d.dataOrigin, 0)
     if (style === false) {
       return
     }
@@ -250,10 +249,6 @@ class Gauge extends BaseVisual {
     return Boolean(style)
   }
 
-  getStyle(key, attr, args) {
-    return getStyle(this, key, attr, args)
-  }
-
   render(data = {}) {
     const {
       _useBuiltInColors,
@@ -292,7 +287,7 @@ class Gauge extends BaseVisual {
     let maxTickTextFontSize = 16
     if (tickText !== false) {
       ticks.map((tick, j) => {
-        const style = this.getStyle('tickText', [data], [data.dataOrigin, j])
+        const style = this.style('tickText')(data, data.dataOrigin, j)
         if (style && style.fontSize) {
           if (jsType(style.fontSize) === 'number' && maxTickTextFontSize < style.fontSize) {
             maxTickTextFontSize = style.fontSize
@@ -333,7 +328,7 @@ class Gauge extends BaseVisual {
           {...data}
           animation={this.gaugeAnimations}
           {...(gradientColor ? { strokeColor: gradientColor } : { strokeColor: this.color(0) })}
-          {...this.getStyle('arc', [data], [data.dataOrigin, 0])}
+          {...this.style('arc')(data, data.dataOrigin, 0)}
           zIndex={11}
         />
         {this.renderPointer(data, maxTickTextFontSize)}
@@ -344,7 +339,7 @@ class Gauge extends BaseVisual {
             textAlign="center"
             zIndex={10}
             anchor={[0.5, 1]}
-            {...this.getStyle('title', [], [data.dataOrigin, 0])}
+            {...this.style('title')(data, data.dataOrigin, 0)}
           />
         ) : null}
         {tickLine !== false || tickText !== false
@@ -354,14 +349,11 @@ class Gauge extends BaseVisual {
                   <Polyline
                     points={tick.points}
                     strokeColor={strokeBgcolor}
-                    {...this.getStyle('tickLine', [], [data.dataOrigin, j])}
+                    {...this.style('tickLine')(data, data.dataOrigin, j)}
                   />
                 ) : null}
                 {tickText !== false ? (
-                  <Label
-                    {...tick.label}
-                    {...this.getStyle('tickText', [], [data.dataOrigin, j])}
-                  />
+                  <Label {...tick.label} {...this.style('tickText')(data, data.dataOrigin, j)} />
                 ) : null}
               </Group>
             ))
@@ -369,8 +361,8 @@ class Gauge extends BaseVisual {
       </Group>
     )
   }
-
-  rendered() {}
+  
+  rendered(){}
 }
 
 export default Gauge

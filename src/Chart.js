@@ -14,7 +14,7 @@ class Chart extends Base {
     if (!global.qcharts || (global.qcharts && !global.qcharts.h)) {
       global.qcharts = { h }
     }
-    let { container, contextType } = attr
+    let { container } = attr
     if (jsType(container) === 'string') {
       container = document.querySelector(container)
     }
@@ -23,7 +23,7 @@ class Chart extends Base {
     this.plugins = []
     this.children = []
     if (isWeiXin()) {
-      const { pixelUnit = 'rpx', size } = attr
+      const { pixelUnit = 'rpx', size, contextType } = attr
       let displayRatio = 1
       if (pixelUnit === 'rpx') {
         const { windowWidth } = wx.getSystemInfoSync()
@@ -37,19 +37,19 @@ class Chart extends Base {
         displayRatio
       })
     } else {
-      this.scene = new Scene({ container, contextType, displayRatio: getGlobal().devicePixelRatio })
+      this.scene = new Scene({ container, displayRatio: getGlobal().devicePixelRatio })
     }
-    this.scene.addEventListener('resize', _ => {
+    this.scene.addEventListener('resize', (_) => {
       //舞台变化的时候
       this.checkUpdate({ type: 'resize' })
     })
-    this.checkUpdate = throttle(args => {
-      this.children.forEach(node => {
+    this.checkUpdate = throttle((args) => {
+      this.children.forEach((node) => {
         node.update(args)
       })
     }, 300)
-    this.checkRender = throttle(_ => {
-      this.children.forEach(child => {
+    this.checkRender = throttle((_) => {
+      this.children.forEach((child) => {
         child.created()
         this.dataset.addDep(child)
       })
@@ -63,7 +63,7 @@ class Chart extends Base {
   }
   append(node) {
     const notNeedDataSetList = [Wave, Gauge]
-    if (notNeedDataSetList.some(Target => node instanceof Target)) {
+    if (notNeedDataSetList.some((Target) => node instanceof Target)) {
       //补齐dataset，wave中不用dataset
       this.source([], {})
     } else if (!this.dataset) {
@@ -71,7 +71,7 @@ class Chart extends Base {
       return
     }
     if (jsType(node) === 'array') {
-      node.forEach(item => {
+      node.forEach((item) => {
         this.append(item)
       })
       return

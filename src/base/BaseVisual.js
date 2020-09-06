@@ -11,7 +11,7 @@ export default class BaseVisual extends Base {
       if (this.theme === theme.visuals[this.constructorName]) {
         this.theme = filterClone(this.theme)
       }
-      this.theme = deepObjectMerge({}, this.theme, obj)
+      this.theme = deepObjectMerge(this.theme, obj)
     }
   }
 }

@@ -437,7 +437,10 @@ chart.source(data, {
 })
 const scatter = new Scatter({
   areaField: 'Population',
-  areaRange: [4, 30]
+  areaRange: [4, 30],
+  layoutWay: {
+    GDP: { min: 1200 }
+  }
 })
 
 const axisBottom = new Axis()
