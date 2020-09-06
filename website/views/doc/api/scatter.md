@@ -13,7 +13,6 @@
 | areaRange     | 面积映射，设置此值则将 areaField 进行线性映射             | Array   | null   |
 | labelField    | 气泡图中显示 label 的字段，可通过 style 自定义            | String  | null   |
 | showGuideLine | hover 时的辅助线,默认不显示辅助线                         | Boolean | false  |
-| layoutWay     | 坐标轴的相关属性                                          | Object  | null   |
 
 ### 可设置 style 名称
 

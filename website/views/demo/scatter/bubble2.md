@@ -123,11 +123,7 @@ chart.source(data, {
 })
 const scatter = new Scatter({
   areaField: 'z',
-  labelField: 'name',
-  layoutWay: {
-    x: { min: 60, max: 96 },
-    y: { min: 0, max: 165 }
-  }
+  labelField: 'name'
 })
 
 const axisBottom = new Axis()

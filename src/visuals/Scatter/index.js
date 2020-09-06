@@ -2,6 +2,7 @@ import { Group, Polyline, Arc, Label } from 'spritejs'
 import BaseVisual from '../../base/BaseVisual'
 import { scaleLinear } from '../../utils/scaleLinear'
 import { hexToRgba } from '../../utils/color'
+import { getStyle } from '../../utils/getStyle'
 import { deepObjectMerge } from '@qcharts/utils'
 import layout from './layout'
 
@@ -31,13 +32,19 @@ class Scatter extends BaseVisual {
   processData() {
     const dataSet = this.dataset
     const { layoutWay, clientRect, axisGap } = this.renderAttrs
-    const { data, layoutWay: newLayoutWay } = layout.call(this, dataSet, [clientRect.width, clientRect.height], layoutWay, axisGap)
+    const { data, layoutWay: newLayoutWay } = layout.call(
+      this,
+      dataSet,
+      [clientRect.width, clientRect.height],
+      layoutWay,
+      axisGap
+    )
     deepObjectMerge(this.renderAttrs.layoutWay || {}, newLayoutWay)
 
     data.forEach((item, i) => {
       const color = this.theme.colors[i]
       const fillColor = hexToRgba(color, 0.3)
-      item.attrs.forEach(di => {
+      item.attrs.forEach((di) => {
         di.strokeColor = color
         di.fillColor = fillColor
       })
@@ -48,7 +55,7 @@ class Scatter extends BaseVisual {
   beforeUpdate() {
     super.beforeUpdate()
     const updateData = this.processData()
-    const temp = updateData.map(row => deepObjectMerge({}, row))
+    const temp = updateData.map((row) => deepObjectMerge({}, row))
     updateData.forEach((row, ind) => {
       const oldRow = this.scatterData[ind]
       row.attrs.forEach((cell, cInd) => {
@@ -57,7 +64,8 @@ class Scatter extends BaseVisual {
         if (oldRow && oldRow.attrs[cInd]) {
           const oldCell = oldRow.attrs[cInd]
           const toPos = [...cell.pos]
-          const fromPos = oldCell.animation.to && oldCell.animation.to.pos ? [...oldCell.animation.to.pos] : [...oldCell.pos]
+          const fromPos =
+            oldCell.animation.to && oldCell.animation.to.pos ? [...oldCell.animation.to.pos] : [...oldCell.pos]
           // 位置相同
           if (toPos.toString() === fromPos.toString()) {
             let fromRadius = radius
@@ -95,9 +103,9 @@ class Scatter extends BaseVisual {
   beforeRender() {
     super.beforeRender()
     const renderData = this.processData()
-    this.scatterData = renderData.map(row => deepObjectMerge({}, row))
-    renderData.forEach(row => {
-      row.attrs.forEach(cell => {
+    this.scatterData = renderData.map((row) => deepObjectMerge({}, row))
+    renderData.forEach((row) => {
+      row.attrs.forEach((cell) => {
         const radius = this.getRealRadius({ ...cell })
         cell.animation = {
           from: { radius: 0 },
@@ -120,7 +128,7 @@ class Scatter extends BaseVisual {
       return dataOrigin[areaField]
     }
 
-    const allData = [...this.dataset].map(d => d.data[areaField]).sort((a, b) => a - b)
+    const allData = [...this.dataset].map((d) => d.data[areaField]).sort((a, b) => a - b)
     const linear = scaleLinear()
       .domain([allData[0], allData[allData.length - 1]])
       .range(areaRange)
@@ -131,7 +139,7 @@ class Scatter extends BaseVisual {
   onMouseenter(event, el) {
     const arc = el.children[0]
     const { row: rowInd, col: colInd, pos } = arc.attributes
-    this.dataset.forEach(cell => {
+    this.dataset.forEach((cell) => {
       if (cell.row === rowInd && cell.col === colInd) {
         cell.state = 'hover'
       }
@@ -152,14 +160,13 @@ class Scatter extends BaseVisual {
     }
   }
   onMouseleave(event, el) {
-    const arc = el.children[0]
     this.dataset.resetState()
     this.guideLineData = []
   }
 
   renderGuideLine() {
     if (this.guideLineData.length > 0) {
-      return this.guideLineData.map(points => {
+      return this.guideLineData.map((points) => {
         return <Polyline points={points} strokeColor={'#ddd'} lineWidth={1} translate={[0.5, 0.5]} />
       })
     }
@@ -170,7 +177,7 @@ class Scatter extends BaseVisual {
     const { labelField } = this.renderAttrs
     const scatters = data.map((item, di) => {
       return item.attrs.map((attr, ci) => {
-        let style = this.style('point')(attr, { ...attr.dataOrigin }, ci)
+        let style = getStyle(this, 'point', [attr], [attr.dataOrigin, ci])
         if (style === false) {
           return
         }
@@ -178,8 +185,8 @@ class Scatter extends BaseVisual {
         let labelAttr = null
 
         if (labelField) {
-          const style = this.style('label')(attr, { ...attr.dataOrigin }, ci)
-          if (style !== false) {
+          const labelStyle = getStyle(this, 'label', [attr], [attr.dataOrigin, ci])
+          if (labelStyle !== false) {
             if (attr.dataOrigin.hasOwnProperty(labelField)) {
               const { strokeColor, ...other } = attr
               const text = attr.dataOrigin[labelField]
@@ -192,12 +199,12 @@ class Scatter extends BaseVisual {
                   fontSize: '12px',
                   zIndex: 10 + di + ci
                 },
-                style
+                labelStyle
               )
             }
           }
         }
-        const hStyle = this.style('point:hover')(attr, attr.dataOrigin, ci) || {}
+        const hStyle = getStyle(this, 'point:hover', [attr], [attr.dataOrigin, ci])||{}
         const stateStyle = attr.state === 'hover' ? hStyle : {}
 
         return (
