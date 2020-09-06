@@ -24,8 +24,10 @@ class Line extends Base {
         smoothRange: item.smoothRange,
         areaFrom: { points: item.areaPoints },
         areaTo: { points: item.areaPoints },
-        from: { points: item.points, lineDash: [1, maxLen] },
-        to: { points: item.points, lineDash: [maxLen, maxLen] }
+        // from: { points: item.points, lineDash: [1, maxLen] },
+        // to: { points: item.points, lineDash: [maxLen, maxLen] }
+        from: { points: item.points },
+        to: { points: item.points }
       }
     })
     return lines
@@ -40,7 +42,7 @@ class Line extends Base {
         from = { points: renderLines[i].to.points }
       }
       if (!renderLines[i] || renderLines[i].state === 'disabled') {
-        from.lineDash = [4, maxLen]
+        // from.lineDash = [4, maxLen]
       }
       return {
         state: item.state,
@@ -51,8 +53,8 @@ class Line extends Base {
         },
         from,
         to: {
-          points: item.points,
-          lineDash: [maxLen, maxLen]
+          points: item.points
+          // lineDash: [maxLen, maxLen]
         }
       }
     })
@@ -132,10 +134,10 @@ class Line extends Base {
         <Group class="lines-group">
           {lines.map((line, ind) => {
             let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind], ind])
-            if (style.lineDash) {
-              line.to.lineDash = style.lineDash
-              line.from.lineDash = style.lineDash
-            }
+            // if (style.lineDash) {
+            //   line.to.lineDash = style.lineDash
+            //   line.from.lineDash = style.lineDash
+            // }
             return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} animation={{ from: line.from, to: line.to }} {...style} />
           })}
         </Group>
