@@ -59,7 +59,7 @@ const axisLeft = new Axis({ orient: 'left' }).style('axis', false).style('scale'
 // 创建图例对象，设置位置以及图标和文本大小
 const legend = new Legend({ align: ['center', 'bottom'] }).style('icon', { borderRadius: 10 }).style('text', { fontSize: 12 })
 // 装载组件
-chart.add([line, tooltip, axisBottom, axisLeft, legend])
+chart.append([line, tooltip, axisBottom, axisLeft, legend])
 // 渲染图表
 ```
 
