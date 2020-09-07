@@ -14,7 +14,7 @@ class Chart extends Base {
     if (!global.qcharts || (global.qcharts && !global.qcharts.h)) {
       global.qcharts = { h }
     }
-    let { container } = attr
+    let { container, contextType = '2d' } = attr
     if (jsType(container) === 'string') {
       container = document.querySelector(container)
     }
@@ -23,7 +23,7 @@ class Chart extends Base {
     this.plugins = []
     this.children = []
     if (isWeiXin()) {
-      const { pixelUnit = 'rpx', size, contextType } = attr
+      const { pixelUnit = 'rpx', size } = attr
       let displayRatio = 1
       if (pixelUnit === 'rpx') {
         const { windowWidth } = wx.getSystemInfoSync()
@@ -37,7 +37,7 @@ class Chart extends Base {
         displayRatio
       })
     } else {
-      this.scene = new Scene({ container, displayRatio: getGlobal().devicePixelRatio })
+      this.scene = new Scene({ container,contextType,displayRatio: getGlobal().devicePixelRatio })
     }
     this.scene.addEventListener('resize', (_) => {
       //舞台变化的时候
