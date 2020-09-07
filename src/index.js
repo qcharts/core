@@ -19,7 +19,7 @@ import Chart from './Chart'
 import theme from './theme/default'
 
 const qcharts = {
-  version: '1.0.19',
+  version: '1.0.20',
   Line,
   Pie,
   Area,
