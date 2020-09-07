@@ -14,7 +14,7 @@ class Chart extends Base {
     if (!global.qcharts || (global.qcharts && !global.qcharts.h)) {
       global.qcharts = { h }
     }
-    let { container, contextType } = attr
+    let { container, contextType = '2d' } = attr
     if (jsType(container) === 'string') {
       container = document.querySelector(container)
     }
