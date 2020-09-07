@@ -131,7 +131,7 @@ class Line extends Base {
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove}>
         <Group class="lines-group">
           {lines.map((line, ind) => {
-            let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind], ind])
+            let style = getStyle(this, 'line', [{ strokeColor: colors[ind], smooth }, styles.line], [this.dataset.rows[ind].data, ind])
             if (style.lineDash) {
               line.to.lineDash = style.lineDash
               line.from.lineDash = style.lineDash
@@ -143,7 +143,7 @@ class Line extends Base {
           {this.type !== 'area'
             ? null
             : lines.map((line, ind) => {
-                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind], ind])
+                let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind].data, ind])
                 return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
         </Group>
@@ -158,8 +158,8 @@ class Line extends Base {
                     from: { pos: line.from.points[j] },
                     to: { pos: p }
                   }
-                  let style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind], ind, j])
-                  let styleHover = getStyle(this, 'point:hover', [style, styles['point:hover']], [this.dataset.rows[ind], ind, j])
+                  let style = getStyle(this, 'point', [{ fillColor: colors[ind] }, styles.point], [this.dataset.rows[ind].data, ind, j])
+                  let styleHover = getStyle(this, 'point:hover', [style, styles['point:hover']], [this.dataset.rows[ind].data, ind, j])
                   if (this.dataset.rows[ind][j].state === 'hover') {
                     deepObjectMerge(style, styleHover)
                   }
