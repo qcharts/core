@@ -3,14 +3,12 @@ import { axis } from '../../utils/axis'
 export default function layout(arr, attrs) {
   let type = this.type
   let lines = []
-  const { stack, splitNumber, clientRect, axisGap } = attrs
+  const { stack, splitNumber, clientRect, axisGap, typeX, typeY, sectionX, sectionY } = attrs
   const { width, height } = clientRect
-  let scales = axis.call(this, { dataSet: arr, stack, splitNumber })
-  let maxVal = Math.max.apply(this, scales)
-  let minVal = Math.min.apply(this, scales)
-  let scaleFY = scaleLinear()
-    .domain([minVal, maxVal])
-    .range([0, height])
+  const { text: textField, value: valueField } = this.dataset.option
+  let scaleFX = getScaleFun(arr, typeX, [0, width], { stack, splitNumber, sectionX, axisGap, field: textField })
+  let scaleFY = getScaleFun(arr, typeY, [0, height], { stack, splitNumber, sectionY, axisGap, field: valueField })
+
   //存储stack数据
   let prevScaleValues = []
   arr.forEach(row => {
@@ -22,18 +20,19 @@ export default function layout(arr, attrs) {
     }
     row.forEach((cell, i) => {
       let val = cell.layoutScaleValue()
+
       if (cell.value !== undefined) {
         //如果为undefined 不渲染
-        let dx = width / (row.length - 1)
-        let offsetX = 0
-        if (axisGap) {
-          dx = width / row.length
-          offsetX = dx / 2
+        let curX
+        if (typeX === 'value') {
+          curX = scaleFX(cell.layoutScaleValue(textField))
+        } else {
+          curX = scaleFX(i)
         }
-        let curPos = [dx * i + offsetX, height - scaleFY(val)]
+        let curPos = [curX, height - scaleFY(val)]
         if (stack && prevScaleValues.length) {
           //如果是堆叠并且前一个row存在，则叠加
-          curPos = [dx * i + offsetX, height - scaleFY(val + prevScaleValues[i])]
+          curPos = [curX, height - scaleFY(val + prevScaleValues[i])]
         }
         line.points.push(curPos)
       }
@@ -77,6 +76,36 @@ export default function layout(arr, attrs) {
     })
   }
   return lines
+}
+function getScaleFun(arr, type, rangePixs, attrs) {
+  let res = null
+  if (type === 'value') {
+    let scales = axis.call(this, { dataSet: arr, ...attrs })
+    let maxVal = Math.max.apply(this, scales)
+    let minVal = Math.min.apply(this, scales)
+    let scaleFun = scaleLinear()
+      .domain([minVal, maxVal])
+      .range(rangePixs)
+    res = scaleFun
+  } else {
+    // 获取最大长度
+    let length = Math.max.apply(
+      this,
+      arr.map(row => row.length)
+    )
+    let width = rangePixs[1]
+    let dx = width / (length - 1)
+    let offsetX = 0
+    let axisGap = attrs.axisGap
+    if (axisGap) {
+      dx = width / length
+      offsetX = dx / 2
+    }
+    res = function(val) {
+      return dx * val + offsetX
+    }
+  }
+  return res
 }
 function transAreaPoint(startPoints, endPoints) {
   let res = {

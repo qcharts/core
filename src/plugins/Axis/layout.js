@@ -78,7 +78,7 @@ export default function layout(arr, attrs) {
       type: 'value'
     }
   }
-  const { stack, splitNumber, clientRect, orient, axisGap, transpose } = attrs
+  const { stack, splitNumber, clientRect, orient, axisGap, transpose, section } = attrs
   if (transpose) {
     ;['top', 'bottom', 'right', 'left'].forEach(str => {
       defaultAttrs[str].type = defaultAttrs[str].type === 'value' ? 'category' : 'value'
@@ -89,7 +89,8 @@ export default function layout(arr, attrs) {
   let axisAttrs = {
     dataSet: arr,
     stack,
-    splitNumber
+    splitNumber,
+    section
   }
   if (targetVisual.constructorName === 'Scatter' && defaultAttrs[attrs.orient].type === 'category') {
     axisAttrs.field = targetVisual.dataset.option.text

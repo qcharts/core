@@ -31,9 +31,9 @@ const updateSectionVal = (section, newSection) => {
   }
 }
 
-export default function layout(dataSet, size, layoutWay, axisGap) {
+export default function layout(dataSet, attrs) {
+  const { size, layoutWay, axisGap, sectionX, sectionY } = attrs
   const [width, height] = size
-
   const { text: textField, value: valueField } = dataSet.option
   const allData = [...dataSet]
 
@@ -53,7 +53,8 @@ export default function layout(dataSet, size, layoutWay, axisGap) {
     const xScales = axis.call(this, {
       dataSet: dataSet.rows,
       stack: false,
-      field: textField
+      field: textField,
+      section: sectionX
       // section: xSection
     })
     xDomain = getDataRange(xScales)
@@ -67,7 +68,8 @@ export default function layout(dataSet, size, layoutWay, axisGap) {
   const yScales = axis.call(this, {
     dataSet: dataSet.rows,
     stack: false,
-    field: valueField
+    field: valueField,
+    section: sectionY
     // section: ySection
   })
   const yDomain = getDataRange(yScales)
