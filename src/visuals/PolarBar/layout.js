@@ -1,4 +1,4 @@
-import { axis } from "../../utils/axis"
+import { axis } from '../../utils/axis'
 
 export default function layout(arr, attrs) {
   // 输入
@@ -15,7 +15,7 @@ export default function layout(arr, attrs) {
   // 输出
   const barData = []
 
-  const bgPillarAttr = { opacity: 0.01, fillColor: "#FF0000" }
+  const bgPillarAttr = { opacity: 0.01, fillColor: '#FF0000' }
 
   // const valueAxis = getAxis(stack, data)
   const valueAxis = axis.call(this, { dataSet: data, stack, splitNumber })
@@ -45,13 +45,10 @@ export default function layout(arr, attrs) {
         //   data[j][i].disabled = false;
         // }
         let barAngle = groupAngle / GROUP_BAR_NUM
-        let startAngle =
-          (groupAngle + groupGap) * i + barAngle * (j - flag) - 90
-        value = data[j][i].layoutScaleValue
+        let startAngle = (groupAngle + groupGap) * i + barAngle * (j - flag) - 90
+        value = data[j][i].layoutScaleValue()
         let barHeight = BAR_HEIGHT_FACTOR * value
-        let innerRadius =
-          BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) +
-          barInnerRadius * tableSize * 0.5
+        let innerRadius = BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) + barInnerRadius * tableSize * 0.5
         //默认中心坐标偏移量0
         let offsetPos = [0, 0]
         let rect = {
@@ -65,19 +62,16 @@ export default function layout(arr, attrs) {
           data: data[j][i].data,
           id: i * lenj + j,
           offsetPos: offsetPos,
-          opacity: value === 0 ? 0 : 1,
+          opacity: value === 0 ? 0 : 1
         }
-        if (rect.state === "hover") {
+        if (rect.state === 'hover') {
           let curAngle = ((rect.startAngle + rect.endAngle) / 2) % 360
           rect.bisectorRadian = transRadius(curAngle)
           //角平分,角度转弧度,默认是顺时针，角度为相反
-          rect.offsetPos = [
-            activeOffset * Math.cos(rect.bisectorRadian),
-            activeOffset * Math.sin(rect.bisectorRadian),
-          ]
+          rect.offsetPos = [activeOffset * Math.cos(rect.bisectorRadian), activeOffset * Math.sin(rect.bisectorRadian)]
           //选中状态
         }
-        if (rect.state === "disabled") {
+        if (rect.state === 'disabled') {
           rect.endAngle = rect.startAngle
           rect.radius = 0
           rect.opacity = 0
@@ -110,16 +104,12 @@ export default function layout(arr, attrs) {
         value = data[j][i].value
         let barHeight = BAR_HEIGHT_FACTOR * value
 
-        let innerRadius =
-          value < 0
-            ? BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) - heightSumDown
-            : BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) + heightSumUp
+        let innerRadius = value < 0 ? BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) - heightSumDown : BAR_MAX_HEIGHT * (1 - POSITIVE_RATIO) + heightSumUp
         innerRadius = innerRadius + barInnerRadius * tableSize * 0.5
         let offsetPos = [0, 0]
         let rect = {
           innerRadius: innerRadius,
-          outerRadius:
-            value === 0 ? innerRadius + 1 : innerRadius + barHeight - stackGap,
+          outerRadius: value === 0 ? innerRadius + 1 : innerRadius + barHeight - stackGap,
           startAngle: startAngle,
           endAngle: startAngle + groupAngle,
           value: data[j][i].value,
@@ -127,21 +117,19 @@ export default function layout(arr, attrs) {
           state: data[j][i].state,
           data: data[j][i].data,
           offsetPos: offsetPos,
-          opacity: value === 0 ? 0 : 1,
+          opacity: value === 0 ? 0 : 1
         }
 
-        if (rect.state === "hover") {
-          rect.strokeColor = "#F00"
+        if (rect.state === 'hover') {
+          rect.strokeColor = '#F00'
         } else {
           delete rect.strokeColor
         }
-        if (rect.state === "disabled") {
+        if (rect.state === 'disabled') {
           rect.opacity = 0
         } else {
           // rect.opacity = 1
-          value < 0
-            ? (heightSumDown = heightSumDown - barHeight)
-            : (heightSumUp = heightSumUp + barHeight)
+          value < 0 ? (heightSumDown = heightSumDown - barHeight) : (heightSumUp = heightSumUp + barHeight)
           gpData.rects.push(rect)
         }
         barData.push(rect)
@@ -155,7 +143,7 @@ export default function layout(arr, attrs) {
 function computerLegend(data) {
   let flag = 0
   for (let i = 0, len = data.length; i < len; i++) {
-    if (data[i][0].state !== "disabled") {
+    if (data[i][0].state !== 'disabled') {
       flag++
     }
   }
@@ -171,15 +159,15 @@ function attachPadAngleOfArr(arr, padAngle = 0) {
   // 设置 padAngle
   const maxPadAngle = Math.min.apply(
     null,
-    arr.filter((d) => !d.disabled).map((a) => a.endAngle - a.startAngle)
+    arr.filter(d => !d.disabled).map(a => a.endAngle - a.startAngle)
   )
 
   if (padAngle >= 0) {
     padAngle = padAngle > maxPadAngle ? maxPadAngle / 2 : padAngle
 
     arr
-      .filter((d) => !d.disabled)
-      .forEach((a) => {
+      .filter(d => !d.disabled)
+      .forEach(a => {
         if (a.endAngle - a.startAngle > padAngle * 2) {
           a.padAngle = padAngle
           a.startAngle += padAngle

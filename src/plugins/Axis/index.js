@@ -90,7 +90,7 @@ class Axis extends Base {
               from: { points: fromPoints },
               to: { points: grid.points }
             }
-            let style = getStyle(this, 'grid', styles.grid, [{ label: axis.labels[ind].text }, ind])
+            let style = getStyle(this, 'grid', styles.grid, [{ label: axis.labels[ind] && axis.labels[ind].text }, ind])
             if (orient === 'left' || orient === 'right') {
               if ((ind === 0 && arrOrient.includes('bottom')) || (ind === axis.grids.length - 1 && arrOrient.includes('top'))) {
                 return <Node />

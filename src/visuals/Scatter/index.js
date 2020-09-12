@@ -199,7 +199,7 @@ class Scatter extends BaseVisual {
         }
         const hStyle = this.style('point:hover')(attr, attr.dataOrigin, ci) || {}
         const stateStyle = attr.state === 'hover' ? hStyle : {}
-
+        console.log(style, stateStyle)
         return (
           <Group onMousemove={this.onMouseenter} onMouseleave={this.onMouseleave}>
             <Arc {...attr} {...style} {...stateStyle} zIndex={9 + di + ci} />
