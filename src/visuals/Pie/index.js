@@ -2,8 +2,10 @@ import Base from '../../base/BaseVisual'
 import { Group, Node, Ring, Polyline, Label } from 'spritejs'
 import filterClone from 'filter-clone'
 import layout from './layout'
+import { layoutLabel } from './layout'
 import { computeLinePos } from './layout'
 import { getStyle } from '../../utils/getStyle'
+import { debounce } from '@qcharts/utils'
 class Pie extends Base {
   constructor(attrs) {
     super(attrs)
@@ -24,6 +26,7 @@ class Pie extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
+    console.log(rings)
     let { center } = this.renderAttrs
     let arr = rings.map((item, ind) => {
       if (ind === 0) {
@@ -44,6 +47,7 @@ class Pie extends Base {
   beforeUpdate() {
     //更新前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
+    console.log(rings)
     let { center } = this.renderAttrs
     let oldRings = this.renderRings
     let arr = rings.map((item, ind) => {
@@ -65,10 +69,10 @@ class Pie extends Base {
     return arr
   }
   computeLine(arr) {
-    let { radiusPx } = this.renderAttrs
+    let { radiusPx, lineLength } = this.renderAttrs
     arr.forEach(item => {
-      let { points: fromPoints, labelAnchor: fromAnchor, labelPos: fromPos } = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, 15)
-      let { points: toPoints, labelAnchor: toAnchor, labelPos: toPos } = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, 15)
+      let { points: fromPoints, labelAnchor: fromAnchor, labelPos: fromPos } = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, lineLength)
+      let { points: toPoints, labelAnchor: toAnchor, labelPos: toPos } = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, lineLength)
       item.line = {
         from: {
           points: fromPoints
@@ -109,7 +113,7 @@ class Pie extends Base {
       innerRadius: 0,
       startAngle: 0,
       endAngle: 360,
-      lineWidth: 1,
+      lineLength: 20,
       //选中偏移量基数
       activeOffset: 10,
       formatter: function(str, data) {
@@ -148,8 +152,25 @@ class Pie extends Base {
     let renderAttrs = this.renderAttrs
     return this.dataset[renderAttrs.layoutBy]
   }
+  labelRendered = debounce(() => {
+    let arr = this.getLabelsPos()
+    arr.forEach((item, ind) => {
+      this.$refs['label-group'].children[ind].transition(0.3).attr('pos', item.pos)
+    })
+    //console.log(this.renderRings.filter(ring => ring.state !== 'disabled'))
+  }, 100)
+  getLabelsPos() {
+    let labels = []
+    this.$refs['label-group'].children.forEach(node => {
+      if (node instanceof Label) {
+        let pos = node.attr('pos')
+        let size = node.offsetSize
+        labels.push({ pos, size })
+      }
+    })
+    return layoutLabel(labels)
+  }
   render(rings) {
-    //console.log(rings)
     let { clientRect, innerRadiusPx, radiusPx, formatter } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
@@ -157,7 +178,7 @@ class Pie extends Base {
     let colors = this.theme.colors
     this.renderRings = rings
     return (
-      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]}>
+      <Group zIndex={1} onAfterrender={this.labelRendered} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
         <Group class="rings-group" onMouseleave={this.mouseleave}>
           {rings.map((ring, ind) => {
             let style = getStyle(this, 'sector', [{ strokeColor: colors[ind], fillColor: colors[ind], innerRadius: innerRadiusPx, outerRadius: radiusPx, _index: ind }, styles.sector], [this.dataset.rows[ind], ind])
@@ -174,7 +195,7 @@ class Pie extends Base {
             return hide || style === false ? <Node /> : <Polyline {...style} animation={{ from: ring.line.from, to: ring.line.to }} />
           })}
         </Group>
-        <Group class="label-group">
+        <Group class="label-group" ref="label-group">
           {rings.map((ring, ind) => {
             let name = formatter(this.dataset.rows[ind].name, this.dataset.rows[ind].data)
             let style = getStyle(this, 'guideText', [{ fillColor: '#666', fontSize: 12 }, styles.guideText], [this.dataset.rows[ind], ind])
