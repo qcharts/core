@@ -3,11 +3,11 @@ import { axis } from '../../utils/axis'
 export default function layout(arr, attrs) {
   let type = this.type
   let lines = []
-  const { stack, splitNumber, clientRect, axisGap, typeX, typeY, sectionX, sectionY } = attrs
+  const { stack, splitNumber, clientRect, axisGap, layoutX, layoutY, sectionX, sectionY } = attrs
   const { width, height } = clientRect
   const { text: textField, value: valueField } = this.dataset.option
-  let scaleFX = getScaleFun(arr, typeX, [0, width], { stack, splitNumber, sectionX, axisGap, field: textField })
-  let scaleFY = getScaleFun(arr, typeY, [0, height], { stack, splitNumber, sectionY, axisGap, field: valueField })
+  let scaleFX = getScaleFun(arr, layoutX, [0, width], { stack, splitNumber, sectionX, axisGap, field: textField })
+  let scaleFY = getScaleFun(arr, layoutY, [0, height], { stack, splitNumber, sectionY, axisGap, field: valueField })
 
   //存储stack数据
   let prevScaleValues = []
@@ -24,7 +24,7 @@ export default function layout(arr, attrs) {
       if (cell.value !== undefined) {
         //如果为undefined 不渲染
         let curX
-        if (typeX === 'value') {
+        if (layoutX === 'value') {
           curX = scaleFX(cell.layoutScaleValue(textField))
         } else {
           curX = scaleFX(i)

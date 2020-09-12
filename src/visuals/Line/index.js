@@ -76,8 +76,8 @@ class Line extends Base {
     return {
       guidePoints: [],
       layer: 'line',
-      typeX: 'category',
-      typeY: 'value'
+      layoutX: 'category',
+      layoutY: 'value'
     }
   }
   defaultStyles() {
