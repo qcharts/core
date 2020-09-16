@@ -71,10 +71,15 @@ export function layoutLabel(arr) {
         if (currentDis < targetDis && Math.abs(nextNode.pos[0] - curNode.pos[0]) < disX && Math.abs(nextNode.pos[1] - curNode.pos[1]) < disY) {
           //如果距离大于对角线长度
           let moveDis = ((targetDis - currentDis) / 2) * 0.5
-          let curPoint = getPointByDistance(curNode.pos, nextNode.pos, -moveDis)
-          let nextPoint = getPointByDistance(nextNode.pos, curNode.pos, -moveDis)
-          curNode.pos = curPoint
-          nextNode.pos = nextPoint
+          if (curNode.pos[0] === nextNode.pos[0] && curNode.pos[1] === nextNode.pos[1]) {
+            nextNode.pos[0] += 1
+            nextNode.pos[1] += 1
+          } else {
+            let curPoint = getPointByDistance(curNode.pos, nextNode.pos, -moveDis)
+            let nextPoint = getPointByDistance(nextNode.pos, curNode.pos, -moveDis)
+            curNode.pos = curPoint
+            nextNode.pos = nextPoint
+          }
           needTick = true
         }
       }

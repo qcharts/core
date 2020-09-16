@@ -154,8 +154,10 @@ class Pie extends Base {
   }
   labelRendered = debounce(() => {
     let arr = this.getLabelsPos()
+    console.log(arr)
     arr.forEach((item, ind) => {
-      this.$refs['label-group'].children[ind].transition(0.3).attr('pos', item.pos)
+      let children = this.$refs['label-group'].children.filter(node => node instanceof Label)
+      children[ind].transition(0.3).attr('pos', item.pos)
     })
     //console.log(this.renderRings.filter(ring => ring.state !== 'disabled'))
   }, 100)
@@ -165,6 +167,7 @@ class Pie extends Base {
       if (node instanceof Label) {
         let pos = node.attr('pos')
         let size = node.offsetSize
+        console.log(pos, size)
         labels.push({ pos, size })
       }
     })
