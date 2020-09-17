@@ -26,7 +26,6 @@ class Pie extends Base {
   beforeRender() {
     //渲染前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
-    console.log(rings)
     let { center } = this.renderAttrs
     let arr = rings.map((item, ind) => {
       if (ind === 0) {
@@ -47,7 +46,6 @@ class Pie extends Base {
   beforeUpdate() {
     //更新前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
-    console.log(rings)
     let { center } = this.renderAttrs
     let oldRings = this.renderRings
     let arr = rings.map((item, ind) => {
@@ -66,13 +64,19 @@ class Pie extends Base {
       }
     })
     this.computeLine(arr)
+    // let arrLabelPos = this.getLabelsPos(arr)
+    // arr.filter(item=>!item.disabled).forEach((obj,ind)=>{
+    //   console.log
+    // })
+    // console.log(arr)
+    // console.log('new', this.getLabelsPos(arr))
     return arr
   }
   computeLine(arr) {
     let { radiusPx, lineLength } = this.renderAttrs
     arr.forEach(item => {
-      let { points: fromPoints, labelAnchor: fromAnchor, labelPos: fromPos } = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, lineLength)
-      let { points: toPoints, labelAnchor: toAnchor, labelPos: toPos } = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, lineLength)
+      let { points: fromPoints, labelAnchor: fromAnchor, labelPos: fromPos, disabled: fromDisabled } = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, lineLength)
+      let { points: toPoints, labelAnchor: toAnchor, labelPos: toPos, disabled: toDisabled } = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, lineLength)
       item.line = {
         from: {
           points: fromPoints
@@ -91,6 +95,7 @@ class Pie extends Base {
           anchor: toAnchor
         }
       }
+      item.disabled = toDisabled
     })
     //计算guideline位置
   }
@@ -154,21 +159,22 @@ class Pie extends Base {
   }
   labelRendered = debounce(() => {
     let arr = this.getLabelsPos()
-    console.log(arr)
     arr.forEach((item, ind) => {
       let children = this.$refs['label-group'].children.filter(node => node instanceof Label)
       children[ind].transition(0.3).attr('pos', item.pos)
     })
-    //console.log(this.renderRings.filter(ring => ring.state !== 'disabled'))
   }, 100)
-  getLabelsPos() {
+  getLabelsPos(arr) {
     let labels = []
-    this.$refs['label-group'].children.forEach(node => {
-      if (node instanceof Label) {
-        let pos = node.attr('pos')
-        let size = node.offsetSize
-        console.log(pos, size)
-        labels.push({ pos, size })
+    let children = this.$refs['label-group'].children
+    ;(arr || this.renderRings).forEach((obj, ind) => {
+      if (obj.disabled !== true) {
+        let node = children[ind]
+        if (node instanceof Label) {
+          let pos = node.attr('pos')
+          let size = node.offsetSize
+          labels.push({ pos, size })
+        }
       }
     })
     return layoutLabel(labels)
