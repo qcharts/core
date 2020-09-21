@@ -43,7 +43,7 @@ class Pie extends Base {
     this.computeLine(arr)
     return arr
   }
-  beforeUpdate() {
+  beforeUpdate(attrs) {
     //更新前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
     let { center } = this.renderAttrs
@@ -64,12 +64,13 @@ class Pie extends Base {
       }
     })
     this.computeLine(arr)
-    // let arrLabelPos = this.getLabelsPos(arr)
-    // arr.filter(item=>!item.disabled).forEach((obj,ind)=>{
-    //   console.log
-    // })
-    // console.log(arr)
-    // console.log('new', this.getLabelsPos(arr))
+    let arrLabelPos = this.getLabelsPos(arr)
+    let arrObj = arr.filter(item => !item.disabled)
+    if (arrLabelPos.length === arrObj.length) {
+      arrObj.forEach((item, ind) => {
+        item.label.to.pos = arrLabelPos[ind].pos
+      })
+    }
     return arr
   }
   computeLine(arr) {
@@ -107,9 +108,7 @@ class Pie extends Base {
     let rings = layout.call(this, renderData, renderAttrs)
     return { rings }
   }
-  rendered() {
-    //console.log(this.$refs['wrap'])
-  }
+  rendered() {}
   defaultAttrs() {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
@@ -159,24 +158,35 @@ class Pie extends Base {
   }
   labelRendered = debounce(() => {
     let arr = this.getLabelsPos()
+    let rings = this.renderRings.filter(item => !item.disabled)
     arr.forEach((item, ind) => {
       let children = this.$refs['label-group'].children.filter(node => node instanceof Label)
       children[ind].transition(0.3).attr('pos', item.pos)
+      rings[ind].label.from.pos = item.pos
+      rings[ind].label.to.pos = item.pos
     })
   }, 100)
   getLabelsPos(arr) {
     let labels = []
     let children = this.$refs['label-group'].children
-    ;(arr || this.renderRings).forEach((obj, ind) => {
-      if (obj.disabled !== true) {
-        let node = children[ind]
-        if (node instanceof Label) {
-          let pos = node.attr('pos')
-          let size = node.offsetSize
-          labels.push({ pos, size })
+    if (arr) {
+      arr.forEach((item, ind) => {
+        if (!item.disabled) {
+          labels.push({ pos: item.label.to.pos, size: children[ind].offsetSize })
         }
-      }
-    })
+      })
+    } else {
+      this.renderRings.forEach((obj, ind) => {
+        if (obj.disabled !== true) {
+          let node = children[ind]
+          if (node instanceof Label) {
+            let pos = node.attr('pos')
+            let size = node.offsetSize
+            labels.push({ pos, size })
+          }
+        }
+      })
+    }
     return layoutLabel(labels)
   }
   render(rings) {

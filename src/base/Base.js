@@ -96,7 +96,7 @@ class Base extends Node {
     }
     if (store.dataset && store.__isCreated__) {
       store.dataset.on('change', _ => {
-        this.__update({ type: 'state' })
+        this.__update({ type: 'state', detail: _ })
       })
       //如果以前存在，则更新
       this.__update({ type: 'source' })
@@ -115,7 +115,7 @@ class Base extends Node {
     this.rendered()
     store.__isCreated__ = true
     this.dataset.on('change', _ => {
-      this.__update({ type: 'state' })
+      this.__update({ type: 'state', detail: _ })
     })
   }
   beforeRender() {
