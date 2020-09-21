@@ -14,7 +14,7 @@ class Chart extends Base {
     if (!global.qcharts || (global.qcharts && !global.qcharts.h)) {
       global.qcharts = { h }
     }
-    let { container, contextType = '' } = attr
+    let { container, contextType = '', displayRatio } = attr
     if (jsType(container) === 'string') {
       container = document.querySelector(container)
     }
@@ -37,7 +37,7 @@ class Chart extends Base {
         displayRatio
       })
     } else {
-      this.scene = new Scene({ container, contextType, displayRatio: getGlobal().devicePixelRatio })
+      this.scene = new Scene({ container, contextType, displayRatio: displayRatio || getGlobal().devicePixelRatio })
     }
     this.scene.addEventListener('resize', _ => {
       //舞台变化的时候
