@@ -61,9 +61,15 @@ export function layoutLabel(arr) {
     let needTick = false
     for (let i = 0; i < arr.length; i++) {
       let curNode = arr[i]
+      if (!curNode.size) {
+        continue
+      }
       let curLength = Math.sqrt(Math.pow(curNode.size[0] / 2, 2) + Math.pow(curNode.size[1] / 2, 2))
       for (let j = i + 1; j < arr.length; j++) {
         let nextNode = arr[j]
+        if (!nextNode.size) {
+          continue
+        }
         let nextLength = Math.sqrt(Math.pow(nextNode.size[0] / 2, 2) + Math.pow(nextNode.size[1] / 2, 2))
         let targetDis = curLength + nextLength
         let currentDis = getDis(curNode, nextNode)

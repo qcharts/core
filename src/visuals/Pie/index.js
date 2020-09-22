@@ -66,9 +66,14 @@ class Pie extends Base {
     this.computeLine(arr)
     let arrLabelPos = this.getLabelsPos(arr)
     let arrObj = arr.filter(item => !item.disabled)
+    let oldArrLabels = oldRings.filter(ring => !ring.disabled)
     if (arrLabelPos.length === arrObj.length) {
       arrObj.forEach((item, ind) => {
         item.label.to.pos = arrLabelPos[ind].pos
+        item.label.from.pos = arrLabelPos[ind].pos
+        if (oldArrLabels[ind]) {
+          item.label.from.pos = oldArrLabels[ind].label.to.pos
+        }
       })
     }
     return arr
