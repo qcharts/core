@@ -61,7 +61,16 @@ export default [
     title: '散点图',
     path: 'scatter-safe'
   },
-
+  {
+    img: 'https://p4.ssl.qhimg.com/t011fd6cb1216213c93.png',
+    title: '散点折线图',
+    path: 'scatter-line'
+  },
+  {
+    img: 'https://p5.ssl.qhimg.com/t0157877d6e2d30f7b9.png',
+    title: '简洁雷达图',
+    path: 'radar-easy'
+  },
   {
     img: 'http://p2.qhimg.com/t01670ed67013eafe8b.png',
     title: '间距堆叠条形图',

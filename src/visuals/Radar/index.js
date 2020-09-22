@@ -1,4 +1,4 @@
-import { Group, Polyline, Arc, Label } from 'spritejs'
+import { Group, Polyline, Arc, Label, Node } from 'spritejs'
 import { deepObjectMerge, throttle, jsType } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 import layout from './layout'
@@ -176,13 +176,10 @@ class Radar extends BaseVisual {
         ...common
       }
       const { style } = this.getStyle('scale', attr, { text, index }, i)
-      if (style === false) {
-        return
-      }
+      const elIndex = index * attrs.splitNumber + i
+      const preEl = this.scaleEl[elIndex]
       if (attr.display !== 'none') {
         let animation = {}
-        const elIndex = index * attrs.splitNumber + i
-        const preEl = this.scaleEl[elIndex]
         if (preEl) {
           if (preEl.text !== text) {
             animation = {
@@ -201,7 +198,7 @@ class Radar extends BaseVisual {
           }
         }
         this.scaleEl[i] = { text: Number(text.toFixed(0)) }
-        labels.push(<Label {...attr} {...style} animation={animation} />)
+        labels.push(style === false ? <Node /> : <Label {...attr} {...style} animation={animation} />)
       }
     }
     return labels
