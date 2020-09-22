@@ -2,8 +2,10 @@ import Base from '../../base/BaseVisual'
 import { Group, Node, Ring, Polyline, Label } from 'spritejs'
 import filterClone from 'filter-clone'
 import layout from './layout'
+import { layoutLabel } from './layout'
 import { computeLinePos } from './layout'
 import { getStyle } from '../../utils/getStyle'
+import { debounce } from '@qcharts/utils'
 class Pie extends Base {
   constructor(attrs) {
     super(attrs)
@@ -41,7 +43,7 @@ class Pie extends Base {
     this.computeLine(arr)
     return arr
   }
-  beforeUpdate() {
+  beforeUpdate(attrs) {
     //更新前的处理函数，返回lines,继承base
     let { rings } = this.getRenderData()
     let { center } = this.renderAttrs
@@ -62,13 +64,25 @@ class Pie extends Base {
       }
     })
     this.computeLine(arr)
+    let arrLabelPos = this.getLabelsPos(arr)
+    let arrObj = arr.filter(item => !item.disabled)
+    let oldArrLabels = oldRings.filter(ring => !ring.disabled)
+    if (arrLabelPos.length === arrObj.length) {
+      arrObj.forEach((item, ind) => {
+        item.label.to.pos = arrLabelPos[ind].pos
+        item.label.from.pos = arrLabelPos[ind].pos
+        if (oldArrLabels[ind]) {
+          item.label.from.pos = oldArrLabels[ind].label.to.pos
+        }
+      })
+    }
     return arr
   }
   computeLine(arr) {
-    let { radiusPx } = this.renderAttrs
+    let { radiusPx, lineLength } = this.renderAttrs
     arr.forEach(item => {
-      let { points: fromPoints, labelAnchor: fromAnchor, labelPos: fromPos } = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, 15)
-      let { points: toPoints, labelAnchor: toAnchor, labelPos: toPos } = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, 15)
+      let { points: fromPoints, labelAnchor: fromAnchor, labelPos: fromPos, disabled: fromDisabled } = computeLinePos(item.from.startAngle, item.from.endAngle, item.from.pos, radiusPx + 1, lineLength)
+      let { points: toPoints, labelAnchor: toAnchor, labelPos: toPos, disabled: toDisabled } = computeLinePos(item.to.startAngle, item.to.endAngle, item.to.pos, radiusPx + 1, lineLength)
       item.line = {
         from: {
           points: fromPoints
@@ -87,6 +101,7 @@ class Pie extends Base {
           anchor: toAnchor
         }
       }
+      item.disabled = toDisabled
     })
     //计算guideline位置
   }
@@ -98,9 +113,7 @@ class Pie extends Base {
     let rings = layout.call(this, renderData, renderAttrs)
     return { rings }
   }
-  rendered() {
-    //console.log(this.$refs['wrap'])
-  }
+  rendered() {}
   defaultAttrs() {
     // 默认的属性,继承base，正常情况可以删除，建议到theme里面设置默认样式
     return {
@@ -109,7 +122,7 @@ class Pie extends Base {
       innerRadius: 0,
       startAngle: 0,
       endAngle: 360,
-      lineWidth: 1,
+      lineLength: 20,
       //选中偏移量基数
       activeOffset: 10,
       formatter: function(str, data) {
@@ -148,8 +161,40 @@ class Pie extends Base {
     let renderAttrs = this.renderAttrs
     return this.dataset[renderAttrs.layoutBy]
   }
+  labelRendered = debounce(() => {
+    let arr = this.getLabelsPos()
+    let rings = this.renderRings.filter(item => !item.disabled)
+    arr.forEach((item, ind) => {
+      let children = this.$refs['label-group'].children.filter(node => node instanceof Label)
+      children[ind].transition(0.3).attr('pos', item.pos)
+      rings[ind].label.from.pos = item.pos
+      rings[ind].label.to.pos = item.pos
+    })
+  }, 100)
+  getLabelsPos(arr) {
+    let labels = []
+    let children = this.$refs['label-group'].children
+    if (arr) {
+      arr.forEach((item, ind) => {
+        if (!item.disabled) {
+          labels.push({ pos: item.label.to.pos, size: children[ind].offsetSize })
+        }
+      })
+    } else {
+      this.renderRings.forEach((obj, ind) => {
+        if (obj.disabled !== true) {
+          let node = children[ind]
+          if (node instanceof Label) {
+            let pos = node.attr('pos')
+            let size = node.offsetSize
+            labels.push({ pos, size })
+          }
+        }
+      })
+    }
+    return layoutLabel(labels)
+  }
   render(rings) {
-    //console.log(rings)
     let { clientRect, innerRadiusPx, radiusPx, formatter } = this.renderAttrs
     //渲染的样式，合并了theme中的styles与组件上的defaultStyles
     let styles = this.renderStyles
@@ -157,7 +202,7 @@ class Pie extends Base {
     let colors = this.theme.colors
     this.renderRings = rings
     return (
-      <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]}>
+      <Group zIndex={1} onAfterrender={this.labelRendered} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]}>
         <Group class="rings-group" onMouseleave={this.mouseleave}>
           {rings.map((ring, ind) => {
             let style = getStyle(this, 'sector', [{ strokeColor: colors[ind], fillColor: colors[ind], innerRadius: innerRadiusPx, outerRadius: radiusPx, _index: ind }, styles.sector], [this.dataset.rows[ind], ind])
@@ -174,7 +219,7 @@ class Pie extends Base {
             return hide || style === false ? <Node /> : <Polyline {...style} animation={{ from: ring.line.from, to: ring.line.to }} />
           })}
         </Group>
-        <Group class="label-group">
+        <Group class="label-group" ref="label-group">
           {rings.map((ring, ind) => {
             let name = formatter(this.dataset.rows[ind].name, this.dataset.rows[ind].data)
             let style = getStyle(this, 'guideText', [{ fillColor: '#666', fontSize: 12 }, styles.guideText], [this.dataset.rows[ind], ind])
