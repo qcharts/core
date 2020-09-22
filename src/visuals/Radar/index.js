@@ -56,14 +56,7 @@ class Radar extends BaseVisual {
     const { len, splitNumber, startAngle, labelOffset } = this.renderAttrs
     const colors = this.theme.colors
 
-    const { sectionAttrs, axisAttrs, gridAttrs } = layout(
-      [...dataSet.rows],
-      len,
-      splitNumber,
-      startAngle,
-      labelOffset,
-      colors
-    )
+    const { sectionAttrs, axisAttrs, gridAttrs } = layout([...dataSet.rows], len, splitNumber, startAngle, labelOffset, colors)
 
     return { sectionAttrs, axisAttrs, gridAttrs }
   }
@@ -111,8 +104,8 @@ class Radar extends BaseVisual {
 
   getStyle(type, attr, data, index) {
     return {
-      style: this.style(type)(attr, data, index) || {},
-      hoverStyle: this.style(`${type}:hover`)(attr, data, index) || {}
+      style: this.style(type)(attr, data, index),
+      hoverStyle: this.style(`${type}:hover`)(attr, data, index)
     }
   }
 
