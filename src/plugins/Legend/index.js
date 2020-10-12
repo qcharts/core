@@ -271,7 +271,7 @@ class Legend extends Base {
         this.lineCounter++
         iconPos = [iconPos[0] + legendsSize[this.lineCounter - 1][0], padding]
         maxTextWidth = 0 // 换行后重置最宽legend
-        legendsSize.push([0, padding])
+        legendsSize.push([0, padding + (textRect.height - iconSize[1]) / 2])
       } else if (
         !this.isVertical &&
         iconPos[0] + iconSize[0] + textRect.width + outGap > canvasWidth
@@ -315,6 +315,7 @@ class Legend extends Base {
         },
       }
     })
+    console.log(this.arrLayout)
     this.state.groupSize = this.isVertical
       ? [
           legendsSize.reduce((i, j) => {
