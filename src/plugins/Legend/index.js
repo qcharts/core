@@ -315,7 +315,6 @@ class Legend extends Base {
         },
       }
     })
-    console.log(this.arrLayout)
     this.state.groupSize = this.isVertical
       ? [
           legendsSize.reduce((i, j) => {
