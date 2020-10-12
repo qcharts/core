@@ -30,15 +30,14 @@ class Legend extends Base {
       layer: "legend",
       orient: "horizontal", // 布局方式， vertical | horizontal
       align: ["center", "bottom"], // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
-      formatter: (d) => d.value || d,
-      iconSize: [12, 12],
-      textSize: [40, 12],
-      scroll: true,
-      outGap: 10,
+      iconSize: [12, 12], // 图标默认大小
+      textSize: [40, 12], // 文字默认大小
+      scroll: true, // 滚动方式，已废弃
+      outGap: 10, // 两个legend之间的距离
       innerGap: 4,
-      lineGap: 5,
+      lineGap: 5, //换行后两行legend之间距离
       formatter: (d) => d.text || d,
-      padding: 2,
+      padding: 2, // legend与canvas整体之间的padding
     }
   }
   get pos() {
