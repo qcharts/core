@@ -35,7 +35,7 @@ class Legend extends Base {
       scroll: true, // 滚动方式，已废弃
       outGap: 10, // 两个legend之间的距离
       innerGap: 4,
-      lineGap: 5, //换行后两行legend之间距离
+      lineGap: 15, //换行后两行legend之间距离
       formatter: (d) => d.text || d,
       padding: 2, // legend与canvas整体之间的padding
     }
@@ -248,6 +248,7 @@ class Legend extends Base {
       let textRect = textEl.getBoundingClientRect()
       let heightSize =
         iconSize[1] > textRect.height ? iconSize[1] : textRect.height
+
       // 垂直布局下，已有的列数的width和
       let lineWidth =
         legendsSize.reduce((i, j) => {
@@ -256,25 +257,24 @@ class Legend extends Base {
 
       // 单个legend的左上角坐标
       let iconPos = this.isVertical
-        ? [
-            lineWidth,
-            legendsSize[this.lineCounter][1] +
-              (textRect.height - iconSize[1]) / 2,
-          ]
+        ? [lineWidth, legendsSize[this.lineCounter][1]]
         : [
             legendsSize[this.lineCounter][0],
-            (textRect.height - iconSize[1]) / 2 +
-              this.lineCounter * (heightSize + lineGap),
+            this.lineCounter * (heightSize + lineGap),
           ]
       // 超过单行长度后换行
-      if (this.isVertical && iconPos[1] + textRect.height > canvasHeight) {
+      if (
+        this.isVertical &&
+        iconPos[1] + textRect.height > canvasHeight - 2 * padding
+      ) {
         this.lineCounter++
         iconPos = [iconPos[0] + legendsSize[this.lineCounter - 1][0], padding]
         maxTextWidth = 0 // 换行后重置最宽legend
-        legendsSize.push([0, padding + (textRect.height - iconSize[1]) / 2])
+        legendsSize.push([0, padding])
       } else if (
         !this.isVertical &&
-        iconPos[0] + iconSize[0] + textRect.width + outGap > canvasWidth
+        iconPos[0] + iconSize[0] + textRect.width + outGap >
+          canvasWidth - 2 * padding
       ) {
         this.lineCounter++
         iconPos = [padding, this.lineCounter * (heightSize + lineGap)]
@@ -283,7 +283,8 @@ class Legend extends Base {
       let iconAttrs = {
         bgcolor: colors[index],
         size: iconSize,
-        pos: [0, 0],
+        pos: [0, heightSize / 2],
+        anchor: [0, 0.5],
       }
       if (this.dataset[this.renderAttrs.layoutBy][index].state === "disabled") {
         iconAttrs.bgcolor = "#ccc"
@@ -291,8 +292,11 @@ class Legend extends Base {
       }
       let textAttrs = {
         ...item.textAttrs,
-        pos: this.isVertical ? [iconSize[0], 0] : [iconSize[0], 0],
+        pos: this.isVertical
+          ? [iconSize[0], heightSize / 2]
+          : [iconSize[0], heightSize / 2],
         text: item.textAttrs.text,
+        anchor: [0, 0.5],
       }
       // 单个legend的宽高
       let size = [iconSize[0] + textRect.width, heightSize]
@@ -315,6 +319,7 @@ class Legend extends Base {
         },
       }
     })
+    // console.log(this.arrLayout)
     this.state.groupSize = this.isVertical
       ? [
           legendsSize.reduce((i, j) => {
@@ -323,7 +328,9 @@ class Legend extends Base {
           this.lineCounter === 0 ? legendsSize[0][1] : canvasHeight,
         ]
       : [
-          this.lineCounter === 0 ? legendsSize[0][0] : canvasWidth,
+          this.lineCounter === 0
+            ? legendsSize[0][0]
+            : canvasWidth - 2 * padding,
           (this.lineCounter + 1) * legendsSize[0][1],
         ]
   }
