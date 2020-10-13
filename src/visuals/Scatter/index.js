@@ -31,8 +31,8 @@ class Scatter extends BaseVisual {
   processData() {
     const dataSet = this.dataset
     const { layoutWay, clientRect, axisGap } = this.renderAttrs
-    const { data, layoutWay: newLayoutWay } = layout.call(this, dataSet, { size: [clientRect.width, clientRect.height], layoutWay, axisGap })
-    deepObjectMerge(this.renderAttrs.layoutWay || {}, newLayoutWay)
+    const { data } = layout.call(this, dataSet, { size: [clientRect.width, clientRect.height], layoutWay, axisGap })
+    // deepObjectMerge(this.renderAttrs.layoutWay || {}, newLayoutWay)
 
     data.forEach((item, i) => {
       const color = this.theme.colors[i]

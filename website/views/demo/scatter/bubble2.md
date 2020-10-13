@@ -123,11 +123,7 @@ chart.source(data, {
 })
 const scatter = new Scatter({
   areaField: 'z',
-  labelField: 'name',
-  layoutWay: {
-    x: { min: 60, max: 96 },
-    y: { min: 0, max: 165 }
-  }
+  labelField: 'name'
 })
 
 const axisBottom = new Axis()
@@ -135,7 +131,7 @@ const axisBottom = new Axis()
 const axisLeft = new Axis({ orient: 'left' })
 
 const tooltip = new Tooltip({
-  formatter: (data) => {
+  formatter: data => {
     return `${data.name}: ${data.y}`
   }
 })
