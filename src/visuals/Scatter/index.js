@@ -3,6 +3,7 @@ import BaseVisual from '../../base/BaseVisual'
 import { scaleLinear } from '../../utils/scaleLinear'
 import { hexToRgba } from '../../utils/color'
 import { deepObjectMerge } from '@qcharts/utils'
+import { getStyle } from '../../utils/getStyle'
 import layout from './layout'
 
 class Scatter extends BaseVisual {
@@ -33,7 +34,6 @@ class Scatter extends BaseVisual {
     const { layoutWay, clientRect, axisGap } = this.renderAttrs
     const { data, layoutWay: newLayoutWay } = layout.call(this, dataSet, { size: [clientRect.width, clientRect.height], layoutWay, axisGap })
     deepObjectMerge(this.renderAttrs.layoutWay || {}, newLayoutWay)
-
     data.forEach((item, i) => {
       const color = this.theme.colors[i]
       const fillColor = hexToRgba(color, 0.3)
@@ -168,41 +168,27 @@ class Scatter extends BaseVisual {
 
   renderScatter(data) {
     const { labelField } = this.renderAttrs
+    let styles = this.renderStyles
     const scatters = data.map((item, di) => {
       return item.attrs.map((attr, ci) => {
-        let style = this.style('point')(attr, { ...attr.dataOrigin }, ci)
+        let style = getStyle(this, 'point', [attr, styles.point], [{ ...attr.dataOrigin }, ci])
         if (style === false) {
           return
         }
-
         let labelAttr = null
-
+        let text = ''
         if (labelField) {
-          const style = this.style('label')(attr, { ...attr.dataOrigin }, ci)
-          if (style !== false) {
-            if (attr.dataOrigin.hasOwnProperty(labelField)) {
-              const { strokeColor, ...other } = attr
-              const text = attr.dataOrigin[labelField]
-              labelAttr = deepObjectMerge(
-                other,
-                {
-                  fillColor: strokeColor,
-                  text,
-                  anchor: [0.5, 0.5],
-                  fontSize: '12px',
-                  zIndex: 10 + di + ci
-                },
-                style
-              )
-            }
-          }
+          labelAttr = getStyle(this, 'label', [{ pos: attr.pos, fillColor: attr.strokeColor }, styles.label], [{ ...attr.dataOrigin }, ci])
+          text = attr.dataOrigin[labelField]
+          labelAttr.zIndex = 10 + di + ci
         }
-        const hStyle = this.style('point:hover')(attr, attr.dataOrigin, ci) || {}
+        const hStyle = getStyle(this, 'point:hover', [style, styles['point:hover']], [attr.dataOrigin, ci])
         const stateStyle = attr.state === 'hover' ? hStyle : {}
+
         return (
           <Group onMousemove={this.onMouseenter} onMouseleave={this.onMouseleave}>
             <Arc {...attr} {...style} {...stateStyle} zIndex={9 + di + ci} />
-            {labelAttr ? <Label {...labelAttr} /> : null}
+            {labelAttr ? <Label text={text} {...labelAttr} /> : null}
           </Group>
         )
       })
