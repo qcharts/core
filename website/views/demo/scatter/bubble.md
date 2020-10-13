@@ -437,10 +437,7 @@ chart.source(data, {
 })
 const scatter = new Scatter({
   areaField: 'Population',
-  areaRange: [4, 30],
-  layoutWay: {
-    GDP: { min: 1200 }
-  }
+  areaRange: [4, 30]
 })
 
 const axisBottom = new Axis()
@@ -453,8 +450,8 @@ chart.append([scatter, axisBottom, axisLeft, legend])
 
 chart.append(
   new Tooltip({
-    title: (data) => data[0].Country,
-    formatter: (data) => {
+    title: data => data[0].Country,
+    formatter: data => {
       return ` 人均寿命：${data.LifeExpectancy} GDP：${data.GDP} `
     }
   })
