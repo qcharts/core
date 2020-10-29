@@ -17,9 +17,9 @@ import Tooltip from './plugins/Tooltip/index'
 import { getGlobal } from './base/platform'
 import Chart from './Chart'
 import theme from './theme/default'
-
+const version = '1.0.34'
 const qcharts = {
-  version: '1.0.33',
+  version,
   Line,
   Pie,
   Area,
@@ -43,6 +43,6 @@ const qcharts = {
 const global = getGlobal()
 global.qcharts = qcharts
 
-export { Dataset, Line, Pie, Area, Wave, Radar, Tooltip, Bar, PolarBar, Funnel, Scatter, Gauge, RadialBar, Axis, Legend, Chart, h, theme, easing }
+export { Dataset, Line, Pie, Area, Wave, Radar, Tooltip, Bar, PolarBar, Funnel, Scatter, Gauge, RadialBar, Axis, Legend, Chart, h, theme, easing, version }
 
 export default qcharts
