@@ -335,7 +335,6 @@ class Legend extends Base {
                   return item[0]
                 })
               ),
-          ,
           (this.lineCounter + 1) * legendsSize[0][1]
         ]
   }
