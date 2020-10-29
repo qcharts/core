@@ -1,7 +1,7 @@
-import Base from "../../base/BasePlugin"
-import { Group, Path, Label } from "spritejs"
-import { getStyle } from "../../utils/getStyle"
-import Point from "../../utils/Point"
+import Base from '../../base/BasePlugin'
+import { Group, Path, Label } from 'spritejs'
+import { getStyle } from '../../utils/getStyle'
+import Point from '../../utils/Point'
 class Legend extends Base {
   constructor(attrs) {
     super(attrs)
@@ -11,7 +11,7 @@ class Legend extends Base {
       totalPage: 1,
       perPageWidthOrHeight: 0, // 每页长度（或宽度）
       paginationSize: [0, 0], // 分页控件大小
-      groupSize: [0, 0], // legends 容器大小
+      groupSize: [0, 0] // legends 容器大小
     }
     this.twiceRender = false
     this.animationSwitch = false
@@ -27,17 +27,17 @@ class Legend extends Base {
   }
   defaultAttrs() {
     return {
-      layer: "legend",
-      orient: "horizontal", // 布局方式， vertical | horizontal
-      align: ["center", "bottom"], // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
+      layer: 'legend',
+      orient: 'horizontal', // 布局方式， vertical | horizontal
+      align: ['center', 'bottom'], // 水平方向布局，left | center | right, 垂直方向布局，top | center | bottom
       iconSize: [12, 12], // 图标默认大小
       textSize: [40, 12], // 文字默认大小
       scroll: true, // 滚动方式，已废弃
       outGap: 10, // 两个legend之间的距离
       innerGap: 4,
       lineGap: 15, //换行后两行legend之间距离
-      formatter: (d) => d.text || d,
-      padding: 2, // legend与canvas整体之间的padding
+      formatter: d => d.text || d,
+      padding: 2 // legend与canvas整体之间的padding
     }
   }
   get pos() {
@@ -49,12 +49,12 @@ class Legend extends Base {
     this.state.paginationSize = this.isVertical ? [30, 60] : [70, 25]
 
     const isValidLayout = (value, type) => {
-      if (type === "horizontal") {
+      if (type === 'horizontal') {
         // 水平布局
-        return ["default", "left", "center", "right"].indexOf(value) > -1
+        return ['default', 'left', 'center', 'right'].indexOf(value) > -1
       } else {
         // 垂直布局
-        return ["default", "top", "center", "bottom"].indexOf(value) > -1
+        return ['default', 'top', 'center', 'bottom'].indexOf(value) > -1
       }
     }
 
@@ -66,7 +66,7 @@ class Legend extends Base {
       right: canvasWidth - groupSize[0] - padding,
       numberOrPercent(num) {
         // 输入 数字或百分比
-        if (typeof num === "number") {
+        if (typeof num === 'number') {
           return num
         } else {
           let val = 0
@@ -75,7 +75,7 @@ class Legend extends Base {
           } catch (e) {}
           return (canvasWidth - groupSize[0]) * val
         }
-      },
+      }
     }
 
     const vLocation = {
@@ -86,7 +86,7 @@ class Legend extends Base {
       bottom: canvasHeight - groupSize[1] - padding,
       numberOrPercent(num) {
         // 输入 数字或百分比
-        if (typeof num === "number") {
+        if (typeof num === 'number') {
           return num
         } else {
           let val = 0
@@ -96,15 +96,15 @@ class Legend extends Base {
           } catch (e) {}
           return (canvasHeight - groupSize[1]) * val
         }
-      },
+      }
     }
     let pos = [
-      isValidLayout(align[0], "horizontal")
+      isValidLayout(align[0], 'horizontal')
         ? hLocation[align[0]]
         : hLocation.numberOrPercent(align[0]),
-      isValidLayout(align[1], "vertical")
+      isValidLayout(align[1], 'vertical')
         ? vLocation[align[1]]
-        : vLocation.numberOrPercent(align[1]),
+        : vLocation.numberOrPercent(align[1])
     ]
     let pagePos
     let totalPageX = Math.ceil(this.state.groupSize[0] / canvasWidth)
@@ -139,12 +139,12 @@ class Legend extends Base {
     }
     return {
       pos: pos,
-      pagePos: { pos: pagePos, pagePrev, pageText, pageNext },
+      pagePos: { pos: pagePos, pagePrev, pageText, pageNext }
     }
   }
 
   get isVertical() {
-    return this.renderAttrs.orient === "vertical"
+    return this.renderAttrs.orient === 'vertical'
   }
   beforeRender() {
     if (this.twiceRender) {
@@ -161,45 +161,45 @@ class Legend extends Base {
       this.legendStateArray.push(item.state)
       return {
         name: item.name,
-        state: item.state,
+        state: item.state
       }
     })
-    let arrLayout = renderData.map((item) => {
+    let arrLayout = renderData.map(item => {
       return {
         textAttrs: {
           text: item.name,
-          paddingLeft: innerGap,
-        },
+          paddingLeft: innerGap
+        }
       }
     })
     this.arrLayout = arrLayout
     return { arrLayout }
   }
   itemClick(e, el) {
-    const ind = el.attr("_index")
+    const ind = el.attr('_index')
     let state = this.dataset[this.renderAttrs.layoutBy][ind].state
-    state = state !== "disabled" ? "disabled" : "default"
+    state = state !== 'disabled' ? 'disabled' : 'default'
     this.dataset[this.renderAttrs.layoutBy][ind].state = state
   }
   itemLeave(e, el) {
-    const ind = el.attr("_index")
-    this.legendStateArray[ind] = "default"
+    const ind = el.attr('_index')
+    this.legendStateArray[ind] = 'default'
     this.update()
   }
   itemMove(e, el) {
-    const ind = el.attr("_index")
-    if (this.legendStateArray[ind] === "default") {
-      this.legendStateArray[ind] = "hover"
+    const ind = el.attr('_index')
+    if (this.legendStateArray[ind] === 'default') {
+      this.legendStateArray[ind] = 'hover'
       this.update()
     }
   }
   beforeUpdate(params) {
-    if (params && params.type === "source") {
+    if (params && params.type === 'source') {
       this.animationSwitch = true
       this.twiceRender = false
       return this.beforeRender()
     } else {
-      if (params && params.type === "resize") {
+      if (params && params.type === 'resize') {
         this.animationSwitch = true
       }
       return this.arrLayout
@@ -227,7 +227,7 @@ class Legend extends Base {
       textSize,
       clientRect,
       lineGap,
-      padding,
+      padding
     } = this.renderAttrs
     let legendsSize = this.isVertical ? [[0, padding]] : [[padding, 0]]
     let maxTextWidth = 0
@@ -238,13 +238,13 @@ class Legend extends Base {
     this.lineCounter = 0
     this.arrLayout = this.arrLayout.map((item, index) => {
       item.iconAttrs = {}
-      let iconEl = this.$refs["icon" + index].$sprite
+      let iconEl = this.$refs['icon' + index].$sprite
       let iconRect = iconEl.getBoundingClientRect()
       iconSize = [
         iconEl.width ? iconEl.width : iconSize[0],
-        iconEl.height ? iconEl.height : iconSize[1],
+        iconEl.height ? iconEl.height : iconSize[1]
       ]
-      let textEl = this.$refs["text" + index]
+      let textEl = this.$refs['text' + index]
       let textRect = textEl.getBoundingClientRect()
       let heightSize =
         iconSize[1] > textRect.height ? iconSize[1] : textRect.height
@@ -260,7 +260,7 @@ class Legend extends Base {
         ? [lineWidth, legendsSize[this.lineCounter][1]]
         : [
             legendsSize[this.lineCounter][0],
-            this.lineCounter * (heightSize + lineGap),
+            this.lineCounter * (heightSize + lineGap)
           ]
       // 超过单行长度后换行
       if (
@@ -284,11 +284,11 @@ class Legend extends Base {
         bgcolor: colors[index],
         size: iconSize,
         pos: [0, heightSize / 2],
-        anchor: [0, 0.5],
+        anchor: [0, 0.5]
       }
-      if (this.dataset[this.renderAttrs.layoutBy][index].state === "disabled") {
-        iconAttrs.bgcolor = "#ccc"
-        iconAttrs.fillColor = "#ccc"
+      if (this.dataset[this.renderAttrs.layoutBy][index].state === 'disabled') {
+        iconAttrs.bgcolor = '#ccc'
+        iconAttrs.fillColor = '#ccc'
       }
       let textAttrs = {
         ...item.textAttrs,
@@ -296,7 +296,7 @@ class Legend extends Base {
           ? [iconSize[0], heightSize / 2]
           : [iconSize[0], heightSize / 2],
         text: item.textAttrs.text,
-        anchor: [0, 0.5],
+        anchor: [0, 0.5]
       }
       // 单个legend的宽高
       let size = [iconSize[0] + textRect.width, heightSize]
@@ -308,15 +308,15 @@ class Legend extends Base {
         ? [maxTextWidth, legendsSize[this.lineCounter][1] + size[1] + outGap]
         : [
             legendsSize[this.lineCounter][0] + size[0] + outGap,
-            size[1] + lineGap,
+            size[1] + lineGap
           ]
       return {
         iconAttrs,
         textAttrs,
         groupAttrs: {
           size: size,
-          pos: iconPos,
-        },
+          pos: iconPos
+        }
       }
     })
     // console.log(this.arrLayout)
@@ -325,13 +325,18 @@ class Legend extends Base {
           legendsSize.reduce((i, j) => {
             return i + j[0]
           }, 0),
-          this.lineCounter === 0 ? legendsSize[0][1] : canvasHeight,
+          this.lineCounter === 0 ? legendsSize[0][1] : canvasHeight
         ]
       : [
           this.lineCounter === 0
             ? legendsSize[0][0]
-            : canvasWidth - 2 * padding,
-          (this.lineCounter + 1) * legendsSize[0][1],
+            : Math.max(
+                ...legendsSize.map(item => {
+                  return item[0]
+                })
+              ),
+          ,
+          (this.lineCounter + 1) * legendsSize[0][1]
         ]
   }
   // changePage(e, el) {
@@ -367,40 +372,40 @@ class Legend extends Base {
               duration:
                 this.twiceRender && this.animationSwitch
                   ? this.renderAttrs.animation.duration
-                  : 0,
+                  : 0
             }}
             // pos={pos}
           >
             {arr.map((attrs, ind) => {
               let cell = this.dataset[this.renderAttrs.layoutBy][ind]
-              let hover = this.legendStateArray[ind] === "hover"
-              let disabled = cell.state === "disabled"
+              let hover = this.legendStateArray[ind] === 'hover'
+              let disabled = cell.state === 'disabled'
               let style = getStyle(
                 this,
-                "point",
+                'point',
                 [{}, styles.point],
                 [cell, ind]
               )
 
               let hoverStyle = hover
-                ? getStyle(this, "point:hover", [{}], [cell, ind])
+                ? getStyle(this, 'point:hover', [{}], [cell, ind])
                 : {}
 
               if (disabled && attrs.iconAttrs && attrs.iconAttrs.bgcolor) {
-                hoverStyle.bgcolor = "#ccc"
-                hoverStyle.fillColor = "#ccc"
+                hoverStyle.bgcolor = '#ccc'
+                hoverStyle.fillColor = '#ccc'
               }
               let textStyle = getStyle(
                 this,
-                "text",
+                'text',
                 [{}, styles.text],
                 [cell, ind]
               )
               let textHoverStyle = hover
-                ? getStyle(this, "text:hover", [{}], [cell, ind])
+                ? getStyle(this, 'text:hover', [{}], [cell, ind])
                 : {}
 
-              attrs.textAttrs.text = formatter(cell.name || "", cell.data, ind)
+              attrs.textAttrs.text = formatter(cell.name || '', cell.data, ind)
               return (
                 <Group
                   onClick={this.itemClick}
@@ -411,13 +416,13 @@ class Legend extends Base {
                   {...attrs.groupAttrs}
                 >
                   <Point
-                    {...{ ref: "icon" + ind }}
+                    {...{ ref: 'icon' + ind }}
                     {...attrs.iconAttrs}
                     {...style}
                     {...hoverStyle}
                   />
                   <Label
-                    {...{ ref: "text" + ind }}
+                    {...{ ref: 'text' + ind }}
                     {...attrs.textAttrs}
                     {...textStyle}
                     {...textHoverStyle}
