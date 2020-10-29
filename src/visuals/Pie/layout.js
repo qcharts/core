@@ -1,7 +1,7 @@
 import getPointByDistance from '../../utils/getLinePoint'
 export default function layout(arr, attrs) {
   let rings = []
-  let arrVal = arr.map(row => row.reduce((val, item) => (row.state !== 'disabled' ? val + item.value : val), 0))
+  let arrVal = arr.map(row => row.reduce((val, item) => (row.state !== 'disabled' ? val + item.layoutScaleValue() : val), 0))
   //当totalVal为0的时候，会造成分母为0 如果totalVal为0 处理成1
   let totalVal = arrVal.reduce((val, item) => val + item, 0) || 1
   let { startAngle, endAngle, activeOffset } = attrs

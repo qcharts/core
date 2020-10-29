@@ -6,7 +6,7 @@
 const data = [
   {
     year: '2001',
-    population: 41.8
+    population: 4
   },
   {
     year: '2002',
@@ -42,7 +42,7 @@ const data = [
   },
   {
     year: '2010',
-    population: 28
+    population: 2800
   }
 ]
 
@@ -54,7 +54,9 @@ const chart = new Chart({
 
 chart.source(data, {
   row: 'year',
-  value: 'population'
+  value: 'population',
+  //布局数据方式
+  layoutScale: 'sqrt'
 })
 
 const pie = new Pie({
