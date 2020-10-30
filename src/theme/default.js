@@ -88,7 +88,8 @@ theme.visuals = {
   Scatter: {
     colors: theme.colors,
     styles: {
-      point: {}
+      point: {},
+      label: { strokeColor: 'transparent', zIndex: 10, anchor: [0.5, 0.5] }
     },
     attrs: {
       showGuideLine: false
