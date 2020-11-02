@@ -176,7 +176,7 @@ class Bar extends Base {
       } else {
         let width = this.groups[0].size[1]
         //转换canvas坐标到当前group的相对坐标
-        curInd = Math.floor(y / width)
+        curInd = this.groups.length - Math.floor(y / width) - 1
       }
       if (curInd < 1) {
         curInd = 0
