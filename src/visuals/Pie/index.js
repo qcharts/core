@@ -157,6 +157,13 @@ class Pie extends Base {
     })
     this.hoverIndex = -1
   }
+  ringClick(event, $el) {
+    let ind = $el.attr('_index')
+    let renderData = this.renderData()
+    let curData = renderData[ind]
+    console.log('click', curData)
+    curData.dispatchEvent('click', { event, data: curData, $el })
+  }
   renderData() {
     let renderAttrs = this.renderAttrs
     return this.dataset[renderAttrs.layoutBy]
@@ -206,7 +213,7 @@ class Pie extends Base {
         <Group class="rings-group" onMouseleave={this.mouseleave}>
           {rings.map((ring, ind) => {
             let style = getStyle(this, 'sector', [{ strokeColor: colors[ind], fillColor: colors[ind], innerRadius: innerRadiusPx, outerRadius: radiusPx, _index: ind }, styles.sector], [this.dataset.rows[ind], ind])
-            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMousemove={this.mousemove} {...style} animation={{ from: ring.from, to: ring.to }} />
+            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onClick={this.ringClick} onMousemove={this.mousemove} {...style} animation={{ from: ring.from, to: ring.to }} />
           })}
         </Group>
         <Group class="line-group">
