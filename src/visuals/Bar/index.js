@@ -188,25 +188,21 @@ class Bar extends Base {
       return Number.NEGATIVE_INFINITY
     }
   }
-  onMousemove = throttle(
-    (event, el) => {
-      let curInd = this.getIndexByCoord(event, el)
-      if (curInd === Number.NEGATIVE_INFINITY) {
-        return
+  onMousemove(event, el) {
+    let curInd = this.getIndexByCoord(event, el)
+    if (curInd === Number.NEGATIVE_INFINITY) {
+      return
+    }
+    if (this.hoverIndex !== curInd) {
+      this.bgpillarState[curInd] = 'hover'
+      if (this.hoverIndex > -1) {
+        this.bgpillarState[this.hoverIndex] = 'defualt'
       }
-      if (this.hoverIndex !== curInd) {
-        this.bgpillarState[curInd] = 'hover'
-        if (this.hoverIndex > -1) {
-          this.bgpillarState[this.hoverIndex] = 'defualt'
-        }
-        this.dataset.resetState()
-        this.dataset.cols[curInd].state = 'hover'
-        this.hoverIndex = curInd
-      }
-    },
-    16,
-    true
-  )
+      this.dataset.resetState()
+      this.dataset.cols[curInd].state = 'hover'
+      this.hoverIndex = curInd
+    }
+  }
   onMouseleave(e, el) {
     this.dataset.resetState()
     this.bgpillarState[this.hoverIndex] = 'defualt'
@@ -230,6 +226,7 @@ class Bar extends Base {
     let colors = this.theme.colors
     return (
       <Group
+        zIndex={1}
         pos={[clientRect.left, clientRect.top]}
         size={[clientRect.width, clientRect.height]}
         onMouseleave={this.onMouseleave}

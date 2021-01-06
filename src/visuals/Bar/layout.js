@@ -120,7 +120,7 @@ export default function layout(arr, attrs) {
                   (barWidth * GROUP_BAR_NUM +
                     groupGap * (GROUP_BAR_NUM - 1) +
                     gap) *
-                    i +
+                    (GROUP_NUM - i - 1) +
                   barWidth * 0.5
               ]
             : [
@@ -210,8 +210,8 @@ export default function layout(arr, attrs) {
             ? tableSize.value * POSITIVE_RATIO + heightSumDown + barHeight
             : tableSize.value * POSITIVE_RATIO - heightSumUp
         const pos = transpose
-          ? [posX, gap / 2 + (barWidth + gap) * i]
-          : [gap / 2 + (barWidth + gap) * (GROUP_NUM - i - 1), posY]
+          ? [posX, gap / 2 + (barWidth + gap) * (GROUP_NUM - i - 1)]
+          : [gap / 2 + (barWidth + gap) * i, posY]
         const size = transpose
           ? [barHeight - stackGapTemp, barWidth]
           : [barWidth, barHeight - stackGapTemp]
@@ -239,7 +239,10 @@ export default function layout(arr, attrs) {
           text: value.toString(),
           anchor: transpose ? (value < 0 ? [1, 0.5] : [0, 0.5]) : [0.5, 1],
           pos: transpose
-            ? [posX, +(gap + barWidth) / 2 + (barWidth + gap) * i]
+            ? [
+                posX,
+                +(gap + barWidth) / 2 + (barWidth + gap) * (GROUP_NUM - i - 1)
+              ]
             : [(gap + barWidth) / 2 + (barWidth + gap) * i, posLabelY]
         }
         label[paddingAttrs] = 8
