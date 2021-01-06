@@ -1,13 +1,13 @@
-import Base from "../../base/BaseVisual"
-import { Group, Label, Polyline } from "spritejs"
-import { getStyle } from "../../utils/getStyle"
-import { deepObjectMerge, throttle } from "@qcharts/utils"
-import layout from "./layout"
-import filterClone from "filter-clone"
+import Base from '../../base/BaseVisual'
+import { Group, Label, Polyline } from 'spritejs'
+import { getStyle } from '../../utils/getStyle'
+import { deepObjectMerge, throttle } from '@qcharts/utils'
+import layout from './layout'
+import filterClone from 'filter-clone'
 class Bar extends Base {
   constructor(attrs) {
     super(attrs)
-    this.type = "bar"
+    this.type = 'bar'
     this.pillars = null
     this.texts = null
     this.groups = null
@@ -26,17 +26,17 @@ class Bar extends Base {
     let { arrLayout } = this.getRenderData()
     this.bgpillarState = Array.from(
       { length: arrLayout.length },
-      () => "defalut"
+      () => 'defalut'
     )
-    let textData = arrLayout.textData.map((item) => {
+    let textData = arrLayout.textData.map(item => {
       return {
         attrs: item,
         from: {
-          pos: item.pos,
+          pos: item.pos
         },
         to: {
-          pos: item.pos,
-        },
+          pos: item.pos
+        }
       }
     })
     let barData = arrLayout.barData.map((item, ind) => {
@@ -65,10 +65,10 @@ class Bar extends Base {
       return {
         attrs: item,
         from: {
-          points: fromPoints,
+          points: fromPoints
         },
 
-        to: { points: item.points },
+        to: { points: item.points }
       }
     })
 
@@ -87,34 +87,34 @@ class Bar extends Base {
         prev = {
           size: [0, 0],
           pos: nextPillar.pos,
-          labelAttrs: null,
+          labelAttrs: null
         }
       }
       return {
         attrs: nextPillar,
         from: {
-          points: prev.attrs.points,
+          points: prev.attrs.points
         },
         to: {
-          points: nextPillar.points,
-        },
+          points: nextPillar.points
+        }
       }
     })
     let textData = arrLayout.textData.map((nextText, i) => {
       let prev = texts[i] ? texts[i] : arrLayout.textData[i - 1]
       if (!prev) {
         prev = {
-          pos: nextPillar.pos,
+          pos: nextPillar.pos
         }
       }
       return {
         attrs: nextText,
         from: {
-          pos: prev.attrs.pos,
+          pos: prev.attrs.pos
         },
         to: {
-          pos: nextText.pos,
-        },
+          pos: nextText.pos
+        }
       }
     })
     this.pillars = barData
@@ -147,64 +147,73 @@ class Bar extends Base {
   }
   defaultAttrs() {
     return {
-      layer: "bar",
+      layer: 'bar',
       states: {
         bgpillar: {
           animation: { duration: 20 },
           default: { opacity: 0.0001 },
-          hover: { opacity: 0.1 },
-        },
-      },
+          hover: { opacity: 0.1 }
+        }
+      }
     }
   }
   defaultStyles() {
     // 默认的样式,继承base
     return {
-      text: { fontSize: 12, fillColor: "#666" },
+      text: { fontSize: 12, fillColor: '#666' }
     }
   }
-  onMousemove = throttle(
-    (event, el) => {
-      if (this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
-        let bgpillarState = this.bgpillarState
-        let curInd = 0
-        let [x, y] = el.getOffsetPosition(event.x, event.y)
-        if (!this.renderAttrs.transpose) {
-          //获取 x轴坐标的刻度
-          let width = this.groups[0].size[0]
-          //转换canvas坐标到当前group的相对坐标
-          curInd = Math.floor(x / width)
-        } else {
-          let width = this.groups[0].size[1]
-          //转换canvas坐标到当前group的相对坐标
-          curInd = Math.floor(y / width)
-        }
-        if (curInd < 1) {
-          curInd = 0
-        } else if (curInd > this.groups.length - 1) {
-          curInd = this.groups.length - 1
-        }
-        if (this.hoverIndex !== curInd) {
-          bgpillarState[curInd] = "hover"
-          if (this.hoverIndex > -1) {
-            bgpillarState[this.hoverIndex] = "defualt"
-          }
-          this.dataset.resetState()
-          this.dataset.cols[curInd].state = "hover"
-          this.hoverIndex = curInd
-        }
+  getIndexByCoord(event, el) {
+    if (this.groups.length && !isNaN(event.x) && !isNaN(event.y)) {
+      let bgpillarState = this.bgpillarState
+      let curInd = 0
+      let [x, y] = el.getOffsetPosition(event.x, event.y)
+      if (!this.renderAttrs.transpose) {
+        //获取 x轴坐标的刻度
+        let width = this.groups[0].size[0]
+        //转换canvas坐标到当前group的相对坐标
+        curInd = Math.floor(x / width)
+      } else {
+        let width = this.groups[0].size[1]
+        //转换canvas坐标到当前group的相对坐标
+        curInd = this.groups.length - Math.floor(y / width) - 1
       }
-    },
-    16,
-    true
-  )
+      if (curInd < 1) {
+        curInd = 0
+      } else if (curInd > this.groups.length - 1) {
+        curInd = this.groups.length - 1
+      }
+      return curInd
+    } else {
+      return Number.NEGATIVE_INFINITY
+    }
+  }
+  onMousemove(event, el) {
+    let curInd = this.getIndexByCoord(event, el)
+    if (curInd === Number.NEGATIVE_INFINITY) {
+      return
+    }
+    if (this.hoverIndex !== curInd) {
+      this.bgpillarState[curInd] = 'hover'
+      if (this.hoverIndex > -1) {
+        this.bgpillarState[this.hoverIndex] = 'defualt'
+      }
+      this.dataset.resetState()
+      this.dataset.cols[curInd].state = 'hover'
+      this.hoverIndex = curInd
+    }
+  }
   onMouseleave(e, el) {
     this.dataset.resetState()
-    this.bgpillarState[this.hoverIndex] = "defualt"
+    this.bgpillarState[this.hoverIndex] = 'defualt'
     this.hoverIndex = -1
   }
-  myClick = function() {
-    console.log("myclick")
+  myClick = function(e, el) {
+    let curInd = this.getIndexByCoord(e, el)
+    if (curInd === Number.NEGATIVE_INFINITY) {
+      return
+    }
+    getStyle(this, 'click', curInd)
   }
 
   render(data) {
@@ -217,6 +226,7 @@ class Bar extends Base {
     let colors = this.theme.colors
     return (
       <Group
+        zIndex={1}
         pos={[clientRect.left, clientRect.top]}
         size={[clientRect.width, clientRect.height]}
         onMouseleave={this.onMouseleave}
@@ -232,32 +242,32 @@ class Bar extends Base {
             ]
             const style = getStyle(
               this,
-              "pillar",
+              'pillar',
               [
                 {
                   fillColor: colors[cell.row],
                   bgcolor: colors[cell.row],
-                  ...pillar.attrs,
+                  ...pillar.attrs
                 },
-                styles.bar,
+                styles.bar
               ],
               [
                 cell.data,
                 Math.floor(ind / renderData.length),
-                ind % renderData.length,
+                ind % renderData.length
               ]
             )
             const hoverStyle = getStyle(
               this,
-              "pillar:hover",
+              'pillar:hover',
               [],
               [
                 cell.data,
                 Math.floor(ind / renderData.length),
-                ind % renderData.length,
+                ind % renderData.length
               ]
             )
-            if (cell.state === "hover") {
+            if (cell.state === 'hover') {
               deepObjectMerge(style, hoverStyle)
             }
             return (
@@ -271,25 +281,25 @@ class Bar extends Base {
           })}
           {data.textData.map((text, ind) => {
             let barAttrs = filterClone(data.barData[ind].attrs, [
-              "anchor",
-              "points",
-              "size",
-              "pos",
+              'anchor',
+              'points',
+              'size',
+              'pos'
             ])
             let textStyle = getStyle(
               this,
-              "text",
+              'text',
               [{ barAttrs: barAttrs }, styles.text],
               [
                 this.dataset.rows[ind % renderData.length][
                   Math.floor(ind / renderData.length)
                 ].data,
                 Math.floor(ind / renderData.length),
-                ind % renderData.length,
+                ind % renderData.length
               ]
             )
             //console.log('aaa', textStyle, styles.text)
-            textStyle = filterClone(textStyle, [], ["barAttrs"])
+            textStyle = filterClone(textStyle, [], ['barAttrs'])
             if (textStyle.pos) {
               this.texts[ind].attrs.pos = textStyle.pos
               text.to.pos = textStyle.pos
@@ -301,7 +311,7 @@ class Bar extends Base {
                 {...textStyle}
                 animation={{
                   from: text.from,
-                  to: text.to,
+                  to: text.to
                 }}
               />
             )
@@ -311,11 +321,11 @@ class Bar extends Base {
           {data.groupData.map((pillar, ind) => {
             let style = getStyle(
               this,
-              "backgroundpillar",
+              'backgroundpillar',
               [{ ...pillar }, styles.groupBar],
               [
                 this.dataset.rows[ind % renderData.length],
-                Math.floor(ind / renderData.length),
+                Math.floor(ind / renderData.length)
               ]
             )
             style.points = style.points.flat()
@@ -328,7 +338,7 @@ class Bar extends Base {
                 animation={{
                   from: { points: style.points },
                   to: { points: style.points },
-                  duration: 0,
+                  duration: 0
                 }}
               />
             )
