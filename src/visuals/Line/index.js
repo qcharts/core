@@ -88,6 +88,7 @@ class Line extends Base {
   }
   guidelineleave(event, el) {
     this.attr('guidePoints', [])
+    this.hoverIndex = -1
     this.dataset.resetState()
   }
   guidelinemove(event, el) {
