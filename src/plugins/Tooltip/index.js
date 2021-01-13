@@ -79,15 +79,15 @@ class Tooltip extends Base {
         this.$el.innerHTML = ''
       }
     })
-    document.body.addEventListener('mousemove', this.tipMousemove)
+    this.chart.$el.addEventListener('mousemove', this.tipMousemove)
   }
   render() {
     if (!this.$el) {
       this.$el = document.createElement('div')
       this.$el.className = 'qcharts-tooltip'
       this.$el.style.cssText = 'transition:top 300ms ease-out,left 300ms ease-out;position:absolute;pointEvents:none;pointer-events:none;font-size:14px;'
+      document.body.appendChild(this.$el)
     }
-    document.body.appendChild(this.$el)
   }
 }
 export default Tooltip
