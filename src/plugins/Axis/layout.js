@@ -92,7 +92,7 @@ export default function layout(arr, attrs) {
     splitNumber,
     section
   }
-  if (targetVisual.constructorName === 'Scatter' && defaultAttrs[attrs.orient].type === 'category') {
+  if (targetVisual && targetVisual.constructorName === 'Scatter' && defaultAttrs[attrs.orient].type === 'category') {
     axisAttrs.field = targetVisual.dataset.option.text
   }
   let scales = axis.call(this, axisAttrs)
@@ -191,7 +191,7 @@ function getItemAttrs(defaultAttrs, orient, cell, value, scaleF, clientRect, axi
     res.labelAttr = {
       ...defaultAttrs[orient].label,
       width: left,
-      text: '' + cell.text,
+      text: '' + (cell.text || ''),
       pos: [scaleF(labelPosValue), y]
     }
   }
