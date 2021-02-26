@@ -167,8 +167,10 @@ class Scatter extends BaseVisual {
   }
 
   renderScatter(data) {
-    const { labelField } = this.renderAttrs
+    const { labelField, layoutBy } = this.renderAttrs
+    console.log(this.renderAttrs)
     let styles = this.renderStyles
+    let renderData = this.dataset[layoutBy]
     const scatters = data.map((item, di) => {
       return item.attrs.map((attr, ci) => {
         let style = getStyle(this, 'point', [attr, styles.point], [{ ...attr.dataOrigin }, ci])
@@ -186,7 +188,7 @@ class Scatter extends BaseVisual {
         const stateStyle = attr.state === 'hover' ? hStyle : {}
 
         return (
-          <Group onMousemove={this.onMouseenter} onMouseleave={this.onMouseleave}>
+          <Group onMousemove={this.onMouseenter} onMouseleave={this.onMouseleave} onMouseEvent={['click', renderData[di][ci], ci]}>
             <Arc {...attr} {...style} {...stateStyle} zIndex={9 + di + ci} />
             {labelAttr ? <Label text={text} {...labelAttr} /> : null}
           </Group>
