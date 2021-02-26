@@ -116,6 +116,12 @@ const legend = new Legend({ orient: 'vertical', align: ['right', 'center'] })
 const toolTip = new Tooltip()
 
 chart.append([pie, legend, toolTip])
+pie.dataset.on('mouseEvent', function(...params) {
+  console.log(params)
+})
+pie.dataset.on('change', function(...params) {
+  console.log(params)
+})
 ```
 
 :::
