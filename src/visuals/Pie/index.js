@@ -207,7 +207,7 @@ class Pie extends Base {
         <Group class="rings-group" onMouseleave={this.mouseleave}>
           {rings.map((ring, ind) => {
             let style = getStyle(this, 'sector', [{ strokeColor: colors[ind], fillColor: colors[ind], innerRadius: innerRadiusPx, outerRadius: radiusPx, _index: ind }, styles.sector], [this.dataset.rows[ind], ind])
-            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMouseEvent={['click', renderData[ind][0], ind]} onMouseEnter={this.mousemove} {...style} animation={{ from: ring.from, to: ring.to }} />
+            return ring.state === 'disabled' || style === false ? <Node /> : <Ring onMouseEvent={['click,dblclick', renderData[ind][0], ind]} onMouseEnter={this.mousemove} {...style} animation={{ from: ring.from, to: ring.to }} />
           })}
         </Group>
         <Group class="line-group">
