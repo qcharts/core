@@ -3,7 +3,7 @@ import { deepObjectMerge } from '@qcharts/utils'
 import BaseVisual from '../../base/BaseVisual'
 
 // 数据拷贝
-const flattern = (arr) => [].concat.apply([], arr)
+const flattern = arr => [].concat.apply([], arr)
 
 class RadialBar extends BaseVisual {
   constructor(attrs = {}) {
@@ -50,7 +50,7 @@ class RadialBar extends BaseVisual {
     const { size } = this.renderAttrs
     const [width, height] = size
     const maxRadius = this.maxOuterRadius
-    return [width/2 - maxRadius, height/2- maxRadius]
+    return [width / 2 - maxRadius, height / 2 - maxRadius]
   }
 
   get innerRadius() {
@@ -73,8 +73,7 @@ class RadialBar extends BaseVisual {
     const outerRadius = this.maxOuterRadius
     const arcOffset = 0.5
     const len = data.length
-    const perRadius =
-      ((outerRadius - innerRadius) * 2 - lineWidth * (lineWidth >= 5 ? 1 : len - 1)) / ((len * 2 - 1) * (1 + arcOffset))
+    const perRadius = ((outerRadius - innerRadius) * 2 - lineWidth * (lineWidth >= 5 ? 1 : len - 1)) / ((len * 2 - 1) * (1 + arcOffset))
     let value = null
 
     data.forEach((d, i) => {
@@ -111,7 +110,7 @@ class RadialBar extends BaseVisual {
     const { startAngle } = this.renderAttrs
     let data = flattern(this.dataset)
     data = this.transform(data)
-    this.animators = data.map((d) => ({
+    this.animators = data.map(d => ({
       from: {
         startAngle,
         endAngle: startAngle
@@ -159,7 +158,7 @@ class RadialBar extends BaseVisual {
 
   onMouseenter(event, el) {
     const { col, row } = el.children[1].attributes
-    this.dataset.forEach((item) => {
+    this.dataset.forEach(item => {
       item.state = item.col === col && item.row === row ? 'hover' : 'default'
     })
   }
@@ -169,7 +168,7 @@ class RadialBar extends BaseVisual {
   }
 
   render(data = []) {
-    const { strokeBgcolor,clientRect } = this.renderAttrs
+    const { strokeBgcolor, clientRect } = this.renderAttrs
     const gAnimation = {
       from: { pos: this.oldPos ? this.oldPos : this.center },
       to: { pos: this.center }
@@ -183,18 +182,9 @@ class RadialBar extends BaseVisual {
         {data.map((d, i) => {
           const { col, row, data } = d
           return (
-            <Group
-              animation={gAnimation}
-              onMouseenter={this.onMouseenter}
-              onMousemove={this.onMouseenter}
-              onMouseleave={this.onMouseleave}
-            >
+            <Group animation={gAnimation} onMouseenter={this.onMouseenter} onMousemove={this.onMouseenter} onMouseleave={this.onMouseleave}>
               <Arc {...d} startAngle={0} endAngle={360} strokeColor={strokeBgcolor} />
-              <Arc
-                {...{ ...d, col, row }}
-                animation={this.animators[i]}
-                {...this.style('arc')(d, data, i)}
-              />
+              <Arc onMouseEvent={['click', d, i]} {...{ ...d, col, row }} animation={this.animators[i]} {...this.style('arc')(d, data, i)} />
             </Group>
           )
         })}

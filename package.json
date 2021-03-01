@@ -1,6 +1,6 @@
 {
   "name": "@qcharts/core",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "description": "QCharts 是一个基于 spritejs 封装的图表库，可以让用户以组件的形式组合出各种图表",
   "main": "dist/index.js",
   "module": "lib/index.js",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@qcharts/dataset": "0.0.14",
     "@qcharts/utils": "^0.0.5",
-    "@qcharts/vnode": "0.0.16",
+    "@qcharts/vnode": "0.0.17",
     "filter-clone": "0.0.12"
   },
   "devDependencies": {

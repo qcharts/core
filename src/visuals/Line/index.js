@@ -130,6 +130,7 @@ class Line extends Base {
     //当前主体颜色
     let colors = this.theme.colors
     this.renderLines = lines
+    let renderData = this.dataset[this.renderAttrs.layoutBy]
     return (
       <Group zIndex={1} class="container" pos={[clientRect.left, clientRect.top]} size={[clientRect.width, clientRect.height]} onMouseleave={this.guidelineleave} onMouseenter={this.guidelinemove} onMousemove={this.guidelinemove}>
         <Group class="lines-group">
@@ -139,7 +140,7 @@ class Line extends Base {
             //   line.to.lineDash = style.lineDash
             //   line.from.lineDash = style.lineDash
             // }
-            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onClick={this.lineClick} animation={{ from: line.from, to: line.to }} {...style} />
+            return line.state === 'disabled' || style === false ? <Node /> : <Polyline onMouseEvent={['click', this.dataset.rows[ind], ind]} onClick={this.lineClick} animation={{ from: line.from, to: line.to }} {...style} />
           })}
         </Group>
         <Group class="areas-group">
@@ -147,7 +148,7 @@ class Line extends Base {
             ? null
             : lines.map((line, ind) => {
                 let style = getStyle(this, 'area', [{ fillColor: colors[ind], smooth }, styles.area], [this.dataset.rows[ind].data, ind])
-                return line.state === 'disabled' || style === false ? <Node /> : <Polyline smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
+                return line.state === 'disabled' || style === false ? <Node /> : <Polyline onMouseEvent={['click', this.dataset.rows[ind], ind]} smoothRange={line.smoothRange} {...style} animation={{ from: line.areaFrom, to: line.areaTo }} />
               })}
         </Group>
         <Group class="line-points">
@@ -166,7 +167,7 @@ class Line extends Base {
                   if (this.dataset.rows[ind][j].state === 'hover') {
                     deepObjectMerge(style, styleHover)
                   }
-                  return <Point {...style} animation={animation} />
+                  return <Point {...style} onMouseEvent={['click', renderData[ind][j], j]} animation={animation} />
                 })}
               </Group>
             )
