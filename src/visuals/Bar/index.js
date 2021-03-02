@@ -231,6 +231,25 @@ class Bar extends Base {
         onClick={this.myClick}
         // onMousemove={throttle(this.onMousemove)}
       >
+        <Group ref="bgpillar">
+          {data.groupData.map((pillar, ind) => {
+            let style = getStyle(this, 'backgroundpillar', [{ ...pillar }, styles.groupBar], [this.dataset.rows[ind % renderData.length], Math.floor(ind / renderData.length)])
+            style.points = style.points.flat()
+            return style === false ? null : (
+              <Polyline
+                state={this.bgpillarState[ind]}
+                states={states.bgpillar}
+                {...pillar}
+                {...style}
+                animation={{
+                  from: { points: style.points },
+                  to: { points: style.points },
+                  duration: 0
+                }}
+              />
+            )
+          })}
+        </Group>
         <Group ref="pillars" class="pillars-group">
           {data.barData.map((pillar, ind) => {
             let cell = this.dataset[layoutBy][ind % renderData.length][Math.floor(ind / renderData.length)]
@@ -251,12 +270,11 @@ class Bar extends Base {
             if (cell.state === 'hover') {
               deepObjectMerge(style, hoverStyle)
             }
-            return <Polyline {...pillar.attrs} {...pillar.from} {...style} onMouseEvent={['click', renderData[ind], ind]} animation={{ from: pillar.from, to: pillar.to }} />
+            return <Polyline onMouseEvent={['click', cell, ind]} {...pillar.attrs} {...pillar.from} {...style} animation={{ from: pillar.from, to: pillar.to }} />
           })}
           {data.textData.map((text, ind) => {
             let barAttrs = filterClone(data.barData[ind].attrs, ['anchor', 'points', 'size', 'pos'])
             let textStyle = getStyle(this, 'text', [{ barAttrs: barAttrs }, styles.text], [this.dataset.rows[ind % renderData.length][Math.floor(ind / renderData.length)].data, Math.floor(ind / renderData.length), ind % renderData.length])
-            //console.log('aaa', textStyle, styles.text)
             textStyle = filterClone(textStyle, [], ['barAttrs'])
             if (textStyle.pos) {
               this.texts[ind].attrs.pos = textStyle.pos
@@ -270,25 +288,6 @@ class Bar extends Base {
                 animation={{
                   from: text.from,
                   to: text.to
-                }}
-              />
-            )
-          })}
-        </Group>
-        <Group ref="bgpillar">
-          {data.groupData.map((pillar, ind) => {
-            let style = getStyle(this, 'backgroundpillar', [{ ...pillar }, styles.groupBar], [this.dataset.rows[ind % renderData.length], Math.floor(ind / renderData.length)])
-            style.points = style.points.flat()
-            return style === false ? null : (
-              <Polyline
-                state={this.bgpillarState[ind]}
-                states={states.bgpillar}
-                {...pillar}
-                {...style}
-                animation={{
-                  from: { points: style.points },
-                  to: { points: style.points },
-                  duration: 0
                 }}
               />
             )
