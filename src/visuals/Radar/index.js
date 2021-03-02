@@ -264,7 +264,8 @@ class Radar extends BaseVisual {
   renderSection(sectionAttrs) {
     return sectionAttrs.map((attr, i) => {
       const { animation, ...otherAttr } = attr
-      return <Polyline zIndex={9 + i} {...otherAttr} animation={animation} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
+      const cell = this.dataset[this.renderAttrs.layoutBy][i]
+      return <Polyline zIndex={9 + i} {...otherAttr} animation={animation} onMouseEvent={['click', cell, i]} onMouseenter={this.onMouseenter} onMouseleave={this.onMouseleave} />
     })
   }
 
