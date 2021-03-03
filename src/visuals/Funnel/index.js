@@ -171,7 +171,7 @@ class Funnel extends Base {
             }
             return (
               <Group>
-                <Polyline onMousemove={this.onMousemove} onMouseleave={this.onMouseleave} {...pillar.attrs} {...pillar.from} {...style} animation={{ from: pillar.from, to: pillar.to }} />
+                <Polyline onMouseEvent={['click', cell, ind]} onMousemove={this.onMousemove} onMouseleave={this.onMouseleave} {...pillar.attrs} {...pillar.from} {...style} animation={{ from: pillar.from, to: pillar.to }} />
                 {/* {withGuide(
                   this,
                   pillar.attrs,
