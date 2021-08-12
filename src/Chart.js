@@ -51,6 +51,7 @@ class Chart extends Base {
     this.checkRender = throttle(_ => {
       this.children.forEach(child => {
         child.created()
+        console.log('abc')
         this.dataset.addDep(child)
       })
       this.__store.__isCreated__ = true

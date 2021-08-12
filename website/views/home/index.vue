@@ -182,6 +182,7 @@
           </a>
         </li>
       </ul>
+       <div class="footer"><a href="https://beian.miit.gov.cn/">鄂ICP备14016440号-6</a></div>
     </section>
   </div>
 </template>
@@ -261,6 +262,14 @@ section.intro {
 
   img {
     max-height: 400px;
+  }
+}
+.footer{
+  text-align: center;
+  font-size:12px;
+  padding:10px;
+  a{
+    color:#666;
   }
 }
 </style>

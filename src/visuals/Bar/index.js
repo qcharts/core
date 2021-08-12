@@ -204,7 +204,7 @@ class Bar extends Base {
     this.bgpillarState[this.hoverIndex] = 'defualt'
     this.hoverIndex = -1
   }
-  myClick = function(e, el) {
+  myClick = function (e, el) {
     //console.log('click')
     let curInd = this.getIndexByCoord(e, el)
     if (curInd === Number.NEGATIVE_INFINITY) {
@@ -229,7 +229,7 @@ class Bar extends Base {
         onMouseenter={this.onMousemove}
         onMousemove={this.onMousemove}
         onClick={this.myClick}
-        // onMousemove={throttle(this.onMousemove)}
+      // onMousemove={throttle(this.onMousemove)}
       >
         <Group ref="bgpillar">
           {data.groupData.map((pillar, ind) => {
@@ -282,14 +282,7 @@ class Bar extends Base {
             }
 
             return textStyle === false ? null : (
-              <Label
-                {...text.attrs}
-                {...textStyle}
-                animation={{
-                  from: text.from,
-                  to: text.to
-                }}
-              />
+              <Label {...text.attrs} {...textStyle} animation={{ from: text.from, to: text.to }} />
             )
           })}
         </Group>
